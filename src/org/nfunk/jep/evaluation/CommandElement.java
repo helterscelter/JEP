@@ -20,70 +20,70 @@ public class CommandElement {
 	private Object              value;
 
 	/**
-	 * @return
+	 * @return The function associated with this element.
 	 */
 	public final PostfixMathCommandI getPFMC() {
 		return pfmc;
 	}
 
 	/**
-	 * @return
+	 * @return The type.
 	 */
 	public final int getType() {
 		return type;
 	}
 
 	/**
-	 * @return
+	 * @return The value of this element.
 	 */
 	public final Object getValue() {
 		return value;
 	}
 
 	/**
-	 * @return
+	 * @return The variable name.
 	 */
 	public final String getVarName() {
 		return varName;
 	}
 
 	/**
-	 * @return
+	 * @return The number of parameters.
 	 */
 	public final int getNumParam() {
 		return nParam;
 	}
 
 	/**
-	 * @param commandI
+	 * @param commandI The function associated with this element.
 	 */
 	public final void setPFMC(PostfixMathCommandI commandI) {
 		pfmc = commandI;
 	}
 
 	/**
-	 * @param i
+	 * @param i The type identifier.
 	 */
 	public final void setType(int i) {
 		type = i;
 	}
 
 	/**
-	 * @param object
+	 * @param object The value of the element.
 	 */
 	public final void setValue(Object object) {
 		value = object;
 	}
 
 	/**
-	 * @param string
+	 * @param string The name of the variable.
 	 */
 	public final void setVarName(String string) {
 		varName = string;
 	}
 
 	/**
-	 * @param i
+	 * @param i The number of parameters.
 	 */
 	public final void setNumParam(int i) {
 		nParam = i;
