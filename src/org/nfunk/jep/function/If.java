@@ -12,8 +12,8 @@ import org.nfunk.jep.type.*;
 import java.util.Stack;
 /**
  * The if(condExpr,posExpr,negExpr) function.
- * The value of trueExpr will be returned if condExpr is >0 (true)
- * and value of negExpr will be returned if condExpr is &lt;= 0 (false).
+ * The value of trueExpr will be returned if condExpr is >0 or Boolean.TRUE
+ * and value of negExpr will be returned if condExpr is &lt;= 0 or Boolean.TRUE.
  * <p>
  * This function performs lazy evaluation so that
  * only posExpr or negExpr will be evaluated.
@@ -28,6 +28,7 @@ import java.util.Stack;
  * so that it handles setting the value of a variable. 
  * @author Rich Morris
  * Created on 18-Nov-2003
+ * @version 2.3.0 beta 1 now supports a Boolean first arguement.
  */
 public class If extends PostfixMathCommand implements SpecialEvaluationI {
 
@@ -61,13 +62,21 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 			throw new ParseException("If operator must have 3 or 4 arguments.");
 
 		// get value of argument
-		
+
 		node.jjtGetChild(0).jjtAccept(pv,data);	
 		checkStack(inStack); // check the stack
 		Object condVal = inStack.pop();
 		
 		// convert to double
 		double val;
+		if(condVal instanceof Boolean)
+		{
+			if(((Boolean) condVal).booleanValue())
+				node.jjtGetChild(1).jjtAccept(pv,data);
+			else
+				node.jjtGetChild(2).jjtAccept(pv,data);
+			return data;
+		}
 		if(condVal instanceof Double)
 		{
 			val = ((Double) condVal).doubleValue();
