@@ -13,9 +13,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
-import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.function.*;
-import org.lsmp.djep.matrixJep.nodeTypes.*;
 
 /**
  * A enhanced version of list, allows matricies and tensors.
@@ -24,7 +22,7 @@ import org.lsmp.djep.matrixJep.nodeTypes.*;
  * Created on 27-Nov-2003
  */
 public class TensorFun extends PostfixMathCommand 
-	implements PrintVisitor.PrintRulesI,NaryOperatorI
+	implements NaryOperatorI
 {
 	public TensorFun()
 	{
@@ -105,40 +103,4 @@ public class TensorFun extends PostfixMathCommand
 		}
 	}
 	
-	int curEle;
-	/** recursive procedure to print the tensor with lots of brackets. **/
-	protected void bufferAppend(MatrixNodeI node,PrintVisitor pv,int currank) throws ParseException
-	{
-		pv.append("[");
-		if(currank+1 >= node.getDim().rank())
-		{
-			// bottom of tree
-			for(int i=0;i<node.getDim().getIthDim(currank);++i)
-			{
-				if(i!=0) pv.append(",");
-				node.jjtGetChild(curEle++).jjtAccept(pv,null);
-			}
-		}
-		else
-		{
-			// not bottom of tree
-			for(int i=0;i<node.getDim().getIthDim(currank);++i)
-			{
-				if(i!=0) pv.append(",");
-				bufferAppend(node,pv,currank+1);
-			}
-		}
-		pv.append("]");
-	}
-
-	/**
-	 * Used to print the TensorNode with all its children.
-	 * Method implements PrintVisitor.PrintRulesI.
-	 */
-	public void append(Node node,PrintVisitor pv) throws ParseException
-	{
-		curEle = 0;
-		bufferAppend((MatrixNodeI) node,pv,0);
-	}
-
 }
