@@ -159,6 +159,30 @@ public class Complex
 	}
 	
 	/**
+	 * Returns <tt>true</tt> if either the real or imaginary component of this
+	 * <tt>Complex</tt> is an infinite value.
+	 *
+	 * <p>
+	 * @return  <tt>true</tt> if either component of the <tt>Complex</tt> object is infinite; <tt>false</tt>, otherwise.
+	 * <p>
+	 **/
+	public boolean isInfinite() {
+		return (Double.isInfinite(re) || Double.isInfinite(im));
+	}
+
+	/**
+	 * Returns <tt>true</tt> if either the real or imaginary component of this
+	 * <tt>Complex</tt> is a Not-a-Number (<tt>NaN</tt>) value.
+	 *
+	 * <p>
+	 * @return  <tt>true</tt> if either component of the <tt>Complex</tt> object is <tt>NaN</tt>; <tt>false</tt>, otherwise.
+	 * <p>
+	 **/
+	public boolean isNaN() {
+		return (Double.isNaN(re) || Double.isNaN(im));
+	}
+	
+	/**
 	 * Returns the absolute value of the complex number.
 	 * <p>
 	 * Adapted from Numerical Recipes in C -
