@@ -108,7 +108,6 @@
 			   includes="org/nfunk/**"
 		       destdir="${build}"
 		       classpath="${classpath}"/>
-		
 	</target>
 
 
@@ -120,7 +119,8 @@
 		<javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
 				sourcepath="src"
 				destdir="doc/javadoc"
-				windowtitle="JEP API">
+				windowtitle="JEP API"
+				breakiterator="yes">
 			<bottom><![CDATA[<A HREF=\"http://www.singularsys.com/jep\" TARGET=\"_blank\">http://www.singularsys.com/jep</A> Copyright &#169; 2004 Singular Systems]]></bottom>
 		</javadoc>
 	</target>
