@@ -482,6 +482,15 @@ public class JEP {
 		return symTab;
 	}
 
+	/**
+	 * Returns the function table (the list of all functions that the parser
+	 * recognises).
+	 * @return The function table
+	 */
+	public FunctionTable getFunctionTable() {
+			return funTab;
+	}
+
 
 	/**
 	 * Returns the number factory.
