@@ -48,13 +48,17 @@ public class GraphCanvas extends Canvas {
 	private void initParser(String initialExpression) {
 		// Init Parser
 		myParser = new JEP();
+		
+		// Allow implicit multiplication
+		myParser.setImplicitMul(true);
 
 		// Load the standard functions
 		myParser.addStandardFunctions();
 
-		// Load the standard Constants
+		// Load the standard constants, and complex variables/functions
 		myParser.addStandardConstants();
 		myParser.addComplex();
+		
 		// Add and initialize x to 0
 		myParser.addVariable("x",0);
 

@@ -1,6 +1,7 @@
 /*
+HTML code for applet:
 <applet code="org.nfunk.jepexamples.FunctionPlotter" width=300 height=320>
-<param name=initialExpression value="cos(x/70)*sin(x/3)*100">
+<param name=initialExpression value="100 sin(x/3) cos(x/70)">
 </applet>
 */
 
