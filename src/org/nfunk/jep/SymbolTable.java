@@ -173,7 +173,7 @@ public class SymbolTable extends Hashtable
 		for(Enumeration e = this.elements(); e.hasMoreElements(); ) 
 		{
 			Variable var = (Variable) e.nextElement();
-			if(!var.isConstant()) var.setValidValue(false);
+			var.setValidValue(false);
 		}
 	}
 	/**

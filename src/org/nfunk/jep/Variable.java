@@ -60,7 +60,8 @@ public class Variable extends Observable {
 	/** Is the value of this variable valid? **/
 	public boolean hasValidValue() { return validValue; }
 	/** Sets whether the value of variable is valid. **/
-	public void setValidValue(boolean val) { validValue = val; }
+	public void setValidValue(boolean val) {
+		if(isConstant()) return; validValue = val; }
 
 	/**
 	 * Sets the value of the variable. Constant values cannot be changed.
