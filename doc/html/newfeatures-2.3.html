@@ -60,6 +60,10 @@
       <td valign="top">Changes to ways <a href="#VAR">variables</a> are implemented.</td>
       <td valign="top"><a href="../javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep.*</a></td>
     </tr>
+    <tr> 
+      <td valign="top"><a href="#LISTEN">Observers</a> can detect changes in variables and new variable creation.</td>
+      <td valign="top"><a href="../javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep.*</a></td>
+    </tr>
     </tbody> 
   </table>
   <br>
@@ -108,6 +112,8 @@
       x + i y.</li>
     <li><tt>polar(r,theta)</tt> converts a radius and argument to a complex number 
       z = r * e^(i theta).</li>
+   <li><tt>binom(n,i)</tt> calculates binomial coefficients = n! / ( i! (n-i)! )</li>
+   <li><tt>conj(z)</tt> the complex conjugate of a complex number</li>
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -131,6 +137,45 @@
   <p>Variables can be constants which cannot have their values changed. To add 
     a new constant use <a href="../javadoc/org/nfunk/jep/JEP.html#addConstant(java.lang.String, java.lang.Object)">addConstant</a> 
     to add a mutable variable use&nbsp;<a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)">addVariable</a>.</p>
+
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><h2><a name="LISTEN"></a>Observers for variables</h2>
+<p>
+Both SymbolTable and Variable implement the Observer/Observable pattern.
+This allows objects to be informed whenever a new variable is created
+or when its value has been changed.
+An example of use is
+<pre>
+public class MyObserver implements Observer
+{
+    public void initialise()
+    {
+        SymbolTable st = j.getSymbolTable();
+        st.addObserver(this);
+        st.addObserverToExistingVariables(this);
+    }
+
+    public void update(Observable arg0, Object arg1)
+    {
+        if(arg0 instanceof Variable)
+            println("Var changed: "+arg0);
+        else if(arg0 instanceof SymbolTable.StObservable)
+        {
+            println("New var: "+arg1);
+
+            // This line is vital to ensure that 
+            // any new variable created will be observed. 
+            ((Variable) arg1).addObserver(this);
+        }
+    }
+}
+</pre>
+
   <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top" border="0"></a></td>

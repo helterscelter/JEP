@@ -243,7 +243,7 @@ public class XJep extends JEP {
 	 * Finds all the variables in an equation.
 	 * 
 	 * @param n the top node of the expression
-	 * @param v a vector to store the list of variables 
+	 * @param v a vector to store the list of variables (new variables will be added on end) 
 	 * @return v
 	 */
 	public Vector getVarsInEquation(Node n,Vector v) {

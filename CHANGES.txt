@@ -1,5 +1,24 @@
 == org.nfunk.* =======================================================
-Feb 13 04 rjm - Added binom, conj functions.
+
+Apr 01 05 rjm - Variable: Fixed setting validValue for constants.
+			Passes value to observers on setValue.
+			
+Apr 01 05 rjm - SymbolTable can now have observes passed to it.
+			Added a clearNoConstants method.
+			
+Apr 01 05 rjm - Changed behaviour on errors. Removed references to
+			Error list in EvaluationVisitor. ParseExceptions are thrown instead.
+			
+			getValueAsObject() traps all errors including RuntimeExceptions.			
+			evaluate() now only throws ParseException.
+
+Apr 01 05 rjm - trapNulls flag in evaluation visitor. Switchable to trap null nulles or not.
+
+Apr 01 05 rjm - Jep copy constructor fixed.
+
+Apr 01 05 rjm - If now works with Numbers
+	
+Feb 13 05 rjm - Added binom, conj functions.
 
 Dec 19 njf - figured out documentation linking issues. Leaving docs as they were
              before Nov 1 (no frames, javadoc at /doc/javadoc)
@@ -69,7 +88,14 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
-Feb 13 04 rjm - added len() and size() functions
+Apr 01 05 rjm - MVector, Matrix, Tensor no longer extend number.
+
+Apr 01 05 rjm - Added det(), trace(), vsum(), trans(), getDiag(), diag(), id(),
+	GenMat, Map function to vectorJep. Need to check diff and matrixJep functionality.
+
+Apr 01 05 rjm - added SpecialPreprocessorI interface for matrixJep functions.
+
+Feb 13 05 rjm - added len() and size() functions
 		   - added Scaler.getInstance() and Vector.getInstance() methods.
 		   
 Dec 21 rjm - xjep.PrintVisitor can now work with three or more arguments to + and *.

@@ -26,8 +26,8 @@
     <li><a href="index.html">DJEP</a></li>
     <li><a href="XJep.html">XJep</a></li>
     <li><a href="DJep.html">Differentiation</a></li>
-    <li><a href="groups.html">Groups</a></li>
     <li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="groups.html">Groups</a></li>
     <li><a href="version.html">Version History</a></li>
   </ul>
 </div>
@@ -36,6 +36,36 @@
 <div id="centercontent">
 <!-- #BeginEditable "Text" --> 
   <h1><a name="top"></a>DJep Version History</h1>
+  
+  <h2>April 05</h2>
+  <h3>New Features</h3>
+  <ul>
+  <li><b>Simplification:</b> 
+  A new package org.lsmp.djep.sjep has a more advanced simplification
+  algorithm. This will collect terms with the same powers so <code>3x+x^2+4x+x^2</code>
+  is transformed to <code>7x+2x^2</code>. Full expansion of polynomials
+  is also available so <code>(1+x)^3</code> it transformed to <code>1+3x+3x^2+x^3</code>.
+  </li>
+  <li><b>Fast Evaluation:</b>
+  Two new classes in the org.lsmp.djep.rpe package peform faster
+  evaluation over the reals. The speed up can be between four and ten times
+  faster. One of the classes RpEval works with singled valued functions
+  and the other MRpEval works with vectors and matrices optimised for 2,3, and four dimensions.
+  </li>
+  <li><b>New Functions:</b> Several new functions have been added, 
+  including standard vector and matrix operations and wrappers around the
+  JAMA matrix algorithms which can solve matrix equations.
+  </li>
+  </ul>
+  <h2>Minor Improvments</h2>
+  <ul>
+  <li>Evaluator now swithchable to allow null variable values.</li>
+  <li>SymbolTable can now tell java.util.observers when new variables are created.</li>
+  <li>Reworked Console aplications to make them easily extendable.</li>
+  <li>Rewrite Visitor can allow arbitary term rewriting rules.</li>
+  <li>XJep has methods to find the variables in an equation.</li>
+  </ul>
+  <h3>Bug Fixes</h3>
   <h2>Version 2.3.0 release</h2>
   <p>No major changes were made for the release.</p>
   <h2>Version 2.3.0 beta 1 - 12 April 2004 (formerly known as 2.3.2 beta)<br>
