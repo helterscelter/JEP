@@ -32,22 +32,21 @@ public class ThreadTest {
 	 */
 	public void evaluate() {
 		for (int i = 0; i < 10; i++) {
-            org.nfunk.jep.JEP myParser = new org.nfunk.jep.JEP();
-            String fooValue = null;
-            Math.random();
-            
-            if (Math.random()> 0.5) {
-                fooValue="NLS";
-            } else {
-                fooValue="NLT";
-            }
-            
-            myParser.addVariableAsObject("foo",fooValue);
-            myParser.parseExpression("foo==\""+fooValue + "\"");
-            
-            //
-            if (myParser.getValue() < 1.0)
-                System.out.println("ERROR");
-        }
-    }
+			org.nfunk.jep.JEP myParser = new org.nfunk.jep.JEP();
+			String fooValue = null;
+			Math.random();
+
+			if (Math.random()> 0.5) {
+				fooValue="NLS";
+			} else {
+				fooValue="NLT";
+			}
+
+			myParser.addVariableAsObject("foo",fooValue);
+			myParser.parseExpression("foo==\""+fooValue + "\"");
+
+			if (myParser.getValue() < 1.0)
+				System.out.println("ERROR");
+		}
+	}
 }
