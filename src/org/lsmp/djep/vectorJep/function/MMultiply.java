@@ -90,6 +90,9 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 		else if(param1 instanceof MVector && param2 instanceof Matrix)
 			return mul((MVector) param1,(Matrix) param2);
 			
+		else if(param1 instanceof Matrix && param2 instanceof Matrix)
+			return mul((Matrix) param1,(Matrix) param2);
+			
 		else if(param1 instanceof MVector && param2 instanceof MVector)
 			return mul((MVector) param1,(MVector) param2);
 			

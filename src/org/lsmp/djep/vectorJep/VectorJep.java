@@ -36,6 +36,7 @@ public class VectorJep extends JEP {
 	public void addStandardFunctions()
 	{
 		super.addStandardFunctions();
+		super.addFunction("ele",new Ele());
 	}
 
 
