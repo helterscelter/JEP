@@ -1,5 +1,6 @@
 == Todo before v2.24 ================================================
  - add more JUnit tests
+ - change %dp0 to %dps0 in scripts
  - automatisize testing in ant script
  - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
  - replace @license_info@ with GPL info using replace task and loadfile
