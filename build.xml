@@ -38,6 +38,7 @@ javadoc/
 	<property name="disttemp"   value="disttemp"/>
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
+	<property name="bootclasspath" value="c:\jdk1.1.8\lib\classes.zip"/>
 
 	<taskdef name="jjtree" classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
 	<taskdef name="javacc" classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
@@ -81,7 +82,7 @@ javadoc/
 		       destdir="${build}"
 		       target="1.1">
 			<bootclasspath>
-				<pathelement path="c:\jdk1.1.8\lib\classes.zip"/>
+				<pathelement path="${bootclasspath}"/>
 			</bootclasspath>
 		</javac>
 	</target>
