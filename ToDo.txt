@@ -5,15 +5,27 @@
  x support for Number type
  x update javadoc on website
  x figure out way to distribute documentation with each version
- - change version in license
- - update Main page
- - add doc for loading custom NumberFactory
+ x update Main page
+ x add doc for loading custom NumberFactory
+ x change version in license
+ x Run all tests
+ x Update download page
+ x Update license
+ x Update documentation with new features
+ x Test web site in multiple browsers
+ x Run spell check on changed pages
+ - use "ant dist"
+ - upload distribution
+ - upload license pdf
  - upload new website
- - update links
- 
+ - Download package and test
+ - Add message on SourceForge list
+ - Update version number+ feature list from JARS, share*it,...
+ - Add CVS tag for version (e.g. v223)
 
 == Further todos ====================================================
  - automaticize web site uploading/cvs
+ - clean up javadoc so warnings are avoided during javadoc generation
  - add max(), min(), avg() methods
  - add user wish list to this file
  - add example for multiple arguments to the documentation
@@ -45,11 +57,21 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
 
 -- Mamala -----------------------------------------------------------
  - use <apply></apply> instead (content MathML?)
+ - allow download from JEP web site?
 
-
-
-== NumberFactory ====================================================
- - Creates Double objects from strings by default
- - Can be replaced with other Factory to create BigInt or BigDecimal for example
+== Release Check List ===============================================
+ - Run all tests
+ - use "ant dist"
+ - Update download page
+ - Update license
+ - Upload license pdf
+ - Update documentation with new features
+ - Add CVS tag for version (e.g. v223)
+ - Test web site in multiple browsers
+ - Upload new distribution file(s)
+ - Run spell check on changed pages
+ - Download package and test
+ - Add message on SourceForge list
+ - Update version number+ feature list from JARS, share*it,...
 
 == User Wish List ===================================================
