@@ -83,10 +83,12 @@ and partial derivatives (default: on). Hence
 diff(f(y),x) -&gt; diff(f,y)*diff(y,x) and the instructions for
 differentiating a function are specified by objects which implement the <a href="../../javadoc/org/lsmp/djep/djep/DiffRulesI.html">DiffRulesI </a>interface. A variety of different classes are provided in the <a href="../../javadoc/org/lsmp/djep/djep/diffRules/package-summary.html">org.lsmp.djep.djep.diffRules</a> package which allow specific rules to be created. A rule is added using the <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addDiffRule%28org.lsmp.djep.djep.DiffRulesI%29">addDiffRule</a> method and the standard rules are added using <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addStandardDiffRules%28%29">addStandardDiffRules</a>. For example<br>
       </p>
-      <pre>&nbsp;&nbsp;&nbsp; j.addDiffRule(new MacroDiffRules(j,"cos","-sin(x)"))</pre>
-      <p>adds the rule for differentiating cos which is specified by the
-string "-sin(x)". There are several other ways rules can be constructed
-which are discussed in the JavaDoc.<br>
+      
+  <pre>&nbsp;&nbsp;&nbsp; j.addDiffRule(new MacroDiffRules(j,"COs","-sin(x)"))</pre>
+      
+  <p>adds the rule for differentiating COs which is specified by the string "-sin(x)". 
+    There are several other ways rules can be constructed which are discussed 
+    in the JavaDoc.<br>
       </p>
       <p><br>
       </p>
