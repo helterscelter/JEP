@@ -34,7 +34,19 @@ public class PrintVisitor extends ErrorCatchingVisitor
   
   /** Creates a visitor to create and print string representations of an expression tree. **/
 
-  public PrintVisitor()  { }
+  public PrintVisitor()
+  {
+	this.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
+	{	public void append(Node node,PrintVisitor pv) throws ParseException
+		{	pv.append("[");
+			for(int i=0;i<node.jjtGetNumChildren();++i)
+			{
+				if(i>0) pv.append(",");
+				node.jjtGetChild(i).jjtAccept(pv, null);
+			}
+			pv.append("]");
+		}});
+  }
 
   
   /** Prints the tree decending from node with lots of brackets or specified stream. **/
@@ -260,7 +272,6 @@ private Object visitFun(ASTFunNode node)
 {
 	try
 	{
-		if(node.getName().equals("LIST")) return visitList(node);
 		sb.append(node.getName()+"(");
 		for(int i=0;i<node.jjtGetNumChildren();++i)
 		{
@@ -268,22 +279,6 @@ private Object visitFun(ASTFunNode node)
 			nodeAccept(node.jjtGetChild(i), null);
 		}
 		sb.append(")");
-	}
-	catch (ParseException e) { addToErrorList(e.getMessage()); }
-	return null;
-}
-
-private Object visitList(ASTFunNode node)
-{
-	try
-	{
-		sb.append("[");
-		for(int i=0;i<node.jjtGetNumChildren();++i)
-		{
-			if(i>0) sb.append(",");
-			nodeAccept(node.jjtGetChild(i),null);
-		}
-		sb.append("]");
 	}
 	catch (ParseException e) { addToErrorList(e.getMessage()); }
 	return null;

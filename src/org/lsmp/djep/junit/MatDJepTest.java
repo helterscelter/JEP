@@ -20,7 +20,7 @@ import org.lsmp.djep.matrixJep.nodeTypes.*;
  * Created on 19-Nov-2003
  */
 public class MatDJepTest extends TestCase {
-	MatrixDJep j;
+	MatrixJep j;
 	public static final boolean SHOW_BAD=false;
 	
 	public MatDJepTest(String name) {
@@ -37,7 +37,7 @@ public class MatDJepTest extends TestCase {
 	}	
 
 	protected void setUp() {
-		j = new MatrixDJep();
+		j = new MatrixJep();
 		j.addStandardConstants();
 		j.addStandardFunctions();
 		j.addComplex();
@@ -413,10 +413,10 @@ public class MatDJepTest extends TestCase {
 	public void testAssignDiff() throws ParseException
 	{
 		simplifyTestString("y=x^5","y=x^5.0");
-		simplifyTestString("z=diff(y,x)","z=dy/dx");
+		simplifyTestString("z=diff(y,x)","z=5.0*x^4.0");
 		Node n1 = ((DSymbolTable) j.getSymbolTable()).getPartialDeriv("y",new String[]{"x"}).getEquation();
 		myAssertEquals("dy/dx","5.0*x^4.0",j.toString(n1));
-		simplifyTestString("w=diff(z,x)","w=dz/dx");
+		simplifyTestString("w=diff(z,x)","w=20.0*x^3.0");
 		Node n2 = ((DSymbolTable) j.getSymbolTable()).getPartialDeriv("y",new String[]{"x","x"}).getEquation();
 		myAssertEquals("d^2y/dxdx","20.0*x^3.0",j.toString(n2));
 		j.getSymbolTable().clearValues();
@@ -439,7 +439,7 @@ public class MatDJepTest extends TestCase {
 		valueTest("y-z","[-4.0,0.0,1.0]");
 		j.getSymbolTable().clearValues();
 		simplifyTestString("y=[cos(x),sin(x)]","y=[cos(x),sin(x)]");
-		simplifyTestString("z=diff(y,x)","z=dy/dx");
+		simplifyTestString("z=diff(y,x)","z=[-sin(x),cos(x)]");
 		valueTest("y . y",1.0);
 		valueTest("y . z",0.0);
 		valueTest("z . z",1.0);

@@ -40,19 +40,8 @@ public class MatrixJep extends DJep {
 		Operator.OP_CROSS.setPFMC(new ExteriorProduct());
 		Operator.OP_ASSIGN.setPFMC(new Assignment());
 
-		pv.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
-		{	public void append(Node node,PrintVisitor pv) throws ParseException
-			{	pv.append("[");
-				for(int i=0;i<node.jjtGetNumChildren();++i)
-				{
-					if(i>0) pv.append(",");
-					node.jjtGetChild(i).jjtAccept(pv, null);
-				}
-				pv.append("]");
-			}});
 		pv.addSpecialRule(MatrixOperatorSet.TENSOR,(PrintVisitor.PrintRulesI) MatrixOperatorSet.TENSOR.getPFMC());
 		dv.addDiffRule(new PassThroughDiffRule("TENSOR",MatrixOperatorSet.TENSOR.getPFMC()));
-		
 	}
 
 	public void addStandardFunctions()
