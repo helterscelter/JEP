@@ -570,11 +570,7 @@ public class DJepTest extends TestCase {
 		taylorParser.setImplicitMul(true);    
 		taylorParser.addStandardDiffRules();
 		taylorParser.getPrintVisitor().setMaxLen(80);
-		Node node=null,
-					diff=null,
-					simp=null,
-					processed=null;
-        
+       
 		taylorParser.addVariable("x", 0);
 		RewriteVisitor ev = new RewriteVisitor();
 		RewriteRuleI expand = new ExpandBrackets(taylorParser);
@@ -608,15 +604,10 @@ public class DJepTest extends TestCase {
 		taylorParser.setAllowAssignment(true);    
 		taylorParser.setImplicitMul(true);    
 		taylorParser.addStandardDiffRules();
-		Node node=null,
-					diff=null,
-					simp=null,
-					processed=null;
-        
+       
 		taylorParser.addVariable("x", 0);
-		
 		try {
-			node = taylorParser.parse("diff(diff(diff(diff(diff(diff(diff(diff(ln(x+1),x),x),x),x),x),x),x),x)");
+			Node node = taylorParser.parse("diff(diff(diff(diff(diff(diff(diff(diff(ln(x+1),x),x),x),x),x),x),x),x)");
 //			processed = taylorParser.preprocess(node);
 //			simp = taylorParser.simplify(processed); 
 		}
@@ -638,6 +629,10 @@ public class DJepTest extends TestCase {
 			simplifyTest("(x/2)*3","x*1.5");
 			simplifyTest("diff(pow(x,y),x)","y*(pow(x,y-1))");
 			simplifyTest("diff(pow(x,y),y)","(ln(x)) (pow(x,y))");
+
+			DJep j2 = new DJep();			
+			j2.addStandardDiffRules();
+
 		}
 	}
 }

@@ -30,7 +30,7 @@ public class XJepTest extends TestCase {
 	public static void main(String args[]) {
 		// Create an instance of this class and analyse the file
 
-		TestSuite suite= new TestSuite(DJepTest.class);
+		TestSuite suite= new TestSuite(XJepTest.class);
 //		DJepTest jt = new DJepTest("DJepTest");
 //		jt.setUp();
 		suite.run(new TestResult());

@@ -181,6 +181,118 @@ private Object visitUnary(ASTFunNode node, Object data) throws ParseException
 	return data;
 }
 
+private boolean testLeft(XOperator top,Node lhs)
+{
+	if((mode & FULL_BRACKET)!= 0)
+	{
+		return true;
+	}
+	else if(lhs instanceof ASTFunNode && ((ASTFunNode) lhs).isOperator())
+	{
+		XOperator lhsop = (XOperator) ((ASTFunNode) lhs).getOperator();
+		if(top == lhsop)
+		{
+			if(top.getBinding() == XOperator.LEFT	// (1-2)-3 -> 1-2-3
+				&& top.isAssociative() )
+					return false;
+			else if(top.useBindingForPrint())
+					return false;
+			else
+					return true;				// (1=2)=3 -> (1=2)=3
+		}
+		else if(top.getPrecedence() == lhsop.getPrecedence())
+		{
+			if(lhsop.getBinding() == XOperator.LEFT && lhsop.isAssociative())
+					return false;
+			else if(lhsop.useBindingForPrint())
+					return false;
+			else	return true;
+		} 				// (1=2)=3 -> (1=2)=3
+			
+		else if(top.getPrecedence() > lhsop.getPrecedence()) // (1*2)+3
+					return false;
+		else
+					return true;
+	}
+	else
+		return false;
+
+}
+
+private boolean testMid(XOperator top,Node rhs)
+{
+	if((mode & FULL_BRACKET)!= 0)
+	{
+		return true;
+	}
+	else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
+	{
+		XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
+		if(top == rhsop)
+		{
+			return false;
+		}
+		else if(top.getPrecedence() == rhsop.getPrecedence())
+		{
+			return false;	// a+(b-c) -> a+b-c
+		}
+		else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
+					return false;
+		else
+					return true;
+	}
+	else
+		return false;
+}
+
+private boolean testRight(XOperator top,Node rhs)
+{
+	if((mode & FULL_BRACKET)!= 0)
+	{
+		return true;
+	}
+	else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
+	{
+		XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
+		if(top == rhsop)
+		{
+			if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
+				|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
+					return false;
+			else
+					return true;				// 1-(2+3) -> 1-(2-3)
+		}
+		else if(top.getPrecedence() == rhsop.getPrecedence())
+		{
+			if(top.getBinding() == XOperator.LEFT && top.isAssociative() )			// 1+(2-3) -> 1+2-3)
+				return false;	// a+(b-c) -> a+b-c
+			else
+				return true;		// a-(b+c) -> a-(b+c)
+		}
+		else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
+					return false;
+		else
+					return true;
+	}
+	else
+		return false;
+}
+
+private Object visitNaryBinary(ASTFunNode node,XOperator op) throws ParseException
+{
+	int n = node.jjtGetNumChildren();
+	for(int i=0;i<n;++i)
+	{
+		if(i>0) sb.append(op.getSymbol());
+		
+		Node arg = node.jjtGetChild(i);
+		if(testMid(op,arg))
+			printBrackets(arg);
+		else
+			printNoBrackets(arg);
+	}
+	return null;
+}
 public Object visit(ASTFunNode node, Object data) throws ParseException
 {
 	if(!node.isOperator()) return visitFun(node);
@@ -212,43 +324,17 @@ public Object visit(ASTFunNode node, Object data) throws ParseException
 		
 	if(((XOperator) node.getOperator()).isUnary())
 		return visitUnary(node,data);
+
 	if(((XOperator) node.getOperator()).isBinary())
 	{
+		XOperator top = (XOperator) node.getOperator();
+		if(node.jjtGetNumChildren()!=2)
+			return visitNaryBinary(node,top);
 		Node lhs = node.jjtGetChild(0);
 		Node rhs = node.jjtGetChild(1);
-		XOperator top = (XOperator) node.getOperator();
 	
-		if((mode & FULL_BRACKET)!= 0)
-		{
+		if(testLeft(top,lhs))
 			printBrackets(lhs);
-		}
-		else if(lhs instanceof ASTFunNode && ((ASTFunNode) lhs).isOperator())
-		{
-			XOperator lhsop = (XOperator) ((ASTFunNode) lhs).getOperator();
-			if(top == lhsop)
-			{
-				if(top.getBinding() == XOperator.LEFT	// (1-2)-3 -> 1-2-3
-					&& top.isAssociative() )
-						printNoBrackets(lhs);
-				else if(top.useBindingForPrint())
-						printNoBrackets(lhs);
-				else
-						printBrackets(lhs);				// (1=2)=3 -> (1=2)=3
-			}
-			else if(top.getPrecedence() == lhsop.getPrecedence())
-			{
-				if(lhsop.getBinding() == XOperator.LEFT && lhsop.isAssociative())
-						printNoBrackets(lhs);
-				else if(lhsop.useBindingForPrint())
-						printNoBrackets(lhs);
-				else	printBrackets(lhs);
-			} 				// (1=2)=3 -> (1=2)=3
-			
-			else if(top.getPrecedence() > lhsop.getPrecedence()) // (1*2)+3
-						printNoBrackets(lhs);
-			else
-						printBrackets(lhs);
-		}
 		else
 			printNoBrackets(lhs);
 		
@@ -256,35 +342,11 @@ public Object visit(ASTFunNode node, Object data) throws ParseException
 		sb.append(node.getOperator().getSymbol());
 		// now the rhs
 
-		if((mode & FULL_BRACKET)!= 0)
-		{
+		if(testRight(top,rhs))
 			printBrackets(rhs);
-		}
-		else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
-		{
-			XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
-			if(top == rhsop)
-			{
-				if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
-					|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
-						printNoBrackets(rhs);
-				else
-						printBrackets(rhs);				// 1-(2+3) -> 1-(2-3)
-			}
-			else if(top.getPrecedence() == rhsop.getPrecedence())
-			{
-				if(top.getBinding() == XOperator.LEFT && top.isAssociative() )			// 1+(2-3) -> 1+2-3)
-					printNoBrackets(rhs);	// a+(b-c) -> a+b-c
-				else
-					printBrackets(rhs);		// a-(b+c) -> a-(b+c)
-			}
-			else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
-						printNoBrackets(rhs);
-			else
-						printBrackets(rhs);
-		}
 		else
 			printNoBrackets(rhs);
+
 	}
 	return null;
 }
