@@ -55,7 +55,7 @@ public class JEP {
 	protected Vector errorList;
 	
 	/** The parser object */
-	protected ParserI parser;
+	protected Parser parser;
 	
 	/** Node at the top of the parse tree */
 	private Node topNode;
@@ -128,24 +128,23 @@ public class JEP {
 		parseExpression("");		
 	}
 
-	/** This constructor suppresses the construction
-	 * of the default componants. Sub classes can call this 
+	/** This constructor copies the SymbolTable and other componants of the arguments to the new instance.
+	 * Sub classes can call this 
 	 * protected constructor and set the individual components
 	 * themselves.
 	 */
 	protected JEP(JEP j)
 	{
-		topNode = null;
-		traverse = j.traverse;
-		allowUndeclared = j.allowUndeclared;
-		allowAssignment  = j.allowAssignment;
-		implicitMul = j.implicitMul;
+		this.topNode = null;
+		this.traverse = j.traverse;
+		this.allowUndeclared = j.allowUndeclared;
+		this.allowAssignment  = j.allowAssignment;
+		this.implicitMul = j.implicitMul;
 		this.ev =j.ev;
 		this.funTab=j.funTab;
 		this.numberFactory=j.numberFactory;
 		this.parser=j.parser;
 		this.symTab=j.symTab;
-		this.traverse=j.traverse;
 	}
 
 	/**
@@ -220,7 +219,7 @@ public class JEP {
 	 * (0,1). Two functions re() and im() are also added for extracting the
 	 * real or imaginary components of a complex number respectively.
 	 *<p>
-	 *RJM addition The functions cmod and arg are added to get the modulus and argument. 
+	 * @since 2.3.0 The functions cmod and arg are added to get the modulus and argument. 
 	 */
 	public void addComplex() {
 		//add constants to Symbol Table
@@ -259,6 +258,13 @@ public class JEP {
 		return object;
 	}
 
+	/** Adds a constant.
+	 * This is a variable whos value cannot be changed.
+	 * @since 2.3.0.1
+	 */
+	public void addConstant(String name,Object value) {
+		symTab.addConstant(name, value);
+	}
 	/**
 	 * Adds a new complex variable to the parser, or updates the value of an
 	 * existing variable. This must be done before parsing
@@ -299,19 +305,32 @@ public class JEP {
 	public Object removeVariable(String name) {
 		return symTab.remove(name);
 	}
-	/** returns the value of the varible with given name. 
-	 * Added RJM Feb 04 */
+	/** 
+	 * Returns the value of the varible with given name.
+	 * @param name name of the variable.
+	 * @return the current value of the variable.
+	 * @since 2.3.0
+	 */
 	public Object getVarValue(String name) {
 		return symTab.getVar(name).getValue();
 	}
-	/** set the value of a variable.
-	 * Returns false if variable does not exist or if its value cannot be changed. 
-	 * Added RJM Feb 04 */
+	/** 
+	 * Sets the value of a variable.
+	 * Returns false if variable does not exist or if its value cannot be changed.
+	 * @param name name of the variable.
+	 * @param val the initial value of the variable.
+	 * @return false if  variable does not exist or if its value cannot be changed.
+	 * @since 2.3.0 
+	 */
 	public boolean setVarValue(String name,Object val) {
 		return symTab.setVarValue(name,val);
 	}
-	/** get the object represeing the variable 
-	 * Added RJM Feb 04 */
+	/** 
+	 * Gets the object representing the variable with a given name. 
+	 * @param name the name of the variable to find.
+	 * @return the Variable object or null if name not found.
+	 * @since 2.3.0
+	 */
 	public Variable getVar(String name) {
 		return symTab.getVar(name);
 	}
@@ -375,10 +394,13 @@ public class JEP {
 	
 	/**
 	 * Whether assignment equation <tt>y=x+1</tt> equations are allowed.
-	 * Added by RJM Nov 03.
+	 * @since 2.3.0
 	 */
 	public boolean getAllowAssignment() { return allowAssignment; }
 
+	/** Sets wheter assignment equations like <tt>y=x+1</tt> are allowed.
+	 * @since 2.3.0
+	 */ 
 	public void setAllowAssignment(boolean value) {
 		allowAssignment = value;
 	}
@@ -441,10 +463,10 @@ public class JEP {
 	 * Does not set the topNode variable of the JEP instance.
 	 * This method should generally be used with the {@link #evaluate evaluate}
 	 * method rather than getValueAsObject.
-	 * Added by RJM Oct 03.
 	 * @param expression represeded as a string.
 	 * @return The top node of an tree representing the parsed expression.
 	 * @throws ParseException
+	 * @since 2.3.0
 	 */
 	public Node parse(String expression) throws ParseException
 	{
@@ -458,10 +480,10 @@ public class JEP {
 	 * rather than the topNode of the JEP instance.
 	 * It should be used in conjunction with {@link #parse parse}
 	 * rather than {@link #parseExpression parseExpression}.
-	 * Added by RJM Feb 04.
 	 * @param node the top node of the tree representing the expression.
 	 * @return The value of the expression
 	 * @throws Exception if for some reason the expression could not be evaluated
+	 * @since 2.3.0
 	 */
 	public Object evaluate(Node node) throws Exception
 	{
@@ -600,6 +622,7 @@ public class JEP {
 
 	/**
 	 * Returns the number factory.
+	 * @return the NumberFactory used by this JEP instance.
 	 */
 	public NumberFactory getNumberFactory() {
 		return numberFactory;
@@ -607,10 +630,19 @@ public class JEP {
 
 	/**
 	 * Returns the operator set.
+	 * @return the OperatorSet used by this JEP instance.
+	 * @since 2.3.0
 	 */
 	public OperatorSet getOperatorSet() {
 		return opSet;
 	}
+
+	/**
+	 * Returns the parse object.
+	 * @return the Parse used by this JEP.
+	 * @since 2.3.0.1
+	 */
+	public Parser getParser() {return parser;	}
 //------------------------------------------------------------------------
 // Old code
 
@@ -636,6 +668,5 @@ public class JEP {
 			return 0;
 	}
 */
-
 }
 
