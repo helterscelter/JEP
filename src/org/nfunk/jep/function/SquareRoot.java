@@ -56,8 +56,8 @@ public class SquareRoot extends PostfixMathCommand
 	 */
 	public Object sqrt(Object param) throws ParseException {
 		
-		if (param instanceof Double) {
-			double value = ((Double)param).doubleValue();
+		if (param instanceof Number) {
+			double value = ((Number)param).doubleValue();
 			
 			// a value less than 0 will produce a complex result
 			if (value < 0) {

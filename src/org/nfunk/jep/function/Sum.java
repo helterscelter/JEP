@@ -66,9 +66,9 @@ public class Sum extends PostfixMathCommand
         while (i < curNumberOfParameters) {
         	// get the parameter from the stack
             param = stack.pop();
-            if (param instanceof Double)   {
+            if (param instanceof Number)   {
                 // calculate the result
-                result += ((Double) param).doubleValue();
+                result += ((Number) param).doubleValue();
             } else {
                 throw new ParseException("Invalid parameter type");
             }

@@ -50,9 +50,9 @@ public class TanH extends PostfixMathCommand
 	public Object tanh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			double value = ((Double)param).doubleValue();
+			double value = ((Number)param).doubleValue();
 			return new Double((Math.exp(value)-Math.exp(-value))/(Math.pow(Math.E,value)+Math.pow(Math.E,-value)));
 		}
 		else if (param instanceof Complex)

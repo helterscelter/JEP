@@ -46,10 +46,10 @@ public class Modulus extends PostfixMathCommand
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
 		
-		if ((param1 instanceof Double) && (param2 instanceof Double))
+		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
-			double divisor = ((Double)param2).doubleValue();
-			double dividend = ((Double)param1).doubleValue();
+			double divisor = ((Number)param2).doubleValue();
+			double dividend = ((Number)param1).doubleValue();
 		
 			double result = dividend % divisor;
 	

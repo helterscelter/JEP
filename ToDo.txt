@@ -1,7 +1,9 @@
-
+== Web site todo ====================================================
+ - add "Added NumberFactory..."
+ - add Double -> Number?
 
 == v2.23 todos ======================================================
- - support for Number type
+ x support for Number type
  - update javadoc on website
  - add download of documentation for old versions
  - figure out way to distribute documentation with each version

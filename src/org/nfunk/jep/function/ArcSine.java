@@ -51,9 +51,9 @@ public class ArcSine extends PostfixMathCommand
 	public Object asin(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			return new Double(Math.asin(((Double)param).doubleValue()));
+			return new Double(Math.asin(((Number)param).doubleValue()));
 		}
 		else if (param instanceof Complex)
 		{

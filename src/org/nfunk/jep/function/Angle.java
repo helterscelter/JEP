@@ -46,10 +46,10 @@ public class Angle extends PostfixMathCommand
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
 		
-		if ((param1 instanceof Double) && (param2 instanceof Double))
+		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
-			double x = ((Double)param1).doubleValue();
-			double y = ((Double)param2).doubleValue();
+			double x = ((Number)param1).doubleValue();
+			double y = ((Number)param2).doubleValue();
 			inStack.push(new Double(Math.atan2(x, y)));//push the result on the inStack
 		}
 		else

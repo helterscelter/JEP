@@ -78,15 +78,24 @@ public class JEP {
 
 	/** Evaluator */
 	private EvaluatorVisitor ev;
+	
+	/** Number factory */
+	private NumberFactory numberFactory;
 
 	/**
-	 * Constructor; initializes all member variables.
+	 * Creates a new JEP instance with the default settings.
+	 * <p>
+	 * Traverse = false<br>
+	 * Allow undeclared variables = false<br>
+	 * Implicit multiplication = false<br>
+	 * Number Factory = DoubleNumberFactory
 	 */
 	public JEP() {
 		topNode = null;
 		traverse = false;
 		allowUndeclared = false;
 		implicitMul = false;
+		numberFactory = new DoubleNumberFactory();
 		initSymTab();
 		initFunTab();
 		errorList = new Vector();
@@ -97,6 +106,39 @@ public class JEP {
 		//e.g. No expression entered
 		parseExpression("");
 	}
+
+	/**
+	 * Creates a new JEP instance with custom settings. If the
+	 * numberFactory_in is null, the default number factory is used.
+	 * @param traverse_in The traverse option.
+	 * @param allowUndeclared_in The "allow undeclared variables" option.
+	 * @param implicitMul_in The implicit multiplication option.
+	 * @param numberFactory_in The number factory to be used.
+	 */
+	public JEP(boolean traverse_in,
+			   boolean allowUndeclared_in,
+			   boolean implicitMul_in,
+			   NumberFactory numberFactory_in) {
+		topNode = null;
+		traverse = traverse_in;
+		allowUndeclared = allowUndeclared_in;
+		implicitMul = implicitMul_in;
+		if (numberFactory_in == null) {
+			numberFactory = new DoubleNumberFactory();
+		} else {
+			numberFactory = numberFactory_in;
+		}
+		initSymTab();
+		initFunTab();
+		errorList = new Vector();
+		ev = new EvaluatorVisitor();
+		parser = new Parser(new StringReader(""));
+
+		//Ensure errors are reported for the initial expression
+		//e.g. No expression entered
+		parseExpression("");		
+	}
+
 
 	/**
 	 * Creates a new SymbolTable object as symTab.
@@ -457,6 +499,13 @@ public class JEP {
 		return symTab;
 	}
 
+
+	/**
+	 * Returns the number factory.
+	 */
+	public NumberFactory getNumberFactory() {
+		return numberFactory;
+	}
 //------------------------------------------------------------------------
 // Old code
 

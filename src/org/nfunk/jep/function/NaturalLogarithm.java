@@ -51,10 +51,10 @@ public class NaturalLogarithm extends PostfixMathCommand
 	public Object ln(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
 			// TODO: think about only returning Complex if param is <0
-			Complex temp = new Complex(((Double)param).doubleValue());
+			Complex temp = new Complex(((Number)param).doubleValue());
 			return temp.log();
 		}
 		else if (param instanceof Complex)

@@ -47,10 +47,10 @@ public class Imaginary extends PostfixMathCommand
 		return;
 	}
 	
-	public Double im(Object param)
+	public Number im(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
 			return new Double(0);
 		}

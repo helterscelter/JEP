@@ -51,19 +51,19 @@ public class Divide extends PostfixMathCommand
 	public Object div(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Double)
+		if (param1 instanceof Number)
 		{
-			if (param2 instanceof Double)
-				return div((Double)param1, (Double)param2);
+			if (param2 instanceof Number)
+				return div((Number)param1, (Number)param2);
 			else if (param2 instanceof Complex)
-				return div((Double)param1, (Complex)param2);
+				return div((Number)param1, (Complex)param2);
 			else if (param2 instanceof Vector)
-				return div((Double)param1, (Vector)param2);
+				return div((Number)param1, (Vector)param2);
 		}
 		else if (param1 instanceof Complex)
 		{
-			if (param2 instanceof Double)
-				return div((Complex)param1, (Double)param2);
+			if (param2 instanceof Number)
+				return div((Complex)param1, (Number)param2);
 			else if (param2 instanceof Complex)
 				return div((Complex)param1, (Complex)param2);
 			else if (param2 instanceof Vector)
@@ -71,8 +71,8 @@ public class Divide extends PostfixMathCommand
 		}
 		else if (param1 instanceof Vector)
 		{
-			if (param2 instanceof Double)
-				return div((Vector)param1, (Double)param2);
+			if (param2 instanceof Number)
+				return div((Vector)param1, (Number)param2);
 			else if (param2 instanceof Complex)
 				return div((Vector)param1, (Complex)param2);
 		}
@@ -81,7 +81,7 @@ public class Divide extends PostfixMathCommand
 	}
 
 
-	public Double div(Double d1, Double d2)
+	public Double div(Number d1, Number d2)
 	{
 		return new Double(d1.doubleValue() / d2.doubleValue());
 	}
@@ -91,34 +91,34 @@ public class Divide extends PostfixMathCommand
 		return c1.div(c2);
 	}
 	
-	public Complex div(Double d, Complex c)
+	public Complex div(Number d, Complex c)
 	{
 		Complex c1 = new Complex(d.doubleValue(), 0);
 
 		return c1.div(c);
 	}
 
-	public Complex div(Complex c, Double d)
+	public Complex div(Complex c, Number d)
 	{
 		return new Complex(c.re()/d.doubleValue(), c.im()/d.doubleValue());
 	}
 	
-	public Vector div(Vector v, Double d)
+	public Vector div(Vector v, Number d)
 	{
 		Vector result = new Vector();
 
 		for (int i=0; i<v.size(); i++)
-			result.addElement(div((Double)v.elementAt(i), d));
+			result.addElement(div((Number)v.elementAt(i), d));
 		
 		return result;
 	}
 	
-	public Vector div(Double d, Vector v)
+	public Vector div(Number d, Vector v)
 	{
 		Vector result = new Vector();
 
 		for (int i=0; i<v.size(); i++)
-			result.addElement(div(d, (Double)v.elementAt(i)));
+			result.addElement(div(d, (Number)v.elementAt(i)));
 		
 		return result;
 	}
@@ -128,7 +128,7 @@ public class Divide extends PostfixMathCommand
 		Vector result = new Vector();
 
 		for (int i=0; i<v.size(); i++)
-			result.addElement(div((Double)v.elementAt(i), c));
+			result.addElement(div((Number)v.elementAt(i), c));
 		
 		return result;
 	}
@@ -138,7 +138,7 @@ public class Divide extends PostfixMathCommand
 		Vector result = new Vector();
 
 		for (int i=0; i<v.size(); i++)
-			result.addElement(div(c, (Double)v.elementAt(i)));
+			result.addElement(div(c, (Number)v.elementAt(i)));
 		
 		return result;
 	}	

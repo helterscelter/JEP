@@ -50,12 +50,9 @@ public class Sine extends PostfixMathCommand
 	public Object sin(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
-		{
-			return new Double(Math.sin(((Double)param).doubleValue()));
-		}
-		else if (param instanceof Complex)
-		{
+		if (param instanceof Number) {
+			return new Double(Math.sin(((Number)param).doubleValue()));
+		} else if (param instanceof Complex) {
 			return ((Complex)param).sin();
 		}
 

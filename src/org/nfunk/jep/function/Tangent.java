@@ -50,9 +50,9 @@ public class Tangent extends PostfixMathCommand
 	public Object tan(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			return new Double(Math.tan(((Double)param).doubleValue()));
+			return new Double(Math.tan(((Number)param).doubleValue()));
 		}
 		else if (param instanceof Complex)
 		{

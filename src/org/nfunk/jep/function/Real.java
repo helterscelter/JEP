@@ -47,15 +47,10 @@ public class Real extends PostfixMathCommand
 		return;
 	}
 	
-	public Double re(Object param)
-		throws ParseException
-	{
-		if (param instanceof Double)
-		{
-			return ((Double)param);
-		}
-		else if (param instanceof Complex)
-		{
+	public Number re(Object param) throws ParseException {
+		if (param instanceof Number) {
+			return ((Number)param);
+		} else if (param instanceof Complex) {
 			return new Double(((Complex)param).re());
 		}
 

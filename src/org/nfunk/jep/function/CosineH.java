@@ -50,9 +50,9 @@ public class CosineH extends PostfixMathCommand
 	public Object cosh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			double value = ((Double)param).doubleValue();
+			double value = ((Number)param).doubleValue();
 			return new Double((Math.exp(value) + Math.exp(-value))/2);
 		}
 		else if (param instanceof Complex)

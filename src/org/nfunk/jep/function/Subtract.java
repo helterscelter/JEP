@@ -54,21 +54,21 @@ public class Subtract extends PostfixMathCommand
 	public Object sub(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Double)
+		if (param1 instanceof Number)
 		{
-			if (param2 instanceof Double)
+			if (param2 instanceof Number)
 			{
-				return sub((Double)param1, (Double)param2);
+				return sub((Number)param1, (Number)param2);
 			}
 			else if (param2 instanceof Complex)
 			{
-				return sub((Double)param1, (Complex)param2);
+				return sub((Number)param1, (Complex)param2);
 			}
 		} else if (param1 instanceof Complex)
 		{
-			if (param2 instanceof Double)
+			if (param2 instanceof Number)
 			{
-				return sub((Complex)param1, (Double)param2);
+				return sub((Complex)param1, (Number)param2);
 			}
 			else if (param2 instanceof Complex)
 			{
@@ -80,7 +80,7 @@ public class Subtract extends PostfixMathCommand
 	}
 	
 
-	public Double sub(Double d1, Double d2)
+	public Double sub(Number d1, Number d2)
 	{
 		return new Double(d1.doubleValue() - d2.doubleValue());
 	}
@@ -90,12 +90,12 @@ public class Subtract extends PostfixMathCommand
 		return new Complex(c1.re() - c2.re(), c1.im() - c2.im());
 	}
 	
-	public Complex sub(Complex c, Double d)
+	public Complex sub(Complex c, Number d)
 	{
 		return new Complex(c.re() - d.doubleValue(), c.im());
 	}
 
-	public Complex sub(Double d, Complex c)
+	public Complex sub(Number d, Complex c)
 	{
 		return new Complex(d.doubleValue() - c.re(), -c.im());
 	}

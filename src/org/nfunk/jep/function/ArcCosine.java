@@ -51,9 +51,9 @@ public class ArcCosine extends PostfixMathCommand
 	public Object acos(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			return new Double(Math.acos(((Double)param).doubleValue()));
+			return new Double(Math.acos(((Number)param).doubleValue()));
 		}
 		else if (param instanceof Complex)
 		{

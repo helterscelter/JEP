@@ -53,9 +53,9 @@ public class UMinus extends PostfixMathCommand
 	public Object umin(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			return new Double(-((Double)param).doubleValue());
+			return new Double(-((Number)param).doubleValue());
 		}
 		else if (param instanceof Complex)
 		{

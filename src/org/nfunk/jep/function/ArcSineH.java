@@ -50,9 +50,9 @@ public class ArcSineH extends PostfixMathCommand
 	public Object asinh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			Complex temp = new Complex(((Double)param).doubleValue(),0.0);
+			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
 			
 			return temp.asinh();
 		}

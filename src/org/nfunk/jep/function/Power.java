@@ -52,24 +52,16 @@ public class Power extends PostfixMathCommand
 	public Object power(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Double)
-		{
-			if (param2 instanceof Double)
-			{
-				return power((Double)param1, (Double)param2);
+		if (param1 instanceof Number) {
+			if (param2 instanceof Number) {
+				return power((Number)param1, (Number)param2);
+			} else if (param2 instanceof Complex) {
+				return power((Number)param1, (Complex)param2);
 			}
-			else if (param2 instanceof Complex)
-			{
-				return power((Double)param1, (Complex)param2);
-			}
-		} else if (param1 instanceof Complex)
-		{
-			if (param2 instanceof Double)
-			{
-				return power((Complex)param1, (Double)param2);
-			}
-			else if (param2 instanceof Complex)
-			{
+		} else if (param1 instanceof Complex) {
+			if (param2 instanceof Number) {
+				return power((Complex)param1, (Number)param2);
+			} else if (param2 instanceof Complex) {
 				return power((Complex)param1, (Complex)param2);
 			}
 		}
@@ -78,7 +70,7 @@ public class Power extends PostfixMathCommand
 	}
 	
 
-	public Object power(Double d1, Double d2)
+	public Object power(Number d1, Number d2)
 	{
 		if (d1.doubleValue()<0 && d2.doubleValue() != d2.intValue())
 		{
@@ -99,7 +91,7 @@ public class Power extends PostfixMathCommand
 			return temp;
 	}
 	
-	public Object power(Complex c, Double d)
+	public Object power(Complex c, Number d)
 	{
 		Complex temp = c.power(d.doubleValue());
 		
@@ -109,7 +101,7 @@ public class Power extends PostfixMathCommand
 			return temp;
 	}
 
-	public Object power(Double d, Complex c)
+	public Object power(Number d, Complex c)
 	{
 		Complex base = new Complex(d.doubleValue(), 0.0);
 		Complex temp = base.power(c);

@@ -52,9 +52,9 @@ public class Logarithm extends PostfixMathCommand
 	public Object log(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			Complex temp = new Complex(((Double)param).doubleValue());
+			Complex temp = new Complex(((Number)param).doubleValue());
 			Complex temp2 = new Complex(Math.log(10),0);
 			return temp.log().div(temp2);
 		}
