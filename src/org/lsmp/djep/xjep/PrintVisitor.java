@@ -9,9 +9,11 @@
 package org.lsmp.djep.xjep;
 //import org.lsmp.djep.matrixParser.*;
 import org.nfunk.jep.*;
-
+import org.nfunk.jep.type.*;
 import java.io.PrintStream;
 import java.util.Hashtable;
+import java.text.NumberFormat;
+import java.text.FieldPosition;
 /**
  * Prints an expression.
  * Prints the expression with lots of brackets.
@@ -30,6 +32,8 @@ public class PrintVisitor extends ErrorCatchingVisitor
 {
   /** All brackets are printed. Removes all ambiguity. */
   public static final int FULL_BRACKET = 1;
+  /** Print Complex as 3+2 i */
+  public static final int COMPLEX_I = 2;
   private int maxLen = -1;
   protected StringBuffer sb;
   /** The current mode for printing. */
@@ -304,8 +308,25 @@ private Object visitFun(ASTFunNode node) throws ParseException
 	return data;
   }
 
+  private FieldPosition fp = new FieldPosition(NumberFormat.FRACTION_FIELD);
   public Object visit(ASTConstant node, Object data) {
-	sb.append(node.getValue());
+	Object val = node.getValue();
+	if(format != null)
+	{
+		if(val instanceof Number)
+			format.format(val,sb,fp);
+		else if(val instanceof Complex)
+		{
+			if((mode | COMPLEX_I) == COMPLEX_I)
+				sb.append(((Complex) val).toString(format,true));
+			else
+				sb.append(((Complex) val).toString(format));
+		}
+		else
+			sb.append(val);
+	}
+	else
+		sb.append(val);
 	return data;
   }
 	/**
@@ -330,7 +351,12 @@ private Object visitFun(ASTFunNode node) throws ParseException
 		else
 			this.mode ^= mode;
 	}
-
+	/** The NumberFormat object used to print numbers. */
+	protected NumberFormat format;
+	public void setNumberFormat(NumberFormat format)
+	{
+		this.format = format;
+	}
 /**
  * @return the maximum length printed per line
  */

@@ -43,7 +43,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 	protected boolean errorFlag;
 
 	/** Debug flag */
-	private static final boolean debug = false;
+	protected static final boolean debug = false;
 
 	/** Constructor. Initialize the stack member */
 	public EvaluatorVisitor() {
@@ -98,7 +98,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 
 		// evaluate by letting the top node accept the visitor
 		try {
-			topNode.jjtAccept(this, null);
+			nodeAccept(topNode, null);
 		} catch (ParseException e) {
 			this.addToErrorList(e.getMessage());
 			throw e;
@@ -112,6 +112,25 @@ public class EvaluatorVisitor implements ParserVisitor {
 
 		// return the value of the expression
 		return stack.pop();
+	}
+
+	/**
+	 * The following methods was used to facilitate 
+	 * using visitors which implemented a interface
+	 * which subclassed ParserVisitor.
+	 *  
+	 * If subclassed to extend to implement a different visitor
+	 * this method should be overwritten to ensure the correct 
+	 * accept method is called.
+	 * This method simply calls the jjtAccept(ParserVisitor this,Object data) of node.
+	 *
+	 * We no longer need this as we use ParseVisitor everywhere,
+	 * but kept for future reference.
+	 * 
+	*/
+	protected Object nodeAccept(Node node, Object data) throws ParseException
+	{
+		return node.jjtAccept(this,data);
 	}
 
 	/**

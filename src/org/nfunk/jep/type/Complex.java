@@ -9,6 +9,7 @@
 
 
 package  org.nfunk.jep.type;
+import java.text.NumberFormat;
 
 /**
  * Represents a complex number with double precision real and imaginary
@@ -192,7 +193,29 @@ public class Complex
 	public String toString() {
 		return "(" + re	+ ", " + im + ")";
 	}
+
+	public String toString(NumberFormat format)
+	{
+		return "(" + format.format(re) +", "+format.format(im)+")";	
+	}
 	
+	/** Prints using specified number format in format or "2" or "3 i"
+	 * or "(2+3 i)"  if flag is true
+	 * or "2+3 i" if flag is false
+	 */
+	
+	public String toString(NumberFormat format,boolean flag)
+	{
+		if(im == 0.0)
+			return format.format(re);
+		else if(re == 0.0)
+			return format.format(im)+" i)";	
+		else if(flag)
+			return "(" + format.format(re) +"+"+format.format(im)+" i)";	
+		else
+			return format.format(re) +"+"+format.format(im)+" i";	
+	}
+
 	/**
 	 * Returns <tt>true</tt> if either the real or imaginary component of this
 	 * <tt>Complex</tt> is an infinite value.

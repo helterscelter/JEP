@@ -23,6 +23,7 @@ import org.nfunk.jep.*;
  * Created on 20-Jun-2003
  * TODO cope with 'a - (-1) * b'
  * TODO cope with '0 - uminus(b)' 
+ * TODO cope with simplifying complex numbers
  */
 
 public class SimplificationVisitor extends DoNothingVisitor

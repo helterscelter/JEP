@@ -44,6 +44,8 @@ class VectorConsole {
 	boolean dumpTree = false;
 	/** whether to print symbol table after each line. **/
 	boolean dumpSymbols=false;
+
+	VectorJep j = new VectorJep();
 	
 	/** Constructor */
 	public VectorConsole() {
@@ -61,7 +63,6 @@ class VectorConsole {
 	/** The input loop */
 	public void run(String args[]) throws IOException {
 		String command="";
-		JEP j = new VectorJep();
 		j.addStandardConstants();
 		j.addStandardFunctions();
 		j.addComplex();
@@ -90,8 +91,9 @@ class VectorConsole {
 		{
 			// no arguments - interactive mode
 				
-			System.out.println("JEP - Enter q to quit");	
-			System.out.print(prompt);
+			System.out.println("JEP - Enter q to quit");
+			System.out.println("setEleMult: sets element by element mode for multiplication");	
+			System.out.println("setMatrixMult: sets matrix multiplication");	
 
 			while ((command = getCommand()) != null) 
 			{
@@ -129,7 +131,6 @@ class VectorConsole {
 */
 				}
 					
-				System.out.print(prompt);
 			}
 		}
 		
@@ -143,6 +144,7 @@ class VectorConsole {
 	private String getCommand() throws IOException {
 		String s;
 		
+		System.out.print(prompt);
 		if (br == null)
 			return null;
 
@@ -153,7 +155,17 @@ class VectorConsole {
 			|| s.equals("quit")
 			|| s.equals("exit"))
 			return null;
-		
+
+		if(s.startsWith("setEleMult"))
+		{
+			j.setElementMuliply(true);
+			return getCommand();
+		}
+		if(s.startsWith("setMatrixMult"))
+		{
+			j.setElementMuliply(false);
+			return getCommand();
+		}
 		return s;
 	}
 }

@@ -7,6 +7,7 @@
  */
 package org.lsmp.djep.vectorJep;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.*;
 import org.lsmp.djep.vectorJep.function.*;
 /**
  * @author Rich Morris
@@ -22,6 +23,7 @@ public class VOperatorSet extends OperatorSet {
 		OP_ADD.setPFMC(new MAdd());
 		OP_SUBTRACT.setPFMC(new MSubtract());
 		OP_MULTIPLY.setPFMC(new MMultiply());
+//		OP_MULTIPLY.setPFMC(new ElementMultiply());
 		OP_POWER.setPFMC(new MPower());
 		OP_UMINUS.setPFMC(new MUMinus());
 		OP_DOT.setPFMC(new MDot());
@@ -29,4 +31,22 @@ public class VOperatorSet extends OperatorSet {
 		OP_LIST.setPFMC(new VList());
 	}
 
+	/** When set the multiplication of vectors and matricies will be element by element.
+	 * Otherwise multiplication will be matrix multiplication (the default).
+	 * 
+	 * @param flag
+	 */
+	public void setElementMultiply(boolean flag)
+	{
+		if(flag)
+		{
+			OP_MULTIPLY.setPFMC(new ElementMultiply());
+			OP_DIVIDE.setPFMC(new ElementDivide());
+		}
+		else
+		{
+			OP_MULTIPLY.setPFMC(new MMultiply());
+			OP_DIVIDE.setPFMC(new Divide());
+		}
+	}
 }

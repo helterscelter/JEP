@@ -5,6 +5,7 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.xjep.rewriteRules.*;
+import java.text.NumberFormat;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -542,6 +543,29 @@ public class XJepTest extends TestCase {
 
 		j.getPrintVisitor().setMaxLen(80);
 		j.println(n2);		
+	}
+	
+	public void testPrint2() throws ParseException
+	{
+		NumberFormat format = NumberFormat.getInstance();
+		j.getPrintVisitor().setNumberFormat(format);
+		format.setMaximumFractionDigits(3);
+		format.setMinimumFractionDigits(0);
+		
+		String s1 = "[10,0,0.1,0.11,0.111,0.1111]";
+		String r1 = j.toString(j.parse(s1));
+		String s2 = "[0.9,0.99,0.999,0.9999]";
+		String r2 = j.toString(j.parse(s2));
+		this.myAssertEquals(s1,r1,"[10,0,0.1,0.11,0.111,0.111]");
+		this.myAssertEquals(s2,r2,"[0.9,0.99,0.999,1]");
+		
+		j.addComplex();
+		j.println(j.parse("[0,1,i,1+i]"));
+		j.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
+		j.println(j.simplify(j.parse("(2+i)+(1+i)")));
+		j.parseExpression("(2+i)+(1+i)");
+		Complex c = j.getComplexValue();
+		System.out.println(c.toString(format,true));
 	}
 
 	public void testBad() throws ParseException

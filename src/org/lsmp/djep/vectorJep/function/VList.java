@@ -16,6 +16,9 @@ import org.lsmp.djep.vectorJep.values.*;
 
 /**
  * A enhanced version of List, allows matricies and tensors.
+ * During evaluation this function converts lists of values into the appropriate 
+ * @link org.lsmp.djep.vectorJep.values.MatrixValueI MatrixValueI
+ * type.
  * 
  * @author Rich Morris
  * Created on 27-Nov-2003
