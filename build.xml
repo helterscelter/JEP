@@ -119,6 +119,7 @@
 		<javac srcdir="${src}"
 		       destdir="${build}"
 		       classpath="${classpath}"
+			   source="1.2"
 			   target="1.2"
 			   bootclasspath="${jdk1.2home}/jre/lib/rt.jar"/>
 	</target>
