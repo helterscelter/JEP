@@ -35,6 +35,7 @@ javadoc/
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
+	<property name="disttemp"   value="disttemp"/>
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
 
@@ -80,49 +81,6 @@ javadoc/
 	</target>
 
 
-<!-- DIST -->
-	<target name="dist" depends="compile">
-		<!-- Create the distribution directory -->
-		<mkdir dir="${dist}/lib"/>
-		
-		<!-- Put everything in ${build} into the jep-${DSTAMP}.jar file -->
-		<jar jarfile="${dist}/lib/jep-${version}.jar"
-		     basedir="${build}"
-		     includes="org/nfunk/jep/**"/>
-		
-		<!-- Examples jar -->
-		<jar jarfile="${dist}/lib/jep-examples-${version}.jar"
-		     basedir="${build}"
-		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
-
-		<!-- Create the source distribution zip file -->
-		<delete file="${dist}/jep-${DSTAMP}-src.zip"/>
-		<zip zipfile="${dist}/jep-${DSTAMP}-src.zip"
-		     basedir="${src}"
-		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"
-		     >
-		</zip>
-
-		<!-- Create the source distribution zip file -->
-		<delete file="${dist}/jep-${DSTAMP}-src.tar.gz"/>
-		<tar tarfile="${dist}/jep-${DSTAMP}-src.tar"
-		     basedir="${src}"
-		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"
-		     >
-		</tar>
-		<gzip zipfile="${dist}/jep-${DSTAMP}-src.tar.gz"
-		      src="${dist}/jep-${DSTAMP}-src.tar"/>
-		<delete file="${dist}/jep-${DSTAMP}-src.tar"/>
-	</target>
-
-
-<!-- CLEAN -->
-	<target name="clean">
-		<!-- Delete the ${build} and ${dist} directory trees -->
-		<delete dir="${build}"/>
-		<!--<delete dir="${dist}"/>-->
-	</target>
-
 <!-- JAVADOC -->
 	<target name="javadoc">
 		<mkdir dir="${doc}/javadoc"/>
@@ -133,6 +91,80 @@ javadoc/
 			<!--<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>-->
 		</javadoc>
 	</target>
+
+
+<!-- DIST -->
+	<target name="dist" depends="compile">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}"/>
+		
+		<!-- Put everything in ${build} into the jep-${DSTAMP}.jar file -->
+		<jar jarfile="${dist}/jep-${version}.jar"
+		     basedir="${build}"
+		     includes="org/nfunk/jep/**"/>
+		
+		<!-- Examples jar -->
+		<jar jarfile="${dist}/jep-${version}-withexamples.jar"
+		     basedir="${build}"
+		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
+		
+		<!-- Create a temp dir and copy all source+doc for archiving -->
+		<mkdir dir="${disttemp}"/>
+		<copy todir="${disttemp}">
+		      <fileset dir="."
+			       includes="src/org/nfunk/jep/**,src/org/nfunk/jepexamples/**"/>
+		</copy>
+		<copy todir="${disttemp}">
+		      <fileset dir="."
+			       includes="doc/**"/>
+		</copy>
+
+		<!-- documentation zip file -->
+		<delete file="${dist}/jep-${version}-doc.zip"/>
+		<zip zipfile="${dist}/jep-${version}-doc.zip"
+		     basedir="${disttemp}/doc"
+		     >
+		</zip>
+
+		<!-- documentation tar.gz file -->
+		<delete file="${dist}/jep-${version}-doc.tar.gz"/>
+		<tar tarfile="${dist}/jep-${version}-doc.tar"
+		     basedir="${disttemp}/doc"
+		     >
+		</tar>
+		<gzip zipfile="${dist}/jep-${version}-doc.tar.gz"
+		      src="${dist}/jep-${version}-doc.tar"/>
+
+		<!-- source zip file -->
+		<delete file="${dist}/jep-${version}-src.zip"/>
+		<zip zipfile="${dist}/jep-${version}-src.zip"
+		     basedir="${disttemp}"
+		     >
+		</zip>
+
+		<!-- source tar.gz file -->
+		<delete file="${dist}/jep-${version}-src.tar.gz"/>
+		<tar tarfile="${dist}/jep-${version}-src.tar"
+		     basedir="${disttemp}"
+		     >
+		</tar>
+		<gzip zipfile="${dist}/jep-${version}-src.tar.gz"
+		      src="${dist}/jep-${version}-src.tar"/>
+
+		<!-- clean up temporary files -->
+		<delete file="${dist}/jep-${version}-doc.tar"/>
+		<delete file="${dist}/jep-${version}-src.tar"/>
+		<delete dir="${disttemp}" />
+	</target>
+
+
+<!-- CLEAN -->
+	<target name="clean">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}"/>
+		<!--<delete dir="${dist}"/>-->
+	</target>
+
 
 <!-- EOLUNIX -->
 	<target name="eolunix">
