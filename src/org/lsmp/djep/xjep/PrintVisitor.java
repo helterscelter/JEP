@@ -28,8 +28,12 @@ import java.util.Hashtable;
  */
 public class PrintVisitor extends ErrorCatchingVisitor
 {
+  /** All brackets are printed. Removes all ambiguity. */
+  public static final int FULL_BRACKET = 1;
   protected StringBuffer sb;
-  private boolean fullBrackets=false;
+  /** The current mode for printing. */
+//  protected boolean fullBrackets=false;
+  protected int mode=0;
   private Hashtable specialRules = new Hashtable();
   
   /** Creates a visitor to create and print string representations of an expression tree. **/
@@ -190,21 +194,32 @@ public Object visit(ASTFunNode node, Object data) throws ParseException
 		Node rhs = node.jjtGetChild(1);
 		XOperator top = (XOperator) node.getOperator();
 	
-		if(fullBrackets)
+		if((mode & FULL_BRACKET)!= 0)
 		{
 			printBrackets(lhs);
 		}
 		else if(lhs instanceof ASTFunNode && ((ASTFunNode) lhs).isOperator())
 		{
 			XOperator lhsop = (XOperator) ((ASTFunNode) lhs).getOperator();
-			if(top.getPrecedence() == lhsop.getPrecedence())
+			if(top == lhsop)
 			{
 				if(top.getBinding() == XOperator.LEFT	// (1-2)-3 -> 1-2-3
-					|| top.isAssociative() )
+					&& top.isAssociative() )
+						printNoBrackets(lhs);
+				else if(top.useBindingForPrint())
 						printNoBrackets(lhs);
 				else
 						printBrackets(lhs);				// (1=2)=3 -> (1=2)=3
 			}
+			else if(top.getPrecedence() == lhsop.getPrecedence())
+			{
+				if(lhsop.getBinding() == XOperator.LEFT && lhsop.isAssociative())
+						printNoBrackets(lhs);
+				else if(lhsop.useBindingForPrint())
+						printNoBrackets(lhs);
+				else	printBrackets(lhs);
+			} 				// (1=2)=3 -> (1=2)=3
+			
 			else if(top.getPrecedence() > lhsop.getPrecedence()) // (1*2)+3
 						printNoBrackets(lhs);
 			else
@@ -217,20 +232,27 @@ public Object visit(ASTFunNode node, Object data) throws ParseException
 		sb.append(node.getOperator().getSymbol());
 		// now the rhs
 
-		if(fullBrackets)
+		if((mode & FULL_BRACKET)!= 0)
 		{
 			printBrackets(rhs);
 		}
 		else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
 		{
 			XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
-			if(top.getPrecedence() == rhsop.getPrecedence())
+			if(top == rhsop)
 			{
 				if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
 					|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
 						printNoBrackets(rhs);
 				else
 						printBrackets(rhs);				// 1-(2+3) -> 1-(2-3)
+			}
+			else if(top.getPrecedence() == rhsop.getPrecedence())
+			{
+				if(top.getBinding() == XOperator.LEFT && top.isAssociative() )			// 1+(2-3) -> 1+2-3)
+					printNoBrackets(rhs);	// a+(b-c) -> a+b-c
+				else
+					printBrackets(rhs);		// a-(b+c) -> a-(b+c)
 			}
 			else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
 						printNoBrackets(rhs);
@@ -266,23 +288,28 @@ private Object visitFun(ASTFunNode node) throws ParseException
 	sb.append(node.getValue());
 	return data;
   }
-/**
- * Is full bracket mode on?
- */
-public boolean isFullBrackets() {
-	return fullBrackets;
-}
-
-/**
- * Set full bracket mode.
- * In full bracket mode the brackets each element in the tree will be suronded
- * by brackets to indicate the tree structure. 
- * In the default mode, (full bracket off) the number of brackets is
- * minimised so (x+y)+z will be printed as x+y+z.
- */
-public void setFullBrackets(boolean b) {
-	fullBrackets = b;
-}
+	/**
+	 * Return the current print mode.
+	 */
+	public int getMode() {
+		return mode;
+	}
+	
+	/**
+	 * Set printing mode.
+	 * In full bracket mode the brackets each element in the tree will be suronded
+	 * by brackets to indicate the tree structure. 
+	 * In the default mode, (full bracket off) the number of brackets is
+	 * minimised so (x+y)+z will be printed as x+y+z.
+	 * @param mode which flags to change, typically FULL_BRACKET
+	 * @param flag whether to switch this mode on or off
+	 */
+	public void setMode(int mode,boolean flag) {
+		if(flag)
+			this.mode |= mode;
+		else
+			this.mode ^= mode;
+	}
 
 }
 

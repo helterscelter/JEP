@@ -10,7 +10,7 @@ import org.nfunk.jep.*;
 /**
  * Allows substution of a given variable with an expresion tree.
  * Substitution is best done using the 
- * {@link XJep#substitute XJep.sumstitute} method. 
+ * {@link XJep#substitute XJep.substitute} method. 
  * For example
  * <pre>
  * XJepI xjep = ...;

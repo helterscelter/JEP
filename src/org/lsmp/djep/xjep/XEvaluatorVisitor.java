@@ -36,7 +36,6 @@ public class XEvaluatorVisitor extends EvaluatorVisitor {
 //		stack = new Stack();
 	}
 
-
 	/**
 	 * Visit a variable node. The value of the variable is obtained from the
 	 * symbol table (symTab) and pushed onto the stack.

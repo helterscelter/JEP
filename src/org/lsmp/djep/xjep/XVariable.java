@@ -37,11 +37,11 @@ public class XVariable extends Variable {
 	/** get the equation */
 	public Node getEquation() { return equation; }
 	
-	/** Calculates the value for the variables equation and returns that value.  
-	 * if the value is valid then just return the value
-	 * otherwise calculate the value from the equation.
+	/**
+	 * Calculates the value for the variables equation and returns that value.  
+	 * 
 	 */
-	public Object findValue(XJep jep) throws Exception
+	public Object calcValue(XJep jep) throws Exception
 	{
 		if(equation == null ) return getValue();
 		Object val = jep.evaluate(equation);

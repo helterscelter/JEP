@@ -420,6 +420,11 @@ public class SimplificationVisitor extends DoNothingVisitor
 	{
 		boolean allConst=true;
 		XOperator op= (XOperator) node.getOperator();
+		// TODO a bit of a hack to prevent lists of constants being converted
+		// what happens is that for [[1,2],[3,4]] the dimension is not passed
+		// into buildConstantNode so list is treated as [1,2,3,4]
+		// Ideally there would be a special simplification rule for List 
+		if(op.getPFMC() instanceof org.nfunk.jep.function.List) return node;
 		int nchild=children.length;
 		for(int i=0;i<nchild;++i)
 		{

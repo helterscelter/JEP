@@ -86,9 +86,4 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 	{
 		throw new ParseException("Eval should not be called by Evaluator"); 
 	}
-
-	public Object evaluate(Node node,Node children[]) throws ParseException
-	{
-		throw new ParseException("Eval should not be called by Evaluator"); 
-	}
 }

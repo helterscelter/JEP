@@ -10,7 +10,8 @@ import org.nfunk.jep.*;
 
 /**
  * An OperatorSet where the operators have information about their commutativity etc.
- *  
+ * 
+ * @see XOperator
  * @author Rich Morris
  * Created on 26-Jul-2003
  */
@@ -24,12 +25,12 @@ public class XOperatorSet extends OperatorSet {
 	OP_GE     =  new XOperator(o.getGE(),XOperator.BINARY+XOperator.LEFT+XOperator.REFLEXIVE+XOperator.TRANSITIVE);
 	OP_NE     =  new XOperator(o.getNE(),XOperator.BINARY+XOperator.LEFT+XOperator.SYMMETRIC);
 
-	OP_AND    =  new XOperator(o.getAnd(),XOperator.BINARY+XOperator.LEFT+XOperator.COMMUTATIVE+XOperator.ASSOCIATIVE);
+	OP_AND    =  new XOperator(o.getAnd(),XOperator.BINARY+XOperator.LEFT+XOperator.COMMUTATIVE+XOperator.ASSOCIATIVE+XOperator.USE_BINDING_FOR_PRINT);
 	OP_OR     =  new XOperator(o.getOr(),XOperator.BINARY+XOperator.LEFT+XOperator.COMMUTATIVE+XOperator.ASSOCIATIVE);
 	OP_NOT    = new XOperator(o.getNot(),XOperator.UNARY+XOperator.RIGHT+XOperator.PREFIX+XOperator.SELF_INVERSE);
 
 	OP_ADD   =  new XOperator(o.getAdd(),XOperator.BINARY+XOperator.LEFT+XOperator.COMMUTATIVE+XOperator.ASSOCIATIVE);
-	OP_SUBTRACT  =  new XOperator(o.getSubtract(),XOperator.BINARY+XOperator.LEFT+XOperator.COMPOSITE);
+	OP_SUBTRACT  =  new XOperator(o.getSubtract(),XOperator.BINARY+XOperator.LEFT+XOperator.COMPOSITE+XOperator.USE_BINDING_FOR_PRINT);
 	OP_UMINUS =  new XOperator(o.getUMinus(),XOperator.UNARY+XOperator.RIGHT+XOperator.PREFIX+XOperator.SELF_INVERSE);
 
 	OP_MULTIPLY    =  new XOperator(o.getMultiply(),XOperator.BINARY+XOperator.LEFT+XOperator.COMMUTATIVE+XOperator.ASSOCIATIVE);
@@ -126,7 +127,9 @@ public class XOperatorSet extends OperatorSet {
 				((XOperator) precArray[i][j]).setPrecedence(i);
 	}
 	
-	
+	/** Prints all the opperators, with verbose representations of each operators properties. 
+	 * 
+	 */
 	public void printOperators()
 	{
 		Operator ops[] = getOperators();

@@ -64,7 +64,11 @@ public class XOperator extends Operator {
 	public static final int SELF_INVERSE=2048;
 	/** composite operators, like a-b which is a+(-b) **/
 	public static final int COMPOSITE=4096;
-		
+	/** For non commutative operators printing can be determined by the left or right binding. 
+	 *  For example (a-b)-c is printed as a-b-c. 
+	 *  But a/b/c could be ambiguous so (a/b)/c is printed with brackets.
+	 */	
+	public static final int USE_BINDING_FOR_PRINT=8192;
 	/** flags for type of operator */
 	private int flags;
 
@@ -126,6 +130,11 @@ public class XOperator extends Operator {
 	{
 		this(op.getName(),op.getSymbol(),op.getPFMC(),flags);
 	}
+	/** Creates a new XOperators with same flags and precedance as argument. */
+//	public XOperator(XOperator op,PostfixMathCommandI pfmc)
+//	{
+//		this(op.getName(),op.getSymbol(),op.getPFMC(),op.flags,op.precedence);
+//	}
 
 	/** precedence of operator, 0 is most tightly bound, so prec("*") < prec("+"). */
 	private int precedence = -1;
@@ -182,6 +191,7 @@ public class XOperator extends Operator {
 	public final boolean isSufix() {return ((flags & SUFIX) == SUFIX);	}
 	public final boolean isComposite() {return ((flags & COMPOSITE) == COMPOSITE);	}
 	public final boolean isSelfInverse() {return ((flags & SELF_INVERSE) == SELF_INVERSE);	}
+	public final boolean useBindingForPrint() {return ((flags & USE_BINDING_FOR_PRINT) == USE_BINDING_FOR_PRINT);	}
 
 	/** returns a verbose representation of the operator and all its properties. **/
 	

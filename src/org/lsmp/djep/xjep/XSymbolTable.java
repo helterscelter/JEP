@@ -10,8 +10,17 @@ package org.lsmp.djep.xjep;
 import java.util.*;
 import org.nfunk.jep.*;
 
+/**
+ * An extension of the symbol table with a few new features.
+ * 
+ * @author Rich Morris
+ * Created on 18-Mar-2004
+ */
 public class XSymbolTable extends SymbolTable
 {
+	/**
+	 * Create a new XSymbolTable with the given variable factory.
+	 */
 	public XSymbolTable(VariableFactory varFac)
 	{
 		super(varFac);
@@ -34,7 +43,7 @@ public class XSymbolTable extends SymbolTable
 		}
 	}	
 	
-	/** Copy the values of all constants from the supplied symbol table. */
+	/** Copy the values of all constants into this from the supplied symbol table. */
 	public void copyConstants(SymbolTable symTab)
 	{
 		for(Enumeration e = symTab.elements(); e.hasMoreElements(); ) 
@@ -44,5 +53,4 @@ public class XSymbolTable extends SymbolTable
 				this.addConstant(var.getName(),var.getValue());
 		}
 	}
-
 }

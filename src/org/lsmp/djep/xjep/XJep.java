@@ -8,8 +8,10 @@
 package org.lsmp.djep.xjep;
 
 import org.nfunk.jep.*;
+
 import java.util.*;
 import java.io.PrintStream;
+import java.io.Reader;
 /**
  * An extended version of JEP adds various routines for working with trees.
  * Has a NodeFactory, and OperatorSet, TreeUtils
@@ -29,15 +31,18 @@ public class XJep extends JEP {
 	protected PrintVisitor pv = null;
 	private VariableFactory vf = new XVariableFactory();
 
+	/**
+	 * Create a new XJep will all the function of JEP plus printing and other features.
+	 */
 	public XJep()
 	{
 		this.symTab = new XSymbolTable(vf); 
 
-		/** Creates new nodes */
+		/* Creates new nodes */
 		nf = new NodeFactory();
-		/** Collects operators **/
+		/* Collects operators **/
 		opSet = new XOperatorSet();
-		/** A few utility functions. */
+		/* A few utility functions. */
 		tu = new TreeUtils();
 		
 		copier = new DeepCopyVisitor();
@@ -64,16 +69,20 @@ public class XJep extends JEP {
 	}
 
 	private JEP ingrediant = null;
+	/** Conversion constructor.
+	 * Turns a JEP object into an XJep object.
+	 * @param j 
+	 */
 	public XJep(JEP j)
 	{
 		ingrediant=j;
-		/** Creates new nodes */
+		/* Creates new nodes */
 		nf = new NodeFactory();
 		this.symTab = new XSymbolTable(vf); 
 		this.funTab = j.getFunctionTable();
-		/** Collects operators **/
+		/* Collects operators **/
 		opSet = new XOperatorSet(j.getOperatorSet());
-		/** A few utility functions. */
+		/* A few utility functions. */
 		tu = new TreeUtils();
 		copier = new DeepCopyVisitor();
 		subv = new SubstitutionVisitor();
@@ -82,17 +91,26 @@ public class XJep extends JEP {
 		commandv = new CommandVisitor();
 		pv = new PrintVisitor();
 	}
+	/**
+	 * Creates a new instance of XJep with the same componants as this one.
+	 * Sub classes should overwrite this method to create objects of the correct type.
+	 */
 	public XJep newInstance()
 	{
 		XJep newJep = new XJep(this);
 		return newJep;
 	}
+	/**
+	 * Creates a new instance of XJep with the same componants as this one and the specified symbol table.
+	 * Sub classes should overwrite this method to create objects of the correct type.
+	 */
 	public XJep newInstance(SymbolTable st)
 	{
 		XJep newJep = new XJep(this);
 		newJep.symTab = st;
 		return newJep;
 	}
+
 	public void addStandardFunctions()
 	{
 		if(ingrediant!=null)
@@ -160,17 +178,64 @@ public class XJep extends JEP {
 	public void println(Node node,PrintStream out) { pv.println(node,out); }
 	/** Returns a string representation of a expresion tree. */
 	public String toString(Node node) { return pv.toString(node); }
-		
+	/** Returns the node factory, used for constructing trees of Nodes. */ 
 	public NodeFactory getNodeFactory() {return nf;}
+	/** Returns the TreeUtilitities, used for examining properties of nodes. */ 
 	public TreeUtils getTreeUtils() { return tu; }
 //	public SimplificationVisitor getSimpV() { return simpv; }
+	/** Returns the PrintVisitor, used for printing equations. */ 
 	public PrintVisitor getPrintVisitor() {	return pv;	}
 
-	public Object findVarValue(String name) throws Exception
+	/**
+	 * Calculates the value for the variables equation and returns that value.  
+	 * If the variable does not have an equation just return its value.
+	 */
+	public Object calcVarValue(String name) throws Exception
 	{
 		XVariable xvar = (XVariable) getVar(name);
-		return xvar.findValue(this);
+		return xvar.calcValue(this);
 	}
 
+	/**
+	 * Continue parsing without re-initilising the stream.
+	 * Allows renetrancy of parser so that strings like
+	 * "x=1; y=2; z=3;" can be parsed.
+	 * When a semi colon is encountered parsing finishes leaving the rest of the string unparsed.
+	 * Parsing can be resumed from the current position by using this method.
+	 * For example
+	 * <pre>
+	 * XJep j = new XJep();
+	 * j.restartParser("x=1;y=2; z=3;");
+	 * Node node;
+	 * try {
+	 * while((node = j.continueParsing())!=null) {
+	 *    j.println(node);
+	 * } }catch(ParseException e) {}
+	 * </pre>
+	 * @return top node of equation parsed to date or null if empty equation
+	 * @throws ParseException
+	 * @see #restartParser
+	 */
+	public Node continueParsing() throws ParseException {
+		return parser.continueParse();
+	}
+
+	/**
+	 * Restarts the parser with the given string.
+	 * @param str String containing a sequence of equations separated by semi-colons.
+	 * @see #continueParsing
+	 */
+	public void restartParser(String str) {
+		parser.restart(new java.io.StringReader(str), this);
+	}
+
+	/**
+	 * Restarts the parser with the given Reader.
+	 * @param reader Reader from which equations separated by semi-colons will be read.
+	 * @see #continueParsing
+	 */
+	public void restartParser(Reader reader) {
+		parser.restart(reader, this);
+	}
 
 }
