@@ -263,6 +263,15 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 		throw new ParseException("Sorry I don't know how to differentiate "+node+"\n");
 	}
 
+	public boolean isConstantVar(XVariable var) {
+		if(!var.hasEquation()) return true;
+		Node eqn = var.getEquation();
+		if(eqn instanceof ASTConstant) return true;
+		if(eqn instanceof ASTVarNode) {
+			return isConstantVar((XVariable)((ASTVarNode) eqn).getVar());
+		}
+		return false;
+	}
 	 /**
 	  * Differentiates a variable. 
 	  * May want to alter behaviour when using multi equation as diff(f,x)
@@ -271,44 +280,39 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 	  */
 	 public Object visit(ASTVarNode node, Object data) throws ParseException {
 	   String varName = (String) data;
-	   Variable var = node.getVar();
+	   XVariable var = (XVariable) node.getVar();
+	   PartialDerivative deriv=null;
 	   if(var instanceof DVariable)
 	   {
-		DVariable difvar = (DVariable) var;
-		if(varName.equals(var.getName()))
-			return nf.buildConstantNode(tu.getONE());
-		else if(difvar.hasEquation())
-		{
-			if(difvar.getEquation() instanceof ASTConstant)
-				return nf.buildConstantNode(tu.getZERO());
-			if(difvar.getEquation() instanceof ASTVarNode) {
-				XVariable tmp = (XVariable) ((ASTVarNode) difvar.getEquation()).getVar();
-				if(tmp.hasEquation() && tmp.getEquation() instanceof ASTConstant)
-					return nf.buildConstantNode(tu.getZERO());
-			}
-
-				PartialDerivative deriv = difvar.findDerivative(varName,localDJep);
-			return nf.buildVariableNode(deriv);
-		}
-		else
-			return nf.buildConstantNode(tu.getZERO());
+	   		DVariable difvar = (DVariable) var;
+	   		if(varName.equals(var.getName()))
+	   			return nf.buildConstantNode(tu.getONE());
+		
+	   		else if(isConstantVar(var))
+	   			return nf.buildConstantNode(tu.getZERO());
+			
+	   		deriv = difvar.findDerivative(varName,localDJep);
 	   }
-	   if(var instanceof PartialDerivative)
+	   else if(var instanceof PartialDerivative)
 	   {
+   			if(isConstantVar(var))
+   				return nf.buildConstantNode(tu.getZERO());
+		
 			PartialDerivative pvar = (PartialDerivative) var;
-			if(pvar.getEquation() instanceof ASTConstant)
-				return nf.buildConstantNode(tu.getZERO());
-			if(pvar.getEquation() instanceof ASTVarNode) {
-				XVariable tmp = (XVariable) ((ASTVarNode) pvar.getEquation()).getVar();
-				if(tmp.hasEquation() && tmp.getEquation() instanceof ASTConstant)
-					return nf.buildConstantNode(tu.getZERO());
-			}
-
 			DVariable dvar = pvar.getRoot();
-			PartialDerivative deriv = dvar.findDerivative(pvar,varName,localDJep);
-			return nf.buildVariableNode(deriv);
+			deriv = dvar.findDerivative(pvar,varName,localDJep);
+				
 	   }
-	   throw new ParseException("Encountered non differentiable variable");
+	   else
+		   throw new ParseException("Encountered non differentiable variable");
+	   	
+	   Node eqn = deriv.getEquation();
+	   if(eqn instanceof ASTVarNode)
+	   		return nf.buildVariableNode(((ASTVarNode) eqn).getVar());
+	   if(eqn instanceof ASTConstant)
+			return nf.buildConstantNode(((ASTConstant)eqn).getValue());
+
+	   return nf.buildVariableNode(deriv);
 	 }
 
 	 /**
