@@ -511,6 +511,14 @@ public class JEP {
 	public double getValue() {
 		Object value = getValueAsObject();
 		
+		if(value == null) return Double.NaN;
+		
+		if(value instanceof Complex)
+		{
+			Complex c = (Complex) value;
+			if( c.im() != 0.0) return Double.NaN;
+			return c.re();
+		}
 		if (value != null && value instanceof Number) {
 			return ((Number)value).doubleValue();
 		}
@@ -529,10 +537,10 @@ public class JEP {
 		
 		if (value == null) {
 			return null;
-		} else if (value instanceof Number) {
-			return new Complex(((Number)value).doubleValue(), 0);
 		} else if (value instanceof Complex) {
 			return (Complex)value;
+		} else if (value instanceof Number) {
+			return new Complex(((Number)value).doubleValue(), 0);
 		} else {
 			return null;
 		}
