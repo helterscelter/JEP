@@ -26,7 +26,7 @@
 	<property name="build"   value="build"/>
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
-	<property name="version" value="2.22"/>
+	<property name="version" value="2.23"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
