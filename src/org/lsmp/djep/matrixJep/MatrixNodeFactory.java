@@ -117,9 +117,22 @@ public class MatrixNodeFactory extends NodeFactory {
 	 * @param node the properties (name and pfmc) of this node will be copied.
 	 * @param arguments the arguments to the function.
 	 * @return top Node of expression 
+	 * 
+	 * @since 2.3.3 if possible use dimension of existing node. (Needed when deep copying MList functions)
 	 */
 	public ASTFunNode buildFunctionNode(ASTFunNode node,Node[] children) throws ParseException
 	{
+		if(node instanceof ASTMFunNode)
+		{
+			if(node.isOperator())
+				return buildOperatorNode(node.getOperator(),children,
+				((ASTMFunNode) node).getDim()); 
+			ASTMFunNode res = new ASTMFunNode(ParserTreeConstants.JJTFUNNODE);
+			res.setFunction(node.getName(),node.getPFMC());
+			copyChildren(res,children);
+			res.setDim(((ASTMFunNode) node).getDim()); 
+			return res;
+		}
 		//MatrixNodeI children[] = (MatrixNodeI []) arguments;
 		if(node.isOperator())
 			return buildOperatorNode(node.getOperator(),children); 
