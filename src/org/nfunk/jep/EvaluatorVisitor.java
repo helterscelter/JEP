@@ -36,21 +36,12 @@ import org.nfunk.jep.function.PostfixMathCommandI;
  * design pattern to traverse the function tree and evaluate the expression
  * using a stack.
  * <p>
- * Because only one instance of this class ever needs to exist, it is
- * implemented as a singleton class. So when an expression tree needs to be
- * evaluated, only a single
- * <pre>EvaluatorVisitor.getInstance().getValue(topNode)</pre>
- * call needs to be made.
- * <p>
  * Function nodes are evaluated by first evaluating all the children nodes,
  * then applying the function class associated with the node. Variable and
  * constant nodes are evaluated by pushing their value onto the stack.
  */
 public class EvaluatorVisitor implements ParserVisitor
 {
-	/** The single instance of this class */
-	private static EvaluatorVisitor instance;
-	
 	/** Stack used for evaluating the expression */
 	private Stack stack;
 	
@@ -74,19 +65,6 @@ public class EvaluatorVisitor implements ParserVisitor
 		stack = new Stack();
 	}
 	
-	/**
-	 * Get the EvaluatorVisitor singleton object. This method should be
-	 * used to access the instance of the class.
-	 */
-	public static synchronized EvaluatorVisitor getInstance() {
-		if (instance == null) {
-			instance = new EvaluatorVisitor();
-		}
-
-		return instance;	
-	}
-	
-
 	/**
 	 * Adds an error message to the list of errors
 	 */
@@ -112,7 +90,7 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
 	 */
-	public synchronized Object getValue(Node topNode, Vector errorList_in,
+	public Object getValue(Node topNode, Vector errorList_in,
 						   SymbolTable symTab_in)
 						   throws Exception {
 		
