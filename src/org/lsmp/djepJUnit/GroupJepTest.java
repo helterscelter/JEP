@@ -265,6 +265,30 @@ public class GroupJepTest extends TestCase {
 		
 	}
 
+	public void testPolynomials2() throws Exception
+	{
+		RingI ring = new Reals();
+		FreeGroup fg = new ExtendedFreeGroup(ring,"x");
+		FreeGroup fg2 = new ExtendedFreeGroup(fg,"y");
+		j = new GroupJep(fg2);
+		j.addStandardConstants();
+		j.setAllowAssignment(true);
+		j.setAllowUndeclared(true);
+		j.setImplicitMul(true);
+		
+		String expr1 = "(3*2) x+34+23+3*2 y+4 x";
+		Node node1 = j.parse(expr1);
+		Object val1 = j.evaluate(node1);
+		String res1 = val1.toString();
+		System.out.println(expr1 +" -> "+res1);
+		
+		String expr2 = "6x+3y+4x+3(15x+7y)+40";
+		Node node2 = j.parse(expr2);
+		Object val2 = j.evaluate(node2);
+		String res2 = val2.toString();
+		System.out.println(expr2 +" -> "+res2);
+
+	}
 	public void testPolynomialCreator() throws Exception
 	{
 		RingI ring = new Reals();
