@@ -79,7 +79,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 	}
 	
 	/**
-	 * TODO currently cannot be called by evaluator
+	 * Should not be called by evaluator
 	 * @throws ParseException if run.
 	 */
 	public void run(Stack s) throws ParseException 

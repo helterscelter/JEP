@@ -181,7 +181,7 @@ public class Complex extends Number
 		int xi = (int)(xl^(xl>>32));
 		int yi = (int)(yl^(yl>>32));
 		result = 37*result+xi;
-		result = 37*result+xi;
+		result = 37*result+yi;
 		return result;
 	}
 	/**

@@ -69,7 +69,7 @@ public class NodeFactory {
 		}
 		pfmc.setCurNumberOfParameters(children.length);
 		pfmc.run(stack);
-		return buildConstantNode(stack.pop()); // TODO what if it returns a vector!
+		return buildConstantNode(stack.pop());
 	}
 
 	/** Creates a ASTConstant whose value of applying the operator to its arguments. */

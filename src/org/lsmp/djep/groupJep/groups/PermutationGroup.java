@@ -12,7 +12,12 @@ import org.lsmp.djep.groupJep.values.*;
 import org.lsmp.djep.groupJep.interfaces.*;
 
 /**
+ * The group of permutations.
+ * 
+ * TODO not sure if this works, not really tested.
+ * 
  * @author Rich Morris
+ * @see org.lsmp.djep.groupJep.values.Permutation
  * Created on 15-Mar-2004
  */
 public class PermutationGroup extends Group implements GroupI , HasListI {
@@ -26,52 +31,31 @@ public class PermutationGroup extends Group implements GroupI , HasListI {
 			perm[i]=new Integer(i+1);
 		zeroPerm = new Permutation(this,perm);
 	}
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.GroupI#getZERO()
-	 */
+
 	public Number getZERO() {
-		// TODO Auto-generated method stub
 		return zeroPerm;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.GroupI#getInverse(java.lang.Number)
-	 */
 	public Number getInverse(Number a) {
 		return ((Permutation) a).getInverse();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.GroupI#add(java.lang.Number, java.lang.Number)
-	 */
 	public Number add(Number a, Number b) {
 		return ((Permutation) a).add((Permutation) b);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.GroupI#sub(java.lang.Number, java.lang.Number)
-	 */
 	public Number sub(Number a, Number b) {
 		return ((Permutation) a).sub((Permutation) b);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.GroupI#equals(java.lang.Number, java.lang.Number)
-	 */
 	public boolean equals(Number a, Number b) {
 		return ((Permutation) a).equals((Permutation) b);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.GroupI#valueOf(java.lang.String)
-	 */
 	public Number valueOf(String s) {
 		return Integer.valueOf(s);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.interfaces.HasListI#list(java.lang.Number[])
-	 */
 	public Number valueOf(Number[] eles) {
 		
 		Integer perm[] = new Integer[eles.length];
@@ -81,9 +65,6 @@ public class PermutationGroup extends Group implements GroupI , HasListI {
 		return res;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.groupJep.interfaces.HasListI#list(java.lang.Number[])
-	 */
 	public Number list(Number[] eles) {
 		return this.valueOf(eles);
 	}

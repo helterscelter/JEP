@@ -88,7 +88,6 @@ public class GComparative extends PostfixMathCommand
 					throw new ParseException("Unknown relational operator");
 				}
 			}
-			// TODO no idea how to implement this nicely.			
 			inStack.push(flag ? Boolean.TRUE : Boolean.FALSE);//push the result on the inStack
 		}
 		else if ((param1 instanceof Boolean) && (param2 instanceof Boolean))

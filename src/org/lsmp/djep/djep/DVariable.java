@@ -164,7 +164,6 @@ public class DVariable extends XVariable
 		{
 			return null;
 		}
-//TODO
 		Node deriv = (Node) jep.differentiate(lowereqn,derivnames[origlen-1]);
 		Node simp = (Node) jep.simplify(deriv);
 		res = createDerivative(derivnames,simp); 

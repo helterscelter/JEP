@@ -119,7 +119,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
   public void append(String s) { sb.append(s); }
 
   /** Adds a special print rule to be added for a given operator. 
-   * TODO Allow special rules for other functions. */
+   * TODO Allow special rules for other functions, i.e. not operators. */
   public void addSpecialRule(Operator op,PrintRulesI rules)
   {
   	specialRules.put(op,rules);

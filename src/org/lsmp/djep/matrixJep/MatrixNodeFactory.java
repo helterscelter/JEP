@@ -59,8 +59,7 @@ public class MatrixNodeFactory extends NodeFactory {
 		ASTMFunNode res = new ASTMFunNode(ParserTreeConstants.JJTFUNNODE);
 		res.setFunction(name,pfmc);
 		copyChildren(res,arguments);
-		// TODO whats the dim?
-		res.setDim(Dimensions.ONE);
+		res.setDim(calcDim(name,pfmc,arguments));
 		return res;		
 	}
 

@@ -144,7 +144,7 @@ public class MatrixPreprocessor implements ParserVisitor
 		}
 		else if(pfmc instanceof List)
 		{
-			// TODO what if we have x=[1,2]; y = [x,x]; or z=[[1,2],x];
+			// What if we have x=[1,2]; y = [x,x]; or z=[[1,2],x];
 			// first check if all arguments are TENSORS
 			boolean flag=true;
 			for(int i=0;i<children.length;++i)

@@ -44,7 +44,7 @@ public class NaturalLogarithm extends PostfixMathCommand
 		}
 		else if (param instanceof Number)
 		{
-			// TODODONE: think about only returning Complex if param is <0
+			// Now returns Complex if param is <0
 			double num = ((Number) param).doubleValue();
 			if( num > 0)
 				return new Double(Math.log(num));

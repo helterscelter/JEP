@@ -77,7 +77,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
    * Also adds rules for functions not in JEP function list:
    * 	sec,cosec,cot,exp,pow,sgn 
    * 
-   * TODO include if, min, max, sgn, dot, cross
+   * TODO include if, min, max, sgn
    * </pre>
    * @return false on error
    */

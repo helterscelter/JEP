@@ -20,7 +20,6 @@ import java.util.*;
  * @author Rich Morris
  * Created on 27-Jul-2003
  * TODO add handeling of tensors
- * TODO clean it all up
  */
 public class MMultiply extends Multiply implements BinaryOperatorI {
 	

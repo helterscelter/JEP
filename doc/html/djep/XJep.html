@@ -1,20 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
   
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><!-- #BeginEditable "doctitle" --><title>XJep - Extensions to the Java Expression Parser</title><!-- #EndEditable -->
 
-<!-- #BeginEditable "doctitle" -->
-  <title>XJep - Extensions to the Java Expression Parser</title>
 
   
-<!-- #EndEditable -->
+
+  
+
 
   <link rel="stylesheet" type="text/css" href="../main.css" title="style1">
 
 
   
   
-  <meta name="description" content="Tutorial on using XJep for printing, simplification, etc.">
-</head><body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+  <meta name="description" content="Tutorial on using XJep for printing, simplification, etc."></head><body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
 
 
@@ -34,8 +33,8 @@
       <a href="../index.html">JEP</a>
 <font color="#cccccc">|</font> <a href="index.html">DJep overview</a>
 <font color="#cccccc">|</font> <a href="XJep.html">XJep</a>
-<font color="#cccccc">|</font> <a href="DJep.html">Differentation</a>
-<font color="#cccccc">|</font> <a href="VectorJep.html">Vector and Matricies</a>
+<font color="#cccccc">|</font> <a href="DJep.html">Differentiation</a>
+<font color="#cccccc">|</font> <a href="VectorJep.html">Vector and Matrices</a>
 <font color="#cccccc">|</font> <a href="groups.html">Groups</a>
 <font color="#cccccc">|</font> <a href="version.html">Version History</a><!-- #EndLibraryItem --><!-- #EndEditable --></td>
     </tr>
@@ -53,7 +52,7 @@
         <h1><a name="top"></a>XJep - extensions to JEP</h1>
         <p><br>The <a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep</a> package offers a number of extensions to the standard JEP package:</p>
         <ul><li><a href="#PRINT">Printing</a>: equations can be easily printed or converted to strings with intelligent handling of brackets.</li>
-        <li><a href="#simp">Simplification</a> equations like <tt>2.0*x^1.0*1.0+0.0</tt> equations can be simplified to produce <tt>2.0*x</tt></li><li><a href="#reenter">Re-enterant parsers</a> allows equations to be separated by ;.</li>
+        <li><a href="#simp">Simplification</a> equations like <tt>2.0*x^1.0*1.0+0.0</tt> equations can be simplified to produce <tt>2.0*x</tt></li><li><a href="#reenter">Re-entrant parsers</a> allows equations to be separated by ;.</li>
         <li><a href="#variable">Variable</a> with equations and lazy evaluation.</li>
         <li><a href="#macro">Macro functions</a> functions specified by a simple function call.</li>
 <li><a href="#utils">Utilities</a>
@@ -82,7 +81,7 @@ To use all the features mention on this page the <a href="../../javadoc/org/lsmp
   <p>
   </p>A number of different routines are available to print equations:
   <pre>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#print%28org.nfunk.jep.Node%29">print(Node node)</a>;  // prints the expression tree<br>                               // specified by node on standard output<br>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#print%28org.nfunk.jep.Node,%20java.io.PrintStream%29">print(Node node,PrintStream out)</a>;   // prints on given stream<br>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#println%28org.nfunk.jep.Node%29">println(Node node)</a>;               // newline at end<br>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#println%28org.nfunk.jep.Node,%20java.io.PrintStream%29">println(Node node,PrintStream out)</a>; // newline at end<br>public String <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#toString%28org.nfunk.jep.Node%29">toString(Node node)</a>;           // returns a string</pre>
-      <p>These methods convert the expresion specified by node to a one
+      <p>These methods convert the expression specified by node to a one
 line string representation. The routines attempt to produce as simple a
 representation of the string as possible. However brackets are used to
 resolve ambiguity. Hence the equation "a+(b*c)" will be printed as
@@ -131,8 +130,8 @@ to improve the algorithm more at a later date.
       <h3><a name="reenter"></a>Re-entrant Parsers</h3>
 
       
-      <p>A new syntatical feature is the use of a semi-colon <tt>;</tt>
-to separate expresions. This allows string like "x=1; y=2; z=x+y;" to
+      <p>A new syntactical feature is the use of a semi-colon <tt>;</tt>
+to separate expressions. This allows string like "x=1; y=2; z=x+y;" to
 be parsed. To enable this the re-entrant methods of the XJep class should be
 used to access the parser. <br>
       </p>
@@ -142,11 +141,11 @@ used to access the parser. <br>
 
       
       <p>The
-first two methods re-initilise the parse instructiong it to read
+first two methods re-initialise the parse instructing it to read
 equations either from the string or a&nbsp; given Reader (allowing a
 sequence of equations to be specified in a file). The last method
 reads the next equation and finishes whenever a semi-colon is
-encounted. null is returned when there is no more to read. For example
+encountered. null is returned when there is no more to read. For example
 </p>
       <pre>XJep j = new XJep();<br>j.setAllowAssignment(true);<br>...<br>j.restartParser("x=1; y=2; z=x+y;");<br>try {<br>  Node node;<br>  while((node = j.continueParsing()) != null) {<br>    Node simp = j.simplify(j.preprocess(node));<br>    Object value = j.evaluate(simp);<br>    j.println(simp);<br>    System.out.println(value.toString);<br>  }<br>} catch(Exception e) {}<br><br></pre>
 
@@ -182,11 +181,11 @@ The equation for a variable is set using the assignment syntax "x=3" or
 The equation for a variable can be recovered by using
       </p>
 <pre><a href="../../javadoc/org/lsmp/djep/xjep/XVariable.html#getEquation%28%29">j.getVar("y").getEquation()</a>;<br></pre>
-      <p>the preprocess method has aditional features when DJep or MatrixJep are used.</p>
+      <p>the preprocess method has additional features when DJep or MatrixJep are used.</p>
 <h3>Reusing sets of equations</h3>
 The same set of equations can be used with different values
 for the variables. However, a little care is needed to
-keep all the variables with up to date values. There are several different stratergies which could be used.<br>
+keep all the variables with up to date values. There are several different strategies which could be used.<br>
       <b><br>
       </b><p><b>Re-evaluation: </b>By calling j.evaluate on each node
 this will bring the values of variables on the left had side of an
@@ -198,7 +197,7 @@ which rely on this equation. </p><pre>XJep j = new XJep();<br>...<br>// Setting 
 <p><b>Calculating variable values from their equations: </b>The <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#findVarValue%28java.lang.String%29">calcVarValue</a>
 method re-calculate the value of variables using it's equation.
 Note that is important that the preprocess call is used to set the
-equations for the variables. The values of the varibles should be
+equations for the variables. The values of the variables should be
 calculated in order.
 </p><pre>j.setVarValue("x",new Double(5));<br>System.out.println(j.calcVarValue("y").toString()); // prints 25<br>System.out.println(j.calcVarValue("z").toString()); // prints 30<br></pre>
 
@@ -226,7 +225,7 @@ variable or equation needs to be calculated. <br>
       </p>
 <pre>j.getSymbolTable().clearValues();<br>j.setVarValue("x",new Double(6));<br>System.out.println(j.findVarValue("z").toString()); // prints 42<br><br>j.getSymbolTable().clearValues();<br>j.setVarValue("x",new Double(7));<br>System.out.println(j.evaluate(node3));<br><br></pre>
       <p>The motivation behind this scheme comes into play if
-differentation when partial derivatives of variables are automatically
+differentiation when partial derivatives of variables are automatically
 calculated.<br>
       </p>
       <h3>Summary of Variable Use</h3>
@@ -247,7 +246,7 @@ calculated.<br>
             </td>
             <td valign="top">public void addConstant(String name,Object value)<br>
             </td>
-            <td valign="top">Adds a constant variable whos value can not be changed.<br>
+            <td valign="top">Adds a constant variable whose value can not be changed.<br>
             </td>
           </tr>
           <tr>
@@ -269,7 +268,7 @@ calculated.<br>
             </td>
             <td valign="top">public Variable getVar(String name)<br>
             </td>
-            <td valign="top">Returns the object represnting the variable.<br>
+            <td valign="top">Returns the object representing the variable.<br>
             </td>
           </tr>
           <tr>
@@ -344,7 +343,7 @@ XJep also make it easier to define you own simple functions
 in your code, without having to create a new sub-class of PostFixMathCommand.
 Such functions can be defined using an String containing its defining equation.
 </p><pre>// creates a function with 1 argument<br>j.addFunction("zap",new MacroFunction("zap",1,"x*(x-1)/2",j));<br>Node node = j.parse("zap(10)");<br>System.out.println(j.evaluate(node)); // print 45<br></pre>
-See the <a href="../../javadoc/org/lsmp/djep/xjep/MacroFunction.html">MacroFunction</a> for precise details of the syntax. Curently only works in 1D, i.e. no vectors or matricies.
+See the <a href="../../javadoc/org/lsmp/djep/xjep/MacroFunction.html">MacroFunction</a> for precise details of the syntax. Currently only works in 1D, i.e. no vectors or matrices.
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
@@ -363,7 +362,7 @@ equation.
 <li><a href="../../javadoc/org/lsmp/djep/xjep/NodeFactory.html">NodeFactory</a>: this contains useful methods for constructing an expression tree.
 By repeatedly calling this methods a expression tree can be constructed.</li>
 <li><a href="../../javadoc/org/lsmp/djep/xjep/TreeUtils.html">TreeUtils</a>: various utility functions for determining the type
-of node and accessing its properties.</li><li><a href="../../javadoc/org/lsmp/djep/xjep/XOperatorSet.html">XOperatorSet</a>: a colection of operators which contain information about their precedence, commutitivity etc.<br>
+of node and accessing its properties.</li><li><a href="../../javadoc/org/lsmp/djep/xjep/XOperatorSet.html">XOperatorSet</a>: a collection of operators which contain information about their precedence, commutativity etc.<br>
         </li>
 
 </ul>

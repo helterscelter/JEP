@@ -2,8 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><!-- #BeginEditable "doctitle" --><title>DJep - differentiation in the Java expresion parser</title><!-- #EndEditable -->
   
   <link rel="stylesheet" type="text/css" href="../main.css" title="style1">
-  <meta name="description" content="Tutorial on using DJep for differentation">
-</head><body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+  <meta name="description" content="Tutorial on using DJep for differentation"></head><body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <br>
 
 
@@ -87,10 +86,10 @@ and partial derivatives (default: on). Hence
       </h3>
       <p>The chain rule is used for differentiating functions
 diff(f(y),x) -&gt; diff(f,y)*diff(y,x) and the instructions for
-differenting a function are specified by objects which implement the <a href="../../javadoc/org/lsmp/djep/djep/DiffRulesI.html">DiffRulesI </a>interface. A variety of different classes are provided in the <a href="../../javadoc/org/lsmp/djep/djep/diffRules/package-summary.html">org.lsmp.djep.djep.diffRules</a> package which allow specific rules to be created. A rule is added using the <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addDiffRule%28org.lsmp.djep.djep.DiffRulesI%29">addDiffRule</a> method and the standard rules are added using <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addStandardDiffRules%28%29">addStandardDiffRules</a>. For example<br>
+differentiating a function are specified by objects which implement the <a href="../../javadoc/org/lsmp/djep/djep/DiffRulesI.html">DiffRulesI </a>interface. A variety of different classes are provided in the <a href="../../javadoc/org/lsmp/djep/djep/diffRules/package-summary.html">org.lsmp.djep.djep.diffRules</a> package which allow specific rules to be created. A rule is added using the <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addDiffRule%28org.lsmp.djep.djep.DiffRulesI%29">addDiffRule</a> method and the standard rules are added using <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addStandardDiffRules%28%29">addStandardDiffRules</a>. For example<br>
       </p>
       <pre>&nbsp;&nbsp;&nbsp; j.addDiffRule(new MacroDiffRules(j,"cos","-sin(x)"))</pre>
-      <p>adds the rule for differenting cos which is specified by the
+      <p>adds the rule for differentiating cos which is specified by the
 string "-sin(x)". There are several other ways rules can be constructed
 which are discussed in the javaDoc.<br>
       </p>
