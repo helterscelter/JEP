@@ -202,7 +202,7 @@ class GroupConsole {
 			else if(splits[0].equals("Qu"))
 			{
 				j = new GroupJep(new Quartonians());
-				j.addStandardConstants(); 
+				j.addStandardConstants();
 			} 
 			else if(splits[0].equals("extend") && splits.length == 2)
 			{
