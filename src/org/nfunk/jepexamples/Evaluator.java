@@ -9,7 +9,7 @@
 
 /**
  * Evaluator - JEP Example Applet
- * Copyright (c) 2000 Nathan Funk
+ * Copyright (c) 2004 Nathan Funk
  *
  * @author Nathan Funk
 

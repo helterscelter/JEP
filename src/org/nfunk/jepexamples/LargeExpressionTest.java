@@ -45,7 +45,7 @@ public class LargeExpressionTest {
 		// Test large symbol table
 		str = "";
 		for (int i=0; i<nVars; i++) {
-			myParser.addVariable("v"+i, 0);
+			myParser.addVariable("v" + i, 0);
 			str += "+" + "v" + i;
 		}
 		myParser.parseExpression(str);
