@@ -63,7 +63,7 @@ public class VectorJep extends JEP {
 	/**	When set the multiplication of vectors and matricies will be element by element.
 	 * Otherwise multiplication will be matrix multiplication (the default).
 	 */
-	public void setElementMuliply(boolean value) {
+	public void setElementMultiply(boolean value) {
 		((VOperatorSet) opSet).setElementMultiply(value);
 	}
 

@@ -13,6 +13,13 @@ import org.nfunk.jep.function.*;
 import java.util.*;
 import org.nfunk.jep.*;
 
+ /**
+  * Not function for use with arbitary groups.
+  * Expects Boolean arguments.
+  * 
+  * @author Rich Morris
+  * Created on 13-Dec-2004
+  */
 public class GNot extends PostfixMathCommand
 {
 	public GNot()

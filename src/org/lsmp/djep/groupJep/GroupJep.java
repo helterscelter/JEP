@@ -72,7 +72,7 @@ public class GroupJep extends JEP {
 	 * @param num the object to be converted
 	 * @return the complex aproximation or null if conversion to complex is not posible. 
 	 **/
-	public static Complex getComplexValue(Object num)
+	public static Complex complexValueOf(Object num)
 	{
 		if(num instanceof Complex) return (Complex) num;
 		else if(num instanceof HasComplexValueI)

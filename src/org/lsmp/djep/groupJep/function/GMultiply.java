@@ -13,6 +13,8 @@ import org.lsmp.djep.groupJep.interfaces.*;
 import java.util.*;
 import org.nfunk.jep.*;
 /**
+ * Multiplication operator for a group.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */

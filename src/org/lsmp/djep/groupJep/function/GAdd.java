@@ -11,7 +11,11 @@ import org.lsmp.djep.groupJep.*;
 
 import java.util.*;
 import org.nfunk.jep.*;
+
 /**
+ * Add function for use with arbitary groups.
+ * Actual behaviour defined by the Group.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */

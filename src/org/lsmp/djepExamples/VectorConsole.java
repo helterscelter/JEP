@@ -158,12 +158,12 @@ class VectorConsole {
 
 		if(s.startsWith("setEleMult"))
 		{
-			j.setElementMuliply(true);
+			j.setElementMultiply(true);
 			return getCommand();
 		}
 		if(s.startsWith("setMatrixMult"))
 		{
-			j.setElementMuliply(false);
+			j.setElementMultiply(false);
 			return getCommand();
 		}
 		return s;

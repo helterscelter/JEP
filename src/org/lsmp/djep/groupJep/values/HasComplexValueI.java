@@ -9,7 +9,7 @@ package org.lsmp.djep.groupJep.values;
 import org.nfunk.jep.type.*;
 
 /**
- * Groups which have a natural conversion to complex numbers.
+ * Group elements which have a natural conversion to complex numbers.
  * 
  * @author Rich Morris
  * Created on 11-Mar-2004

@@ -16,7 +16,7 @@ import org.lsmp.djep.groupJep.*;
 import org.lsmp.djep.groupJep.interfaces.*;
 
 /** 
- * Implements logical operations on a a group.
+ * Implements logical operations on a group.
  * Will always return Boolean results.
  * 
  * @author Rich Morris
@@ -26,10 +26,16 @@ public class GComparative extends PostfixMathCommand
 {
 	int id;
 	GroupI group;
-		
-	public GComparative(GroupI group,int id_in)
+	
+	/**
+	 * Constructor.	For inequalities the group should implement OrderedSetI.
+	 * 
+	 * @param id should be Comparative.LT or GT, LE, GE, NE EQ
+	 * @see org.nfunk.jep.function.Comparative
+	 */	
+	public GComparative(GroupI group,int id)
 	{
-		id = id_in;
+		this.id = id;
 		numberOfParameters = 2;
 		this.group = group;
 	}

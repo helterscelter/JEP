@@ -12,6 +12,8 @@ import org.lsmp.djep.groupJep.*;
 import java.util.*;
 import org.nfunk.jep.*;
 /**
+ * Subtract operator for a group.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */

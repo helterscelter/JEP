@@ -9,7 +9,7 @@
 <!-- #BeginEditable "Sub%20Menu" --> <!-- #BeginLibraryItem "/Library/Docu Menu.lbi" --><!-- NAVIGATION ---------------------------------------------------- -->
 <div id="navcontainer">
 <ul>
-<li><a href="file:///G|/eclipse/jep/doc/javadoc/index.html" target="_blank">JavaDoc*</a></li>
+<li><a href="../../javadoc/index.html" target="_blank">JavaDoc*</a></li>
 </ul>
 
 <hr/>
@@ -79,15 +79,52 @@ org.lsmp.djep.groupJep.groups package.
 Examples of the use of these groups:
 <pre>import org.lsmp.djep.groupJep.*;<br>import org.lsmp.djep.groupJep.groups.*;<br><br>class GroupExamples {<br>public static void main(String args[])<br>{<br>JEP j = new GroupJep(new Integers());<br>Node node = j.parse("1*2*3*4*5*6*7*8*9*10*11*12*13*14*15*16*17*18*19*20");<br>Object value = j.evaluate(node);<br>System.out.println(value.toString());<br>// prints 2432902008176640000<br><br>j =  new GroupJep(new Rationals());<br>node = j.parse("(1/2)-(1/3)");<br>value = j.evaluate(node);<br>System.out.println(value.toString());<br>// prints 1/6<br><br>j = new GroupJep(new Zn(BigInteger.valueOf(5)));<br>node = j.parse("3+3");<br>value = j.evaluate(node);<br>System.out.println(value.toString()); // prints 1<br><br>node = j.parse("3*3");<br>value = j.evaluate(node);<br>System.out.println(value.toString()); // prints 4<br></pre>
 
-<h3>Free groups</h3>
+<h3>Free groups/Polynomials</h3>
 Any ring can be extended to form a <a href="../../javadoc/org/lsmp/djep/groupJep/groups/FreeGroup.html">FreeGroup</a> with
-a single generator:
+a single generator. In effect this allows JEP to function with polynomials
+as a basic type and they will always be reduced to their basic type.
+<p>
+To use:
 <pre>import org.lsmp.djep.groupJep.interfaces.*;<br>import org.lsmp.djep.groupJep.*;<br>...<br>RingI ring = new Integers();<br>RingI freeGroup = new FreeGroup(ring,"t");<br>JEP j = new GroupJep(freeGroup);<br>// this line is needed to ensure the parser recognises the symbol t<br>j.addStandardConstants();	<br><br>Node node = j.parse("(t + 2)*(t+4)");<br>Object value = j.evaluate(node);<br>System.out.println(value.toString()); // prints t^2+5 t+6<br></pre>
 Note that the addStandardConstants method of JEP must be
 called to ensure that the variable t is added to the parser.
 Free groups with more than one generator can be constructed
 by repeatedly extending a ring:
 <pre>RingI freeGroup = new FreeGroup(new FreeGroup(new Integers(),"t"),"s");<br></pre>
+
+<p>
+Polynomials in multiple variables can be defined by repeatidly
+extending. 
+<pre>
+		RingI ring = new Reals();
+		FreeGroup fg = new ExtendedFreeGroup(ring,"x");
+		FreeGroup fg2 = new ExtendedFreeGroup(fg,"y");
+		j = new GroupJep(fg2);
+		j.addStandardConstants();
+		j.setAllowAssignment(true);
+		j.setAllowUndeclared(true);
+		Node n2 = j.parse("(x+1)*(y-2)");	
+		FreeGroupElement fge = (FreeGroupElement) j.evaluate(n2);
+</pre>
+The coefficients of the polynomial can be found using:
+<pre>
+		Number co1[] = fge.getCoeffs();
+		for(int i=0;i<co1.length;++i)
+		{
+			FreeGroupElement fge3 = (FreeGroupElement) co1[i];
+			Number co2[] = fge3.getCoeffs();
+			for(int j=0;j<co2.length;++j)
+				System.out.print(co2[j]+"\t");
+			System.out.println();
+		}
+</pre>
+
+To calculate 
+		fg.setRootVal(new Complex(5.0));
+		fg2.setRootVal(new Complex(4.0));
+		System.out.println(fge2.toString());
+		myAssertEquals("(x+1)*(y-2): x=5,y=4",fge2.getComplexValue().toString(),"(12.0, 0.0)");		
+
 
 <h3>Algebraic Numbers</h3>
 In a similar fashion a ring can be extended by an algebraic number
@@ -131,15 +168,17 @@ Same methods as GroupI.<br>
 implies group is commutative under +.
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/RingI.html">RingI</a></td><td>
-methods for GroupI plus<br>
+Methods for GroupI plus:-<br>
 public Number getONE();<br>
 public Number mul(Number a,Number b);<br>
+public Number getMulInverse(Number num);<br>
+
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/IntegralDomainI.html">IntegralDomainI</a></td><td>
-methods for RingI implies the group has
-an identity for multiplication *, it is 
-commutative under * and cancellation is meaningful:
-if a is not 0 then a*b = a*c implies b = c.
+Same methods as RingI. This interface implies the group has:
+an identity for multiplication *; it is 
+commutative under * and that cancellation is meaningful
+(if a is not 0 then a*b = a*c implies b = c).
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/HasDivI.html">HasDivI</a></td><td>
 Group has some notion of division i.e. integers<br>
@@ -147,11 +186,6 @@ public Number div(Number a,Number b);
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/FieldI.html">FieldI</a></td><td>
 Same methods as for RingI plus<br>
-public Number getMulInverse(Number num);<br>
-public Number div(Number a,Number b);
-</td></tr>
-<tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/HasDivI.html">HasDivI</a></td><td>
-Group has some notion of division, but is not necessary a Field. e.g the integers<br>
 public Number div(Number a,Number b);
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/HasModI.html">HasModI</a></td><td>
@@ -163,9 +197,13 @@ The power function is defined:<br>
 public Number pow(Number a,Number b);
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/OrderedSetI.html">OrderedSetI</a></td><td>
-There is a natural ordering to the set<br>
+There is a natural ordering to the set so <, <=, >, >= meaningful.<br>
 public int compare(Number a,Number b);<br>
 will return -1 if a&lt;b, 0 if a=b, +1 if a&gt;b.
+</td></tr>
+<tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/HasList.html">List operations meaninful</a></td><td>
+The list syntax [a,b,c] is meaningful.
+public Number list(Number eles[]);<br>
 </td></tr>
 </tbody></table>
 

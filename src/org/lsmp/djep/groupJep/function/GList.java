@@ -13,6 +13,10 @@ import org.lsmp.djep.groupJep.interfaces.*;
 import java.util.*;
 import org.nfunk.jep.*;
 /**
+ * List function for use with arbitary groups.
+ * Converts elements on stack and returns a list
+ * actual behaviour defined by the Group.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */
@@ -28,10 +32,6 @@ public class GList extends PostfixMathCommand {
 		this.group = group;
 	}
 
-	/**
-	 * Calculates the result of applying the "+" operator to the arguments from
-	 * the stack and pushes it back on the stack.
-	 */
 	public void run(Stack stack) throws ParseException {
 		checkStack(stack);// check the stack
 		if(!(group instanceof HasListI))

@@ -104,7 +104,7 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 	 * @param data
 	 * @param pv
 	 * @param stack
-	 * @return
+	 * @return the result of evaluation
 	 * @throws ParseException
 	 */ 
 

@@ -10,7 +10,10 @@ import org.nfunk.jep.*;
 import org.lsmp.djep.groupJep.function.*;
 import org.nfunk.jep.function.*;
 /**
- * 
+ * The set of operators used in the parser.
+ * Actual function and suported operators are 
+ * defined by the group and the interfaces it supports.
+ *
  * @author Rich Morris
  * Created on 07-Mar-2004
  */

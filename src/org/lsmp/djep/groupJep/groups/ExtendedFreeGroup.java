@@ -11,12 +11,16 @@ import org.lsmp.djep.groupJep.interfaces.*;
 import org.lsmp.djep.groupJep.values.*;
 import org.nfunk.jep.type.*;
 /**
+ * An extended version of a Free Group, limted seport for powers and division.
+ * Positive integer powers are allowed and division by constants.
+ * TODO implement polynomial division and remainder (mod).
+ * 
  * @author Rich Morris
  * Created on 07-Dec-2004
  */
 public class ExtendedFreeGroup
 	extends FreeGroup
-	implements HasPowerI, HasDivI, HasModI {
+	implements HasPowerI, HasDivI {
 
 	public ExtendedFreeGroup(RingI K, String symbol) {
 		super(K, symbol);
@@ -40,7 +44,7 @@ public class ExtendedFreeGroup
 		return ((FreeGroupElement) a).pow((int) re);
 	}
 
-	/** Division of Polynomials, discards remainder.
+	/** Currently just division by constants. Polynomial division to come.
 	 * 
 	 */
 	public Number div(Number a, Number b) {
@@ -48,10 +52,11 @@ public class ExtendedFreeGroup
 	}
 
 	/** Division of Polynomials, discards remainder.
+	 * Not yet implemented.
 	 */
-	public Number mod(Number a, Number b) {
-		return null;
-		//return ((FreeGroupElement) a).mod((FreeGroupElement) b);
-	}
+//	public Number mod(Number a, Number b) {
+//		return null;
+//		//return ((FreeGroupElement) a).mod((FreeGroupElement) b);
+//	}
 
 }

@@ -545,7 +545,7 @@ public class XJepTest extends TestCase {
 		j.println(n2);		
 	}
 	
-	public void testPrint2() throws ParseException
+	public void testFormat() throws ParseException
 	{
 		NumberFormat format = NumberFormat.getInstance();
 		j.getPrintVisitor().setNumberFormat(format);

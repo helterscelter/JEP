@@ -13,13 +13,24 @@ import org.nfunk.jep.function.*;
 import java.util.*;
 import org.nfunk.jep.*;
 
+/**
+ * Implements logical operators for a group.
+ * 
+ * @author Rich Morris
+ * Created on 13-Dec-2004
+ */
 public class GLogical extends PostfixMathCommand
 {
 	int id;
 	
-	public GLogical(int id_in)
+	/**
+	 * Constructs
+	 * @param id should be Logical.AND or Logical.OR
+	 * @see org.nfunk.jep.function.Logical
+	 **/
+	public GLogical(int id)
 	{
-		id = id_in;
+		this.id = id;
 		numberOfParameters = 2;
 	}
 	

@@ -13,6 +13,9 @@ import org.lsmp.djep.groupJep.interfaces.*;
 import java.util.*;
 import org.nfunk.jep.*;
 /**
+ * Divide function for use with arbitary groups.
+ * Actual behaviour defined by the Group.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */
@@ -30,7 +33,7 @@ public class GDivide extends PostfixMathCommand {
 	}
 
 	/**
-	 * Calculates the result of applying the "+" operator to the arguments from
+	 * Calculates the result of applying the "/" operator to the arguments from
 	 * the stack and pushes it back on the stack.
 	 */
 	public void run(Stack stack) throws ParseException {

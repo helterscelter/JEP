@@ -1,4 +1,13 @@
+== org.nfunk.* =======================================================
+
+Dec 10 rjm - nodeAccept method added to jep.EvaluationVisitor so that it
+			 can be easier for sub classes to use visitor pattern.
+			 
+		   - Improved printing facilities for complex numbers.
+		   
 Nov  6 njf - Merged JEPTester and JEPTest into JEPTest, now in the JUnit framework
+
+Nov  3 rjm - JEP.evaluate() method will throw an exception if this.hasErrors() is true.
 
 Nov  1 njf - changed documentation to frames
            - added new FAQ item
@@ -54,3 +63,29 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
 
 Many previous changes not included here. See the documentation for details.
 
+== org.lsmp.* =======================================================
+
+Dec 10 rjm - Implemented element by element multiplication in VectorJep
+			 nodeAccept method added to jep.EvaluationVisitor so that it
+			 can be easier for sub classes to use visitor pattern.
+			 
+		   - Improved printing facilities for complex numbers.
+		   
+		   - xjep.PrintVisitor now allows a NumberFormat object to be specified to control 
+		     the printing of double values.
+		     
+		   - ExtendedFreeGroup added to GroupJep this allows a limited 
+		     use of ^ and / for polynomials. Polynomials can be raised to 
+		     positive integer powers and divided by constants.
+
+Oct 4  rjm - Added rules to differentiate atan2 removed support for angle
+       rjm - Doc update for GroupJep, improved consol and unit test or working with polynomials over the reals (Doubles).
+
+Oct 1 rjm  - RewriteRulesI interface added and RewriteVisitor added.
+			Begining of an improved simplification algorithm.
+
+Sept  rjm  - added SumType functions equivilent to sigma notation.
+
+-- 1.0.0 (Oct 3rd, 2004) --------------------------------------------
+
+Many previous changes not included here. See the documentation for details.

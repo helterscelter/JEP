@@ -9,6 +9,8 @@ package org.lsmp.djep.groupJep.groups;
 import org.lsmp.djep.groupJep.interfaces.*;
 
 /**
+ * A representation of the Reals where elements are represented as Doubles.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */
@@ -18,7 +20,7 @@ public class Reals extends Group implements FieldI,OrderedSetI,HasPowerI {
 	private Double ONE = new Double(1.0);
 
 	/**
-	 * Operations on the reals (Implemented as Doubles  
+	 * Operations on the reals (Implemented as Doubles).  
 	 */
 	public Reals() {
 	}

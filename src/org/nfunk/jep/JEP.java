@@ -489,7 +489,7 @@ public class JEP {
 	 * @return The top node of an tree representing the parsed expression.
 	 * @throws ParseException
 	 * @since 2.3.0 alpha
-	 * @version 2.3.0 beta - will raise exception if errorList non empty
+	 * @since 2.3.0 beta - will raise exception if errorList non empty
 	 */
 	public Node parse(String expression) throws ParseException
 	{

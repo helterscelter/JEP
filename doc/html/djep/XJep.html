@@ -86,6 +86,24 @@ At some stage in the future print facilities to produce MathML
 and other output formats will be included.   
 </p>
 
+<p>
+The way that numbers are displayed can be set by supplying a 
+java.text.NumberFormat object.
+<pre>
+NumberFormat format = NumberFormat.getInstance();
+j.getPrintVisitor().setNumberFormat(format);
+format.setMaximumFractionDigits(3);
+format.setMinimumFractionDigits(0);
+		
+String s1 = "[10,0,0.1,0.11,0.111,0.1111,0.999,0.9999]";
+Node n1 = j.parse(s1);
+System.out.println(j.toString(n1));
+</pre>
+<p>
+Prints <tt>[10,0,0.1,0.11,0.111,0.111,0.999,1]</tt> i.e. numbers are displayed rounded to three decimal places.
+</p>
+
+
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
 <tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
@@ -332,6 +350,31 @@ in your code, without having to create a new sub-class of PostFixMathCommand.
 Such functions can be defined using an String containing its defining equation.
 </p><pre>// creates a function with 1 argument<br>j.addFunction("zap",new MacroFunction("zap",1,"x*(x-1)/2",j));<br>Node node = j.parse("zap(10)");<br>System.out.println(j.evaluate(node)); // print 45<br></pre>
 See the <a href="../../javadoc/org/lsmp/djep/xjep/MacroFunction.html">MacroFunction</a> for precise details of the syntax. Currently only works in 1D, i.e. no vectors or matrices.
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
+</tbody></table>
+
+<h3>Sum type function</h3>
+<p>
+An equivilent of the sigma notation for summation
+are provided by 
+<a href="../../javadoc/org/lsmp/djep/xjep/function/SumType.html">SumType</a> functions.
+For example
+<tt>Sum(x^2,x,1,10)</tt> finds the sum of <tt>x^2</tt> with <tt>x</tt> running from 1 to 10, i.e. <tt>1^2+2^2+...+10^10</tt>.
+Other sum-type functions include:
+<ul>
+<li>Sum - finds sum over range.
+<li>Product
+<li>Min - finds minimum value
+<li>Max - finds maximum value
+<li>MinArg - finds value of variable giving the minimum
+<li>MaxArg - finds value of variable giving the maximum
+<li>Simpson - implements Simpson rule for aproximation to integral.
+</ul>
+Note all these function begin with a capital letter to distinguish from
+<tt>sum(1,2,3,4)</tt> which justs finds the sum of its arguments.
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>

@@ -144,18 +144,6 @@ public class Polynomial extends Number {
 		}
 		return res;
 	}
-	private String stripBrackets(Number num)
-	{
-		String s = num.toString();
-		if(s.startsWith("(") && s.endsWith(")"))
-		{
-			if(s.indexOf('+')!=-1 || s.indexOf('-')>1) // is it <x+y> or <x-y>. <-x> is OK
-				return s;
-			else
-				return s.substring(1,s.length()-1);
-		}
-		else return s;
-	}
 	private boolean needsBrackets(String s)
 	{
 		int i1 = s.indexOf('+');
@@ -254,16 +242,28 @@ public class Polynomial extends Number {
 	 */
 	public Complex calculateComplexValue(Complex rootVal) {
 		Number val = coeffs[this.getDegree()];
-		Complex cval = GroupJep.getComplexValue(val);
+		Complex cval = GroupJep.complexValueOf(val);
 		
 		for(int i=this.getDegree()-1;i>=0;--i)
 		{
 			Number val2 = coeffs[i];
-			Complex cval2 = GroupJep.getComplexValue(val2);
+			Complex cval2 = GroupJep.complexValueOf(val2);
 			Complex prod = cval.mul(rootVal);
 			cval = prod.add(cval2);
 		}
 		return cval;
+	}
+
+	public Number calculateValue(Number rootVal) {
+		Number val = coeffs[this.getDegree()];
+		
+		for(int i=this.getDegree()-1;i>=0;--i)
+		{
+			Number val2 = coeffs[i];
+			Number prod = baseRing.mul(val,rootVal);
+			val = baseRing.add(prod,val2);
+		}
+		return val;
 	}
 
 }

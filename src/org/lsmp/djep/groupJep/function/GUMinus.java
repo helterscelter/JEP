@@ -11,6 +11,8 @@ import org.lsmp.djep.groupJep.*;
 import java.util.*;
 import org.nfunk.jep.*;
 /**
+ * Unitary division for a group.
+ * 
  * @author Rich Morris
  * Created on 05-Mar-2004
  */

@@ -125,6 +125,24 @@ For example:
 </tbody>
 </table>
 
+<h3>Element by element calculations</h3>
+<p>
+The vectorJep package can be set up so that element by element multiplication and division
+is performed instead of matrix multiplication. To switch this mode on
+use
+</p>
+<pre>VectorJep j = new VectorJep();<br>
+j.setElementMultiply(true);</pre>
+<p>
+Once set <tt>[1,2,3]*[4,5,6]</tt> will evaluate to <tt>[4,10,18]</tt>.
+</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
+</tbody>
+</table>
+
 <h2><a name="MAT"></a>MatrixJep</h2>
 The MatrixJep package offers the same functionality as the VectorJep
 package however it is implemented in a different manner internally
