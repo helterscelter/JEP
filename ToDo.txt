@@ -1,23 +1,22 @@
 == TODO for version 2.3.0 ===========================================
+- Remove CustFunc second getValue() call in documentation
+  remove version 2.12
+- document Exp function
+- check for undocumented functions
 - finalize docs
 - ensure EvaluatorVisitor reports multiple errors for one evaluation
    (compare Rich's code to version 1.12)
 - document hasError() better with examples 
-
-== Todo before v2.25 ================================================
- - state clearly that NumberFactory has been changed to create the
+- state clearly that NumberFactory has been changed to create the
    number from a String representation (in order to allow creation 
    of arbitrary precision numbers without the limitations of double)
- - fix "ln(e) = 0" with getValue()
- - add more JUnit tests
- - change %dp0 to %dps0 in scripts
- - automatisize testing in ant script
- - replace @license_info@ with GPL info using replace task and loadfile
+- fix "ln(e) = 0" with getValue()
+- add more JUnit tests
+- change %dp0 to %dps0 in scripts
+- automatisize testing in ant script
+- replace @license_info@ with GPL info using replace task and loadfile
    also @version@ @date@ @license@ @copyright@
- - new commercial license (like UCalc??)
-   check with campus legal services
- x change getValue() and getComplexValue()
- - add Exponential class
+x change getValue() and getComplexValue()
 
 == Web site todo ====================================================
  - add Double -> Number?
