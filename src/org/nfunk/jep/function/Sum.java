@@ -19,6 +19,7 @@ import org.nfunk.jep.*;
  */
 public class Sum extends PostfixMathCommand
 {
+	private Add addFun = new Add();
 	/**
 	 * Constructor.
 	 */
@@ -38,25 +39,28 @@ public class Sum extends PostfixMathCommand
 			throw new ParseException("Stack argument null");
 		}
         
-        Object param = null;
-        double result = 0;
-        int i = 0;
+        Object param = stack.pop();
+        Number result;
+		if (param instanceof Number)
+			result = (Number) param;
+		else 
+			throw new ParseException("Invalid parameter type");
         
         // repeat summation for each one of the current parameters
-        while (i < curNumberOfParameters) {
+        for(int i=1;i < curNumberOfParameters;++i)
+        {
         	// get the parameter from the stack
             param = stack.pop();
             if (param instanceof Number)   {
                 // calculate the result
-                result += ((Number) param).doubleValue();
+                result = addFun.add((Number) param,result);
             } else {
                 throw new ParseException("Invalid parameter type");
             }
                 
             i++;
         }
-        
         // push the result on the inStack
-        stack.push(new Double(result));
+        stack.push(result);
 	}
 }

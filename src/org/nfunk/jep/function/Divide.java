@@ -32,30 +32,30 @@ public class Divide extends PostfixMathCommand
 	public Object div(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Number)
+		if (param1 instanceof Complex)
 		{
-			if (param2 instanceof Number)
-				return div((Number)param1, (Number)param2);
-			else if (param2 instanceof Complex)
-				return div((Number)param1, (Complex)param2);
-			else if (param2 instanceof Vector)
-				return div((Number)param1, (Vector)param2);
-		}
-		else if (param1 instanceof Complex)
-		{
-			if (param2 instanceof Number)
-				return div((Complex)param1, (Number)param2);
-			else if (param2 instanceof Complex)
+			if (param2 instanceof Complex)
 				return div((Complex)param1, (Complex)param2);
+			else if (param2 instanceof Number)
+				return div((Complex)param1, (Number)param2);
 			else if (param2 instanceof Vector)
 				return div((Complex)param1, (Vector)param2);
 		}
+		else if (param1 instanceof Number)
+		{
+			if (param2 instanceof Complex)
+				return div((Number)param1, (Complex)param2);
+			else if (param2 instanceof Number)
+				return div((Number)param1, (Number)param2);
+			else if (param2 instanceof Vector)
+				return div((Number)param1, (Vector)param2);
+		}
 		else if (param1 instanceof Vector)
 		{
-			if (param2 instanceof Number)
-				return div((Vector)param1, (Number)param2);
-			else if (param2 instanceof Complex)
+			if (param2 instanceof Complex)
 				return div((Vector)param1, (Complex)param2);
+			else if (param2 instanceof Number)
+				return div((Vector)param1, (Number)param2);
 		}
 
 		throw new ParseException("Invalid parameter type");

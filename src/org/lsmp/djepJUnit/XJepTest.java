@@ -2,6 +2,7 @@ package org.lsmp.djepJUnit;
 
 import junit.framework.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.type.*;
 import org.lsmp.djep.xjep.*;
 
 /* @author rich
@@ -70,6 +71,14 @@ public class XJepTest extends TestCase {
 		Node node = j.parse(expr);
 		Object res = j.evaluate(node);
 		assertEquals("<"+expr+">",expected,res);
+		System.out.println("Sucess value of <"+expr+"> is "+res);
+	}
+	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
+	{
+		Node node = j.parse(expr);
+		Object res = j.evaluate(node);
+		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
+			expected.equals((Complex) res,tol));
 		System.out.println("Sucess value of <"+expr+"> is "+res);
 	}
 
@@ -344,6 +353,18 @@ public class XJepTest extends TestCase {
 		simplifyTest("(2*(3+(x/4)))","6+0.5*x");
 		simplifyTest("1+(2*(3+(x/4)))","7+0.5*x");
 		simplifyTest("((3+(x/4))*2)+1","7+0.5*x");
+		
+	}
+
+	public void testComplex() throws Exception
+	{
+		double tol = 0.00000001;
+
+		complexValueTest("z=complex(3,2)",new Complex(3,2),tol);
+		complexValueTest("z*z-z",new Complex(2,10),tol);
+		complexValueTest("z^3",new Complex(-9,46),tol);
+		complexValueTest("(z*z-z)/z",new Complex(2,2),tol);
+		complexValueTest("w=polar(2,pi/2)",new Complex(0,2),tol);
 		
 	}
 

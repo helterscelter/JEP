@@ -31,15 +31,15 @@ public class ArcCosineH extends PostfixMathCommand
 	public Object acosh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
+		if (param instanceof Complex)
+		{
+			return ((Complex)param).acosh();
+		}
+		else if (param instanceof Number)
 		{
 			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
 			
 			return temp.acosh();
-		}
-		else if (param instanceof Complex)
-		{
-			return ((Complex)param).acosh();
 		}
 
 		throw new ParseException("Invalid parameter type");

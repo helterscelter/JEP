@@ -36,19 +36,19 @@ public class SquareRoot extends PostfixMathCommand
 	 *
 	 * @return The square root of the parameter.
 	 */
-	public Object sqrt(Object param) throws ParseException {
-		
+	public Object sqrt(Object param) throws ParseException 
+	{
+		if (param instanceof Complex)
+			return ((Complex)param).sqrt();
 		if (param instanceof Number) {
 			double value = ((Number)param).doubleValue();
 			
 			// a value less than 0 will produce a complex result
-			if (value < 0) {
+			if (value < 0.0) {
 				return (new Complex(value).sqrt());
 			} else {
 				return new Double(Math.sqrt(value));
 			}
-		} else if (param instanceof Complex) {
-			return ((Complex)param).sqrt();
 		}
 
 		throw new ParseException("Invalid parameter type");

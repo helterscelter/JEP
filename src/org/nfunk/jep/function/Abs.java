@@ -33,13 +33,13 @@ public class Abs extends PostfixMathCommand
 	public Object abs(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
-		{
-			return new Double(Math.abs(((Number)param).doubleValue()));
-		}
-		else if (param instanceof Complex)
+		if (param instanceof Complex)
 		{
 			return new Double(((Complex)param).abs());
+		}
+		else if (param instanceof Number)
+		{
+			return new Double(Math.abs(((Number)param).doubleValue()));
 		}
 
 		throw new ParseException("Invalid parameter type");

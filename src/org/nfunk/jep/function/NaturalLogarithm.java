@@ -38,7 +38,11 @@ public class NaturalLogarithm extends PostfixMathCommand
 	public Object ln(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
+		if (param instanceof Complex)
+		{
+			return ((Complex)param).log();
+		}
+		else if (param instanceof Number)
 		{
 			// TODODONE: think about only returning Complex if param is <0
 			double num = ((Number) param).doubleValue();
@@ -49,10 +53,6 @@ public class NaturalLogarithm extends PostfixMathCommand
 				Complex temp = new Complex(num);
 				return temp.log();
 			}
-		}
-		else if (param instanceof Complex)
-		{
-			return ((Complex)param).log();
 		}
 
 		throw new ParseException("Invalid parameter type");

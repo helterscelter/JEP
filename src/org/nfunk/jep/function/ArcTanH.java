@@ -31,15 +31,15 @@ public class ArcTanH extends PostfixMathCommand
 	public Object atanh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
+		if (param instanceof Complex)
+		{
+			return ((Complex)param).atanh();
+		}
+		else if (param instanceof Number)
 		{
 			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
 			
 			return temp.atanh();
-		}
-		else if (param instanceof Complex)
-		{
-			return ((Complex)param).atanh();
 		}
 
 		throw new ParseException("Invalid parameter type");

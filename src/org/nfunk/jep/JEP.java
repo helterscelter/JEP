@@ -220,6 +220,7 @@ public class JEP {
 	 * real or imaginary components of a complex number respectively.
 	 *<p>
 	 * @since 2.3.0 The functions cmod and arg are added to get the modulus and argument. 
+	 * @since 2.3.1 The functions complex and polar to convert x,y and r,theta to Complex. 
 	 */
 	public void addComplex() {
 		//add constants to Symbol Table
@@ -228,6 +229,8 @@ public class JEP {
 		funTab.put("im", new Imaginary());
 		funTab.put("arg", new Arg());
 		funTab.put("cmod", new Abs());
+		funTab.put("complex", new ComplexPFMC());
+		funTab.put("polar", new Polar());
 	}
 
 	/**

@@ -45,17 +45,17 @@ public class Exp extends PostfixMathCommand
 	public Object exp(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number) 
-		{
-			return new Double(Math.exp(((Number)param).doubleValue()));
-		}
-		else if (param instanceof Complex)
+		if (param instanceof Complex)
 		{
 		  	Complex z = (Complex) param;
 		  	double x = z.re();
 		  	double y = z.im();
 		  	double mod = Math.exp(x);
 			return new Complex(mod*Math.cos(y),mod*Math.sin(y));
+		}
+		else if (param instanceof Number) 
+		{
+			return new Double(Math.exp(((Number)param).doubleValue()));
 		}
 
 		throw new ParseException("Invalid parameter type");

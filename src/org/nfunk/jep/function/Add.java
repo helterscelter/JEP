@@ -49,19 +49,21 @@ public class Add extends PostfixMathCommand
 	}
 
 	public Object add(Object param1, Object param2) throws ParseException {
-		if (param1 instanceof Number) {
-			if (param2 instanceof Number) {
-				return add((Number)param1, (Number)param2);
-			} else if (param2 instanceof Complex) {
-				return add((Complex)param2, (Number)param1);
-			}
-		} else if (param1 instanceof Complex) {
-			if (param2 instanceof Number) {
-				return add((Complex)param1, (Number)param2);
-			} else if (param2 instanceof Complex) {
+		if (param1 instanceof Complex) 
+		{
+			if (param2 instanceof Complex) 
 				return add((Complex)param1, (Complex)param2);
-			}
-		} else if ((param1 instanceof String) && (param2 instanceof String)) {
+			else if (param2 instanceof Number)
+				return add((Complex)param1, (Number)param2);
+		}
+		else if (param1 instanceof Number) 
+		{
+			if (param2 instanceof Complex) 
+				return add((Complex)param2, (Number)param1);
+			else if (param2 instanceof Number) 
+				return add((Number)param1, (Number)param2);
+		}
+		else if ((param1 instanceof String) && (param2 instanceof String)) {
 			return (String)param1 + (String)param2;
 		}
 		

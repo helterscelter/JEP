@@ -31,17 +31,16 @@ public class ArcSineH extends PostfixMathCommand
 	public Object asinh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
+		if (param instanceof Complex)
+		{
+			return ((Complex)param).asinh();
+		}
+		else if (param instanceof Number)
 		{
 			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
 			
 			return temp.asinh();
 		}
-		else if (param instanceof Complex)
-		{
-			return ((Complex)param).asinh();
-		}
-
 		throw new ParseException("Invalid parameter type");
 	}
 }

@@ -33,13 +33,13 @@ public class ArcSine extends PostfixMathCommand
 	public Object asin(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
-		{
-			return new Double(Math.asin(((Number)param).doubleValue()));
-		}
-		else if (param instanceof Complex)
+		if (param instanceof Complex)
 		{
 			return ((Complex)param).asin();
+		}
+		else if (param instanceof Number)
+		{
+			return new Double(Math.asin(((Number)param).doubleValue()));
 		}
 
 		throw new ParseException("Invalid parameter type");

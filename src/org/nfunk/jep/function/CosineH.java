@@ -32,14 +32,14 @@ public class CosineH extends PostfixMathCommand
 	public Object cosh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
+		if (param instanceof Complex)
+		{
+			return ((Complex)param).cosh();
+		}
+		else if (param instanceof Number)
 		{
 			double value = ((Number)param).doubleValue();
 			return new Double((Math.exp(value) + Math.exp(-value))/2);
-		}
-		else if (param instanceof Complex)
-		{
-			return ((Complex)param).cosh();
 		}
 
 		throw new ParseException("Invalid parameter type");

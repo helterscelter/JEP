@@ -34,18 +34,17 @@ public class Power extends PostfixMathCommand
 	public Object power(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Number) {
-			if (param2 instanceof Number) {
-				return power((Number)param1, (Number)param2);
-			} else if (param2 instanceof Complex) {
-				return power((Number)param1, (Complex)param2);
-			}
-		} else if (param1 instanceof Complex) {
-			if (param2 instanceof Number) {
-				return power((Complex)param1, (Number)param2);
-			} else if (param2 instanceof Complex) {
+		if (param1 instanceof Complex) {
+			if (param2 instanceof Complex)
 				return power((Complex)param1, (Complex)param2);
-			}
+			else if (param2 instanceof Number) 
+				return power((Complex)param1, (Number)param2);
+		}
+		else if (param1 instanceof Number) {
+			if (param2 instanceof Complex)
+				return power((Number)param1, (Complex)param2);
+			else if (param2 instanceof Number) 
+				return power((Number)param1, (Number)param2);
 		}
 
 		throw new ParseException("Invalid parameter type");

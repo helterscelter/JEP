@@ -35,12 +35,12 @@ public class Arg extends PostfixMathCommand
 	}
 	
 	public Number arg(Object param) throws ParseException {
-		if (param instanceof Number) {
+		if (param instanceof Complex) {
+					return new Double(((Complex)param).arg());
+				}
+		else if (param instanceof Number) {
 			return (ONE);
-		} else if (param instanceof Complex) {
-			return new Double(((Complex)param).arg());
-		}
-
+		} 
 		throw new ParseException("Invalid parameter type");
 	}
 

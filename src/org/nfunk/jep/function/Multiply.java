@@ -47,29 +47,30 @@ public class Multiply extends PostfixMathCommand
 	public Object mul(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Number)
+		if (param1 instanceof Complex)
 		{
-			if (param2 instanceof Number)
-				return mul((Number)param1, (Number)param2);
-			else if (param2 instanceof Complex)
-				return mul((Complex)param2, (Number)param1);
-			else if (param2 instanceof Vector)
-				return mul((Vector)param2, (Number)param1);
-		} else if (param1 instanceof Complex)
-		{
-			if (param2 instanceof Number)
-				return mul((Complex)param1, (Number)param2);
-			else if (param2 instanceof Complex)
+			if (param2 instanceof Complex)
 				return mul((Complex)param1, (Complex)param2);
+			else if (param2 instanceof Number)
+				return mul((Complex)param1, (Number)param2);
 			else if (param2 instanceof Vector)
 				return mul((Vector)param2, (Complex)param1);
 		}
+		else if (param1 instanceof Number)
+		{
+			if (param2 instanceof Complex)
+				return mul((Complex)param2, (Number)param1);
+			else if (param2 instanceof Number)
+				return mul((Number)param1, (Number)param2);
+			else if (param2 instanceof Vector)
+				return mul((Vector)param2, (Number)param1);
+		}
 		else if (param1 instanceof Vector)
 		{
-			if (param2 instanceof Number)
-				return mul((Vector)param1, (Number)param2);
-			else if (param2 instanceof Complex)
+			if (param2 instanceof Complex)
 				return mul((Vector)param1, (Complex)param2);
+			else if (param2 instanceof Number)
+				return mul((Vector)param1, (Number)param2);
 		}
 		
 		throw new ParseException("Invalid parameter type");

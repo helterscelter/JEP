@@ -133,8 +133,8 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 		addDiffRule(new PassThroughDiffRule(globalDJep,"im"));
 		addDiffRule(new PassThroughDiffRule(globalDJep,"rand"));
 		
-		MacroFunction complex = new MacroFunction("complex",2,"x+i*y",globalDJep);
-		globalDJep.addFunction("complex",complex);
+		MacroFunction complex = new MacroFunction("macrocomplex",2,"x+i*y",globalDJep);
+		globalDJep.addFunction("macrocomplex",complex);
 		addDiffRule(new MacroFunctionDiffRules(globalDJep,complex));
 		
 /*		addDiffRule(new PassThroughDiffRule("\"<\"",globalDJep.getOperatorSet().getLT().getPFMC()));

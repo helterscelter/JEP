@@ -33,12 +33,13 @@ public class Sine extends PostfixMathCommand
 	public Object sin(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number) {
-			return new Double(Math.sin(((Number)param).doubleValue()));
-		} else if (param instanceof Complex) {
+		if (param instanceof Complex) {
 			return ((Complex)param).sin();
 		}
-
+		else if (param instanceof Number) {
+			return new Double(Math.sin(((Number)param).doubleValue()));
+		}
+		
 		throw new ParseException("Invalid parameter type");
 	}
 }

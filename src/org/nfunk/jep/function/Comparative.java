@@ -39,7 +39,25 @@ public class Comparative extends PostfixMathCommand
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
 		
-		if ((param1 instanceof Number) && (param2 instanceof Number))
+		if ((param1 instanceof Complex) && (param2 instanceof Complex))
+		{
+			int r;
+			
+			switch (id)
+			{
+				case NE:
+					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 0 : 1;
+					break;
+				case EQ:
+					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 1 : 0;
+					break;
+				default:
+					throw new ParseException("Relational operator type error");
+			}
+			
+			inStack.push(new Double(r));//push the result on the inStack
+		}
+		else if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
 			double x = ((Number)param1).doubleValue();
 			double y = ((Number)param2).doubleValue();
@@ -70,24 +88,8 @@ public class Comparative extends PostfixMathCommand
 			}
 			
 			inStack.push(new Double(r));//push the result on the inStack
-		} else if ((param1 instanceof Complex) && (param2 instanceof Complex))
-		{
-			int r;
-			
-			switch (id)
-			{
-				case NE:
-					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 0 : 1;
-					break;
-				case EQ:
-					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 1 : 0;
-					break;
-				default:
-					throw new ParseException("Relational operator type error");
-			}
-			
-			inStack.push(new Double(r));//push the result on the inStack
-		} else if ((param1 instanceof String) && (param2 instanceof String))
+		} 
+		else if ((param1 instanceof String) && (param2 instanceof String))
 		{
 			int r;
 			

@@ -32,14 +32,14 @@ public class SineH extends PostfixMathCommand
 	public Object sinh(Object param)
 		throws ParseException
 	{
-		if (param instanceof Number)
+		if (param instanceof Complex)
+		{
+			return ((Complex)param).sinh();
+		}
+		else if (param instanceof Number)
 		{
 			double value = ((Number)param).doubleValue();
 			return new Double((Math.exp(value)-Math.exp(-value))/2);
-		}
-		else if (param instanceof Complex)
-		{
-			return ((Complex)param).sinh();
 		}
 
 		throw new ParseException("Invalid parameter type");

@@ -35,28 +35,28 @@ public class Subtract extends PostfixMathCommand
 	public Object sub(Object param1, Object param2)
 		throws ParseException
 	{
-		if (param1 instanceof Number)
+		if (param1 instanceof Complex)
 		{
-			if (param2 instanceof Number)
-			{
-				return sub((Number)param1, (Number)param2);
-			}
-			else if (param2 instanceof Complex)
-			{
-				return sub((Number)param1, (Complex)param2);
-			}
-		} else if (param1 instanceof Complex)
-		{
-			if (param2 instanceof Number)
-			{
-				return sub((Complex)param1, (Number)param2);
-			}
-			else if (param2 instanceof Complex)
+			if (param2 instanceof Complex)
 			{
 				return sub((Complex)param1, (Complex)param2);
 			}
+			else if( param2 instanceof Number)
+			{
+				return sub((Complex)param1, (Number)param2);
+			}
 		}
-
+		else if (param1 instanceof Number)
+		{
+			if (param2 instanceof Complex)
+			{
+				return sub((Number)param1, (Complex)param2);
+			}
+			else if (param2 instanceof Number)
+			{
+				return sub((Number)param1, (Number)param2);
+			}
+		} 
 		throw new ParseException("Invalid parameter type");
 	}
 	

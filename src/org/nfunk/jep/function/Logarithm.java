@@ -36,10 +36,13 @@ public class Logarithm extends PostfixMathCommand
 	}
 	
 
-	public Object log(Object param) throws ParseException {
-
-		if (param instanceof Number) {
-
+	public Object log(Object param) throws ParseException 
+	{
+		if (param instanceof Complex) {
+		   return ((Complex)param).log().div(CLOG10);
+		}
+		else if (param instanceof Number) 
+		{
 			double num = ((Number) param).doubleValue();
 			if( num > 0)
 				return new Double(Math.log(num)/LOG10);
@@ -48,12 +51,7 @@ public class Logarithm extends PostfixMathCommand
 				Complex temp = new Complex(num);
 				return temp.log().div(CLOG10);
 			}
-			
-		} else if (param instanceof Complex) {
-				
-			return ((Complex)param).log().div(CLOG10);
 		}
-
 		throw new ParseException("Invalid parameter type");
 	}
 	

@@ -117,7 +117,7 @@ public class TreeUtils {
 	public boolean isReal(Node node)
 	{
 			return (node instanceof ASTConstant)
-			 && ( ((ASTConstant) node).getValue() instanceof Number );
+			 && ( ((ASTConstant) node).getValue() instanceof Double );
 	}
 	
 	/**

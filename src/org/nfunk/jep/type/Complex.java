@@ -28,7 +28,8 @@ package  org.nfunk.jep.type;
  * recommended to use the netlib package.
  *
  * @author Nathan Funk
- * @version 2.3.0.1 now extends Number
+ * @version 2.3.0.1 now extends Number, has add and sub methods.
+ * @version 2.3.0.2 now overrides equals and hashCode.
  */
 
 public class Complex extends Number
@@ -150,7 +151,39 @@ public class Complex extends Number
 		
 		return (temp1*temp1 + temp2*temp2) <= tolerance*tolerance;
 	}
-	
+	/**
+	 * Compares this object against the specified object. 
+	 * The result is true if and only if the argument is not null 
+	 * and is a Complex object that represents the same complex number. 
+	 * Equality follows the same pattern as Double aplies to each field:
+	 * <ul>
+     * <li>If d1 and d2 both represent Double.NaN, then the equals method returns true, even though Double.NaN==Double.NaN has the value false.
+     * <li>If d1 represents +0.0 while d2 represents -0.0, or vice versa, the equal test has the value false, even though +0.0==-0.0 has the value true.
+     * </ul>
+     * This definition allows hash tables to operate properly.
+
+	 * @since 2.3.0.2
+	 */
+	public boolean equals(Object o) {
+		if(!(o instanceof Complex)) return false;
+		Complex c = (Complex) o;
+		return(Double.doubleToLongBits(this.re) == Double.doubleToLongBits(c.re) 
+			&& Double.doubleToLongBits(this.im) == Double.doubleToLongBits(c.im));
+	}
+	/**
+	 * Always override hashCode when you override equals.
+	 * Efective Java, Joshua Bloch, Sun Press
+	 */
+	public int hashCode() {
+		int result = 17;
+		long xl = Double.doubleToLongBits(this.re);
+		long yl = Double.doubleToLongBits(this.im);
+		int xi = (int)(xl^(xl>>32));
+		int yi = (int)(yl^(yl>>32));
+		result = 37*result+xi;
+		result = 37*result+xi;
+		return result;
+	}
 	/**
 	 * Returns the value of this complex number as a string in the format:
 	 * <pre>(real, imaginary)</pre>.
@@ -726,7 +759,20 @@ public class Complex extends Number
 		return result;
 	}
 
-
+	/**
+	 * Converts an [r,theta] pair to a complex number r * e^(i theta).
+	 * @param r The radius
+	 * @param theta The angle
+	 * @return The complex result.
+	 * @since 2.3.0.1
+	 */
+	public static Complex polarValueOf(Number r,Number theta)
+	{
+		double rad = r.doubleValue();
+		double ang = theta.doubleValue();
+		return new Complex(rad*Math.cos(ang), rad*Math.sin(ang));
+		
+	}
 	/** Returns real part.
 	 * @since 2.3.0.1
 	 */
