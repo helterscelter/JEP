@@ -64,14 +64,16 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - use "ant dist"
  - Update download page
  - Update license
- - Upload license pdf
+ - Download package and test
+ - add jep-x.xx-withexamples.jar to website folder
  - Update documentation with new features
- - Add CVS tag for version (e.g. v223)
+ - Run spell check on changed pages
  - Test web site in multiple browsers
  - Upload new distribution file(s)
- - Run spell check on changed pages
- - Download package and test
+ - Upload license pdf
+ - Upload web site
  - Add message on SourceForge list
  - Update version number+ feature list from JARS, share*it,...
+ - Add CVS tag for version (e.g. v223)
 
 == User Wish List ===================================================
