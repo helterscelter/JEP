@@ -13,6 +13,11 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * Addition function. Supports any number of parameters although typically
+ * only 2 parameters are used. 
+ * @author nathan
+ */
 public class Add extends PostfixMathCommand
 {
 	
@@ -30,24 +35,35 @@ public class Add extends PostfixMathCommand
 		
 		Object sum = stack.pop();
 		Object param;
-        int i = 1;
+		int i = 1;
         
-        // repeat summation for each one of the current parameters
-        while (i < curNumberOfParameters) {
-        	// get the parameter from the stack
-            param = stack.pop();
-            
-            // add it to the sum (order is important for String arguments)
-            sum = add(param, sum);
-            
-            i++;
-        }
+		// repeat summation for each one of the current parameters
+		while (i < curNumberOfParameters) {
+			// get the parameter from the stack
+			param = stack.pop();
+			
+			// add it to the sum (order is important for String arguments)
+			sum = add(param, sum);
+			
+			i++;
+		}
         		
 		stack.push(sum);
 		
 		return;
 	}
 
+	/**
+	 * Adds two numbers together. The parameters can be of type Number,
+	 * Complex, or String. If a certain combination of types is not supported,
+	 * a ParseException is thrown.
+	 * 
+	 * @param param1 The first parameter to be added.
+	 * @param param2 The second parameter to be added.
+	 * @return The sum of param1 and param2, or concatenation of the two if
+	 *         they are Strings.
+	 * @throws ParseException
+	 */
 	public Object add(Object param1, Object param2) throws ParseException {
 		if (param1 instanceof Complex) 
 		{

@@ -19,6 +19,9 @@ import org.nfunk.jep.type.*;
  * for the last two only != and == work.
  * For other types care might be needed.
  * 
+ * Complex numbers are compared using a tolerance which can be set
+ * using setTolerance().  
+ * 
  * @author N Funk and R Morris
  * @since 2.3.0 beta 1 a bit of a rewrite to make sub classing easier, now allows Complex to be compared to Double i.e. 1+0 i == 1.
  * @since 2.3.0 beta 2 changed the internal lt,gt,le,ge,ne and eq method to return boolean.
@@ -37,6 +40,11 @@ public class Comparative extends PostfixMathCommand
 	public static final int NE = 4;
 	public static final int EQ = 5;
 
+	/**
+	 * Constructor. Sets the number of parameters to 2. Initializes the
+	 * tolerance for comparing Complex values.
+	 * @param id_in The id of the comparative operator.
+	 */
 	public Comparative(int id_in)
 	{
 		id = id_in;
@@ -64,7 +72,7 @@ public class Comparative extends PostfixMathCommand
 		else inStack.push(new Double(0));
 	}
 	
-	public boolean lt(Object param1,Object param2) 	throws ParseException
+	public boolean lt(Object param1, Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException("< not defined for complex numbers");
@@ -76,10 +84,12 @@ public class Comparative extends PostfixMathCommand
 		}
 		throw new ParseException("< not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
-	public boolean gt(Object param1,Object param2)	throws ParseException
+	
+	public boolean gt(Object param1, Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException("> not defined for complex numbers");
+		
 		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
 			double x = ((Number)param1).doubleValue();
@@ -88,10 +98,12 @@ public class Comparative extends PostfixMathCommand
 		}
 		throw new ParseException("> not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
-	public boolean le(Object param1,Object param2)	throws ParseException
+	
+	public boolean le(Object param1, Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException("<= not defined for complex numbers");
+		
 		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
 			double x = ((Number)param1).doubleValue();
@@ -100,10 +112,12 @@ public class Comparative extends PostfixMathCommand
 		}
 		throw new ParseException("<= not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
-	public boolean ge(Object param1,Object param2)	throws ParseException
+	
+	public boolean ge(Object param1, Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException(">= not defined for complex numbers");
+		
 		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
 			double x = ((Number)param1).doubleValue();
@@ -113,36 +127,38 @@ public class Comparative extends PostfixMathCommand
 		throw new ParseException(">= not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
 
-	public boolean eq(Object param1,Object param2)	throws ParseException
+	public boolean eq(Object param1, Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) && (param2 instanceof Complex))
 		{
-			return ((Complex)param1).equals((Complex)param2,tolerance);
+			return ((Complex)param1).equals((Complex)param2, tolerance);
 		}
 		if ((param1 instanceof Complex) && (param2 instanceof Double))
 		{
-			return ((Complex)param1).equals(new Complex((Number) param2),tolerance);
+			return ((Complex)param1).equals(new Complex((Number)param2), tolerance);
 		}
 		if ((param2 instanceof Complex) && (param1 instanceof Double))
 		{
-			return ((Complex)param2).equals(new Complex((Number) param1),tolerance);
+			return ((Complex)param2).equals(new Complex((Number)param1), tolerance);
 		}
+		
+		// if we get to here, just use the equal function
 		return param1.equals(param2);
 	}
 	
-	public boolean ne(Object param1,Object param2)	throws ParseException
+	public boolean ne(Object param1, Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) && (param2 instanceof Complex))
 		{
-			return !((Complex)param1).equals((Complex)param2,tolerance);
+			return !((Complex)param1).equals((Complex)param2, tolerance);
 		}
 		if ((param1 instanceof Complex) && (param2 instanceof Double))
 		{
-			return !((Complex)param1).equals(new Complex((Number) param2),tolerance);
+			return !((Complex)param1).equals(new Complex((Number) param2), tolerance);
 		}
 		if ((param2 instanceof Complex) && (param1 instanceof Double))
 		{
-			return !((Complex)param2).equals(new Complex((Number) param1),tolerance);
+			return !((Complex)param2).equals(new Complex((Number) param1), tolerance);
 		}
 		return !param1.equals(param2);
 	}
@@ -167,10 +183,10 @@ public class Comparative extends PostfixMathCommand
 			switch (id)
 			{
 				case NE:
-					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 0 : 1;
+					r = ((Complex)param1).equals((Complex)param2, tolerance) ? 0 : 1;
 					break;
 				case EQ:
-					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 1 : 0;
+					r = ((Complex)param1).equals((Complex)param2, tolerance) ? 1 : 0;
 					break;
 				default:
 					throw new ParseException("Relational operator type error");
@@ -236,6 +252,7 @@ public class Comparative extends PostfixMathCommand
 		return;
 	}
 	*/
+	
 	/**
 	 * Returns the tolerance used for comparing complex numbers
 	 */
