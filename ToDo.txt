@@ -11,6 +11,7 @@
 
 == Further todos ====================================================
  - add user wish list to this file
+ - add example for multiple arguments to the documentation
  - add more details about license to web site
  - extend build.xml to automatically generate commercial package
  - allow dumpvisitor to show values of function nodes and variables
