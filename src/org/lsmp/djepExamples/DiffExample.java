@@ -8,6 +8,7 @@
 
 package org.lsmp.djepExamples;
 import org.nfunk.jep.*;
+import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.djep.*;
 
 /**
@@ -56,15 +57,23 @@ public class DiffExample {
 			j.preprocess(node3);
 			Node node4 = j.parse("diff(y^2+x,x)");
 			Node simp3 = j.simplify(j.preprocess(node4));
-			j.getDPrintVisitor().setPrintVariableEquations(true);
-			j.println(simp3);
-			j.getDPrintVisitor().setPrintPartialEquations(false);
-			j.getDPrintVisitor().setPrintVariableEquations(false);
-			j.println(simp3);
-			Node node5 = j.parse("y");
-			j.println(node5);
-			j.getDPrintVisitor().setPrintVariableEquations(true);
-			j.println(node5);
+
+			j.println(simp3); // default printing will be 2*y*5*x^4+1
+
+			PrintVisitor pv = j.getPrintVisitor();
+			pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
+			j.println(simp3); // no expansion will be 2*y*dy/dx+1
+
+			pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,true);
+			pv.setMode(DPrintVisitor.PRINT_VARIABLE_EQNS,true);
+			j.println(simp3); // full expansion: 2*x^5*5*x^4+1
+
+			pv.setMode(DPrintVisitor.PRINT_VARIABLE_EQNS,false);
+
+//			Node node5 = j.parse("y");
+//			j.println(node5);
+//			((DPrintVisitor)j.getPrintVisitor()).setPrintVariableEquations(true);
+//			j.println(node5);
 			
 			j.getSymbolTable().setVarValue("x",new Double(5));
 			System.out.println(j.evaluate(simp3));
@@ -97,8 +106,8 @@ public class DiffExample {
 			
 			j.setVarValue("x",new Double(5));
 			System.out.println("j.setVarValue(\"x\",new Double(5));");
-			System.out.println("j.findVarValue(y): "+j.findVarValue("y").toString());
-			System.out.println("j.findVarValue(z): "+j.findVarValue("z").toString());
+			System.out.println("j.findVarValue(y): "+j.calcVarValue("y").toString());
+			System.out.println("j.findVarValue(z): "+j.calcVarValue("z").toString());
 
 			// if j.getSymbolTable().clearValues();
 			// is called before values of equations are set
@@ -109,7 +118,7 @@ public class DiffExample {
 			j.getSymbolTable().clearValues();
 			j.setVarValue("x",new Double(6));
 			System.out.println("j.setVarValue(\"x\",new Double(6));");
-			System.out.println("j.findVarValue(z): "+j.findVarValue("z").toString());
+			System.out.println("j.findVarValue(z): "+j.calcVarValue("z").toString());
 
 			j.getSymbolTable().clearValues();
 			j.setVarValue("x",new Double(7));

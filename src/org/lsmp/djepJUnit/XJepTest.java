@@ -185,6 +185,47 @@ public class XJepTest extends TestCase {
 		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
 	}
 	
+	public void testPrint() throws ParseException
+	{
+		simplifyTestString("(a+b)+c","a+b+c");
+		simplifyTestString("(a-b)+c","a-b+c");
+		simplifyTestString("(a+b)-c","a+b-c"); 
+		simplifyTestString("(a-b)-c","a-b-c");
+
+		simplifyTestString("a+(b+c)","a+b+c");
+		simplifyTestString("a-(b+c)","a-(b+c)");
+		simplifyTestString("a+(b-c)","a+b-c");   
+		simplifyTestString("a-(b-c)","a-(b-c)");
+
+		simplifyTestString("(a*b)*c","a*b*c");
+		simplifyTestString("(a/b)*c","(a/b)*c");
+		simplifyTestString("(a*b)/c","a*b/c"); 
+		simplifyTestString("(a/b)/c","(a/b)/c");
+
+		simplifyTestString("a*(b*c)","a*b*c");
+		simplifyTestString("a/(b*c)","a/(b*c)");
+		simplifyTestString("a*(b/c)","a*b/c");
+		simplifyTestString("a/(b/c)","a/(b/c)");
+
+		simplifyTestString("a=(b=c)","a=b=c");
+		//simplifyTestString("(a=b)=c","a/(b/c)");
+
+		simplifyTestString("(a*b)+c","a*b+c");
+		simplifyTestString("(a+b)*c","(a+b)*c");
+		simplifyTestString("a*(b+c)","a*(b+c)"); 
+		simplifyTestString("a+(b*c)","a+b*c");
+
+		simplifyTestString("(a||b)||c","a||b||c");
+		simplifyTestString("(a&&b)||c","a&&b||c");
+		simplifyTestString("(a||b)&&c","(a||b)&&c"); 
+		simplifyTestString("(a&&b)&&c","a&&b&&c");
+
+		simplifyTestString("a||(b||c)","a||b||c");
+		simplifyTestString("a&&(b||c)","a&&(b||c)");
+		simplifyTestString("a||(b&&c)","a||b&&c");   
+		simplifyTestString("a&&(b&&c)","a&&b&&c");
+	}
+	
 	public void testSimp() throws ParseException
 	{
 		simplifyTest("2+3","5");
@@ -356,20 +397,38 @@ public class XJepTest extends TestCase {
 //		j.getSymbolTable().clearValues();
 		j.setVarValue("x",new Double(5));
 		System.out.println("j.setVarValue(\"x\",new Double(5));");
-		myAssertEquals("j.findVarValue(y)",j.findVarValue("y").toString(),"25.0");
-		myAssertEquals("j.findVarValue(z)",j.findVarValue("z").toString(),"30.0");
+		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"25.0");
+		myAssertEquals("j.findVarValue(z)",j.calcVarValue("z").toString(),"30.0");
 
 		j.getSymbolTable().clearValues();
 		j.setVarValue("x",new Double(6));
 		System.out.println("j.setVarValue(\"x\",new Double(6));");
-		myAssertEquals("j.findVarValue(z)",j.findVarValue("z").toString(),"42.0");
-		myAssertEquals("j.findVarValue(y)",j.findVarValue("y").toString(),"36.0");
+		myAssertEquals("j.findVarValue(z)",j.calcVarValue("z").toString(),"42.0");
+		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"36.0");
 
 		parseProcSimpEval("x=7",new Double(7));
 		myAssertEquals("eval y eqn",j.evaluate(node13).toString(),"49.0");
 		myAssertEquals("eval z eqn",j.evaluate(node15).toString(),"56.0");
 	}
 	
+	public void testDotInName() throws ParseException,Exception
+	{
+		valueTest("x.x=3",3);
+		valueTest("x.x+1",4);
+	}
+
+	public void testReentrant() throws ParseException,Exception
+	{
+		j.restartParser("x=1; // semi-colon; in comment\n y=2; z=x+y;");
+		Node node = j.continueParsing();
+		myAssertEquals("x=1; ...",j.evaluate(node).toString(),"1.0");
+		node = j.continueParsing();
+		myAssertEquals("..., y=2; ...",j.evaluate(node).toString(),"2.0");
+		node = j.continueParsing();
+		myAssertEquals("..., z=x+y;",j.evaluate(node).toString(),"3.0");
+		node = j.continueParsing();
+		assertNull("empty string ",node);
+	}
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)

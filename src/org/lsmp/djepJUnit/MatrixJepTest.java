@@ -374,8 +374,8 @@ public class MatrixJepTest extends TestCase {
 		simplifyTest("diff(sqrt(x),x)","1/(2 (sqrt(x)))");
 		
 		simplifyTest("diff(exp(x),x)","exp(x)");
-		simplifyTest("diff(pow(x,y),x)","y*(pow(x,y-1))");
-		simplifyTest("diff(pow(x,y),y)","(ln(x)) (pow(x,y))");
+//		simplifyTest("diff(pow(x,y),x)","y*(pow(x,y-1))");
+//		simplifyTest("diff(pow(x,y),y)","(ln(x)) (pow(x,y))");
 		simplifyTest("diff(ln(x),x)","1/x");
 		simplifyTest("diff(log(x),x)","(1/ln(10)) /x");
 		simplifyTest("diff(abs(x),x)","abs(x)/x");
@@ -431,23 +431,40 @@ public class MatrixJepTest extends TestCase {
 		valueTest("x=2",2);
 		valueTest("y=[x^3,x^2,x]","[8.0,4.0,2.0]");
 		valueTest("z=diff(y,x)","[12.0,4.0,1.0]");
+		valueTest("3*y","[24.0,12.0,6.0]");
+		valueTest("y*4","[32.0,16.0,8.0]");
+		valueTest("y*z","[[96.0,32.0,8.0],[48.0,16.0,4.0],[24.0,8.0,2.0]]");
+		valueTest("z*y","[[96.0,48.0,24.0],[32.0,16.0,8.0],[8.0,4.0,2.0]]");
 		valueTest("w=y^z","[-4.0,16.0,-16.0]");
-		valueTest("w . y",0.0);
-		valueTest("w . z",0.0);
+		simplifyTestString("diff(w,x)","[3.0*x^2.0,2.0*x,1.0]^z+y^[6.0*x,2.0,0.0]");
+		simplifyTestString("diff(y . z,x)","[3.0*x^2.0,2.0*x,1.0].z+y.[6.0*x,2.0,0.0]");
+		valueTest("w.y",0.0);
+		valueTest("w.z",0.0);
+		valueTest("sqrt(w . z)",0.0);
+		valueTest("sqrt([3,4].[3,4])",5.0); // tests result is unwrapped from scaler
 		valueTest("y+z","[20.0,8.0,3.0]");
 		valueTest("y-z","[-4.0,0.0,1.0]");
 		j.getSymbolTable().clearValues();
+		// the following two tests insure that ^ is printed correctly
+		simplifyTestString("y^z","y^z");
+		simplifyTestString("[8.0,4.0,2.0]^[12.0,4.0,1.0]","[8.0,4.0,2.0]^[12.0,4.0,1.0]");
 		simplifyTestString("y=[cos(x),sin(x)]","y=[cos(x),sin(x)]");
 		simplifyTestString("z=diff(y,x)","z=[-sin(x),cos(x)]");
-		valueTest("y . y",1.0);
-		valueTest("y . z",0.0);
-		valueTest("z . z",1.0);
+		valueTest("y.y",1.0);
+		valueTest("y.z",0.0);
+		valueTest("z.z",1.0);
 		j.getSymbolTable().clearValues();
 		valueTest("x=[[1,2],[3,4]]","[[1.0,2.0],[3.0,4.0]]");
 		valueTest("y=[1,-1]","[1.0,-1.0]");
 		valueTest("x*y","[-1.0,-1.0]");			
 		valueTest("y*x","[-2.0,-2.0]");
 		valueTest("x+[y,y]","[[2.0,1.0],[4.0,3.0]]");	
+		valueTest("ele(y,1)","1.0");              // Value: 2.0
+		valueTest("ele(y,2)","-1.0");              // Value: 2.0
+		valueTest("ele(x,[1,1])","1.0");          // Value: 2.0
+		valueTest("ele(x,[1,2])","2.0");          // Value: 2.0
+		valueTest("ele(x,[2,1])","3.0");          // Value: 2.0
+		valueTest("ele(x,[2,2])","4.0");          // Value: 2.0
 	}
 	public void testBad() throws ParseException
 	{

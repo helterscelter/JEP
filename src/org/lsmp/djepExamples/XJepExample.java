@@ -52,8 +52,8 @@ public class XJepExample {
 			
 			j.setVarValue("x",new Double(5));
 			System.out.println("j.setVarValue(\"x\",new Double(5));");
-			System.out.println("j.findVarValue(y): "+j.findVarValue("y").toString());
-			System.out.println("j.findVarValue(z): "+j.findVarValue("z").toString());
+			System.out.println("j.findVarValue(y): "+j.calcVarValue("y").toString());
+			System.out.println("j.findVarValue(z): "+j.calcVarValue("z").toString());
 
 			// if j.getSymbolTable().clearValues();
 			// is called before values of equations are set
@@ -64,12 +64,19 @@ public class XJepExample {
 			j.getSymbolTable().clearValues();
 			j.setVarValue("x",new Double(6));
 			System.out.println("j.setVarValue(\"x\",new Double(6));");
-			System.out.println("j.findVarValue(z): "+j.findVarValue("z").toString());
+			System.out.println("j.findVarValue(z): "+j.calcVarValue("z").toString());
 
 			j.getSymbolTable().clearValues();
 			j.setVarValue("x",new Double(7));
 			System.out.println(j.evaluate(node15));
 			System.out.println("z: "+j.getVarValue("z").toString());
+			
+			// now see if reentrancy works
+			
+			j.restartParser("x=1; // semi colon; in comment \ny=2; z=3;");
+			Node node21;
+			while((node21 = j.continueParsing()) != null)
+				j.println(node21);
 		}
 		catch(ParseException e)
 		{

@@ -33,10 +33,10 @@ public class PrintExample {
 			// convert to string
 			String str = j.toString(node);
 			System.out.println("String is '"+str+"'");
-			j.getPrintVisitor().setFullBrackets(true);
+			j.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,true);
 			j.println(node);
 			
-			j.getPrintVisitor().setFullBrackets(false);
+			j.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,false);
 			Node node2=j.parse("1*x^1+0");
 			j.println(node2);
 			Node simp=j.simplify(node2);

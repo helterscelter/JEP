@@ -26,8 +26,7 @@ JEP - Java Math Expression Parser 2.24
  */
 
 package org.lsmp.djepExamples;
-import org.lsmp.djep.djep.DJep;
-import org.lsmp.djep.djep.DSymbolTable;
+import org.lsmp.djep.djep.*;
 import org.nfunk.jep.*;
 import java.io.*;
 import java.applet.*;
@@ -172,7 +171,7 @@ public class DJepConsole extends Applet implements ActionListener {
 	{
 		try
 		{
-			System.out.print("fun:\t\t"); 
+			System.out.print("Parsed:\t\t"); 
 			j.println(node);
 			Node processed = j.preprocess(node);
 			System.out.print("Processed:\t"); 
@@ -182,10 +181,12 @@ public class DJepConsole extends Applet implements ActionListener {
 			System.out.print("Simplified:\t"); 
 			j.println(simp);
 			
-			System.out.print("Full Brackets:\t");
-			j.getPrintVisitor().setFullBrackets(true);
+			System.out.print("Full Brackets, no variable expansion:\t");
+			j.getPrintVisitor().setMode(DPrintVisitor.FULL_BRACKET,true);
+			j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
 			j.println(simp);
-			j.getPrintVisitor().setFullBrackets(false);
+			j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,true);
+			j.getPrintVisitor().setMode(DPrintVisitor.FULL_BRACKET,false);
 
 			try
 			{

@@ -16,7 +16,8 @@ JEP - Java Math Expression Parser 2.24
 
 package org.lsmp.djepExamples;
 import org.nfunk.jep.*;
-import org.lsmp.djep.matrixJep.MatrixJep;
+import org.lsmp.djep.djep.*;
+import org.lsmp.djep.matrixJep.*;
 import java.io.*;
 
 /**
@@ -88,7 +89,7 @@ public class MatrixConsole {
 			Object res = j.evaluate(matEqn);
 			System.out.println("Res: "+res);
 			System.out.println("Variables");
-			j.getVarTab().print(j.getPrintVisitor());	
+			((DSymbolTable)j.getSymbolTable()).print(j.getPrintVisitor());	
 		}
 		catch(ParseException e1) { System.out.println("Parse Error: "+e1.getMessage()); }
 		catch(IllegalArgumentException e2) { System.out.println(e2.getMessage()); }
@@ -179,7 +180,7 @@ public class MatrixConsole {
 		if( s.equals("invalidate"))
 		{
 			this.j.getSymbolTable().clearValues();
-			j.getVarTab().print(j.getPrintVisitor());	
+			((DSymbolTable)j.getSymbolTable()).print(j.getPrintVisitor());	
 			System.out.print(prompt);
 			return getCommand();
 		}

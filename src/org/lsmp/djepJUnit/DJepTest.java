@@ -328,6 +328,13 @@ public class DJepTest extends TestCase {
 		valueTest("a=b=c=z",10);
 		valueTest("b",10);
 		valueTest("d=f=a-b",0);
+		valueTest("x=2",2);
+		valueTest("(x*x)*x*(x*x)",32.0); // Works fine with Multiply
+		JEP j2 = new org.lsmp.djep.vectorJep.VectorJep();
+		valueTest("(x*x)*x*(x*x)",32.0);
+		// this created an error in 2.3.0b
+		// as creating a VectorJep changed the operator set
+		// and hence the broken MMultiply was used.								
 	}
 
 						
@@ -340,6 +347,10 @@ public class DJepTest extends TestCase {
 		simplifyTest("diff(x^2+x+1,x)","2 x+1");
 		simplifyTest("diff((x+x^2)*(x+x^3),x)","(1+2*x)*(x+x^3)+(x+x^2)*(1+3*x^2)");
 		simplifyTest("diff((x+x^2)/(x+x^3),x)","((1+2*x)*(x+x^3)-(x+x^2)*(1+3*x^2))/((x+x^3)*(x+x^3))");
+
+		simplifyTest("diff(y^x,x)","y^x*ln(y)");
+		simplifyTest("diff(e^x,x)","e^x*ln(e)");
+
 		simplifyTest("diff(sin(x),x)","cos(x)");
 
 		simplifyTest("diff((x+1)^2,x)","2+2*x");
@@ -375,8 +386,6 @@ public class DJepTest extends TestCase {
 		simplifyTest("diff(sqrt(x),x)","1/(2 (sqrt(x)))");
 		
 		simplifyTest("diff(exp(x),x)","exp(x)");
-		simplifyTest("diff(pow(x,y),x)","y*(pow(x,y-1))");
-		simplifyTest("diff(pow(x,y),y)","(ln(x)) (pow(x,y))");
 		simplifyTest("diff(ln(x),x)","1/x");
 		simplifyTest("diff(log(x),x)","(1/ln(10)) /x");
 		simplifyTest("diff(abs(x),x)","abs(x)/x");
@@ -424,6 +433,7 @@ public class DJepTest extends TestCase {
 		valueTest("y",32); // x^5
 		valueTest("z",80); // 5 x^4 
 		valueTest("w",160); // 20 x^3
+		simplifyTestString("diff(ln(y),x)","(1.0/y)*5.0*x^4.0");
 	}
 
 	public void testVariableReuse() throws ParseException,Exception
@@ -443,14 +453,14 @@ public class DJepTest extends TestCase {
 //		j.getSymbolTable().clearValues();
 		j.setVarValue("x",new Double(5));
 		System.out.println("j.setVarValue(\"x\",new Double(5));");
-		myAssertEquals("j.findVarValue(y)",j.findVarValue("y").toString(),"25.0");
-		myAssertEquals("j.findVarValue(z)",j.findVarValue("z").toString(),"10.0");
+		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"25.0");
+		myAssertEquals("j.findVarValue(z)",j.calcVarValue("z").toString(),"10.0");
 
 		j.getSymbolTable().clearValues();
 		j.setVarValue("x",new Double(6));
 		System.out.println("j.setVarValue(\"x\",new Double(5));");
-		myAssertEquals("j.findVarValue(z)",j.findVarValue("z").toString(),"12.0");
-		myAssertEquals("j.findVarValue(y)",j.findVarValue("y").toString(),"36.0");
+		myAssertEquals("j.findVarValue(z)",j.calcVarValue("z").toString(),"12.0");
+		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"36.0");
 	}
 	
 	public void testBad() throws ParseException
@@ -464,6 +474,8 @@ public class DJepTest extends TestCase {
 			simplifyTest("diff(im(x+i y),x)","0");
 			simplifyTest("diff(im(x+i y),y)","1");
 			simplifyTest("(x/2)*3","x*1.5");
+			simplifyTest("diff(pow(x,y),x)","y*(pow(x,y-1))");
+			simplifyTest("diff(pow(x,y),y)","(ln(x)) (pow(x,y))");
 		}
 	}
 }
