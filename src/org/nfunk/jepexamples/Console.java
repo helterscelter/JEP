@@ -73,10 +73,14 @@ class Console {
 				if (j.hasError()) {
 					System.out.println(j.getErrorInfo());
 				} else {
-					// expression is ok
-					System.out.println(j.getValueAsObject());
+					// expression is OK, get the value
+					Object value = j.getValueAsObject();
+					
+					// did error occur during evaluation?
 					if (j.hasError()) {
 						System.out.println(j.getErrorInfo());
+					} else {
+						System.out.println(value);
 					}
 
 /*
