@@ -123,12 +123,13 @@ public class Polynomial extends Number {
 		return valueOf(lcoeffs);
 	}
 	
+	
 	public Polynomial pow(int exp)
 	{
 		if(exp == 0) return valueOf(new Number[]{baseRing.getONE()});
 		if(exp == 1) return valueOf(this.getCoeffs());
 		if(exp < 0)
-			throw new IllegalArgumentException("Tried to rais a Polynomial to a negative power");
+			throw new IllegalArgumentException("Tried to raise a Polynomial to a negative power");
 
 		Polynomial res = valueOf(new Number[]{baseRing.getONE()});
 		Polynomial currentPower = this;
@@ -146,7 +147,7 @@ public class Polynomial extends Number {
 	private String stripBrackets(Number num)
 	{
 		String s = num.toString();
-		if(s.startsWith("<") && s.endsWith(">"))
+		if(s.startsWith("(") && s.endsWith(")"))
 		{
 			if(s.indexOf('+')!=-1 || s.indexOf('-')>1) // is it <x+y> or <x-y>. <-x> is OK
 				return s;
@@ -155,13 +156,19 @@ public class Polynomial extends Number {
 		}
 		else return s;
 	}
+	private boolean needsBrackets(String s)
+	{
+		int i1 = s.indexOf('+');
+		int i2 = s.lastIndexOf('-');
+		return ( (i1 !=-1) || (i2>0) );
+	}
 	public String toString()
 	{
-		if(degree==0) return "<"+stripBrackets(coeffs[0])+">";
-		StringBuffer sb = new StringBuffer("<");
+		if(degree==0) return coeffs[0].toString();
+		StringBuffer sb = new StringBuffer("");
 		for(int i=degree;i>=0;--i)
 		{
-			String s = stripBrackets(coeffs[i]);
+			String s = coeffs[i].toString();
 
 			// don't bother if a zero coeff
 			if(s.equals("0") ||
@@ -174,11 +181,12 @@ public class Polynomial extends Number {
 			// always print the final coeff (if non zero)
 			if( i==0 ) {
 				String s1 = coeffs[i].toString();
-				if(s1.startsWith("<") && s1.endsWith(">"))
-				{
-						sb.append(s1.substring(1,s1.length()-1));
-				}
-				else 	sb.append(s1);
+				sb.append(s1);
+				//if(s1.startsWith("(") && s1.endsWith(")"))
+				//{
+				//		sb.append(s1.substring(1,s1.length()-1));
+				//}
+				//else 	sb.append(s1);
 				break;
 			}
 			// if its -1 t^i just print -
@@ -190,13 +198,21 @@ public class Polynomial extends Number {
 					baseRing.getONE()))
 				{} // don't print 1
 			else {
-				sb.append(stripBrackets(coeffs[i]));
+				if(needsBrackets(coeffs[i].toString()))
+				{
+					sb.append("(");
+					sb.append(coeffs[i].toString());
+					sb.append(")");
+				}
+				else
+					sb.append(coeffs[i].toString());
+				//sb.append(stripBrackets(coeffs[i]));
 				sb.append(" ");
 			}
 			if(i>=2) sb.append(symbol+"^"+i);
 			else if(i==1) sb.append(symbol);
 		}
-		sb.append(">");
+		sb.append("");
 		return sb.toString();
 	}
 	

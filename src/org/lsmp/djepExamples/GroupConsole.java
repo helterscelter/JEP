@@ -243,6 +243,7 @@ class GroupConsole {
 				j.addStandardConstants();
 				j.setAllowAssignment(true);
 				j.setAllowUndeclared(true);
+				j.setImplicitMul(true);
 			}
 
 			System.out.println("Current Group: "+j.getGroup().toString());			

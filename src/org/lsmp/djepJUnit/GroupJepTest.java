@@ -137,8 +137,8 @@ public class GroupJepTest extends TestCase {
 		j = new GroupJep(new AlgebraicExtension(ring, p1));
 		j.addStandardConstants();
 		System.out.println(j.getGroup().toString());
-		valueToStringTest("rt2*rt2","<2>");
-		valueToStringTest("(rt2+1)*(rt2+1)","<2 rt2+3>");
+		valueToStringTest("rt2*rt2","2");
+		valueToStringTest("(rt2+1)*(rt2+1)","2 rt2+3");
 	}
 	
 	public void testZ5thRootUnity() throws Exception
@@ -156,10 +156,10 @@ public class GroupJepTest extends TestCase {
 		j = new GroupJep(new AlgebraicExtension(ring, p1));
 		j.addStandardConstants();
 		System.out.println(j.getGroup().toString());
-		valueToStringTest("t*t","<t^2>");
-		valueToStringTest("t*t*t","<t^3>");
-		valueToStringTest("t*t*t*t","<t^4>");
-		valueToStringTest("t*t*t*t*t","<1>");
+		valueToStringTest("t*t","t^2");
+		valueToStringTest("t*t*t","t^3");
+		valueToStringTest("t*t*t*t","t^4");
+		valueToStringTest("t*t*t*t*t","1");
 	}
 
 	public void testZRoot2Root5() throws Exception
@@ -183,13 +183,13 @@ public class GroupJepTest extends TestCase {
 		j.addStandardConstants();
 		System.out.println(j.getGroup().toString());
 
-		valueToStringTest("t","<t>");
-		valueToStringTest("s","<s>");
-		valueToStringTest("t*t","<2>");
-		valueToStringTest("s*s","<5>");
-		valueToStringTest("s*t","<t s>");
-		valueToStringTest("s+t","<s+t>");
-		valueToStringTest("(t-1)*(s-1)","<<t-1> s+-t+1>");
+		valueToStringTest("t","t");
+		valueToStringTest("s","s");
+		valueToStringTest("t*t","2");
+		valueToStringTest("s*s","5");
+		valueToStringTest("s*t","t s");
+		valueToStringTest("s+t","s+t");
+		valueToStringTest("(t-1)*(s-1)","(t-1) s-t+1");
 	}
 
 	public void testZtau() throws Exception
@@ -207,22 +207,22 @@ public class GroupJepTest extends TestCase {
 		j.setAllowAssignment(true);
 		j.setAllowUndeclared(true);
 		System.out.println(j.getGroup().toString());
-		valueToStringTest("t*t","<t+1>");
-		valueToStringTest("t*t*t","<2 t+1>");
-		valueToStringTest("t*t*t*t","<3 t+2>");
-		valueToStringTest("t*t*t*t*t","<5 t+3>");
-		valueToStringTest("t*t*t*t*t*t","<8 t+5>");
-		valueToStringTest("x=2*t-1","<2 t-1>");
-		valueToStringTest("x*x","<5>");
-		valueToStringTest("-t","<-t>");
-		valueToStringTest("1-t","<-t+1>");
-		valueToStringTest("t*(1-t)","<-1>");
+		valueToStringTest("t*t","t+1");
+		valueToStringTest("t*t*t","2 t+1");
+		valueToStringTest("t*t*t*t","3 t+2");
+		valueToStringTest("t*t*t*t*t","5 t+3");
+		valueToStringTest("t*t*t*t*t*t","8 t+5");
+		valueToStringTest("x=2*t-1","2 t-1");
+		valueToStringTest("x*x","5");
+		valueToStringTest("-t","-t");
+		valueToStringTest("1-t","-t+1");
+		valueToStringTest("t*(1-t)","-1");
 	}
 
 	public void testPolynomials() throws Exception
 	{
 		RingI ring = new Reals();
-		FreeGroup fg = new FreeGroup(ring,"x");
+		FreeGroup fg = new ExtendedFreeGroup(ring,"x");
 		j = new GroupJep(fg);
 		j.addStandardConstants();
 		j.setAllowAssignment(true);
@@ -238,7 +238,7 @@ public class GroupJepTest extends TestCase {
 		myAssertEquals("(x+7.6)*(x+5.8832)*(x-55.12): x=1.0",val.toString(),"(-3203.6615424, 0.0)");
 		System.out.println("rounding error 7.6+5.8832-55.12 = "+(7.6+5.8832-55.12));
 
-		FreeGroup fg2 = new FreeGroup(fg,"y");
+		FreeGroup fg2 = new ExtendedFreeGroup(fg,"y");
 		j = new GroupJep(fg2);
 		j.addStandardConstants();
 		j.setAllowAssignment(true);
@@ -258,6 +258,10 @@ public class GroupJepTest extends TestCase {
 		fg2.setRootVal(new Complex(4.0));
 		System.out.println(fge2.toString());
 		myAssertEquals("(x+1)*(y-2): x=5,y=4",fge2.getComplexValue().toString(),"(12.0, 0.0)");		
+
+		valueToStringTest("a=5","5.0");
+		valueToStringTest("z=x+y-1","y+x-1.0");
+		valueToStringTest("z^a","y^5+(5.0 x-5.0) y^4+(10.0 x^2-20.0 x+10.0) y^3+(10.0 x^3-30.0 x^2+30.0 x-10.0) y^2+(5.0 x^4-20.0 x^3+30.0 x^2-20.0 x+5.0) y+x^5-5.0 x^4+10.0 x^3-10.0 x^2+5.0 x-1.0");
 		
 	}
 
