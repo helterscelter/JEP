@@ -28,6 +28,7 @@
  - add shell scripts for starting up in linux
  - return N/A when result is a complex number.
  - automaticize web site uploading/cvs
+ - add to features, that it is "easy to integrate in your project"
  - clean up javadoc so warnings are avoided during javadoc generation
  - add max(), min(), avg() methods
  - add user wish list to this file
