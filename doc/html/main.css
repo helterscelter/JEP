@@ -27,7 +27,8 @@ A:HOVER {
 P  {
 	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
 	FONT-SIZE : 10pt;
-; margin-top: 0px; padding-top: 0px
+	margin-top: 0px;
+	padding-top: 0px;
 }
 
 H1  {
@@ -35,21 +36,27 @@ H1  {
 	FONT-FAMILY : Arial, Helvetica, sans-serif;
 	FONT-SIZE : 15pt;
 	FONT-WEIGHT : bold;
-; margin-bottom: 0px; padding-bottom: 0px
+	margin-bottom: 20px;
+	padding-bottom: 0px;
+	border-bottom: solid;
+	border-width: 1px;
+	border-color: #ccc;
 }
 
 H2  {
 	COLOR : #036;
 	FONT-FAMILY : Arial, Helvetica, sans-serif;
 	FONT-SIZE : 13pt;
-; margin-bottom: 0px; padding-bottom: 0px
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 
 H3  {
 	COLOR : #369;
 	FONT-FAMILY : Arial, Helvetica, sans-serif;
 	FONT-SIZE : 12pt;
-; margin-bottom: 5px; padding-bottom: 0px
+	margin-bottom: 5px;
+	padding-bottom: 0px;
 }
 
 OL  {
