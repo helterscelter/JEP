@@ -87,7 +87,7 @@ public class Parser {
 		// Parse the expression, and return the 
 		enable_tracing();
 		Node res = Start();
-		if(res == null) throw new ParseException("No expression entered");
+		if (res == null) throw new ParseException("No expression entered");
 		return res.jjtGetChild(0);
 	}
 
