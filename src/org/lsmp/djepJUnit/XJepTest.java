@@ -607,10 +607,11 @@ public class XJepTest extends TestCase {
 		valueTestInt("binom(10,1)",10);
 		valueTestInt("binom(10,5)",252);
 	}
-	public void testBad() throws ParseException
+	public void testBad() throws Exception
 	{
 		if(SHOW_BAD)
 		{
+			valueTest("recurse = recurse+1",null);
 			simplifyTest("1&&(1||x)","1");
 			simplifyTest("diff(sgn(x),x)","0");	// sgn not implemented
 			simplifyTest("diff(re(x+i y),x)","1"); // not smart enought to work out re(i) = 1
