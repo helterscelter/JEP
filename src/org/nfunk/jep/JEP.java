@@ -296,7 +296,22 @@ public class JEP {
 	public Object removeVariable(String name) {
 		return symTab.remove(name);
 	}
-
+	/** returns the value of the varible with given name. 
+	 * Added RJM Feb 04 */
+	public Object getVarValue(String name) {
+		return symTab.getVar(name).getValue();
+	}
+	/** set the value of a variable 
+	 * Added RJM Feb 04 */
+	public Object setVarValue(String name,Object val) {
+		return symTab.setVarValue(name,val);
+	}
+	/** get the object represeing the variable 
+	 * Added RJM Feb 04 */
+	public Variable getVar(String name) {
+		return symTab.getVar(name);
+	}
+	
 	/**
 	 * Removes a function from the parser.
 	 *
