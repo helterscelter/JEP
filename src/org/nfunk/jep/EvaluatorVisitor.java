@@ -92,8 +92,9 @@ public class EvaluatorVisitor implements ParserVisitor {
 		errorList = errorList_in;
 		symTab = symTab_in;
 		errorFlag = false;
-		stack.clear();
+		stack.removeAllElements();
 		// rjm addition ensure stack is correct before beginning.
+		// njf changed from clear() to removeAllElements for 1.1 compatibility
 
 		// evaluate by letting the top node accept the visitor
 		try {
