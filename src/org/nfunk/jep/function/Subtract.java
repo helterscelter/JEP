@@ -31,7 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class Subtract extends PostfixMathCommand implements PostfixMathCommandI
+public class Subtract extends PostfixMathCommand
 {
 	public Subtract()
 	{

@@ -33,7 +33,7 @@ import org.nfunk.jep.type.*;
 /**
 * Encapsulates the Math.random() function.
 */
-public class Random extends PostfixMathCommand implements PostfixMathCommandI
+public class Random extends PostfixMathCommand
 {
 	public Random()
 	{

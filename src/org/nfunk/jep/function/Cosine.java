@@ -31,7 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class Cosine extends PostfixMathCommand implements PostfixMathCommandI
+public class Cosine extends PostfixMathCommand
 {
 	public Cosine()
 	{

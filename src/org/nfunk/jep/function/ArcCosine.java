@@ -31,7 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class ArcCosine extends PostfixMathCommand implements PostfixMathCommandI
+public class ArcCosine extends PostfixMathCommand
 {
 	public ArcCosine()
 	{

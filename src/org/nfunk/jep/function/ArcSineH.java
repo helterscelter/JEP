@@ -31,7 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class ArcSineH extends PostfixMathCommand implements PostfixMathCommandI
+public class ArcSineH extends PostfixMathCommand
 {
 	public ArcSineH()
 	{

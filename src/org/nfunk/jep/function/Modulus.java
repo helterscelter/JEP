@@ -32,7 +32,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class Modulus extends PostfixMathCommand implements PostfixMathCommandI
+public class Modulus extends PostfixMathCommand
 {
 	public Modulus()
 	{

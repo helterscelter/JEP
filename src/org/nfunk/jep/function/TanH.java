@@ -31,8 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-
-public class TanH extends PostfixMathCommand implements PostfixMathCommandI
+public class TanH extends PostfixMathCommand
 {
 	public TanH()
 	{

@@ -31,7 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class Imaginary extends PostfixMathCommand implements PostfixMathCommandI
+public class Imaginary extends PostfixMathCommand
 {
 	public Imaginary()
 	{

@@ -31,7 +31,7 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class Real extends PostfixMathCommand implements PostfixMathCommandI
+public class Real extends PostfixMathCommand
 {
 	public Real()
 	{

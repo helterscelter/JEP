@@ -29,11 +29,13 @@ import java.util.*;
 import org.nfunk.jep.*;
 
 /**
- * Function classes extend this class. It includes a numberOfParameters member,
- * that is checked when parsing the expression. This member should be
- * initialized to an appropriate value for all classes extending this class.
- * If an arbitrary number of parameters should be allowed, initialize this
- * member to -1.
+ * Function classes extend this class. It is an implementation of the 
+ * PostfixMathCommandI interface.
+ * <p>
+ * It includes a numberOfParameters member, that is checked when parsing the
+ * expression. This member should be initialized to an appropriate value for
+ * all classes extending this class. If an arbitrary number of parameters
+ * should be allowed, initialize this member to -1.
  */
 public class PostfixMathCommand implements PostfixMathCommandI
 {
