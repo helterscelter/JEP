@@ -37,16 +37,28 @@ public class Add extends PostfixMathCommand
 	
 	public Add()
 	{
-		numberOfParameters = 2;
+		numberOfParameters = -1;
 	}
 	
-	public void run(Stack inStack) throws ParseException {
-		checkStack(inStack);// check the stack
+	public void run(Stack stack) throws ParseException {
+		checkStack(stack);// check the stack
 		
-		Object param2 = inStack.pop();
-		Object param1 = inStack.pop();
-		
-		inStack.push(add(param1, param2));		
+		Object sum = stack.pop();
+		Object param;
+        int i = 1;
+        
+        // repeat summation for each one of the current parameters
+        while (i < curNumberOfParameters) {
+        	// get the parameter from the stack
+            param = stack.pop();
+            
+            // add it to the sum
+            sum = add(sum, param);
+                
+            i++;
+        }
+        		
+		stack.push(sum);
 		
 		return;
 	}

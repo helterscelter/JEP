@@ -34,21 +34,31 @@ import org.nfunk.jep.type.*;
 public class Multiply extends PostfixMathCommand
 {
 	
-	public Multiply()
-	{
-		numberOfParameters = 2;
+	public Multiply() {
+		numberOfParameters = -1;
 	}
 	
-	public void run(Stack inStack)
-		throws ParseException 
+	public void run(Stack stack) throws ParseException 
 	{
-		checkStack(inStack); // check the stack
+		checkStack(stack); // check the stack
 
-		Object param2 = inStack.pop();
-		Object param1 = inStack.pop();
+		Object product = stack.pop();
+		Object param;
+        int i = 1;
+        
+        // repeat summation for each one of the current parameters
+        while (i < curNumberOfParameters) {
+        	// get the parameter from the stack
+            param = stack.pop();
+            
+            // multiply it with the product
+            product = mul(product, param);
+                
+            i++;
+        }
+        		
+		stack.push(product);
 
-		inStack.push(mul(param1, param2));
-		
 		return;
 	}
 	
