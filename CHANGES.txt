@@ -88,6 +88,9 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Apr 03 05 rjm - DifferentationVisitor is now smarter when calculating zero derivatives
+			  - PrintVisitor.getMode(int testmode) added.
+			  
 Apr 01 05 rjm - MVector, Matrix, Tensor no longer extend number.
 
 Apr 01 05 rjm - Added det(), trace(), vsum(), trans(), getDiag(), diag(), id(),

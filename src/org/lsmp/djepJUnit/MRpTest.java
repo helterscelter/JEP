@@ -795,7 +795,8 @@ public class MRpTest extends TestCase {
 	*/
 	public void testAssignDiff() throws ParseException
 	{
-		rpTest2(new String[]{"x=2","y=x^5","z=diff(y,x)"});
+		//TODO Used to be an error but new procedure for working with derivs should add test
+		//rpTest2(new String[]{"x=2","y=x^5","z=diff(y,x)"});
 	}
 /*
 	public void testMatrix() throws ParseException

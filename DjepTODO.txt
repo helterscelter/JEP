@@ -6,4 +6,20 @@ Check new functions can be differented.
 
 Handle partial derivatives which have constant equations.
 
+New syntatical features
+	(x,y,z) for vectors and matrices
+	x=-pi:pi:0:20 to specify ranges
+	MaxArg(x=-pi:pi:0:20,sin(x))
+
+Investigate potential bug with setting elements of a MatrixVariable
+using var.getMValue().setEle()
+Does it set validValue flags properly.
+
+Think about using a RealEvaluatorVisitor
+with Unary/Binary/Nary RealValuedFunctions
+
+Definable functions 
+	foo(x,y)=sqrt(x^2+y^2)
+requires (x,y) to be returned as a list.
+
 Many more I'm sure.

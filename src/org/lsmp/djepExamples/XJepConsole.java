@@ -4,6 +4,7 @@
  * See LICENSE.txt for license information.
  */
 package org.lsmp.djepExamples;
+import org.lsmp.djep.djep.DPrintVisitor;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 import java.text.NumberFormat;
@@ -114,6 +115,8 @@ public class XJepConsole extends Console
 	public void printVars() {
 		PrintVisitor pv = ((XJep) j).getPrintVisitor();
 		SymbolTable st = j.getSymbolTable();
+		pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
+
 		println("Variables:");
 		for(Enumeration  loop = st.keys();loop.hasMoreElements();)
 		{
@@ -121,6 +124,7 @@ public class XJepConsole extends Console
 			XVariable var = (XVariable) st.getVar(s);
 			println("\t"+var.toString(pv));
 		}
+		pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,true);
 	}
 
 	public void resetVars()
