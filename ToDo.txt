@@ -10,6 +10,7 @@
  - automaticize web site uploading/cvs
 
 == Further todos ====================================================
+ - add max(), min(), avg() methods
  - add user wish list to this file
  - add example for multiple arguments to the documentation
  - add more details about license to web site
