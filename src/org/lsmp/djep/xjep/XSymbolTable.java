@@ -29,7 +29,7 @@ public class XSymbolTable extends SymbolTable
 	/** Creates a new SymbolTable with the same variable factory as this. */
 	public SymbolTable newInstance()
 	{
-		return new XSymbolTable(vf);
+		return new XSymbolTable(this.getVariableFactory());
 	}
 
 	/** Prints the contents of the symbol table displaying its equations and value. */	

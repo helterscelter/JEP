@@ -1,6 +1,6 @@
 /* @author rich
  * Created on 23-Nov-2003
- *
+ *  
  * This code is covered by a Creative Commons
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
@@ -27,7 +27,7 @@ public class DSymbolTable extends XSymbolTable {
 	/** Creates a new SymbolTable with the same variable factory as this. */
 	public SymbolTable newInstance()
 	{
-		return new DSymbolTable(vf);
+		return new DSymbolTable(this.getVariableFactory());
 	}
 
 	public PartialDerivative getPartialDeriv(String name,String dnames[])

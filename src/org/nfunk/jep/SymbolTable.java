@@ -30,12 +30,44 @@ import java.util.*;
  * When Variables need to be constructed then methods in the {@link VariableFactory}
  * should be called, which allows different types of variables to be used.
  * 
+ * <p>
+ * Both SymbolTable and Variable implement the Observer/Observable pattern.
+ * This allows objects to be informed whenever a new variable is created
+ * or when its value has been changed. The member class StObservable is used to implement
+ * Observer. An example of use is
+ * <pre>
+ * public class MyObserver implements Observer
+ * {
+ * 	public void initialise()
+ * 	{
+ * 		SymbolTable st = j.getSymbolTable();
+ * 		st.addObserver(this);
+ * 		st.addObserverToExistingVariables(this);
+ * 	}
+ * 
+ * 	public void update(Observable arg0, Object arg1)
+ * 	{
+ * 		if(arg0 instanceof Variable)
+ * 			println("Var changed: "+arg0);
+ * 		else if(arg0 instanceof SymbolTable.StObservable)
+ * 		{
+ * 			println("New var: "+arg1);
+ * 
+ * 			// This line is vital to ensure that 
+ * 			// any new variable created will be observed. 
+ * 			((Variable) arg1).addObserver(this);
+ * 		}
+ * 	}
+ * }
+ * </pre>
+
+ *  
  * @author Rich Morris
  * Created on 28-Feb-2004
  */ 
 public class SymbolTable extends Hashtable
 {
-	protected VariableFactory vf;
+	private VariableFactory vf;
 	/** SymbolTable should always be constructed an associated variable factory. */
 	public SymbolTable(VariableFactory varFac)
 	{
@@ -88,6 +120,21 @@ public class SymbolTable extends Hashtable
 		else return false;
 	}
 
+	/**
+	 * Returns a new variable fro the variable factory. Notifies observers
+	 * when a new variable is created. If a subclass need to create a new variable it should call this method.
+	 * 
+	 * @param name
+	 * @param val
+	 * @return an new Variable object.
+	 */
+	protected Variable createVariable(String name,Object val)
+	{
+		Variable var = vf.createVariable(name,val);
+		obeservable.stSetChanged();
+		obeservable.notifyObservers(var);
+		return var;
+	}
 	/** Creates a variable with given value.
 	 * Returns null if variable already exists.
 	 */
@@ -97,7 +144,7 @@ public class SymbolTable extends Hashtable
 		if(var != null)	return null;
 		else
 		{
-			var = vf.createVariable(name,val);
+			var = createVariable(name,val);
 			super.put(name,var);
 		}
 		var.setValidValue(true);
@@ -128,7 +175,7 @@ public class SymbolTable extends Hashtable
 		}
 		else
 		{
-			var = vf.createVariable(name,val);
+			var = createVariable(name,val);
 			super.put(name,var);
 			return var;
 		}
@@ -143,7 +190,7 @@ public class SymbolTable extends Hashtable
 		Variable var = (Variable) super.get(name);
 		if(var != null)	return var; 
 
-		var = vf.createVariable(name,null);
+		var = createVariable(name,null);
 		super.put(name,var);
 		return var;
 	}
@@ -181,6 +228,59 @@ public class SymbolTable extends Hashtable
 	 */
 	public VariableFactory getVariableFactory() {
 		return vf;
+	}
+
+	public class StObservable extends Observable {
+		protected synchronized void stSetChanged() {
+			this.setChanged();
+		}
+		public SymbolTable getSymbolTable() {
+			return SymbolTable.this;
+		}
+	};
+	protected StObservable obeservable = new StObservable();
+	/**
+	 * Adds an observer which will be notified when a new variable is created.
+	 * The observer's update method will be called whenever a new
+	 * variable is created, the second argument of this will be
+	 * a reference to the new variable.
+	 * 
+	 * <p>
+	 * To find out if the values of variables are changed
+	 * the Variable.addObserver method should be used.
+	 * 
+	 * @param arg the observer
+	 * @see Variable.addObserver(Observer)
+	 */	
+	public synchronized void addObserver(Observer arg)	{
+		obeservable.addObserver(arg);
+	}
+
+	public synchronized int countObservers() {
+		return obeservable.countObservers();
+	}
+
+	public synchronized void deleteObserver(Observer arg)	{
+		obeservable.deleteObserver(arg);
+	}
+
+	public synchronized void deleteObservers()	{
+		obeservable.deleteObservers();
+	}
+
+	public synchronized boolean hasChanged()	{
+		return obeservable.hasChanged();
+	}
+
+	/** Adds an observer to all variables currently in the SymbolTable.
+	 * 
+	 * @param arg the object to be notified when a variable changes.
+	 */
+	public synchronized void addObserverToExistingVariables(Observer arg)	{
+		for(Enumeration en = this.elements();en.hasMoreElements();) {
+			Variable var = (Variable) en.nextElement();
+			var.addObserver(arg);
+		}
 	}
 
 }
