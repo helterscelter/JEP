@@ -1,37 +1,46 @@
 
 == org.nfunk.* ======================================================
-2.3.0 release (Oct 3)
-Oct  3 - 
+---- 2.3.0 release (Oct 3, 2004) ------------------------------------
+Oct  3 njf - created new features document for the core JEP and moved
+             appropriate text from DJEP index.html there
+       njf - changed "jar" and "dist" targets to create a separate djep
+             jar without examples and test cases, then include both jars
+             in a jep-djep-2.3.0.zip file
+       njf - new jjdoc target in build.xml to generate grammar documentation
+       njf - removed compile.bat and grammardoc.bat
 
-Oct  2 - build.xml now creates javadoc using new breakiterator
-         (gets rid of all the "helpful" output when running javadoc)
-       - added package.html files to package directories
-       - updated details in documentation
-       - documented error handling using hasError() and getErrorInfo()
-       - added 1.2 compatibility checking in build.xml
+Oct  2 njf - build.xml now creates javadoc using new breakiterator
+             (gets rid of all the "helpful" output when running javadoc)
+       njf - added package.html files to package directories
+       njf - updated details in documentation
+       njf - documented error handling using hasError() and getErrorInfo()
+       njf - added 1.2 compatibility checking in build.xml
        
-Oct  1 - removed org.lsmp.* from compile in build.xml
-       - commented out addToErrorList("No expression entered"); from
-         Start() in Parser.jjt
-       - added getTraverse() method
-       - changed @since version names in org.nfunk.* according to:
-          2.3.0   ->  2.3.0 alpha
-          2.3.1   ->  2.3.0 beta 1
-          2.3.2   ->  2.3.0 beta 2
-          2.3.3   ->  2.3.0 beta 2
-          2.3.0.1 ->  2.3.0 alpha
+Oct  1 njf - removed org.lsmp.* from compile in build.xml
+       njf - commented out addToErrorList("No expression entered"); from
+             Start() in Parser.jjt
+       njf - added getTraverse() method
+       njf - changed @since version names in org.nfunk.* according to:
+             2.3.0   ->  2.3.0 alpha
+             2.3.1   ->  2.3.0 beta 1
+             2.3.2   ->  2.3.0 beta 2
+             2.3.3   ->  2.3.0 beta 2
+             2.3.0.1 ->  2.3.0 alpha
           
+---- 2.3.0 beta 2 ---------------------------------------------------
 
-2.3.0 beta 2
-?      - NumberFactory has been changed to create the number from a String
-         representation (in order to allow creation of arbitrary precision
-         numbers without the limitations of double)
+---- 2.3.0 beta 1 ---------------------------------------------------
+
+---- 2.3.0 alpha ----------------------------------------------------
+?      njf - NumberFactory has been changed to create the number from a String
+             representation (in order to allow creation of arbitrary precision
+             numbers without the limitations of double)
 
 
 
 == org.lsmp.* =======================================================
 
-
+-- 1.0.0 (Oct 3rd, 2004) --------------------------------------------
 
 
 
