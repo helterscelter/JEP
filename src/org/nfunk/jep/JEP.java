@@ -392,10 +392,7 @@ public class JEP {
 	public Object getValueAsObject() {
 		Object result;
 		
-		if (topNode != null) {
-			//
-			errorList.clear();
-
+		if (topNode != null && !hasError()) {
 			// evaluate the expression
 			try {
 				result =
