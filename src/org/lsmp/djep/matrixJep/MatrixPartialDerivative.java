@@ -8,11 +8,10 @@
 package org.lsmp.djep.matrixJep;
 import org.nfunk.jep.*;
 import org.lsmp.djep.djep.*;
-import org.lsmp.djep.matrixJep.nodeTypes.ASTMConstant;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 /**
- * Contains infomation about a PartialDerivative of a variable.
+ * Contains information about a PartialDerivative of a variable.
  * 
  * @author Rich Morris
  * Created on 29-Oct-2003

@@ -10,8 +10,6 @@ import org.nfunk.jep.ParseException;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.xjep.PrintVisitor;
 
-import java.io.*;
-
 /**
  * @author Rich Morris
  * Created on 21-Mar-2005
@@ -41,7 +39,7 @@ public class DJepConsole extends XJepConsole
 
 	public void printIntroText()
 	{
-		println("DJep: differention in JEP. eg. diff(x^2,x)");
+		println("DJep: differentation in JEP. eg. diff(x^2,x)");
 		printStdHelp();
 	}
 
@@ -52,33 +50,33 @@ public class DJepConsole extends XJepConsole
 
 	public void processEquation(Node node) throws ParseException
 	{
-		DJep j = (DJep) this.j;
+		DJep dj = (DJep) this.j;
 		if(verbose) {
 			print("Parsed:\t\t"); 
-			println(j.toString(node));
+			println(dj.toString(node));
 		}
-		Node processed = j.preprocess(node);
+		Node processed = dj.preprocess(node);
 		if(verbose) {
 			print("Processed:\t"); 
-			println(j.toString(processed));
+			println(dj.toString(processed));
 		}
 					
-		Node simp = j.simplify(processed);
+		Node simp = dj.simplify(processed);
 		if(verbose) 
 			print("Simplified:\t"); 
-		println(j.toString(simp));
+		println(dj.toString(simp));
 			
 		if(verbose) {
 			print("Full Brackets, no variable expansion:\n\t\t");
-			j.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,true);
-			j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
-			println(j.toString(simp));
-			j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,true);
-			j.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,false);
+			dj.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,true);
+			dj.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
+			println(dj.toString(simp));
+			dj.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,true);
+			dj.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,false);
 		}
 
-		Object val = j.evaluate(simp);
-		String s = j.getPrintVisitor().formatValue(val);
+		Object val = dj.evaluate(simp);
+		String s = dj.getPrintVisitor().formatValue(val);
 		println("Value:\t\t"+s);
 	}
 

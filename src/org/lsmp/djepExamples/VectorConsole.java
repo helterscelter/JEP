@@ -5,9 +5,7 @@
  */
 package org.lsmp.djepExamples;
 
-import org.nfunk.jep.Node;
 import org.lsmp.djep.vectorJep.*;
-import java.io.*;
 
 /**
  * @author Rich Morris

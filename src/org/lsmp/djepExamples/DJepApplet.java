@@ -28,7 +28,6 @@ JEP - Java Math Expression Parser 2.24
 package org.lsmp.djepExamples;
 import org.lsmp.djep.djep.*;
 import org.nfunk.jep.*;
-import java.io.*;
 import java.applet.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -132,7 +131,7 @@ public class DJepApplet extends Applet implements ActionListener {
 	}
 	
 	/** Creates a new Console object and calls run() */
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) {
 		DJepApplet app = new DJepApplet();
 		app.init();
 

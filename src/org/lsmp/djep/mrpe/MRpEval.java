@@ -331,7 +331,7 @@ public final class MRpEval implements ParserVisitor {
 		store.setVarValue(ref,val);
 	}
 	/**
-	 * Sets value of rpe variable. Only applyies to scaler (double variables).
+	 * Sets value of rpe variable. Only applys to scaler (double variables).
 	 * 
 	 * @param ref the reference number for the variable (found using {@link #getVarRef})
 	 * @param val the value

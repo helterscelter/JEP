@@ -10,7 +10,6 @@ package org.lsmp.djep.vectorJep;
 import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.vectorJep.values.*;
-import java.util.*;
 
 /**
  * An extension of JEP with support for basic vectors and matrices.

@@ -85,9 +85,9 @@ public class Binomial extends PostfixMathCommand
 	}
 	/** Returns the binomial coefficients.
 	 * 
-	 * @throws ArrayOutOfBounndsException if n<0, i<0 or i>n
+	 * @throws ArrayIndexOutOfBoundsException if n<0, i<0 or i>n
 	 */
-	static public int binom(int n,int i)
+	static public int binom(int n,int i) throws ArrayIndexOutOfBoundsException
 	{
 		expand(n);
 		return coeffs[n][i];

@@ -103,8 +103,6 @@ public class Console extends Applet implements KeyListener {
 	}
 
 	/** The main entry point with command line arguments 
-	 * 
-	 * @throws IOException
 	 */
 	public void run(String args[]) {
 		initialise();
@@ -121,9 +119,7 @@ public class Console extends Applet implements KeyListener {
 
 	/**
 	 * The main input loop for interactive operation.
-	 * Repeatidly calls getCommand() and processCommand().
-	 * 
-	 * @throws IOException
+	 * Repeatedly calls getCommand() and processCommand().
 	 */
 	public void inputLoop() {
 		String command="";
@@ -215,7 +211,6 @@ public class Console extends Applet implements KeyListener {
 	/**
 	 * Get a command from the input.
 	 * @return null if an io error or EOF occurs.
-	 * @throws IOException
 	 */
 	protected String getCommand() {
 		String s=null;
@@ -292,7 +287,7 @@ public class Console extends Applet implements KeyListener {
 		}
 	}
 	/**
-	 * Checks for sqecial commands used by subclasses.
+	 * Checks for special commands used by subclasses.
 	 * For example a subclass may have a verbose mode
 	 * switched on of off using the command
 	 * <pre>verbose on</pre>
@@ -341,7 +336,6 @@ public class Console extends Applet implements KeyListener {
 	 * Subclasses should call this method rather than 
 	 * System.out.print to allow for output to different places.
 	 * 
-	 * @param s string to print
 	 */
 	public void print(Object o)
 	{
@@ -358,8 +352,6 @@ public class Console extends Applet implements KeyListener {
 	/** Prints a line of text no newline.
 	 * Subclasses should call this method rather than 
 	 * System.out.print to allow for output to different places.
-	 * 
-	 * @param s string to print
 	 */
 	public void println(Object o)
 	{

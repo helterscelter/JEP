@@ -13,22 +13,22 @@ import org.lsmp.djep.mrpe.MRpCommandList;
 import org.lsmp.djep.mrpe.MRpEval;
 import org.lsmp.djep.mrpe.MRpRes;
 import org.lsmp.djep.vectorJep.values.*;
-import org.lsmp.djep.rpe.*;
 /**
- * Examples using fast reverse polish calculator with vectors and matricies
+ * Examples using fast reverse polish calculator with vectors and matrices
  */
 public class MRpExample {
-	static MatrixJep j;
+	static MatrixJep mj;
+	static MRpEval rpe;
 	
 	public static void main(String args[])	{
-		j = new MatrixJep();
-		j.addStandardConstants();
-		j.addStandardFunctions();
-		j.addComplex();
-		j.setAllowUndeclared(true);
-		j.setImplicitMul(true);
-		j.setAllowAssignment(true);
-
+		mj = new MatrixJep();
+		mj.addStandardConstants();
+		mj.addStandardFunctions();
+		mj.addComplex();
+		mj.setAllowUndeclared(true);
+		mj.setImplicitMul(true);
+		mj.setAllowAssignment(true);
+		rpe = new MRpEval(mj);
 		// parse and evaluate each equation in turn
 		
 		doStuff("[1,2,3]");               // Value: [1.0,2.0,3.0]
@@ -39,13 +39,13 @@ public class MRpExample {
 		doStuff("[[1,2],[3,4]]*[1,0]");   // Value: [1.0,3.0]
 		doStuff("[1,0]*[[1,2],[3,4]]");   // Value: [1.0,2.0]
 		doStuff("[[1,2],[3,4]]*[[1,2],[3,4]]");   // Value: [[7.0,10.0],[15.0,22.0]]
-		// vectors and matricies can be used with assignment
-//		doStuff("x=[1,2,3]");             // Value: [1.0,2.0,3.0]
-//		doStuff("x+x");                   // Value: [2.0,4.0,6.0]
-//		doStuff("x . x");                 // Value: 14.0
-//		doStuff("x^x");                  // Value: [0.0,0.0,0.0]
-//		doStuff("y=[[1,2],[3,4]]");       // Value: [[1.0,2.0],[3.0,4.0]]
-//		doStuff("y * y");                 // Value: [[7.0,10.0],[15.0,22.0]]
+		// vectors and matrices can be used with assignment
+		doStuff("x=[1,2,3]");             // Value: [1.0,2.0,3.0]
+		doStuff("x+x");                   // Value: [2.0,4.0,6.0]
+		doStuff("x . x");                 // Value: 14.0
+		doStuff("x^x");                  // Value: [0.0,0.0,0.0]
+		doStuff("y=[[1,2],[3,4]]");       // Value: [[1.0,2.0],[3.0,4.0]]
+		doStuff("y * y");                 // Value: [[7.0,10.0],[15.0,22.0]]
 		// accessing the elements on an array or vector
 //		doStuff("ele(x,2)");              // Value: 2.0
 //		doStuff("ele(y,[1,2])");          // Value: 2.0
@@ -54,20 +54,20 @@ public class MRpExample {
 //		doStuff("y=[x^3,x^2,x]");		  // [8.0,4.0,2.0]
 //		doStuff("z=diff(y,x)");			  // [12.0,4.0,1.0]
 //		doStuff("diff([x^3,x^2,x],x)");
-//		System.out.println("dim(z) "+((MatrixVariableI) j.getVar("z")).getDimensions());
+//		System.out.println("dim(z) "+((MatrixVariableI) mj.getVar("z")).getDimensions());
 	}
 
 	public static void doStuff(String str)	{
 		try	{
-			Node node = j.parse(str);
-			Node proc = j.preprocess(node);
-			Node simp = j.simplify(proc);
+			Node node = mj.parse(str);
+			Node proc = mj.preprocess(node);
+			Node simp = mj.simplify(proc);
 
-			MRpEval rpe = new MRpEval(j);
+	
 			MRpCommandList list = rpe.compile(simp);
 			MRpRes res = rpe.evaluate(list);
 
-			j.print(node);
+			mj.print(node);
 			
 			// conversion to String
 			System.out.println("\nres " + res.toString());
