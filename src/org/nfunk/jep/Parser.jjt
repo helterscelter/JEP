@@ -71,10 +71,11 @@ in this grammar.
 OPTIONS
 ***************************************************************/
 options {
-  MULTI = true;
-  VISITOR = true;
-  NODE_DEFAULT_VOID = true;
-  STATIC = false;
+	JAVA_UNICODE_ESCAPE = true;
+	MULTI = true;
+	VISITOR = true;
+	NODE_DEFAULT_VOID = true;
+	STATIC = false;
 }
 
 
@@ -159,13 +160,34 @@ TOKEN : /* LITERALS */
 	>
 }
 
-/* IDENTIFIERS */
+/* IDENTIFIERS 
+	
+	Letters before version 2.22
+	< #LETTER: ["_","a"-"z","A"-"Z"] >
+*/
 
 TOKEN :
 {
 	< IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
 |
-	< #LETTER: ["_","a"-"z","A"-"Z"] >
+	< #LETTER:
+	[
+		"\u0024",           // $
+		"\u0041"-"\u005a",  // A - Z
+		"\u005f",           // _
+		"\u0061"-"\u007a",  // a - z
+		"\u00c0"-"\u00d6",  // Upper case symbols of Latin-1 Supplement
+		"\u00d8"-"\u00f6",  // Lower case symbols of Latin-1 Supplement
+		"\u00f8"-"\u00ff",  // More lower case symbols of Latin-1 Supplement
+		"\u0100"-"\u1fff",  // Many languages (including Greek)
+		"\u3040"-"\u318f",  // Hiragana, Katakana, Bopomofo, Hangul Compatibility Jamo
+		"\u3300"-"\u337f",  // CJK Compatibility
+		"\u3400"-"\u3d2d",  // CJK Unified Ideographs Extension A
+		"\u4e00"-"\u9fff",  // CJK Unified Ideographs
+		"\uf900"-"\ufaff"   // CJK Compatibility Ideographs
+	]
+	>
+	
 |
 	< #DIGIT: ["0"-"9"] >
 }

@@ -1039,30 +1039,6 @@ GRAMMAR START
     return retval;
   }
 
-  final private boolean jj_3_1() {
-    if (jj_3R_9()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_13() {
-    if (jj_3R_17()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3_6() {
-    if (jj_3R_9()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3_4() {
-    if (jj_3R_13()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
   final private boolean jj_3R_35() {
     if (jj_scan_token(FLOATING_POINT_LITERAL)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
@@ -1313,8 +1289,32 @@ GRAMMAR START
     return false;
   }
 
+  final private boolean jj_3_1() {
+    if (jj_3R_9()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_13() {
+    if (jj_3R_17()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_3R_9()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3_4() {
+    if (jj_3R_13()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
   public ParserTokenManager token_source;
-  SimpleCharStream jj_input_stream;
+  JavaCharStream jj_input_stream;
   public Token token, jj_nt;
   private int jj_ntk;
   private Token jj_scanpos, jj_lastpos;
@@ -1330,7 +1330,7 @@ GRAMMAR START
   private int jj_gc = 0;
 
   public Parser(java.io.InputStream stream) {
-    jj_input_stream = new SimpleCharStream(stream, 1, 1);
+    jj_input_stream = new JavaCharStream(stream, 1, 1);
     token_source = new ParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -1351,7 +1351,7 @@ GRAMMAR START
   }
 
   public Parser(java.io.Reader stream) {
-    jj_input_stream = new SimpleCharStream(stream, 1, 1);
+    jj_input_stream = new JavaCharStream(stream, 1, 1);
     token_source = new ParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
