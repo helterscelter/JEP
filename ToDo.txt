@@ -24,7 +24,10 @@
  x Add CVS tag for version (e.g. v223)
 
 == Further todos ====================================================
+ - add JUnit testing
+ - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
  - replace @license_info@ with GPL info using replace task and loadfile
+ - new commercial license (like UCalc??)
  - make same change to getValue as for ERIN
  - add Exponential class
  - add shell scripts for starting up in linux
@@ -33,29 +36,24 @@
  - add to features, that it is "easy to integrate in your project"
  - clean up javadoc so warnings are avoided during javadoc generation
  - add max(), min(), avg() methods
- - add user wish list to this file
  - add example for multiple arguments to the documentation
- - add more details about license to web site
  - extend build.xml to automatically generate commercial package
  - allow dumpvisitor to show values of function nodes and variables
  - allow custom symbol tables (Map interface only in 1.2 - talk with dude)
  - add list of reference companies that use JEP to web site
  - add exp function
  - make case sensitivity optional
- - add JUnit testing
  - think about adding a "static double getValue(String expr) throw Exception"
  - add support for delimited identifiers (suggestion from Ralph Harnden)
  - new example applet, show gray-scale image with function evaluated at
- - check out caligula
+ - check out caligula http://www.home.foni.net/~wkurz/caligula/caligula.htm
  - complete applying new code convention to complex class
-http://www.home.foni.net/~wkurz/caligula/caligula.htm
  - add documentation to most imporant classes
  - update Parser.jjt and JEP for smooth configuration optioning
  - optimize evaluation
  - look at 330 design patterns and see whether some might be useful
  - test error output (e.g. i == 2 -> type conflict)
  - handle type conflicts in advance
- - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
  - look at digital signing of jars
  - protect jars/applets from running on other domains.
 http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
