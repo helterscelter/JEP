@@ -388,7 +388,7 @@ public class Complex
 	}
 	
 	/**
-	 * Calculates the square root of this object.<br>
+	 * Calculates the square root of this object.
 	 * Adapted from Numerical Recipes in C - The Art of Scientific Computing
 	 * (ISBN 0-521-43108-5)
 	 */
