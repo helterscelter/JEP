@@ -24,7 +24,7 @@ import org.nfunk.jep.function.SpecialEvaluationI;
  * @author Rich Morris
  * Created on 14-Feb-2005
  */
-public class Map
+public class VMap
 	extends PostfixMathCommand
 	implements NaryOperatorI, SpecialEvaluationI
 {
@@ -32,7 +32,7 @@ public class Map
 	/**
 	 * 
 	 */
-	public Map()
+	public VMap()
 	{
 		super();
 		this.numberOfParameters = -1;
@@ -40,7 +40,7 @@ public class Map
 
 	public Dimensions calcDim(Dimensions[] dims) throws ParseException
 	{
-		return null;
+		return dims[2];
 	}
 
 	public MatrixValueI calcValue(MatrixValueI res, MatrixValueI[] inputs)
@@ -49,22 +49,9 @@ public class Map
 		return null;
 	}
 
-	public Object evaluate(
-		Node node,
-		Object data,
-		ParserVisitor pv,
-		Stack stack,
-		SymbolTable symTab)
-		throws ParseException
+	protected Variable[] getVars(Node varsNode) throws ParseException
 	{
-		int nChild = node.jjtGetNumChildren();
-		if(nChild <3)
-			throw new ParseException("Map must have three or more arguments");
-		
-		// First find the variables
-		
 		Variable vars[]=null;
-		Node varsNode = node.jjtGetChild(1);
 		if(varsNode instanceof ASTFunNode 
 			&& ((ASTFunNode) varsNode).getPFMC() instanceof VList )
 		{
@@ -88,6 +75,22 @@ public class Map
 		}
 		else
 			throw new ParseException("Map: second argument should be a variable or list of variables");
+		return vars;
+	}
+	public Object evaluate(
+		Node node,
+		Object data,
+		ParserVisitor pv,
+		Stack stack,
+		SymbolTable symTab)
+		throws ParseException
+	{
+		int nChild = node.jjtGetNumChildren();
+		if(nChild <3)
+			throw new ParseException("Map must have three or more arguments");
+		
+		// First find the variables
+		Variable vars[] = getVars(node.jjtGetChild(1));
 			
 		if(nChild != vars.length + 2)
 			throw new ParseException("Map: number of arguments should match number of variables + 2");

@@ -42,7 +42,7 @@ public class VectorJep extends JEP {
 		super.addFunction("det",new Determinant());
 		super.addFunction("trace",new Trace());
 		super.addFunction("vsum",new VSum());
-		super.addFunction("Map",new org.lsmp.djep.vectorJep.function.Map());
+		super.addFunction("Map",new VMap());
 	}
 
 

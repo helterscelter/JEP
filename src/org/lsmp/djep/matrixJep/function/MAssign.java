@@ -14,6 +14,7 @@ import org.nfunk.jep.function.*;
 import org.lsmp.djep.matrixJep.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
 import org.lsmp.djep.vectorJep.values.*;
+import org.lsmp.djep.vectorJep.*;
 
 /**
  * A matrix enabled asignment function.
@@ -22,7 +23,7 @@ import org.lsmp.djep.vectorJep.values.*;
  * @author Rich Morris
  * Created on 23-Feb-2004
  */
-public class MAssign extends Assign implements MatrixSpecialEvaluationI
+public class MAssign extends Assign implements MatrixSpecialEvaluationI,SpecialPreProcessorI
 {
 	public MAssign()
 	{
@@ -63,4 +64,26 @@ public class MAssign extends Assign implements MatrixSpecialEvaluationI
 		}
 		throw new ParseException("Assignment should have a variable for the lhs.");
 	}
+
+	public MatrixNodeI preprocess(
+		ASTFunNode node,
+		MatrixPreprocessor visitor,
+		MatrixJep mjep,
+		MatrixNodeFactory nf)
+		throws ParseException
+	{
+		MatrixNodeI children[] = visitor.visitChildrenAsArray(node,null);
+
+		if(node.jjtGetNumChildren()!=2) throw new ParseException("Operator "+node.getOperator().getName()+" must have two elements, it has "+children.length);
+		Dimensions rhsDim = children[1].getDim();
+		MatrixVariable var = (MatrixVariable) ((ASTVarNode) children[0]).getVar();
+		var.setDimensions(rhsDim);
+		Node copy =mjep.deepCopy(children[1]);
+		Node simp = mjep.simplify(copy);
+		//Node preproc = (Node) simp.jjtAccept(this,data);
+		var.setEquation(simp);
+		
+		return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,rhsDim);
+	}
+
 }

@@ -143,6 +143,16 @@ public class MatrixNodeFactory extends NodeFactory {
 		return res;		
 	}
 	
+	/** create a function node with a known dimension */
+	public ASTFunNode buildFunctionNode(ASTFunNode node,Node[] arguments,Dimensions dim)
+	{
+		ASTMFunNode res = new ASTMFunNode(ParserTreeConstants.JJTFUNNODE);
+		res.setFunction(node.getName(),node.getPFMC());
+		res.setDim(dim);
+		copyChildren(res,arguments);
+		return res;		
+	}
+
 	
 	/**
 	 * Builds a operator node with n arguments

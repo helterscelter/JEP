@@ -10,9 +10,11 @@
 package org.lsmp.djep.matrixJep.function;
 
 import org.nfunk.jep.*;
+import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
+import org.lsmp.djep.matrixJep.*;
 import org.lsmp.djep.xjep.*;
 //import org.lsmp.djep.matrixJep.nodeTypes.*;
 
@@ -23,7 +25,7 @@ import org.lsmp.djep.xjep.*;
  * Created on 27-Nov-2003
  */
 public class MList extends VList 
-	implements PrintVisitor.PrintRulesI,NaryOperatorI
+	implements PrintVisitor.PrintRulesI,NaryOperatorI,SpecialPreProcessorI
 {
 	public MList()
 	{
@@ -44,6 +46,61 @@ public class MList extends VList
 		return res;
 	}
 	
+	public MatrixNodeI preprocess(
+		ASTFunNode node,
+		MatrixPreprocessor visitor,
+		MatrixJep jep,
+		MatrixNodeFactory nf)
+		throws ParseException
+	{
+		MatrixNodeI children[] = visitor.visitChildrenAsArray(node,null);
+		Operator listOp = ((MatrixOperatorSet) jep.getOperatorSet()).getMList();
+		// What if we have x=[1,2]; y = [x,x]; or z=[[1,2],x];
+		// first check if all arguments are TENSORS
+		boolean flag=true;
+		for(int i=0;i<children.length;++i)
+		{
+			if(children[i] instanceof ASTMFunNode)
+			{
+				if(((ASTMFunNode) children[i]).getOperator() != listOp)
+				{
+					flag=false; break;
+				}
+			}
+			else
+				flag=false; break;
+		}
+
+		if(flag)
+		{
+			ASTMFunNode opNode1 = (ASTMFunNode) children[0];
+			Dimensions dim = Dimensions.valueOf(children.length,opNode1.getDim());
+			ASTMFunNode res = (ASTMFunNode) nf.buildUnfinishedOperatorNode(listOp);
+			int k=0;
+			res.setDim(dim);
+			res.jjtOpen();
+			for(int i=0;i<children.length;++i)
+			{
+				ASTMFunNode opNode = (ASTMFunNode) children[i];
+				for(int j=0;j<opNode.jjtGetNumChildren();++j)
+				{
+					Node child = opNode.jjtGetChild(j);
+					res.jjtAddChild(child,k++);
+					child.jjtSetParent(res);
+				}
+			}
+			res.jjtClose();
+			return res;
+		}
+		else
+		{
+			MatrixNodeI node1 = (MatrixNodeI) children[0];
+			Dimensions dim = Dimensions.valueOf(children.length,node1.getDim());
+			ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(listOp,children,dim);
+			return res;
+		}
+	}
+
 	
 	int curEle;
 	/** recursive procedure to print the tensor with lots of brackets. **/
@@ -80,5 +137,6 @@ public class MList extends VList
 		curEle = 0;
 		bufferAppend((MatrixNodeI) node,pv,0);
 	}
+
 
 }

@@ -488,6 +488,38 @@ public class MatrixJepTest extends TestCase {
 		valueTest("ele(x,[2,1])","3.0");          // Value: 2.0
 		valueTest("ele(x,[2,2])","4.0");          // Value: 2.0
 	}
+	
+	public void testLength() throws ParseException,Exception
+	{
+		valueTest("len(5)","1");
+		valueTest("len([1,2,3])","3");
+		valueTest("len([[1,2,3],[4,5,6]])","6");
+		valueTest("size(5)","1");
+		valueTest("size([1,2,3])","3");
+		valueTest("size([[1,2,3],[4,5,6]])","[2,3]");
+		valueTest("size([[[1,2],[3,4],[5,6]],[[7,8],[9,10],[11,12]]])","[2,3,2]");
+
+		valueTest("diag([1,2,3])","[[1.0,0.0,0.0],[0.0,2.0,0.0],[0.0,0.0,3.0]]");
+		valueTest("getdiag([[1,2],[3,4]])","[1.0,4.0]");
+		valueTest("trans([[1,2],[3,4]])","[[1.0,3.0],[2.0,4.0]]");
+		valueTest("det([[1,2],[3,4]])","-2.0");
+		valueTest("det([[1,2,3],[4,5,6],[9,8,9]])","-6.0");
+		valueTest("det([[1,2,3],[4,5,6],[7,8,9]])","0.0");
+		valueTest("det([[1,2,3,4],[5,6,77,8],[4,3,2,1],[17,9,23,19]])","9100.0");
+
+		valueTest("trace([[1,2],[3,4]])","5.0");
+		valueTest("trace([[1,2,3],[4,5,6],[7,8,9]])","15.0");
+		valueTest("trace([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]])","34.0");
+
+		valueTest("vsum([[1,2],[3,4]])","10.0");
+		valueTest("vsum([1,2,3])","6.0");
+		
+		valueTest("Map(x^3,x,[1,2,3])","[1.0,8.0,27.0]");
+		valueTest("Map(x*y,[x,y],[1,2,3],[4,5,6])","[4.0,10.0,18.0]");
+		valueTest("Map(if(x>0,x,0),x,[-2,-1,0,1,2])","[0.0,0.0,0.0,1.0,2.0]");
+		valueTest("Map(abs(x),x,[[-2,-1],[1,2]])","[[2.0,1.0],[1.0,2.0]]");
+	}
+
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)

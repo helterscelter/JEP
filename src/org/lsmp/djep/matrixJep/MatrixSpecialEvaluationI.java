@@ -23,9 +23,17 @@ public interface MatrixSpecialEvaluationI {
 	 * This method has the responsability for evaluating the children of the node
 	 * and it should generally call
 	 * <pre>
-	 * 		MatrixValueI res = (MatrixValueI) node.jjtGetChild(i).jjtAccept(visitor,null);	
+	 * MatrixValueI val = (MatrixValueI) node.jjtGetChild(i).jjtAccept(visitor,null);	
 	 * </pre>
 	 * for each child.
+	 * 
+	 * <p>
+	 * The final results should be copied into the mvalue field of the node using
+	 * <pre>
+	 * MatrixValueI mvalue = node.getMValue();
+	 * mvalue.setEles(res);
+	 * return mvalue;
+	 * </pre>
 	 * 
 	 * @param node The top node.
 	 * @param visitor The parser visitor

@@ -18,12 +18,12 @@ import java.util.*;
  * @author Rich Morris
  * Created on 26-Nov-2003
  */
-public class MPower extends PostfixMathCommand implements BinaryOperatorI 
+public class VPower extends PostfixMathCommand implements BinaryOperatorI 
 {
 	private static Power pow = new Power();
 	private static ExteriorProduct cross = new ExteriorProduct();
 
-	public MPower() {
+	public VPower() {
 		super();
 	}
 	public Dimensions calcDim(Dimensions ldim,Dimensions rdim) throws ParseException

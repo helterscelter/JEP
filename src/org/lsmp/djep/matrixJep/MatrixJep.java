@@ -48,9 +48,20 @@ public class MatrixJep extends DJep {
 	{
 		super.addStandardFunctions();
 		this.getFunctionTable().remove("if");
-		addFunction("pow",new Power());
+		this.getFunctionTable().remove("diff");
+		addFunction("pow",new MPower());
 		addFunction("if",new MIf());
 		addFunction("ele",new Ele());
+		addFunction("diff",new MDiff());
+		addFunction("len",new Length());
+		addFunction("size",new Size());
+		addFunction("diag",new Diagonal());
+		addFunction("getdiag",new GetDiagonal());
+		addFunction("trans",new Transpose());
+		addFunction("det",new Determinant());
+		addFunction("trace",new Trace());
+		addFunction("vsum",new VSum());
+		addFunction("Map",new MMap());
 	}
 
 	/** Evaluate a node. If the result is a scaler it
