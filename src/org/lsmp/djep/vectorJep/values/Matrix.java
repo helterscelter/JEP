@@ -128,13 +128,13 @@ public class Matrix implements MatrixValueI
 	}
 
 	/** value of ele(1,1). */	
-	public int intValue() {return ((Number) data[0][0]).intValue();	}
+	//public int intValue() {return ((Number) data[0][0]).intValue();	}
 	/** value of ele(1,1). */	
-	public long longValue() {return ((Number) data[0][0]).longValue();	}
+	//public long longValue() {return ((Number) data[0][0]).longValue();	}
 	/** value of ele(1,1). */	
-	public float floatValue() {	return ((Number) data[0][0]).floatValue();	}
+	//public float floatValue() {	return ((Number) data[0][0]).floatValue();	}
 	/** value of ele(1,1). */	
-	public double doubleValue() {return ((Number) data[0][0]).doubleValue();	}
+	//public double doubleValue() {return ((Number) data[0][0]).doubleValue();	}
 	/** Are two matricies equal, element by element 
 	 * Overrides Object.
 	 */

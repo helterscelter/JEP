@@ -68,15 +68,15 @@ public class MVector implements MatrixValueI
 		if(!dim.equals(val.getDim())) return;
 		System.arraycopy(((MVector) val).data,0,data,0,getNumEles());
 	}
-
+	public Object[] getEles() { return data; }
 	/** value of constant ele(1). */	
-	public int intValue() {return ((Number) data[0]).intValue();	}
+	//public int intValue() {return ((Number) data[0]).intValue();	}
 	/** value of constant ele(1). */	
-	public long longValue() {return ((Number) data[0]).longValue();	}
+	//public long longValue() {return ((Number) data[0]).longValue();	}
 	/** value of constant ele(1). */	
-	public float floatValue() {	return ((Number) data[0]).floatValue();	}
+	//public float floatValue() {	return ((Number) data[0]).floatValue();	}
 	/** value of constant ele(1). */	
-	public double doubleValue() {return ((Number) data[0]).doubleValue();	}
+	//public double doubleValue() {return ((Number) data[0]).doubleValue();	}
 
 	public boolean equals(Object obj) {
 		if(!(obj instanceof MVector)) return false;

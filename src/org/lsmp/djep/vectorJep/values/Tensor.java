@@ -116,13 +116,13 @@ public class Tensor implements MatrixValueI {
 	}
 
 	/** value of constant ele(1). */	
-	public int intValue() {return ((Number) values[0]).intValue();	}
+	//public int intValue() {return ((Number) values[0]).intValue();	}
 	/** value of constant ele(1). */	
-	public long longValue() {return ((Number) values[0]).longValue();	}
+	//public long longValue() {return ((Number) values[0]).longValue();	}
 	/** value of constant ele(1). */	
-	public float floatValue() {	return ((Number) values[0]).floatValue();	}
+	//public float floatValue() {	return ((Number) values[0]).floatValue();	}
 	/** value of constant ele(1). */	
-	public double doubleValue() {return ((Number) values[0]).doubleValue();	}
+	//public double doubleValue() {return ((Number) values[0]).doubleValue();	}
 
 	public boolean equals(Object obj) {
 		if(!(obj instanceof Tensor)) return false;
