@@ -41,6 +41,8 @@ public class VectorJep extends JEP {
 		super.addFunction("trans",new Transpose());
 		super.addFunction("det",new Determinant());
 		super.addFunction("trace",new Trace());
+		super.addFunction("vsum",new VSum());
+		super.addFunction("Map",new org.lsmp.djep.vectorJep.function.Map());
 	}
 
 

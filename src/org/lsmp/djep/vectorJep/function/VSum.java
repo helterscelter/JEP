@@ -13,18 +13,18 @@ import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.*;
 
 /**
- * Calculate the trace of a matrix
- * trace([[1,2],[3,4]]) -> 1+4 = 5
+ * Adds the elements of a vector or matrix.
+ * vsum([1,2,3]) -> 6
+ * vsum([[1,2],[3,4]]) -> 10
  * 
  * @author Rich Morris
  * Created on 13-Feb-2005
  */
-public class Trace extends PostfixMathCommand implements UnaryOperatorI
+public class VSum extends PostfixMathCommand implements UnaryOperatorI
 {
 	Add add = new Add();
-	Multiply mul = new Multiply();
 	
-	public Trace()
+	public VSum()
 	{
 		super();
 		this.numberOfParameters = 1;
@@ -39,28 +39,13 @@ public class Trace extends PostfixMathCommand implements UnaryOperatorI
 		throws ParseException
 	{
 		if(!(res instanceof Scaler))
-			throw new ParseException("trace: result must be a scaler");
-		if(!(lhs instanceof Matrix))
-			throw new ParseException("trace: argument must be a matrix");
-		Matrix mat = (Matrix) lhs;
-		if( mat.getNumRows()!= mat.getNumCols())
-		 	throw new ParseException("trace: argument must be a square matrix "+mat);
+			throw new ParseException("vsum: result must be a scaler");
 
-		if(mat.getNumRows() == 2)
-		{
-			res.setEle(0,add.add(mat.getEle(0,0),mat.getEle(1,1)));
-		}
-		else if(mat.getNumRows() == 3)
-		{	
-			res.setEle(0,add.add(mat.getEle(0,0),add.add(mat.getEle(1,1),mat.getEle(2,2))));
-		}
-		else
-		{
-			Object val = Scaler.getInstance(mat.getEle(0,0));
-			for(int i=1;i<mat.getNumRows();++i)
-				val = add.add(val,mat.getEle(i,i));
+		Object val = Scaler.getInstance(lhs.getEle(0));
+			for(int i=1;i<lhs.getNumEles();++i)
+				val = add.add(val,lhs.getEle(i));
 			res.setEle(0,val);
-		}
+		
 		return res;
 	}
 	public void run(Stack s) throws ParseException
