@@ -242,6 +242,17 @@ public class JEP {
 	}
 
 	/**
+	 * Removes a function from the parser.
+	 *
+	 * @return If the function was added earlier, the function class instance
+	 * is returned. If the function was not present, <code>null</code>
+	 * is returned.
+	 */
+	public Object removeFunction(String name) {
+		return funTab.remove(name);
+	}
+
+	/**
 	 * Sets the value of the traverse option. setTraverse is useful for
 	 * debugging purposes. When traverse is set to true, the parse-tree
 	 * will be dumped to the standard ouput device.
