@@ -41,10 +41,16 @@ public class ASTFunNode extends SimpleNode {
 	/** Name of the function */
 	private String name;
 	
+	/**
+	 * Creates a new ASTFunNode
+	 */
 	public ASTFunNode(int id) {
 		super(id);
 	}
 	
+	/**
+	 * Creates a new ASTFunNode
+	 */
 	public ASTFunNode(Parser p, int id) {
 		super(p, id);
 	}
