@@ -24,6 +24,7 @@
  x Add CVS tag for version (e.g. v223)
 
 == Further todos ====================================================
+ - replace @license_info@ with GPL info using replace task and loadfile
  - add shell scripts for starting up in linux
  - return N/A when result is a complex number.
  - automaticize web site uploading/cvs
