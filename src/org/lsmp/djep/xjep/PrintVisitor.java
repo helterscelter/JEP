@@ -7,7 +7,6 @@
  */
 
 package org.lsmp.djep.xjep;
-//import org.lsmp.djep.matrixParser.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import java.io.PrintStream;
@@ -27,6 +26,8 @@ import java.text.FieldPosition;
  * </pre>
  * @author Rich Morris
  * Created on 20-Jun-2003
+ * @since Dec 04 and NumberFormat object can be supplied to modify printing of numbers.
+ * @since 21 Dec 04 PrintVisitor can now cope with 3 or more arguments to + and *. 
  */
 public class PrintVisitor extends ErrorCatchingVisitor
 {
