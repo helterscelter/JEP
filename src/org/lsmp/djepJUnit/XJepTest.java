@@ -84,14 +84,14 @@ public class XJepTest extends TestCase {
 	public void simplifyTest(String expr,String expected) throws ParseException
 	{
 		Node node = j.parse(expr);
-		Node processed = j.commandv.process(node,j);
+		Node processed = j.preprocess(node);
 		Node simp = j.simplify(processed);
-		String res = j.pv.toString(simp);
+		String res = j.toString(simp);
 		
 		Node node2 = j.parse(expected);
-		Node processed2 = j.commandv.process(node2,j);
+		Node processed2 = j.preprocess(node2);
 		Node simp2 = j.simplify(processed2);
-		String res2 = j.pv.toString(simp2);
+		String res2 = j.toString(simp2);
 
 		if(!res2.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+res2+"\"");
@@ -108,9 +108,9 @@ public class XJepTest extends TestCase {
 	public void simplifyTestString(String expr,String expected) throws ParseException
 	{
 		Node node = j.parse(expr);
-		Node processed = j.commandv.process(node,j);
+		Node processed = j.preprocess(node);
 		Node simp = j.simplify(processed);
-		String res = j.pv.toString(simp);
+		String res = j.toString(simp);
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
@@ -127,7 +127,7 @@ public class XJepTest extends TestCase {
 	public Node parseProcSimpEval(String expr,Object expected) throws ParseException,Exception
 	{
 		Node node = j.parse(expr);
-		Node processed = j.commandv.process(node,j);
+		Node processed = j.preprocess(node);
 		Node simp = j.simplify(processed);
 		Object res = j.evaluate(simp);
 		

@@ -72,7 +72,7 @@ public class MatrixConsole {
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
 		j.setAllowAssignment(true);
-		j.dv.addStandardDiffRules();
+		j.addStandardDiffRules();
 		//		dv.addDiffRule(new MProductDiffRule(dv,MatrixOperatorSet.M_HAT));
 	}
 	
@@ -83,13 +83,13 @@ public class MatrixConsole {
 		try
 		{
 			System.out.print("fun:\t\t"); 
-			j.pv.println(node);
+			j.println(node);
 			MatrixNodeI matEqn = j.dec.preprocess(node,j);
 			j.println(matEqn);
 			Object res = j.evaluate(matEqn);
 			System.out.println("Res: "+res);
 			System.out.println("Variables");
-			j.getVarTab().print(j.pv);	
+			j.getVarTab().print(j.getPrintVisitor());	
 		}
 		catch(ParseException e1) { System.out.println("Parse Error: "+e1.getMessage()); }
 		catch(IllegalArgumentException e2) { System.out.println(e2.getMessage()); }
@@ -168,7 +168,7 @@ public class MatrixConsole {
 
 		if( s.equals("rules"))
 		{
-			j.dv.printDiffRules();
+			j.getDifferentationVisitor().printDiffRules();
 
 			System.out.println("Operators:");
 			Operator.printOperators();
@@ -180,7 +180,7 @@ public class MatrixConsole {
 		if( s.equals("invalidate"))
 		{
 			this.j.getSymbolTable().clearValues();
-			j.getVarTab().print(j.pv);	
+			j.getVarTab().print(j.getPrintVisitor());	
 			System.out.print(prompt);
 			return getCommand();
 		}

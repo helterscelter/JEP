@@ -35,7 +35,7 @@ import java.util.*;
  */ 
 public class SymbolTable extends Hashtable
 {
-	private VariableFactory vf;
+	protected VariableFactory vf;
 	/** SymbolTable should always be constructed an associated variable factory. */
 	public SymbolTable(VariableFactory varFac)
 	{

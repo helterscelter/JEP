@@ -163,7 +163,7 @@ public class DJepConsole extends Applet implements ActionListener {
 		j.setAllowUndeclared(true);
 		j.setAllowAssignment(true);
 		j.setImplicitMul(true);
-		j.dv.addStandardDiffRules();
+		j.addStandardDiffRules();
 		//j.setTraverse(true);
 	}
 	
@@ -174,7 +174,7 @@ public class DJepConsole extends Applet implements ActionListener {
 		{
 			System.out.print("fun:\t\t"); 
 			j.println(node);
-			Node processed = j.commandv.process(node,j);
+			Node processed = j.preprocess(node);
 			System.out.print("Processed:\t"); 
 			j.println(processed);
 			
@@ -183,9 +183,9 @@ public class DJepConsole extends Applet implements ActionListener {
 			j.println(simp);
 			
 			System.out.print("Full Brackets:\t");
-			j.pv.setFullBrackets(true);
+			j.getPrintVisitor().setFullBrackets(true);
 			j.println(simp);
-			j.pv.setFullBrackets(false);
+			j.getPrintVisitor().setFullBrackets(false);
 
 			try
 			{
@@ -205,7 +205,7 @@ public class DJepConsole extends Applet implements ActionListener {
 		//	bpv.println(simp);
 			
 			System.out.println("Variables");
-			((DSymbolTable) j.getSymbolTable()).print(j.pv);
+			((DSymbolTable) j.getSymbolTable()).print(j.getPrintVisitor());
 		}
 		catch(ParseException e1) { System.out.println("Parse Error: "+e1.getMessage()); }
 		catch(IllegalArgumentException e2) { System.out.println(e2.getMessage()); }
@@ -271,7 +271,7 @@ public class DJepConsole extends Applet implements ActionListener {
 
 		if( s.equals("rules"))
 		{
-			j.dv.printDiffRules();
+			j.getDifferentationVisitor().printDiffRules();
 			System.out.println("dJEPdx - Enter q to quit, rules to print the differentation rules,\ndiff(x^2,x) to differentiate,\neval(x^y,x,2,y,3) to evaluate");	
 			System.out.print(prompt);
 			return getCommand();

@@ -25,7 +25,7 @@ public class DiffExample {
 		j.setAllowUndeclared(true);
 		j.setAllowAssignment(true);
 		j.setImplicitMul(true);
-		j.dv.addStandardDiffRules();
+		j.addStandardDiffRules();
 
 		try
 		{
@@ -56,14 +56,14 @@ public class DiffExample {
 			j.preprocess(node3);
 			Node node4 = j.parse("diff(y^2+x,x)");
 			Node simp3 = j.simplify(j.preprocess(node4));
-			j.dpv.setPrintVariableEquations(true);
+			j.getDPrintVisitor().setPrintVariableEquations(true);
 			j.println(simp3);
-			j.dpv.setPrintPartialEquations(false);
-			j.dpv.setPrintVariableEquations(false);
+			j.getDPrintVisitor().setPrintPartialEquations(false);
+			j.getDPrintVisitor().setPrintVariableEquations(false);
 			j.println(simp3);
 			Node node5 = j.parse("y");
 			j.println(node5);
-			j.dpv.setPrintVariableEquations(true);
+			j.getDPrintVisitor().setPrintVariableEquations(true);
 			j.println(node5);
 			
 			j.getSymbolTable().setVarValue("x",new Double(5));

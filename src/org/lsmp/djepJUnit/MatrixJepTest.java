@@ -45,7 +45,7 @@ public class MatrixJepTest extends TestCase {
 		j.setAllowAssignment(true);
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
-		j.dv.addStandardDiffRules();
+		j.addStandardDiffRules();
 	}
 
 	public static Test suite() {
@@ -96,12 +96,12 @@ public class MatrixJepTest extends TestCase {
 		Node node = j.parse(expr);
 		MatrixNodeI matEqn = j.dec.preprocess(node,j);
 		Node simp = j.simplify(matEqn);
-		String res = j.pv.toString(simp);
+		String res = j.toString(simp);
 		
 		Node node2 = j.parse(expected);
 		MatrixNodeI matEqn2 = j.dec.preprocess(node2,j);
 		Node simp2 = j.simplify(matEqn2);
-		String res2 = j.pv.toString(simp2);
+		String res2 = j.toString(simp2);
 
 
 		if(!res2.equals(res))		
@@ -120,7 +120,7 @@ public class MatrixJepTest extends TestCase {
 	{
 		Node node = j.parse(expr);
 		MatrixNodeI matEqn = j.dec.preprocess(node,j);
-		String res = j.pv.toString(matEqn);
+		String res = j.toString(matEqn);
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
