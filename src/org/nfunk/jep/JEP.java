@@ -50,7 +50,7 @@ import org.nfunk.jep.type.*;
 public class JEP {
 
 	/** Debug flag for extra command line output */
-	private boolean debug;
+	private static final boolean debug = false;
 	
 	/** Traverse option */
 	private boolean traverse;
@@ -83,7 +83,6 @@ public class JEP {
 	 * Constructor; initializes all member variables.
 	 */
 	public JEP() {
-		debug = false;
 		topNode = null;
 		traverse = false;
 		allowUndeclared = false;
