@@ -32,40 +32,51 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
-public class Sum extends PostfixMathCommand implements PostfixMathCommandI
+/**
+ * This class serves mainly as an example of a function that accepts any
+ * number of parameters. Note that the numberOfParameters is initialized to 
+ * -1.
+ */
+public class Sum extends PostfixMathCommand
 {
-	public Sum()
-	{
-		/* Use a variable number of arguments*/
+	/**
+	 * Constructor.
+	 */
+	public Sum() {
+		// Use a variable number of arguments
 		numberOfParameters = -1;
 	}
 	
-	public void run(Stack inStack)
-		throws ParseException 
-	{
-  		/* Check if stack is null */
-  		if (null == inStack)
-		{
+	/**
+	 * Calculates the result of summing up all parameters, which are assumed
+	 * to be of the Double type.
+	 */
+	public void run(Stack stack) throws ParseException {
+		
+  		// Check if stack is null
+  		if (null == stack) {
 			throw new ParseException("Stack argument null");
 		}
         
         Object param = null;
-        double r = 0;
-        while(!inStack.isEmpty())
-        {
+        double result = 0;
+        int i = 0;
+        
+        // repeat summation for each one of the current parameters
+        while (i < curNumberOfParameters) {
         	// get the parameter from the stack
-            param = inStack.pop();
-            
+            param = stack.pop();
             if (param instanceof Double)   {
                 // calculate the result
-                r += ((Double) param).doubleValue();
-            }
-            else
+                result += ((Double) param).doubleValue();
+            } else {
                 throw new ParseException("Invalid parameter type");
+            }
+                
+            i++;
         }
         
         // push the result on the inStack
-        inStack.push(new Double(r));
+        stack.push(new Double(result));
 	}
-
 }
