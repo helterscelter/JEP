@@ -1,0 +1,554 @@
+/***************************************************************
+
+JEP - Java Expression Parser
+    JEP is a Java package for parsing and evaluating mathematical
+	expressions. It currently supports user defined variables,
+	constant, and functions. A number of common mathematical
+	functions and constants are included.
+
+Author: Nathan Funk
+Copyright (C) 2000 Nathan Funk
+
+    JEP is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    JEP is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with JEP; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+This file contains the grammar from which the parser is
+generated. The parser generation tools being used are JavaCC
+and its component JJTree. JJTree processes the .jjt file and
+generates the .jj file. This file is then used be JavaCC to
+generate the final java classes.
+
+Knowledge of parser generation is definetly beneficial if you
+are planning to make changes to this file. Although many parts
+are self explanitory, it is helpful to know how the grammar is
+handled by JJTree and JavaCC.
+
+You can follow the structure of the grammar by starting in the
+line which reads "ASTStart Start() #Start : {}". From there you
+will be able to trace the same path the parser follows when
+parsing an expression.
+
+The concept of precedence is very important. Since this is a
+recursive descent parser, it is easy to see which operators have
+higher order of precedence. The following table outlines the
+order incorporated in this grammar.
+
+Order of precedence (from lowest to highest):
+
+   ||               or  (logical)
+   &&               and (logical)
+   ==  !=           equal, not equal
+   <   >   <=  >=   less, greater, less or equal, greater or equal
+   +   -            addition, subtraction
+   *   /   %        multiplication, division, modulus
+   !   +   -        not, unary +/-
+   ^                power
+
+The order of precedence is greatly inspired by the operator
+precedence of the C language. See "The C Programming Language"
+Kernighan & Richie 2nd Ed p.53. Java also uses a very similar
+precedence. Note that the '^' operator is used for bitwise 
+exclusive OR in Java and C, but represents the power operator
+in this grammar.
+
+***************************************************************/
+
+
+
+/***************************************************************
+OPTIONS
+***************************************************************/
+options {
+  MULTI = true;
+  VISITOR = true;
+  NODE_DEFAULT_VOID = true;
+  STATIC = false;
+}
+
+
+/***************************************************************
+PARSER BEGIN
+***************************************************************/
+
+PARSER_BEGIN(Parser)
+package org.nfunk.jep;
+
+import java.util.Vector;
+import org.nfunk.jep.function.*;
+import org.nfunk.jep.type.*;
+
+public class Parser {
+	private JEP     jep;
+
+	public Node parseStream(java.io.Reader stream, JEP jep_in)
+							throws ParseException {
+		ReInit(stream);
+		jep = jep_in;
+
+		// Parse the expression, and return the 
+		return Start().jjtGetChild(0);
+	}
+
+	private void addToErrorList(String errorStr) {
+		jep.errorList.addElement(errorStr);		
+	}
+}
+
+PARSER_END(Parser)
+
+
+/***************************************************************
+SKIP
+***************************************************************/
+
+SKIP :
+{
+  " "
+  | "\t"
+  | "\n"
+  | "\r"
+
+//| <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+//| <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
+}
+
+
+/***************************************************************
+TOKENS
+***************************************************************/
+
+TOKEN : /* LITERALS */
+{
+	< INTEGER_LITERAL:
+		<DECIMAL_LITERAL>
+	>
+|
+	< #DECIMAL_LITERAL: ["0"-"9"] (["0"-"9"])* >
+|
+	< FLOATING_POINT_LITERAL:
+		(["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
+		| "." (["0"-"9"])+ (<EXPONENT>)?
+		| (["0"-"9"])+ <EXPONENT>
+	>
+|
+	< #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+	< STRING_LITERAL:
+		"\""
+		(   (~["\"","\\","\n","\r"])
+		| ("\\"
+			( ["n","t","b","r","f","\\","'","\""]
+			| ["0"-"7"] ( ["0"-"7"] )?
+			| ["0"-"3"] ["0"-"7"] ["0"-"7"]
+			)
+			)
+		)*
+		"\""
+	>
+}
+
+/* IDENTIFIERS */
+
+TOKEN :
+{
+	< IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+	< #LETTER: ["_","a"-"z","A"-"Z"] >
+|
+	< #DIGIT: ["0"-"9"] >
+}
+
+
+
+/***************************************************************
+GRAMMAR START
+***************************************************************/
+
+ASTStart Start() #Start :
+{
+}
+{
+	Expression() <EOF> { return jjtThis; }
+	|  <EOF>
+	{
+		throw new ParseException("No expression entered");
+		addToErrorList("No expression entered");
+		return null;
+	}
+}
+
+
+
+void Expression() : {}
+{
+	OrExpression()
+}
+
+
+void OrExpression() :
+{
+}
+{
+	AndExpression()
+	(
+	  ( "||" AndExpression()
+		{
+			jjtThis.setFunction("||", new Logical(1));
+		}
+	  ) #FunNode(2)
+	)*
+}
+
+
+void AndExpression() :
+{
+}
+{
+	EqualExpression()
+	(
+	  ( "&&" EqualExpression()
+		{
+			jjtThis.setFunction("&&", new Logical(0));
+		}
+	  ) #FunNode(2)
+	)*
+}
+
+
+
+void EqualExpression() :
+{
+}
+{
+	RelationalExpression()
+	(
+	  ( "!=" RelationalExpression()
+	    {
+	    jjtThis.setFunction("!=", new Comparative(4));
+	    }
+	  ) #FunNode(2)
+	|
+	  ( "==" RelationalExpression()
+	    {
+	      jjtThis.setFunction("==", new Comparative(5));
+	    }
+	  ) #FunNode(2)
+	)*
+}
+
+
+
+void RelationalExpression() :
+{
+}
+{
+  AdditiveExpression()
+  (
+    ( "<" AdditiveExpression()
+      {
+	    jjtThis.setFunction("<", new Comparative(0));
+      }
+	) #FunNode(2)
+	|
+    ( ">" AdditiveExpression()
+      {
+        jjtThis.setFunction(">", new Comparative(1));
+      }
+    ) #FunNode(2)
+    |
+    ( "<=" AdditiveExpression()
+      {
+	    jjtThis.setFunction("<=", new Comparative(2));
+      }
+	) #FunNode(2)
+	|
+    ( ">=" AdditiveExpression()
+      {
+        jjtThis.setFunction(">=", new Comparative(3));
+      }
+    ) #FunNode(2)
+  )*
+}
+
+
+void AdditiveExpression() :
+{
+}
+{
+  MultiplicativeExpression()
+  (
+    ( "+" MultiplicativeExpression()
+      {
+        jjtThis.setFunction("+", new Add());
+      }
+    ) #FunNode(2)
+    |
+    ( "-" MultiplicativeExpression()
+      {
+        jjtThis.setFunction("-", new Subtract());
+      }
+    ) #FunNode(2)
+  )*
+}
+
+
+void MultiplicativeExpression() :
+{
+}
+{
+  UnaryExpression()
+  (
+    (       
+      PowerExpression()
+      {
+        if (!jep.implicitMul) throw new ParseException(
+        	"Syntax Error (implicit multiplication not enabled)");
+        	
+        jjtThis.setFunction("*", new Multiply());
+      }
+    ) #FunNode(2)
+    |
+    ( "*" UnaryExpression()
+      {
+        jjtThis.setFunction("*", new Multiply());
+      }
+    ) #FunNode(2)
+	|
+    ( "/" UnaryExpression()
+      {
+        jjtThis.setFunction("/", new Divide());
+      }
+    ) #FunNode(2)
+    |
+    ( "%" UnaryExpression()
+      {
+        jjtThis.setFunction("%", new Modulus());
+      }
+    ) #FunNode(2)
+  )*
+}
+
+
+void UnaryExpression() :
+{
+}
+{
+  ( "+" UnaryExpression())
+|
+  ( "-" UnaryExpression()
+    {
+	  jjtThis.setFunction("-", new UMinus());
+    }
+  ) #FunNode(1)
+|
+  ( "!" UnaryExpression()
+    {
+	  jjtThis.setFunction("!", new Not());
+    }
+  ) #FunNode(1)
+|
+  PowerExpression()
+}
+
+
+void PowerExpression() :
+{
+}
+{
+  UnaryExpressionNotPlusMinus()
+  [
+  ( "^" UnaryExpression()
+    {
+      jjtThis.setFunction("^", new Power());
+    }
+  ) #FunNode(2)
+  ]
+}
+
+
+void UnaryExpressionNotPlusMinus() :
+{
+	String identString = "";
+	int type;
+}
+{
+	AnyConstant()
+|
+	( LOOKAHEAD({ getToken(1).kind == IDENTIFIER &&
+				  jep.funTab.containsKey(getToken(1).image) })
+		Function()
+		|
+		Variable()
+	)
+	|
+	"(" Expression() ")"
+}
+
+
+void Variable() :
+{
+	String identString = "";
+}
+{
+	(identString = Identifier()
+	{
+		if (jep.symTab.containsKey(identString)) {
+			jjtThis.setName(identString);
+			jjtThis.setSymbolTable(jep.symTab);
+		} else {
+			if (jep.allowUndeclared) {
+				jep.symTab.put(identString,new Double(0));
+				jjtThis.setName(identString);
+				jjtThis.setSymbolTable(jep.symTab);
+			} else {
+				addToErrorList("Unrecognized symbol \"" + identString +"\"");
+			}
+		}
+	}
+	) #VarNode
+}
+
+
+
+void Function() :
+{
+	int reqArguments = 0;
+	String identString = "";
+}
+{
+	( identString = Identifier()
+		{
+			if (jep.funTab.containsKey(identString)) {
+				//Set number of required arguments
+				reqArguments =
+					((PostfixMathCommand)jep.funTab.get(identString)).getNumberOfParameters();
+				jjtThis.setFunction(identString,
+					(PostfixMathCommandI)jep.funTab.get(identString));
+			} else {
+				addToErrorList("!!! Unrecognized function \"" + identString +"\"");
+			}
+		}
+		
+		"("ArgumentList(reqArguments, identString)")"
+		
+	) #FunNode
+}
+
+void ArgumentList(int reqArguments, String functionName) :
+{
+	int count = 0;
+	String errorStr = "";
+}
+{
+	[
+	Expression() { count++; }
+	(
+		","
+		Expression() { count++; }
+	)*
+	]
+    {
+    	if (reqArguments != count && reqArguments != -1) {
+			errorStr = "Function \"" + functionName +"\" requires "
+			           + reqArguments + " parameter";
+			if (reqArguments!=1) errorStr += "s";
+			addToErrorList(errorStr);
+		}
+    }
+}
+
+
+
+String Identifier() :
+{
+  Token t;
+}
+{
+	t=<IDENTIFIER>
+	{
+		return t.image;
+	}
+}
+
+
+void AnyConstant() #Constant:
+{
+	Token t;
+	Object value;
+}
+{
+	t=<STRING_LITERAL> {
+		String temp = (t.image).substring(1,t.image.length()-1);
+		
+		jjtThis.setValue(temp);
+	}
+	|
+	value = RealConstant() {
+		jjtThis.setValue(value);
+	}
+	|
+	value = Array() {
+		jjtThis.setValue(value);
+	}
+}
+
+
+Vector Array() :
+{
+	Object value;
+	Vector result = new Vector();
+}
+{
+	"["
+	value = RealConstant()
+	{
+		result.addElement(value);
+	}
+	(
+		","
+		value = RealConstant()
+		{
+			result.addElement(value);
+		}
+	)* 
+	"]"
+	{
+		return result;
+	}
+}
+
+
+
+
+Object RealConstant() :
+{
+  Token t;
+  Object value;
+}
+{
+	(t=<INTEGER_LITERAL>
+	|
+	t=<FLOATING_POINT_LITERAL>)
+	{
+		try {
+			value = new Double(t.image);
+		} catch (Exception e) {
+			value = null;
+			addToErrorList("Can't parse \"" + t.image + "\"");
+		}
+	
+		return value;
+	}
+}
