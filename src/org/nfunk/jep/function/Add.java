@@ -40,6 +40,10 @@ public class Add extends PostfixMathCommand
 		numberOfParameters = -1;
 	}
 	
+	/**
+	 * Calculates the result of applying the "+" operator to the arguments from
+	 * the stack and pushes it back on the stack.
+	 */
 	public void run(Stack stack) throws ParseException {
 		checkStack(stack);// check the stack
 		
@@ -52,8 +56,8 @@ public class Add extends PostfixMathCommand
         	// get the parameter from the stack
             param = stack.pop();
             
-            // add it to the sum
-            sum = add(sum, param);
+            // add it to the sum (order is important for String arguments)
+            sum = add(param, sum);
                 
             i++;
         }
