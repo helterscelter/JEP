@@ -19,6 +19,7 @@ import java.util.Stack;
  * 
  * @author Rich Morris
  * Created on 30-Oct-2003
+ * @since 2.3.2 Hack so comparitive operations work with vectors and matricies. 
  */
 public class MatrixEvaluator implements ParserVisitor
 {
@@ -91,6 +92,16 @@ public class MatrixEvaluator implements ParserVisitor
 //			((SpecialEvaluationI) node.getPFMC()).evaluate(
 //				node,data,this,stack,mjep.getSymbolTable());
 //			mnode.getMValue().setEle(0,stack.peek());
+		}
+		else if(pfmc instanceof Comparative) {
+			Object lhsval = (MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data);
+			Object rhsval = (MatrixValueI) node.jjtGetChild(1).jjtAccept(this,data);
+			stack.push(lhsval);
+			stack.push(rhsval);
+			pfmc.setCurNumberOfParameters(2);
+			pfmc.run(stack);
+			mnode.getMValue().setEle(0,stack.pop());
+			return mnode.getMValue();
 		}
 
 		// not a clever op use old style call

@@ -123,4 +123,24 @@ public class Tensor extends Number implements MatrixValueI {
 	public float floatValue() {	return ((Number) values[0]).floatValue();	}
 	/** value of constant ele(1). */	
 	public double doubleValue() {return ((Number) values[0]).doubleValue();	}
+
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Tensor)) return false;
+		Tensor tens = (Tensor) obj;
+		if(!tens.getDim().equals(getDim())) return false;
+		for(int i=0;i<values.length;++i)
+				if(!values[i].equals(tens.values[i])) return false;
+		return true;
+	}
+
+	/**
+	 * Always override hashCode when you override equals.
+	 * Efective Java, Joshua Bloch, Sun Press
+	 */
+	public int hashCode() {
+		int result = 17;
+		for(int i=0;i<values.length;++i)
+			result = 37*result+ values[i].hashCode();
+		return result;
+	}
 }

@@ -13,6 +13,11 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * The acos function.
+ * @author Nathan Funk
+ * TODO How to handle acos(x) for real x with x>1 or x<-1
+ */
 public class ArcCosine extends PostfixMathCommand
 {
 	public ArcCosine()

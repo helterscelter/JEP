@@ -12,6 +12,12 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * Implements the arcTanH function.
+ * 
+ * @author Nathan Funk
+ * @since 2.3.2 - Now returns Double result rather than Complex for -1<x<1 
+ */
 public class ArcTanH extends PostfixMathCommand
 {
 	public ArcTanH()
@@ -37,9 +43,16 @@ public class ArcTanH extends PostfixMathCommand
 		}
 		else if (param instanceof Number)
 		{
-			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
-			
-			return temp.atanh();
+			double val = ((Number)param).doubleValue();
+			if(val > -1.0 && val < 1) {
+				double res = Math.log((1+val)/(1-val))/2;
+				return new Double(res);
+			}
+			else
+			{
+				Complex temp = new Complex(val,0.0);
+				return temp.atanh();
+			}
 		}
 
 		throw new ParseException("Invalid parameter type");

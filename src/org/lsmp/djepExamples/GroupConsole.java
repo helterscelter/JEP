@@ -199,6 +199,11 @@ class GroupConsole {
 			{
 				j = new GroupJep(new Zn(new BigInteger(splits[1]))); 
 			} 
+			else if(splits[0].equals("Qu"))
+			{
+				j = new GroupJep(new Quartonians());
+				j.addStandardConstants(); 
+			} 
 			else if(splits[0].equals("extend") && splits.length == 2)
 			{
 				RingI ring = (RingI) j.getGroup();

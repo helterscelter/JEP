@@ -41,4 +41,22 @@ public class Scaler extends Number implements MatrixValueI {
 	/** value of constant coeff. */	
 	public double doubleValue() {return ((Number) value).doubleValue();	}
 
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Scaler)) return false;
+		Scaler s = (Scaler) obj;
+		if(!s.getDim().equals(getDim())) return false;
+		if(!value.equals(s.value)) return false;
+		return true;
+	}
+	
+	/**
+	 * Always override hashCode when you override equals.
+	 * Efective Java, Joshua Bloch, Sun Press
+	 */
+	public int hashCode() {
+		int result = 17;
+			result = 37*result+ value.hashCode();
+		return result;
+	}
+
 }

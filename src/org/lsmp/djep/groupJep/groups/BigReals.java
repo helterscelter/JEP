@@ -38,6 +38,15 @@ public class BigReals extends Group implements FieldI,OrderedSetI {
 		this.scale = scale;
 	}
 
+	/** Create a BigReals group with round mode set to
+	 * BigDecimal.ROUND_HALF_DOWN.
+	 * 
+	 * @param scale
+	 */
+	public BigReals(int scale) {
+		this.roundMode = BigDecimal.ROUND_HALF_DOWN;
+		this.scale = scale;
+	}
 	public Number getZERO() {
 		return ZERO;
 	}

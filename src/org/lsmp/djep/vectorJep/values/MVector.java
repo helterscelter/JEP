@@ -78,5 +78,25 @@ public class MVector extends Number implements MatrixValueI
 	public float floatValue() {	return ((Number) data[0]).floatValue();	}
 	/** value of constant ele(1). */	
 	public double doubleValue() {return ((Number) data[0]).doubleValue();	}
+
+	public boolean equals(Object obj) {
+		if(!(obj instanceof MVector)) return false;
+		MVector vec = (MVector) obj;
+		if(!vec.getDim().equals(getDim())) return false;
+		for(int i=0;i<data.length;++i)
+				if(!data[i].equals(vec.data[i])) return false;
+		return true;
+	}
+
+	/**
+	 * Always override hashCode when you override equals.
+	 * Efective Java, Joshua Bloch, Sun Press
+	 */
+	public int hashCode() {
+		int result = 17;
+		for(int i=0;i<data.length;++i)
+			result = 37*result+ data[i].hashCode();
+		return result;
+	}
 	
 }

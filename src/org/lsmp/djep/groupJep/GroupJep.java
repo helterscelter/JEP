@@ -11,22 +11,26 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.type.Complex;
 import org.lsmp.djep.groupJep.values.*;
 /**
- * An extension of JEP with support for basic vectors and matricies.
- * Use this class instead of JEP if you wish to use vectors and matricies.
+ * An extension of JEP which allows calculations over arbitary groups,
+ * such as the integers(exact answers) and rationals.
  *  
  * @author Rich Morris
  * Created on 19-Dec-2003
  */
 public class GroupJep extends JEP {
 	protected GroupI group;
-	
+	/** 
+	 * Create a new GroupJep instance with calculations over the given group.
+	 * 
+	 * @param group The group to calculate over.
+	 */
 	public GroupJep(GroupI group) {
 		super();
 		this.group = group;
 		super.numberFactory = group.getNumberFactory();
 		opSet = new GOperatorSet(group);
 	}
-
+	private GroupJep() {}
 	public void addStandardFunctions()
 	{
 //		Certinally don't want the jep standard functions
@@ -47,8 +51,10 @@ public class GroupJep extends JEP {
 	{
 		return group;
 	}
-	/* (non-Javadoc)
-	 * @see org.nfunk.jep.JEP#getComplexValue()
+
+	/** 
+	 * Calcuates the value of the expression and returns the 
+	 * result as a complex number.
 	 */
 	public Complex getComplexValue() {
 		Object num = this.getValueAsObject();

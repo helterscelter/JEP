@@ -12,6 +12,12 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * Implements the arcSinH function.
+ * 
+ * @author Nathan Funk
+ * @since 2.3.2 - Now returns Double result rather than Complex for Double arguments. 
+ */
 public class ArcSineH extends PostfixMathCommand
 {
 	public ArcSineH()
@@ -37,9 +43,11 @@ public class ArcSineH extends PostfixMathCommand
 		}
 		else if (param instanceof Number)
 		{
-			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
-			
-			return temp.asinh();
+			double val = ((Number)param).doubleValue();
+			double res = Math.log(val+Math.sqrt(val*val+1));
+			return new Double(res);
+//			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
+//			return temp.asinh();
 		}
 		throw new ParseException("Invalid parameter type");
 	}

@@ -15,6 +15,7 @@ import org.lsmp.djep.vectorJep.values.*;
  * 
  * @author Rich Morris
  * Created on 29-Oct-2003
+ * TODO Should setValue be overwritten?
  */
 public class MatrixPartialDerivative extends PartialDerivative implements MatrixVariableI {
 

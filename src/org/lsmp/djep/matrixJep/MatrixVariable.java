@@ -11,7 +11,7 @@ import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.djep.*;
-
+import java.util.*;
 /**
  * Holds all info about a variable.
  * Has a name, an equation, a dimension (or sent of dimensions if matrix or tensor)
@@ -24,6 +24,7 @@ import org.lsmp.djep.djep.*;
  * findDerivative method.
  * @author Rich Morris
  * Created on 26-Oct-2003
+ * @since 2.3.2 Added a setValue method overriding 
  */
 public class MatrixVariable extends DVariable implements MatrixVariableI {
 
@@ -83,6 +84,7 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 		else
 			return mvalue;
 	}	
+	 
 	
 //	public void setMValue(VectorMatrixTensorI value) 
 //	{ this.mvalue = value; this.invalidateAll(); }
@@ -112,4 +114,28 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 		}
 		System.out.print(sb.toString());
 	}
+	
+	/**
+	 * Sets the value of this variable.
+	 * Needed when using marco functions in matrix calculations.
+	 * TODO might be better to change macro function behaviour.
+	 */
+	public boolean setValue(Object val) {
+		for(Enumeration en = derivatives.elements();en.hasMoreElements();)
+		{
+			PartialDerivative pd = (PartialDerivative) en.nextElement();
+			pd.setValidValue(false);
+		}
+
+		if(val instanceof MatrixValueI)
+		{
+			mvalue = (MatrixValueI) val;
+			this.dims = mvalue.getDim();
+		}
+		else 
+			mvalue.setEle(0,val);
+		setValidValue(true);
+		return true;
+	}
+
 }

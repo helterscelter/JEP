@@ -30,7 +30,7 @@ public class GMultiply extends PostfixMathCommand {
 	}
 
 	/**
-	 * Calculates the result of applying the "+" operator to the arguments from
+	 * Calculates the result of applying the "*" operator to the arguments from
 	 * the stack and pushes it back on the stack.
 	 */
 	public void run(Stack stack) throws ParseException {

@@ -20,6 +20,7 @@ import java.util.*;
  * @author Rich Morris
  * Created on 27-Jul-2003
  * TODO add handeling of tensors
+ * @since 2.3.2 Improved error reporting
  */
 public class MMultiply extends Multiply implements BinaryOperatorI {
 	
@@ -90,7 +91,7 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 		return this.calcValue(res,param1,param2);
 	}
 
-	public Dimensions calcDim(Dimensions l,Dimensions r) 
+	public Dimensions calcDim(Dimensions l,Dimensions r) throws ParseException
 	{
 		int lrank = l.rank();
 		int rrank = r.rank();
@@ -109,9 +110,9 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 			case 2: // Vector * Matrix -> Vector
 				if(l.getLastDim() == r.getFirstDim())
 					 return Dimensions.valueOf(r.getLastDim());
-				else return null;
+				break;
 			default: // Tensor res
-				//throw new ParseException("Sorry I don't know how to multiply a vector by a tensor");
+				throw new ParseException("Sorry I don't know how to multiply a vector by a tensor");
 			}
 			break;
 		case 2: // Matrix * ?
@@ -122,10 +123,10 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 			case 1: // Matrix * Vector -> Vector
 				if(l.getLastDim() == r.getFirstDim())
 					 return Dimensions.valueOf(l.getFirstDim());
-				else return null;
+				break;
 			case 2: // Matrix * Matrix -> Matrix
 				if(l.getLastDim() == r.getFirstDim()) return Dimensions.valueOf(l.getFirstDim(),r.getLastDim());
-				else return null;
+				break;
 			default: // Tensor res
 				//throw new ParseException("Sorry I don't know how to multiply a matrix by a tensor");
 				
@@ -144,7 +145,7 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 //				throw new ParseException("Sorry I don't know how to multiply a tensor by a tensor");
 			}
 		}
-		return null;
+		throw new ParseException("Dimensions for multiply do not match: "+l+" "+r);
 	}
 
 	public MatrixValueI calcValue(MatrixValueI res,MatrixValueI param1,MatrixValueI param2) throws ParseException

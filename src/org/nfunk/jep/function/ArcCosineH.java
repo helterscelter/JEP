@@ -12,6 +12,12 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * Implements the arcCosH function.
+ * 
+ * @author Nathan Funk
+ * @since 2.3.2 - Now returns Double result rather than Complex for x >= 1 
+ */
 public class ArcCosineH extends PostfixMathCommand
 {
 	public ArcCosineH()
@@ -37,9 +43,16 @@ public class ArcCosineH extends PostfixMathCommand
 		}
 		else if (param instanceof Number)
 		{
-			Complex temp = new Complex(((Number)param).doubleValue(),0.0);
-			
-			return temp.acosh();
+			double val = ((Number)param).doubleValue();
+			if(val >= 1.0) {
+				double res = Math.log(val+Math.sqrt(val*val-1));
+				return new Double(res);
+			}
+			else
+			{
+				Complex temp = new Complex(((Number)param).doubleValue(),0.0);
+				return temp.acosh();
+			}
 		}
 
 		throw new ParseException("Invalid parameter type");

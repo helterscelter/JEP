@@ -18,7 +18,7 @@ import org.lsmp.djep.vectorJep.*;
  * Created on 07-Jul-2003
  * @version 2.3.0.2 now extends number
  * @version 2.3.1.1 Bug with non square matricies fixed.
- *
+ * @since 2.3.2 Added equals method.
  */
 public class Matrix extends Number implements MatrixValueI 
 {
@@ -133,4 +133,32 @@ public class Matrix extends Number implements MatrixValueI
 	public float floatValue() {	return ((Number) data[0][0]).floatValue();	}
 	/** value of ele(1,1). */	
 	public double doubleValue() {return ((Number) data[0][0]).doubleValue();	}
+	/** Are two matricies equal, element by element 
+	 * Overrides Object.
+	 */
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Matrix)) return false;
+		Matrix mat = (Matrix) obj;
+		if(!mat.getDim().equals(getDim())) return false;
+		for(int i=0;i<rows;++i)
+			for(int j=0;j<cols;++j)
+				if(!data[i][j].equals(mat.data[i][j])) return false;
+		return true;
+	}
+	
+	/**
+	 * Always override hashCode when you override equals.
+	 * Efective Java, Joshua Bloch, Sun Press
+	 */
+	public int hashCode() {
+		int result = 17;
+//		long xl = Double.doubleToLongBits(this.re);
+//		long yl = Double.doubleToLongBits(this.im);
+//		int xi = (int)(xl^(xl>>32));
+//		int yi = (int)(yl^(yl>>32));
+		for(int i=0;i<rows;++i)
+			for(int j=0;j<cols;++j)
+			result = 37*result+ data[i][j].hashCode();
+		return result;
+	}
 }
