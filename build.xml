@@ -1,27 +1,22 @@
 <!--
-jar for distribution (without examples)
-jar for website (with examples)
-source package with GPL
-source package without GPL
-javadoc documentation
-compile jjt file
-normal compile jep
-compile for each example
-compile all
-backup
-CVS
-testing (JUnit)
-CRLF conversion
-separate build.xml for subprojects?
+=============================================================================
+  build.xml (ant build script)
 
-/
-src/   (contains org... with source files)
-build/ (contains org... with class files)
-dist/  (zip, tar.gz)
-lib/ (jar)
- doc/
-javadoc/
- bin/ (scripts for starting things)
+  JEP - Java Expression Parser
+  http://jep.sourceforge.net
+
+  Requirements for compiling JEP with the ant build tool
+    1. Ant is installed (http://jakarta.apache.org/ant/)
+    2. The optional tasks for ant are installed
+    3. JavaCC is installed (http://www.webgain.com/products/java_cc/)
+    4. The classes.zip file for the Sun JDK 1.1.8 is on your system
+
+  Setting up your system to compile JEP:
+    1. Set the JAVACCHOME environment variable to the location of the
+       library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
+    2. Set the value of the "bootclasspath" variable in this script to the
+       location of the classes.zip file.
+=============================================================================
 -->
 
 <project name="JEP" default="compile" basedir=".">
@@ -31,7 +26,7 @@ javadoc/
 	<property name="build"   value="build"/>
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
-	<property name="version" value="2.21"/>
+	<property name="version" value="2.22"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
@@ -40,17 +35,17 @@ javadoc/
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
 	<property name="bootclasspath" value="c:\jdk1.1.8\lib\classes.zip"/>
 
-	<taskdef name="jjtree" classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
-	<taskdef name="javacc" classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
+	<taskdef name="jjtree"
+	classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
 
+	<taskdef name="javacc"
+	classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
 
+<!--======================================================================-->
 <!-- INIT -->
 	<target name="init">
 		<!-- Create the time stamp -->
                 <tstamp/>
-
-		<!-- Create the build directory structure used by compile -->
-		<mkdir dir="${build}"/>
 
 		<!-- Ensure JavaCC is present -->
 		<available property="javacc.present"
@@ -58,6 +53,7 @@ javadoc/
 			classpath="${javacchome}/JavaCC.zip" />
 	</target>
 
+<!--======================================================================-->
 <!-- JJTREE -->
 	<target name="jjtree" depends="init" if="javacc.present">
 		<jjtree
@@ -66,6 +62,7 @@ javadoc/
 		/>
 	</target>
 
+<!--======================================================================-->
 <!-- JAVACC -->
 	<target name="javacc" depends="jjtree">
 		<javacc
@@ -75,8 +72,12 @@ javadoc/
 	</target>
 
       
+<!--======================================================================-->
 <!-- COMPILE -->
 	<target name="compile" depends="javacc">
+		<!-- Create the build directory -->
+		<mkdir dir="${build}"/>
+
 		<!-- Compile the java code from ${src} into ${build} -->
 		<javac srcdir="${src}"
 		       destdir="${build}"
@@ -88,6 +89,7 @@ javadoc/
 	</target>
 
 
+<!--======================================================================-->
 <!-- JAVADOC -->
 	<target name="javadoc">
 		<mkdir dir="${doc}/javadoc"/>
@@ -95,11 +97,11 @@ javadoc/
 				sourcepath="src"
 				destdir="${doc}/javadoc"
 				windowtitle="JEP API">
-			<!--<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>-->
+			<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>
 		</javadoc>
 	</target>
 
-
+<!--======================================================================-->
 <!-- DIST -->
 	<target name="dist" depends="compile">
 		<!-- Create the distribution directory -->
@@ -119,11 +121,12 @@ javadoc/
 		<mkdir dir="${disttemp}"/>
 		<copy todir="${disttemp}">
 		      <fileset dir="."
-			       includes="src/org/nfunk/jep/**,src/org/nfunk/jepexamples/**"/>
-		</copy>
-		<copy todir="${disttemp}">
-		      <fileset dir="."
-			       includes="doc/**"/>
+			       includes="src/org/nfunk/jep/**,
+					 src/org/nfunk/jepexamples/**,
+					 doc/**,
+					 bin/**,
+					 build.xml,
+					 LICENSE.txt"/>
 		</copy>
 
 		<!-- documentation zip file -->
@@ -165,6 +168,7 @@ javadoc/
 	</target>
 
 
+<!--======================================================================-->
 <!-- CLEAN -->
 	<target name="clean">
 		<!-- Delete the ${build} and ${dist} directory trees -->
@@ -173,6 +177,7 @@ javadoc/
 	</target>
 
 
+<!--======================================================================-->
 <!-- EOLUNIX -->
 	<target name="eolunix">
 		<fixcrlf srcdir="${src}"
