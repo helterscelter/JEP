@@ -144,9 +144,8 @@ public class JEPTester {
 		// cycle till a valid line is found
 		do {
 			line = reader.readLine(); // returns null on end of file
-			lineCount++;
 			if (line == null) return null;
-			//println("reader returned null on readLine()");
+			lineCount++;
 		} while (line.length() == 0 || line.trim().charAt(0) == '#');
 
 		// parse the expression
