@@ -6,14 +6,8 @@
   http://www.singularsys.com/jep
 
   Setting up your system to compile JEP:
-    1. Set the JAVACCHOME environment variable to the location of the
-       library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
-    2. This script uses Java JDK 1.1.8 to check for compatibility.
-	   Specifically the "classes.zip" file is required. Install the old
-	   JDK 1.1.8 and set the "bootclasspath" property to the location of
-	   the 1.1.8 classes.zip file. You can still use a newer SDK for 
-	   compiling, the classes.zip file is only needed to ensure
-	   compatibility.
+  ! Set the JAVACCHOME environment variable to the location of the
+    library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
 =============================================================================
 -->
 
@@ -27,14 +21,13 @@
 	<property name="doc"     value="doc"/>
 	<property name="lib"     value="lib"/>
 	<!-- <property name="website" value="website"/> -->
-	<property name="version" value="2.25a"/>
+	<property name="version" value="2.3.0b2"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
 	<property name="disttemp"   value="disttemp"/>
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
-	<property name="bootclasspath" value="c:\jdk1.1.8\lib\classes.zip"/>
 	<property name="classpath" value="${lib}/junit.jar"/>
 
 	<taskdef name="jjtree"
@@ -113,12 +106,8 @@
 		<!-- Compile the java code from ${src} into ${build} -->
 		<javac srcdir="${src}"
 		       destdir="${build}"
-		       classpath="${classpath}"
-		       target="1.1">
-			<bootclasspath>
-				<pathelement path="${bootclasspath}"/>
-			</bootclasspath>
-		</javac>
+		       classpath="${classpath}"/>
+		
 	</target>
 
 
@@ -176,7 +165,7 @@
 		<filterset id="sourcefilters">
 			<filter token="header" value="JEP - Java Math Expression Parser ${version}"/>
 			<filter token="date" value="      ${TODAY}"/>
-			<filter token="copyright" value="      (c) Copyright 2002, Nathan Funk"/>
+			<filter token="copyright" value="      (c) Copyright 2004, Nathan Funk and Richard Morris"/>
 			<filter token="license" value="      See LICENSE.txt for license information."/>
 		</filterset>
 		<copy todir="${disttemp}/jep-${version}">
