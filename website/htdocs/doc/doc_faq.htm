@@ -1,0 +1,149 @@
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --> 
+<title>JEP - Java Math Expression Parser</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="../main.css" title="style1">
+</head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<br>
+<br>
+<div align=center>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td>
+        <img src="../images/title.gif" width="378" height="75" alt="JEP - Java Expression Parser"> </td>
+      <td align=right valign=bottom><A href="http://sourceforge.net" target="_parent"> 
+        <img src="http://sourceforge.net/sflogo.php?group_id=24711&type=1" width="88" height="31" border="0" alt="SourceForge Logo"></A> 
+        <br>
+        <img src="../images/spacer.gif" width="1" height="2" alt=""></td>
+    </tr>
+	</table>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td bgcolor="#000033"><img src="../images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td align="center"> 
+        <table width="590" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		<td>
+<img src="../images/spacer.gif" width="1" height="4" alt=""><br>
+              <a href="../index.html"><b>Main</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../sampleapplets.htm"><b>Samples</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="doc_usage.htm"><b>Documentation</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../log.htm"><b>Version Log</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../forum.htm"><b>Forum</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../download.htm"><b>Download</b></a><br>
+		<img src="../images/spacer.gif" width="1" height="5" alt=""></td>
+		</tr>
+		</table>
+      </td>
+    </tr>
+    <tr> 
+      <td bgcolor="#cccccc"><img src="../images/spacer.gif" width="1" height="1" alt=""></td>
+    </tr>
+	</table>
+	<table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><img src="../images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td><!-- #BeginEditable "Sub%20Menu" --> <!-- #BeginLibraryItem "/Library/Docu Menu.lbi" --><a href="doc_usage.htm">Usage</a> <font color="#CCCCCC">|</font> <a href="doc_op_and_func.htm">Operators 
+&amp; Functions</a> <font color="#CCCCCC">|</font> <a href="doc_grammar.htm">Grammar</a> 
+<font color="#CCCCCC">|</font> <a href="doc_cust_func.htm">Custom Functions</a> 
+<font color="#CCCCCC">|</font> <a href="javadoc/index.html" target="_blank">JavaDoc</a> 
+<font color="#CCCCCC">|</font> <a href="doc_faq.htm">FAQ</a><!-- #EndLibraryItem --><!-- #EndEditable --><br>
+        <br>
+      </td>
+    </tr>
+  </table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><!-- #BeginEditable "Text" --> 
+        <h2>Frequently Asked Questions</h2>
+        <p><b>Q: How can I add custom functions with a variable number of parameters?</b></p>
+        <blockquote> 
+          <p><b>A:</b> Create a custom function class and set the number of parameters 
+            to -1. The parser will then accept any number of parameters.</p>
+        </blockquote>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr> 
+              <td bgcolor="#CCCCCC"><img src="../images/spacer.gif" width="1" height="1"></td></tr></table><br>
+        <p><b>Q: I don't need all the functions supplied by JEP. Is there a way 
+          to not load some of them, or completely remove some from the package?</b></p>
+        <blockquote> 
+          <p><b>A:</b> Stripping down JEP into a lean mean arithmetic machine!</p>
+          <p><b>Option 1:</b><br>
+            In some cases you will not require all the built in functions supported 
+            by JEP. The easiest way to accomplish this is simply not calling the 
+            addStandardFunctions() method before parsing. Then, you can call addFunction() 
+            for any specific functions you may require.</p>
+          <p><b>Option 2:</b><br>
+            If you think it is necessary to minimize the size of JEP to a minimum, 
+            you can remove all function classes other than the operators (if you 
+            don't need them). This will leave you with a parser that can still 
+            do basic arithmetic, but not the fancy functions like sin() and cos(). 
+            It saves you about 17KB of classes (15% of JEP in total). </p>
+          <p><b>Instructions:</b><br>
+            - The function classes are all located in the org.nfunk.jep.function 
+            package. Operators (+, -, *, /,&#133;) are also implemented as functions. 
+            These should NOT be removed if you still want JEP to work properly. 
+            The following function classes are used to implement operators:</p>
+          <blockquote> 
+            <table width="400" border="0" cellspacing="0" cellpadding="2">
+              <tr> 
+                <td>Add</td>
+                <td>Modulus</td>
+                <td>Subtract</td>
+              </tr>
+              <tr> 
+                <td>Comparative</td>
+                <td>Multiply</td>
+                <td>UMinus</td>
+              </tr>
+              <tr> 
+                <td>Divide</td>
+                <td>Not</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr> 
+                <td>Logical</td>
+                <td>Power</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+          </blockquote>
+          <p> - Open the source code for JEP and look for the addStandardFunctions() 
+            method. It contains a list of almost all non-operator functions. For 
+            every function class you remove from the function directory, you must 
+            also remove the associated line from this method.<br>
+            - Recompile JEP, and you should have a lean mean arithmetic machine!<br>
+          </p>
+        </blockquote>
+        <!-- #EndEditable --></td>
+    </tr>
+    <tr> 
+      <td><br>
+        <br>
+        <br>
+      </td>
+    </tr>
+	</table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr bgcolor="#000033"> 
+      <td bgcolor="#000033"><img src="../images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+	</table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left"><font size="-2" color="#999999"><b>::</b></font></td>
+      <td align="right"> <font size="-2" color="#999999">&copy; 2000 Nathan Funk</font></td>
+    </tr>
+  </table>
+  <p class="menu">&nbsp;</p>
+</div>
+</body>
+<!-- #EndTemplate --></html>

@@ -1,0 +1,1 @@
+rsync -avguz -e ssh nathanfunk@jep.sourceforge.net:/home/groups/j/je/jep/ .

@@ -1,0 +1,329 @@
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --> 
+<title>JEP - Java Math Expression Parser</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1">
+</head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<br>
+<br>
+<div align=center>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td>
+        <img src="images/title.gif" width="378" height="75" alt="JEP - Java Expression Parser"> </td>
+      <td align=right valign=bottom><A href="http://sourceforge.net" target="_parent"> 
+        <img src="http://sourceforge.net/sflogo.php?group_id=24711&type=1" width="88" height="31" border="0" alt="SourceForge Logo"></A> 
+        <br>
+        <img src="images/spacer.gif" width="1" height="2" alt=""></td>
+    </tr>
+	</table>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td bgcolor="#000033"><img src="images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td align="center"> 
+        <table width="590" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		<td>
+<img src="images/spacer.gif" width="1" height="4" alt=""><br>
+              <a href="index.html"><b>Main</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="sampleapplets.htm"><b>Samples</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="doc/doc_usage.htm"><b>Documentation</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="log.htm"><b>Version Log</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="forum.htm"><b>Forum</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="download.htm"><b>Download</b></a><br>
+		<img src="images/spacer.gif" width="1" height="5" alt=""></td>
+		</tr>
+		</table>
+      </td>
+    </tr>
+    <tr> 
+      <td bgcolor="#cccccc"><img src="images/spacer.gif" width="1" height="1" alt=""></td>
+    </tr>
+	</table>
+	<table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><img src="images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td><!-- #BeginEditable "Sub%20Menu" --><!-- #EndEditable --><br>
+        <br>
+      </td>
+    </tr>
+  </table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><!-- #BeginEditable "Text" --> 
+        <h2><a name="top"></a>Version Log</h2>
+        <p><b>Unreleased: </b></p>
+        <ul>
+          <li>2002/07/01: Started adding Number support to JEP class and functions</li>
+          <li>2002/07/08: Fixed string concatenation bug</li>
+        </ul>
+        <p> 
+        <b><!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --></b>
+        <p><b>Version 2.22: <font color="#999999">(released 2002/07/04)</font></b> 
+        </p>
+        <ul>
+          <li>2002/06/06: Removed symbol table information from ASTVarNode (making 
+            AST nodes into pure data structure elements)</li>
+          <li>2002/06/20: Fixed sum() issue (functions with variable number of 
+            parameters)</li>
+          <li>2002/06/24: Rearranged function class structure by letting PostfixMathCommand 
+            implement PostfixMathCommandI (no changes to functionality)</li>
+          <li>2002/06/25: Added multiple thread testing classes</li>
+          <li>2002/06/26: Made EvaluatorVisitor non-singleton (was doing more 
+            harm than good)</li>
+          <li>2002/06/28: Added Unicode character support for variable names</li>
+        </ul>
+        <p> 
+        <b><!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem -->VERSION 
+        2.21: <font color="#999999">(released 2002/06/04)</font></b> 
+        <p></p>
+        <ul>
+          <li>2002/06/03: Fixed 1.1 compatibility issue in JEP.java (was using 
+            add() and clear() which are not included in the 1.1.8 VM).</li>
+        </ul>
+        <p> 
+        <b><!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem -->VERSION 
+        2.20: <font color="#999999">(released 2002/05/31)</font></b> 
+        <p></p>
+        <ul>
+          <li>2002/01/20: Combined multiplication and division to the same precedence 
+            level</li>
+          <li>2002/03/10: Added implicit multiplication, allowing expressions 
+            like &quot;3x == 3*x&quot;</li>
+          <li>2002/03/14: Improved evaluation performance through creating only 
+            one stack for evaluation</li>
+          <li>2002/03/19: Changes to operator precedence (more like C and Java)</li>
+          <li>2002/03/19: Now using JavaCC 2.1</li>
+          <li>2002/03/24: Added a console application to the org.nfunk.jepexamples 
+            package</li>
+          <li>2002/03/28: Implemented evaluation using the Visitor design pattern</li>
+          <li>2002/04/13: Added setAllowUndeclared() and setImplicitMul() for 
+            control of undeclared variables, and implicit multiplication options</li>
+          <li>2002/04/15: Added getSymbolTable() for obtaining list of variables 
+            in the symbol table (e.g. after parsing an expression with allowUndeclared=true)</li>
+          <li>2002/04/17: Prepared directory structure for building with <a href="http://jakarta.apache.org/ant/">ant</a></li>
+          <li>2002/04/19: Full transition of build environment to <a href="http://jakarta.apache.org/ant/">ant</a></li>
+          <li>2002/04/20: Finally was persuaded to add the sqrt() function to 
+            the set of built-ins</li>
+          <li>2002/04/27: Cleaned up error reporting using an error list in the 
+            JEP class</li>
+          <li>2002/05/27: New documentation</li>
+          <li>2002/05/30: Modifications to the sample applets</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --> 
+        <b>VERSION 2.12: <font color="#999999">(released 2002/02/01)</font></b> 
+        <ul>
+          <li>2001/08/31: Made a change to the Complex power function Complex.pow(to 
+            avoid problems with applets run in Internet Explorer (Math.exp(-Infinity) 
+            was not producing 0.0)</li>
+          <li>2001/09/10: Started working on array type</li>
+          <li>2001/09/20: Allowed variable number of arguments in functions</li>
+          <li>2001/09/20: Fixed undetected syntax error bug involving a comma 
+            before a list of function parameters</li>
+          <li>2001/10/17: Changed order of precedence for power and unary signs. 
+            Now power is of higher order than unary plus or minus</li>
+          <li>2001/11/10: Tweaked complex power functions</li>
+          <li>2001/11/10: Added error reporting for exceptions that occur while 
+            evaluating</li>
+          <li>2001/11/17: Edited the parser class to work without static function 
+            and symbol tables</li>
+          <li>2001/12/21: Completed the JEPTester class for verifying correct 
+            evaluation</li>
+          <li>2002/01/06: Replaced some Vector operations that relied on AbstractList 
+            with Java 1.1 compliant code</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        2.11:</b> 
+        <ul>
+          <li>2001/08/26: Substituted the Netlib complex number class with a custom 
+            class</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        2.10:</b> 
+        <ul>
+          <li>2001/07/07: Finished adding complex numbers, and incorporated complex 
+            numbers in nearly all built in functions</li>
+          <li>2001/07/08: Added string handling with concatenation with the + 
+            operator and comparison with ==</li>
+          <li>2001/07/16: Renamed the package to org.nfunk.jep</li>
+          <li>2001/08/24: Bugfix - subtraction of complex numbers was not working 
+            properly</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        2.05:</b> 
+        <ul>
+          <li>2001/03/21: Fixed PostfixMathCommand class to allow inheritance 
+            to classes in other packages</li>
+          <li>2001/04/10: Added some error reporting functions to main interface 
+            class (Error name and position)</li>
+          <li>2001/06/01: Finished adding hyperbolic trigonometric functions and 
+            packaging.</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        2.04:</b> 
+        <ul>
+          <li>2001/03/01: Fixed EOF problem (included EOF in grammar)</li>
+          <li>2001/03/16: Removed a few redundant exception classes</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        2.03:</b> 
+        <ul>
+          <li>2001/02/17: Corrected order of precedence for logical operators</li>
+          <li>2001/02/17: Added '&amp;&amp;', '||', and '!' operators to extend 
+            the logical functionality of the parser</li>
+          <li>2001/02/07: Disabled the default command line ouput. For debugging 
+            purposes, you may want to try to use setTraverse(true)</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        2.0:</b> 
+        <ul>
+          <li>2000/10/16: Started rebuilding the whole parser with JavaCC (<a href="http://www.webgain.com/products/java_cc/">http://www.webgain.com/products/java_cc/</a>)</li>
+          <li>2000/10/27: Completed restructuring main background parser functions 
+            in JavaCC</li>
+          <li>2000/11/17: Created a simple interface class for intuitive interaction 
+          </li>
+          <li>2000/12/10: Added a few logical operators</li>
+          <li>2001/01/06: Released the freshly rebuilt parser</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        1.1:</b> 
+        <ul>
+          <li>2000/11/30: Changed order of precedence so division occurs before 
+            multiplication </li>
+          <li>2000/10/01: Added exponential notation (i.e. 1.23e-3)</li>
+          <li>2000/10/16: Tweaked code here and there</li>
+          <li>2000/10/21: Finished new sample applet</li>
+          <li>2000/10/21: Repackaged and reorganized all source code and classes</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        1.0:</b> 
+        <ul>
+          <li>2000/07/03: Added more documentation</li>
+          <li>2000/07/10: Removed all operator nodes such as MulNode or PlusNode, 
+            and replaced them by using FunNode nodes with PostfixMathCommands</li>
+          <li>2000/08/07: Considering using JavaCC to recreate the Parser</li>
+          <li>2000/09/01: Fixed multiple subtraction problem. Now 1-2-3 = (1-2)-3 
+            instead of 1-(2-3)</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        0.3:</b> 
+        <ul>
+          <li>2000/06/01: Created Web page and posted it</li>
+          <li>2000/06/02: Edited Web page, added one variable field just for integers</li>
+          <li>2000/06/06: Started adding internal code documentation</li>
+          <li>2000/06/09: Figured out how to create objects at run-time with the 
+            reflection package. Probably useful for future use of user defined 
+            functions</li>
+          <li>2000/06/10: Finished adding capability of parsing standard functions 
+            as well as user defined functions (thanks to Ross Bagely)</li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><b>VERSION 
+        0.2:</b> 
+        <ul>
+          <li>2000/06/18: Added SharedConstants class for the parser package</li>
+          <li>2000/06/18: Added InvalidExpressionException class which is thrown 
+            inside Parser</li>
+          <li>2000/06/19: Tweaked the error report of Parser</li>
+          <li>2000/06/27: Simplified process of adding user defined functions 
+            by adding a parent class PostfixMathCommand, that contains a function 
+            for checking the stack passed to the command</li>
+          <li>2000/06/27: Extended the FunNode class to be able to handle functions 
+            with multiple arguments, needs to be implemented in the parser yet</li>
+          <li>2000/07/01: Completed expanding parser to handle functions with 
+            multiple arguments. Implemented angle function to return the angle 
+            whose tangent is equal to the ratio of the arguments x/y (using the 
+            Math.atan2 method). </li>
+        </ul>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><br>
+        <!-- #EndEditable --></td>
+    </tr>
+    <tr> 
+      <td><br>
+        <br>
+        <br>
+      </td>
+    </tr>
+	</table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr bgcolor="#000033"> 
+      <td bgcolor="#000033"><img src="images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+	</table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left"><font size="-2" color="#999999"><b>::</b></font></td>
+      <td align="right"> <font size="-2" color="#999999">&copy; 2000 Nathan Funk</font></td>
+    </tr>
+  </table>
+  <p class="menu">&nbsp;</p>
+</div>
+</body>
+<!-- #EndTemplate --></html>

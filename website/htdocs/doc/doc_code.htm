@@ -1,0 +1,112 @@
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --> 
+<title>JEP - Java Math Expression Parser</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="../main.css" title="style1">
+</head>
+
+<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<br>
+<br>
+<div align=center>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td>
+        <img src="../images/title.gif" width="378" height="75" alt="JEP - Java Expression Parser"> </td>
+      <td align=right valign=bottom><A href="http://sourceforge.net" target="_parent"> 
+        <img src="http://sourceforge.net/sflogo.php?group_id=24711&type=1" width="88" height="31" border="0" alt="SourceForge Logo"></A> 
+        <br>
+        <img src="../images/spacer.gif" width="1" height="2" alt=""></td>
+    </tr>
+	</table>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td bgcolor="#000033"><img src="../images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td align="center"> 
+        <table width="590" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		<td>
+<img src="../images/spacer.gif" width="1" height="4" alt=""><br>
+              <a href="../index.html"><b>Main</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../sampleapplets.htm"><b>Samples</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="doc_usage.htm"><b>Documentation</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../log.htm"><b>Version Log</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../forum.htm"><b>Forum</b></a> &nbsp;<font color="#CCCCCC">|</font>&nbsp; 
+              <a href="../download.htm"><b>Download</b></a><br>
+		<img src="../images/spacer.gif" width="1" height="5" alt=""></td>
+		</tr>
+		</table>
+      </td>
+    </tr>
+    <tr> 
+      <td bgcolor="#cccccc"><img src="../images/spacer.gif" width="1" height="1" alt=""></td>
+    </tr>
+	</table>
+	<table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><img src="../images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td><!-- #BeginEditable "Sub%20Menu" --> <!-- #BeginLibraryItem "/Library/Docu Menu.lbi" --><a href="doc_usage.htm">Usage</a> <font color="#CCCCCC">|</font> <a href="doc_op_and_func.htm">Operators 
+&amp; Functions</a> <font color="#CCCCCC">|</font> <a href="doc_grammar.htm">Grammar</a> 
+<font color="#CCCCCC">|</font> <a href="doc_cust_func.htm">Custom Functions</a> 
+<font color="#CCCCCC">|</font> <a href="javadoc/index.html" target="_blank">JavaDoc</a> 
+<font color="#CCCCCC">|</font> <a href="doc_faq.htm">FAQ</a><!-- #EndLibraryItem --><!-- #EndEditable --><br>
+        <br>
+      </td>
+    </tr>
+  </table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td><!-- #BeginEditable "Text" -->
+        <h2><a href="javadoc/index.html" target="_blank">JavaDoc Class Documentation</a></h2>
+        <h2>The org.nfunk.jep.JEP Class</h2>
+        <p>This is the only class that needs to be accessed for parsing expressions. 
+          It contains all functions needed to add functions and variables. Once 
+          an expression has been parsed, the values of the variables can be adjusted 
+          and the expression evaluated.<br>
+          <br>
+        </p>
+        <h2>Contents of the org.nfunk.jep.function package</h2>
+        <h3>PostFixMathCommandI</h3>
+        <p>The Interface Class for all math commands. It requires the classes 
+          which implement it, to contain a run(Stack aStack) function. The parameters 
+          for the math command are placed on the stack before calling run, and 
+          the result can be popped off afterwards. </p>
+        <h3>PostFixMathCommand</h3>
+        <p>Contains a stack checking function, and a numberOfParameters field. 
+          The stack checking function checkStack ensures that the stack passed 
+          as argument is not null, and the stack size is at least equal to the 
+          number of parameters.</p>
+        <h3>Mathematical Functions and Operators Classes</h3>
+        <p>Each of the classes such as Add, Angle, Sine, or Divide implement PostFixMathCommandI 
+          and extend PostFixMathCommand. They all return their result through 
+          pushing it on the the top of the stack in the run(Stack aStack) function.</p>
+        <!-- #EndEditable --></td>
+    </tr>
+    <tr> 
+      <td><br>
+        <br>
+        <br>
+      </td>
+    </tr>
+	</table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr bgcolor="#000033"> 
+      <td bgcolor="#000033"><img src="../images/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+	</table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="left"><font size="-2" color="#999999"><b>::</b></font></td>
+      <td align="right"> <font size="-2" color="#999999">&copy; 2000 Nathan Funk</font></td>
+    </tr>
+  </table>
+  <p class="menu">&nbsp;</p>
+</div>
+</body>
+<!-- #EndTemplate --></html>
