@@ -13,9 +13,12 @@ import org.lsmp.djep.vectorJep.*;
 
 /**
  * Represents a matrix.
+ * 
  * @author Rich Morris
  * Created on 07-Jul-2003
- * @version 1.3.0.2 now extends number
+ * @version 2.3.0.2 now extends number
+ * @version 2.3.1.1 Bug with non square matricies fixed.
+ *
  */
 public class Matrix extends Number implements MatrixValueI 
 {
@@ -91,8 +94,8 @@ public class Matrix extends Number implements MatrixValueI
 
 	public void setEle(int n,Object value) 
 	{
-		int i = n / rows;
-		int j = n % rows;
+		int i = n / cols;
+		int j = n % cols;
 		data[i][j] = value;
 	}
 	public void setEle(int i,int j,Object value) 
@@ -101,8 +104,8 @@ public class Matrix extends Number implements MatrixValueI
 	}
 	public Object getEle(int n)
 	{
-		int i = n / rows;
-		int j = n % rows;
+		int i = n / cols;
+		int j = n % cols;
 		return data[i][j];
 	}
 	public Object getEle(int i,int j) 
