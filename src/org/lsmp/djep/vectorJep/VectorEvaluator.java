@@ -78,6 +78,10 @@ public class VectorEvaluator extends EvaluatorVisitor {
 		pfmc instanceof BinaryOperatorI ||
 		pfmc instanceof NaryOperatorI )
 			pfmc.run(stack);
+		else if(numChild == 0)
+		{
+			pfmc.run(stack);
+		}
 		else /* perform operations element by element */
 		{
 			if(stack.peek() instanceof MatrixValueI)

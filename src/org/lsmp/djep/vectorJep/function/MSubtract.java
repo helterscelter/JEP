@@ -65,7 +65,7 @@ public class MSubtract extends Subtract implements BinaryOperatorI {
 	{
 		if(lhs.getNumRows() != rhs.getNumRows()) throw new ParseException("Miss match in number of rows ("+lhs.getNumRows()+","+rhs.getNumRows()+") when trying to add vectors!");
 		if(lhs.getNumCols() != rhs.getNumCols()) throw new ParseException("Miss match in number of cols ("+lhs.getNumCols()+","+rhs.getNumCols()+") when trying to add vectors!");
-		Matrix res = new Matrix(lhs.getNumRows(),lhs.getNumCols());
+		Matrix res = (Matrix) Matrix.getInstance(lhs.getNumRows(),lhs.getNumCols());
 		return (Matrix) calcValue(res,lhs,rhs);			
 	}
 

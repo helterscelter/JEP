@@ -66,7 +66,7 @@ public class VList extends org.nfunk.jep.function.List
 			Vector vec1 = (Vector) param1;
 			int rows = curNumberOfParameters;
 			int cols = vec1.size();
-			Matrix res = new Matrix(rows,cols);
+			Matrix res = (Matrix) Matrix.getInstance(rows,cols);
 			for(int j=0;j<cols;++j)
 				res.setEle(rows-1,j,vec1.elementAt(j));					
 			for(int i=rows-2;i>=0;--i)

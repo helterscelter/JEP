@@ -36,6 +36,7 @@ public class VectorJep extends JEP {
 		super.addFunction("ele",new Ele());
 		super.addFunction("len",new Length());
 		super.addFunction("size",new Size());
+		super.addFunction("id",new Id());
 		super.addFunction("diag",new Diagonal());
 		super.addFunction("getdiag",new GetDiagonal());
 		super.addFunction("trans",new Transpose());
@@ -43,6 +44,7 @@ public class VectorJep extends JEP {
 		super.addFunction("trace",new Trace());
 		super.addFunction("vsum",new VSum());
 		super.addFunction("Map",new VMap());
+		super.addFunction("GenMat",new GenMat());
 	}
 
 

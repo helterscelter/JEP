@@ -30,14 +30,16 @@ public class Matrix extends Number implements MatrixValueI
 	
 	private Matrix() {}
 	/** Construct a matrix with given rows and cols. */
-	public Matrix(int rows,int cols)
+	protected Matrix(int rows,int cols)
 	{
 		this.rows = rows;
 		this.cols = cols;
 		data = new Object[rows][cols];
 		dims = Dimensions.valueOf(rows,cols);
 	}
-	
+	public static MatrixValueI getInstance(int rows,int cols) {
+		return new Matrix(rows,cols);
+	}
 	/**
 	 * Construct a Matrix from a set of row vectors.
 	 * @param vecs

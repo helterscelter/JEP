@@ -7,7 +7,7 @@
  */
 package org.lsmp.djep.xjep.rewriteRules;
 
-import org.lsmp.djep.xjep.RewriteRuleI;
+//import org.lsmp.djep.xjep.RewriteRuleI;
 import org.nfunk.jep.*;
 import org.lsmp.djep.xjep.*;
 

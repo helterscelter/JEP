@@ -61,7 +61,7 @@ public class MUMinus extends UMinus implements UnaryOperatorI {
 	/** negate a matrix. */
 	public Matrix umin(Matrix lhs) throws ParseException
 	{
-		Matrix res = new Matrix(lhs.getNumRows(),lhs.getNumCols());
+		Matrix res = (Matrix) Matrix.getInstance(lhs.getNumRows(),lhs.getNumCols());
 		return (Matrix) calcValue(res,lhs);			
 	}
 

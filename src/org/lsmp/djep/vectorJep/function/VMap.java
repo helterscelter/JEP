@@ -49,7 +49,7 @@ public class VMap
 		return null;
 	}
 
-	protected Variable[] getVars(Node varsNode) throws ParseException
+	public static Variable[] getVars(Node varsNode) throws ParseException
 	{
 		Variable vars[]=null;
 		if(varsNode instanceof ASTFunNode 

@@ -150,4 +150,12 @@ public class Dimensions
 			res = 37*res + dims[i];
 		return res;
 	}
+	
+	public boolean equals(Object arg)
+	{
+		if(arg == null) return false;
+		if(arg instanceof Dimensions) return equals((Dimensions) arg);
+		return false;
+	}
+
 }

@@ -100,14 +100,15 @@ public class EvaluatorVisitor implements ParserVisitor {
 		try {
 			nodeAccept(topNode, null);
 		} catch (ParseException e) {
-			this.addToErrorList(e.getMessage());
-			throw e;
+			this.addToErrorList("Error: "+e.getMessage());
+			return null;
 		}
 
+		if(errorFlag) return null;
 		// something is wrong if not exactly one item remains on the stack
 		// or if the error flag has been set
-		if (errorFlag || stack.size() != 1) {
-			throw new Exception("EvaluatorVisitor.getValue(): Error during evaluation");
+		if (stack.size() != 1) {
+			throw new Exception("Stack corrupted");
 		}
 
 		// return the value of the expression

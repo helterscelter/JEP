@@ -10,7 +10,6 @@ package org.lsmp.djep.matrixJep;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.djep.diffRules.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.xjep.*;

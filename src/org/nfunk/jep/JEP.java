@@ -586,9 +586,16 @@ public class JEP {
 			// evaluate the expression
 			try {
 				result = ev.getValue(topNode,errorList,symTab);
-			} catch (Exception e) {
+			}
+			catch(ParseException e)
+			{
 				if (debug) System.out.println(e);
-				errorList.addElement("Error during evaluation");
+				errorList.addElement("Error during evaluation: "+e.getMessage());
+				return null;
+			}
+			catch (Exception e) {
+				if (debug) System.out.println(e);
+				errorList.addElement("Error during evaluation: "+e.getClass().getName()+": "+e.getMessage());
 				return null;
 			}
 			

@@ -11,7 +11,6 @@ import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.djep.*;
-import java.util.*;
 /**
  * Holds all info about a variable.
  * Has a name, an equation, a dimension (or sent of dimensions if matrix or tensor)

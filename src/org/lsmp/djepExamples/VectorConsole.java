@@ -16,6 +16,7 @@
 
 package org.lsmp.djepExamples;
 
+import org.lsmp.djep.jama.JamaUtil;
 import org.lsmp.djep.vectorJep.VectorJep;
 import org.nfunk.jep.*;
 import java.io.*;
@@ -69,6 +70,7 @@ class VectorConsole {
 		//j.setTraverse(true);
 		j.setAllowAssignment(true);
 		j.setAllowUndeclared(true);
+		JamaUtil.addStandardFunctions(j);
 		String temp="";
 		for(int i=0;i<args.length;++i)
 		{

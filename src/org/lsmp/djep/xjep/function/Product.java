@@ -7,7 +7,6 @@
  */
 package org.lsmp.djep.xjep.function;
 
-import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 
