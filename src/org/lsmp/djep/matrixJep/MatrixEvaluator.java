@@ -23,8 +23,8 @@ public class MatrixEvaluator implements ParserVisitor
 {
 //	private DimensionCalculator dimCalc;
 	private Stack stack = new Stack();
-	private MatrixDJep mjep;
-	public MatrixValueI evaluate(MatrixNodeI node,MatrixDJep mjep) throws ParseException
+	private MatrixJep mjep;
+	public MatrixValueI evaluate(MatrixNodeI node,MatrixJep mjep) throws ParseException
 	{
 		this.mjep=mjep;
 		return (MatrixValueI) node.jjtAccept(this,null);

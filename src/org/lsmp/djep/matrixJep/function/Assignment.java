@@ -43,7 +43,7 @@ public class Assignment extends Assign implements MatrixSpecialEvaluationI
 	 * evaluate the rhs. Then set the value 
 	 * of the lhs to the result.
 	 */
-	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixDJep j) throws ParseException
+	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixJep j) throws ParseException
 	{
 		if(node.jjtGetNumChildren()!=2)
 			throw new ParseException("Assignment opperator must have 2 operators.");

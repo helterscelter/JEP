@@ -70,7 +70,7 @@ public class MIf extends PostfixMathCommand implements NaryOperatorI, MatrixSpec
 	/**
 	 * Evaluate the node, uses lazy evaluation.
 	 */
-	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixDJep j) throws ParseException
+	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixJep j) throws ParseException
 	{
 		int num =node.jjtGetNumChildren(); 
 		if( num < 3 || num > 4)

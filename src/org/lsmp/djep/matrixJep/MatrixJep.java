@@ -20,13 +20,13 @@ import org.lsmp.djep.matrixJep.nodeTypes.*;
  * @author Rich Morris
  * Created on 19-Dec-2003
  */
-public class MatrixDJep extends DJep {
+public class MatrixJep extends DJep {
 
 	public MatrixPreprocessor dec = new MatrixPreprocessor();
 	public MatrixVariableFactory mvf = new MatrixVariableFactory();
 	public MatrixEvaluator mev = new MatrixEvaluator();
 	
-	public MatrixDJep() {
+	public MatrixJep() {
 		super();
 		nf = new MatrixNodeFactory();
 		super.symTab = new DSymbolTable(mvf);
@@ -75,7 +75,7 @@ public class MatrixDJep extends DJep {
 		else return res;
 	}
 
-	public MatrixDJep(DJep j) {
+	public MatrixJep(DJep j) {
 		super(j);
 		nf = new MatrixNodeFactory();
 	}

@@ -29,9 +29,9 @@ public interface MatrixSpecialEvaluationI {
 	 * 
 	 * @param node The top node.
 	 * @param visitor The parser visitor
-	 * @param jep The current MatrixDJep instance.
+	 * @param jep The current MatrixJep instance.
 	 * @return Value after evaluation.
 	 * @throws ParseException
 	 */
-	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixDJep jep) throws ParseException;
+	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixJep jep) throws ParseException;
 }

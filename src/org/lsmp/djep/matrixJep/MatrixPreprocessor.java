@@ -31,7 +31,7 @@ import org.lsmp.djep.vectorJep.function.*;
  */
 public class MatrixPreprocessor implements ParserVisitor
 {
-	private MatrixDJep mjep;
+	private MatrixJep mjep;
 	private MatrixNodeFactory nf;
 	private DSymbolTable vt;
 
@@ -40,11 +40,11 @@ public class MatrixPreprocessor implements ParserVisitor
 	/**
 	 * Main entry point: preprocess a node. 
 	 * @param node	Top node of tree. 
-	 * @param mdjep	Reference to MatrixDJep instance
+	 * @param mdjep	Reference to MatrixJep instance
 	 * @return	A new tree with all preprocessing carried out.
 	 * @throws ParseException
 	 */	
-	public MatrixNodeI preprocess(Node node,MatrixDJep mdjep) throws ParseException
+	public MatrixNodeI preprocess(Node node,MatrixJep mdjep) throws ParseException
 	{
 		this.mjep=mdjep;
 		this.nf=(MatrixNodeFactory) mdjep.nf;

@@ -40,7 +40,7 @@ import java.io.*;
 */
 public class MatrixDecConsole {
 	/** Main JEP object */
-	MatrixDJep j;	
+	MatrixJep j;	
 	
 	/** The prompt string */
 	private String prompt;
@@ -64,7 +64,7 @@ public class MatrixDecConsole {
 	/** sets up all the needed objects. */
 	void initialise()
 	{
-		j = new MatrixDJep();
+		j = new MatrixJep();
 		j.addStandardConstants();
 		j.addStandardFunctions();
 		j.addComplex();
