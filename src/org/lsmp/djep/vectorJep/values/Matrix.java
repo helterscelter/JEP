@@ -161,4 +161,6 @@ public class Matrix extends Number implements MatrixValueI
 			result = 37*result+ data[i][j].hashCode();
 		return result;
 	}
+	
+
 }
