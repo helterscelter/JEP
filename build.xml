@@ -66,7 +66,7 @@
 
 <!--======================================================================-->
 <!-- JAVACC -->
-	<target name="javacc" depends="jjtree">
+	<target name="javacc" depends="jjtree" if="javacc.present">
 		<javacc
 			target="${src}/org/nfunk/jep/Parser.jj"
 			javacchome="${javacchome}"
