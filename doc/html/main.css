@@ -118,8 +118,9 @@ pre {  font-size: 10pt}
 #centercontent {
 	width:500px;
 	text-align:left;
-	margin-left:150px;
-	margin-right:auto;
+; margin-left: 150px
+/*	margin-left:150px;
+	margin-right:auto; */
 }
 
 

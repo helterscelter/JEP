@@ -8,47 +8,69 @@
 </head>
 
 <body>
-<!-- #BeginEditable "Sub%20Menu" --> <!-- #BeginLibraryItem "/Library/Docu Menu.lbi" --><!-- NAVIGATION ---------------------------------------------------- -->
-<div id="navcontainer">
-<ul>
-<li><a href="file:///G|/eclipse/jep/doc/javadoc/index.html" target="_blank">JavaDoc*</a></li>
-</ul>
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="javadoc/index.html" target="_blank">JavaDoc*</a></li>
 
-<hr/>
+  </ul>
+  <hr/>
+  <ul>
+    <li><a href="index.html">Usage</a></li>
+    <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
 
-<ul>
-<li><a href="index.html">Usage</a></li>
-<li><a href="op_and_func.html">Operators &amp; Functions</a></li>
-<li><a href="grammar.html">Grammar</a></li>
-<li><a href="cust_func.html">Custom Functions</a></li>
-<li><a href="newfeatures-2.3.html">New Features</a></li>
-<li><a href="faq.html">FAQ</a></li>
+    <li><a href="cust_func.html">Custom Functions</a></li>
+    <li><a href="newfeatures-2.3.html">New Features</a></li>
+    <li><a href="faq.html">FAQ</a></li>
     <li><a href="version.html">Version History</a></li>
-</ul>
+  </ul>
+  <hr/>
+  <ul>
 
-<hr/>
+    <li><a href="djep/index.html">DJEP</a></li>
+    <li><a href="djep/XJep.html">XJep</a></li>
+    <li><a href="djep/DJep.html">Differentiation</a></li>
+    <li><a href="djep/groups.html">Groups</a></li>
+    <li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
 
-<ul>
-<li><a href="djep/index.html">DJEP</a></li>
-<li><a href="djep/XJep.html">XJep</a></li>
-<li><a href="djep/DJep.html">Differentiation</a></li>
-<li><a href="djep/groups.html">Groups</a></li>
-<li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
-<li><a href="djep/version.html">Version History</a></li>
-</ul>
-</div><!-- #EndLibraryItem --><!-- #EndEditable -->
+    <li><a href="djep/version.html">Version History</a></li>
+  </ul>
+</div>
+
+<!-- CENTER CONTENT -------------------------------------------------- -->
 <div id="centercontent">
 <!-- #BeginEditable "Text" --> 
         
   <h1>Frequently Asked Questions</h1>
-        <p><b>Q: How can I add custom functions with a variable number of parameters?</b></p>
+        
+  <p><b>Q: I've noticed that JEP does not give accurate results for certain expressions. 
+    Why is this? What can I do about it?</b></p>
+  <blockquote> 
+    <p><b>A:</b> You will notice that when you evaluate something as simple as 
+      &quot;8 - 7.9&quot; the result will be 0.09999999999999964 rather than 0.1. 
+      These inaccuracies are the result of <b>floating point arithmetic</b>. Internally 
+      JEP uses the <code>double</code> type to represent numbers by default. Unfortunately, 
+      even for trivial calculations such as &quot;8 - 7.9&quot; the calculation 
+      can not be performed accurately.</p>
+    <p>You will notice the same if you run</p>
+    <pre>  double a=8, b=7.9;
+  System.out.println(&quot;a-b = &quot; + (a-b));</pre>
+    <p>in a Java program.</p>
+    <p>Although floating point numbers are accurate enough for many applications, 
+      these types of errors should not be ignored in applications where accuracy 
+      is critical.</p>
+    <p>The DJEP library provides tools to perform accurate calculations using 
+      more sophisiticated number types. DJEP includes GroupJep which is intended 
+      for exact arithmetic on groups. See the Groups documentation for details. 
+      It utilizes the BigInteger and BigDecimal classes to represent numbers rather 
+      than the double type. </p>
+  </blockquote>
+  <p><b>Q: How can I add custom functions with a variable number of parameters?</b></p>
         <blockquote> 
           <p><b>A:</b> Create a custom function class and set the number of parameters 
             to -1. The parser will then accept any number of parameters.</p>
         </blockquote>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr> 
-              <td bgcolor="#CCCCCC"><img src="../images/spacer.gif" width="1" height="1"></td></tr></table><br>
         <p><b>Q: I don't need all the functions supplied by JEP. Is there a way 
           to not load some of them, or completely remove some from the package?</b></p>
         <blockquote> 
@@ -104,7 +126,8 @@
 <br/>
 <br/>
 <br/>
-  <div id="footer"> &copy; 2004 Singular Systems</div>
+<div id="footer">&copy; 2004 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a></div>
 </div>
 </body>
 <!-- #EndTemplate --></html>
