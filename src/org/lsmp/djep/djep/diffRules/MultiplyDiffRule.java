@@ -15,6 +15,7 @@ import org.lsmp.djep.xjep.*;
 /**
    * Diffrentiates a product with respect to var.
    * diff(y*z,x) -> diff(y,x)*z+y*diff(z,x)
+   * @since 28/1/05 now works when multiply has more than two arguments.
    */
   public class MultiplyDiffRule implements DiffRulesI
   {
@@ -56,6 +57,19 @@ import org.lsmp.djep.xjep.*;
 			  djep.deepCopy(children[0]),
 			  dchildren[1]));
 	  else
-		  throw new ParseException("Too many children "+nchild+" for "+node+"\n");
+	  {
+	  	Node sums[] = new Node[nchild];
+	  	for(int i=0;i<nchild;++i)
+	  	{
+	  		Node terms[] = new Node[nchild];
+	  		for(int j=0;j<nchild;++j)
+	  			terms[j] = children[j];
+	  		terms[i] = dchildren[i];
+			sums[i] = nf.buildOperatorNode(op,terms);
+	  	}
+	  	Node res = nf.buildOperatorNode(opset.getAdd(),sums);
+	  	return res;
+	  }
+	  //throw new ParseException("Too many children "+nchild+" for "+node+"\n");
 	}
   } /* end MultiplyDiffRule */
