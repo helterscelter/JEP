@@ -21,7 +21,10 @@ import org.nfunk.jep.type.*;
  * 
  * @author N Funk and R Morris
  * @since 2.3.1 a bit of a rewrite to make sub classing easier, now allows Complex to be compared to Double i.e. 1+0 i == 1.
- * 
+ * @since 2.3.2 changed the internal lt,gt,le,ge,ne and eq method to return boolean.
+ * If this breaks anything use
+ * 		if(lt(obj1,obj2)) inStack.push(new Double(1));
+ *		else 	inStack.push(new Double(0));
  */
 public class Comparative extends PostfixMathCommand
 {
@@ -47,7 +50,7 @@ public class Comparative extends PostfixMathCommand
 		
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
-		Object res=null;
+		boolean res=false;
 		switch(id)
 		{
 		case LT: res = lt(param1,param2); break;
@@ -57,10 +60,11 @@ public class Comparative extends PostfixMathCommand
 		case NE: res = ne(param1,param2); break;
 		case EQ: res = eq(param1,param2); break;
 		}
-		inStack.push(res);
+		if(res) inStack.push(new Double(1));
+		else inStack.push(new Double(0));
 	}
 	
-	public Object lt(Object param1,Object param2) 	throws ParseException
+	public boolean lt(Object param1,Object param2) 	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException("< not defined for complex numbers");
@@ -68,12 +72,11 @@ public class Comparative extends PostfixMathCommand
 		{
 			double x = ((Number)param1).doubleValue();
 			double y = ((Number)param2).doubleValue();
-			int r = (x<y) ? 1 : 0;
-			return new Double(r);
+			return (x<y);
 		}
 		throw new ParseException("< not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
-	public Object gt(Object param1,Object param2)	throws ParseException
+	public boolean gt(Object param1,Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException("> not defined for complex numbers");
@@ -81,12 +84,11 @@ public class Comparative extends PostfixMathCommand
 		{
 			double x = ((Number)param1).doubleValue();
 			double y = ((Number)param2).doubleValue();
-			int r = (x>y) ? 1 : 0;
-			return new Double(r);
+			return (x>y);
 		}
 		throw new ParseException("> not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
-	public Object le(Object param1,Object param2)	throws ParseException
+	public boolean le(Object param1,Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException("<= not defined for complex numbers");
@@ -94,12 +96,11 @@ public class Comparative extends PostfixMathCommand
 		{
 			double x = ((Number)param1).doubleValue();
 			double y = ((Number)param2).doubleValue();
-			int r = (x<=y) ? 1 : 0;
-			return new Double(r);
+			return (x<=y);
 		}
 		throw new ParseException("<= not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
-	public Object ge(Object param1,Object param2)	throws ParseException
+	public boolean ge(Object param1,Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException(">= not defined for complex numbers");
@@ -107,52 +108,43 @@ public class Comparative extends PostfixMathCommand
 		{
 			double x = ((Number)param1).doubleValue();
 			double y = ((Number)param2).doubleValue();
-			int r = (x>=y) ? 1 : 0;
-			return new Double(r);
+			return (x>=y);
 		}
 		throw new ParseException(">= not defined for object of type "+param1.getClass().getName()+" and "+param1.getClass().getName());
 	}
 
-	public Object eq(Object param1,Object param2)	throws ParseException
+	public boolean eq(Object param1,Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) && (param2 instanceof Complex))
 		{
-			int r = ((Complex)param1).equals((Complex)param2,tolerance) ? 1 : 0;
-			return new Double(r);
+			return ((Complex)param1).equals((Complex)param2,tolerance);
 		}
 		if ((param1 instanceof Complex) && (param2 instanceof Double))
 		{
-			int r = ((Complex)param1).equals(new Complex((Number) param2),tolerance) ? 1 : 0;
-			return new Double(r);
+			return ((Complex)param1).equals(new Complex((Number) param2),tolerance);
 		}
 		if ((param2 instanceof Complex) && (param1 instanceof Double))
 		{
-			int r = ((Complex)param2).equals(new Complex((Number) param1),tolerance) ? 1 : 0;
-			return new Double(r);
+			return ((Complex)param2).equals(new Complex((Number) param1),tolerance);
 		}
-		int r = param1.equals(param2) ? 1 : 0;
-		return new Double(r);
+		return param1.equals(param2);
 	}
 	
-	public Object ne(Object param1,Object param2)	throws ParseException
+	public boolean ne(Object param1,Object param2)	throws ParseException
 	{
 		if ((param1 instanceof Complex) && (param2 instanceof Complex))
 		{
-			int r = ((Complex)param1).equals((Complex)param2,tolerance) ? 0 : 1;
-			return new Double(r);
+			return !((Complex)param1).equals((Complex)param2,tolerance);
 		}
 		if ((param1 instanceof Complex) && (param2 instanceof Double))
 		{
-			int r = ((Complex)param1).equals(new Complex((Number) param2),tolerance) ? 0 : 1;
-			return new Double(r);
+			return !((Complex)param1).equals(new Complex((Number) param2),tolerance);
 		}
 		if ((param2 instanceof Complex) && (param1 instanceof Double))
 		{
-			int r = ((Complex)param2).equals(new Complex((Number) param1),tolerance) ? 0 : 1;
-			return new Double(r);
+			return !((Complex)param2).equals(new Complex((Number) param1),tolerance);
 		}
-		int r = param1.equals(param2) ? 0 : 1;
-		return new Double(r);
+		return !param1.equals(param2);
 	}
 
 

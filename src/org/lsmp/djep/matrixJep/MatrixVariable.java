@@ -107,9 +107,9 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 	public void setMValue(MatrixValueI val) {
 		if(this.isConstant()) return;
 		mvalue.setEles(val);
+		setValidValue(true);
 		setChanged();
 		notifyObservers();
-//		setValidValue(true);
 	}
 	
 //	public void setMValue(VectorMatrixTensorI value) 

@@ -46,7 +46,7 @@ public class Variable extends Observable {
 	{
 		this.name = name;
 		this.value=value;
-		validValue=true;
+		validValue= (value!=null);
 	}
 	public String getName() {return name;}
 	//private void setName(String string) {name = string;	}
@@ -67,7 +67,7 @@ public class Variable extends Observable {
 	 * method so they do not need to handle the Observable methods.
 	 *  
 	 * @return false if tried to change a constant value.
-	 * @version 2.3.3 added Observable
+	 * @since 2.3.3 added Observable
 	 */
 	public boolean setValue(Object object) {
 		if(!setValueRaw(object)) return false;
@@ -81,7 +81,7 @@ public class Variable extends Observable {
 	 * setValue. This is because setValue notifies any observers
 	 * and then calls this method.
 	 * @param object
-	 * @return
+	 * @return false if tried to change a constant value.
 	 * @since 2.3.3
 	 */
 	protected boolean setValueRaw(Object object) {

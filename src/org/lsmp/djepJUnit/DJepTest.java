@@ -508,10 +508,21 @@ public class DJepTest extends TestCase {
 	{
 		j.parseExpression("sqrt(-1)");
 		double val = j.getValue();
-		assert(Double.isNaN(val));
+		assertEquals("sqrt(-1) NaN",Double.isNaN(val),true);
 		j.parseExpression("sqrt(-1)^2");
 		val = j.getValue();
 		assertEquals("sqrt(-1)^2",-1.0,val,0.0);
+	}
+	
+	public void testSum()
+	{
+		valueTest("Sum(x,x,1,10)",55);
+		valueTest("Sum(x^2,x,1,5)",55);
+		valueTest("Product(x,x,1,5)",120);
+		valueTest("Min(x^2,x,1,5)",1);
+		valueTest("Max(x^2,x,1,5)",25);
+		valueTest("MinArg(x^2,x,1,5)",1);
+		valueTest("MaxArg(x^2,x,1,5)",5);
 	}
 	public void testBad() throws ParseException
 	{

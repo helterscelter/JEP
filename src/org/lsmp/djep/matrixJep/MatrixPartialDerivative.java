@@ -43,9 +43,9 @@ public class MatrixPartialDerivative extends PartialDerivative implements Matrix
 	public void setMValue(MatrixValueI val) {
 		if(this.isConstant()) return;
 		mvalue.setEles(val);
+		setValidValue(true);
 		setChanged();
 		notifyObservers();
-		setValidValue(true);
 	}
 //	public void setMValue(VectorMatrixTensorI value) 
 //	{ this.mvalue = value; setValidValue(true); }

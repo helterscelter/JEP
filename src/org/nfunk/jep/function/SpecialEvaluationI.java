@@ -33,5 +33,5 @@ public interface SpecialEvaluationI {
 	 * @return the value after evaluation
 	 * @throws ParseException
 	 */
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack stack,SymbolTable symTab) throws ParseException;
+	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack stack/*,SymbolTable symTab*/) throws ParseException;
 }
