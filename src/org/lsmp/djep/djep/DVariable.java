@@ -98,29 +98,24 @@ public class DVariable extends XVariable
 	 * 	deriv names. Note the names are sorted so that
 	 *  d^2z/dxdy = d^2z/dydx.
 	 */
-	public void setDerivative(String derivnames[],PartialDerivative eqn)
+	void setDerivative(String derivnames[],PartialDerivative eqn)
 	{
 		String newnames[] = sortedNames(derivnames); 
 		derivatives.put(makeDerivString(name,newnames),eqn);
 	}
 
-	public void setDerivativeSorted(String derivnames[],PartialDerivative eqn)
+	void setDerivativeSorted(String derivnames[],PartialDerivative eqn)
 	{
 		derivatives.put(makeDerivString(name,derivnames),eqn);
 	}
 
-/*	public PartialDerivative getDerivative(String derivname)
-	{
-		return (PartialDerivative) derivatives.get(derivname);
-	}
-*/
-	public PartialDerivative getDerivative(String derivnames[])
+	PartialDerivative getDerivative(String derivnames[])
 	{
 		String newnames[] = sortedNames(derivnames);
 		return (PartialDerivative) derivatives.get(makeDerivString(name,newnames));
 	}
 
-	public PartialDerivative getDerivativeSorted(String derivnames[])
+	PartialDerivative getDerivativeSorted(String derivnames[])
 	{
 		return (PartialDerivative) derivatives.get(makeDerivString(name,derivnames));
 	}
@@ -137,7 +132,7 @@ public class DVariable extends XVariable
  * @return The derivative or null if it cannot be calculated.
  * @throws ParseException
  */
-	public PartialDerivative findDerivativeSorted(String derivnames[],DJep jep)
+	PartialDerivative findDerivativeSorted(String derivnames[],DJep jep)
 		throws ParseException
 	{
 		if(getEquation()==null) return null;
@@ -171,14 +166,14 @@ public class DVariable extends XVariable
 		return res;	
 	}
 
-	public PartialDerivative findDerivative(String derivnames[],DJep jep)
+	PartialDerivative findDerivative(String derivnames[],DJep jep)
 		throws ParseException
 	{
 		String newnames[] = sortedNames(derivnames); 
 		return findDerivativeSorted(newnames,jep);
 	}
 
-	public PartialDerivative findDerivative(String derivname,DJep jep)
+	PartialDerivative findDerivative(String derivname,DJep jep)
 		throws ParseException
 	{
 		String newnames[] = new String[1];
@@ -186,7 +181,7 @@ public class DVariable extends XVariable
 		return findDerivativeSorted(newnames,jep);
 	}
 
-	public PartialDerivative findDerivative(PartialDerivative deriv,String dname,DJep jep)
+	PartialDerivative findDerivative(PartialDerivative deriv,String dname,DJep jep)
 		throws ParseException
 	{
 		int len = deriv.getDnames().length;
@@ -219,20 +214,11 @@ public class DVariable extends XVariable
 		return sb.toString();
 	}
 
-	/**
-	 * Sets the value of the variable. Constant values cannot be changed.
-	 * @return false if tried to change a constant value.
+	/** Enumerate all the derivatives of this variable.
+	 * 
+	 * @return an Enumeration running through all the derivatives. 
 	 */
-/*
- * Should not be needed as functionality now caried out using java.util.observer/observable model. 
- 
-	public boolean setValueRaw(Object object) {
-		for(Enumeration en = derivatives.elements();en.hasMoreElements();)
-		{
-			PartialDerivative pd = (PartialDerivative) en.nextElement();
-			pd.setValidValue(false);
-		}
-		return super.setValueRaw(object);
+	public Enumeration allDerivatives() {
+		return derivatives.elements();
 	}
-*/
 }
