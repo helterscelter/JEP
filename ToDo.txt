@@ -25,8 +25,10 @@
 
 == Further todos ====================================================
  - replace @license_info@ with GPL info using replace task and loadfile
+ - make same change to getValue as for ERIN
+ - add Exponential class
  - add shell scripts for starting up in linux
- - return N/A when result is a complex number.
+ - comparison needs to be more flexible with complex type ((i-i) == 0)
  - automaticize web site uploading/cvs
  - add to features, that it is "easy to integrate in your project"
  - clean up javadoc so warnings are avoided during javadoc generation
