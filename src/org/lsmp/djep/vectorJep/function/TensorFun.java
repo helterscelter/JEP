@@ -29,11 +29,15 @@ public class TensorFun extends PostfixMathCommand
 		numberOfParameters = -1;
 	}
 
+	/** Calculates the dimension of this node with given dimesions of children. */
 	public Dimensions calcDim(Dimensions dims[]) throws ParseException
 	{
 		return Dimensions.valueOf(dims.length,dims[0]);
 	}
 	
+	/** Calculates the value of this node.
+	 * 
+	 */
 	public MatrixValueI calcValue(MatrixValueI res,
 		MatrixValueI inputs[]) throws ParseException
 	{
@@ -102,5 +106,4 @@ public class TensorFun extends PostfixMathCommand
 			return;
 		}
 	}
-	
 }

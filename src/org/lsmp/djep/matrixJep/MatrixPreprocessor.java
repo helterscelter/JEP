@@ -36,7 +36,14 @@ public class MatrixPreprocessor implements ParserVisitor
 	private DSymbolTable vt;
 
 	public MatrixPreprocessor() {}
-	
+
+	/**
+	 * Main entry point: preprocess a node. 
+	 * @param node	Top node of tree. 
+	 * @param mdjep	Reference to MatrixDJep instance
+	 * @return	A new tree with all preprocessing carried out.
+	 * @throws ParseException
+	 */	
 	public MatrixNodeI preprocess(Node node,MatrixDJep mdjep) throws ParseException
 	{
 		this.mjep=mdjep;
@@ -78,6 +85,20 @@ public class MatrixPreprocessor implements ParserVisitor
 		return nf.buildVariableNode(vt.getVar(node.getName()));
 	}
 
+	/** visit functions and operators **/
+	public Object visit(ASTFunNode node, Object data) throws ParseException
+	{
+		if(node.isOperator()) return visitOp(node,data);
+		if(node.getPFMC() instanceof Diff)
+		{
+			return visitDiff(node,data);
+		}
+		
+		MatrixNodeI children[] = visitChildrenAsArray(node,data);
+		ASTMFunNode res = (ASTMFunNode) nf.buildFunctionNode(node,children);
+		return res;
+	}
+
 	/** operators +,-,*,/ **/
 	public Object visitOp(ASTFunNode node, Object data) throws ParseException
 	{
@@ -96,8 +117,6 @@ public class MatrixPreprocessor implements ParserVisitor
 			MatrixVariable var = (MatrixVariable) ((ASTVarNode) children[0]).getVar();
 			var.setDimensions(rhsDim);
 			var.setEquation(mjep.deepCopy(children[1]));
-//			var.setMValue(Tensor.getInstance(rhsDim));
-//			var.setDimensions(rhsDim);
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,rhsDim);
 		}
 		else if(pfmc instanceof Power)
@@ -196,20 +215,6 @@ public class MatrixPreprocessor implements ParserVisitor
 			Dimensions dim = Dimensions.ONE;
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,dim);
 		}
-	}
-
-	/** other functions **/
-	public Object visit(ASTFunNode node, Object data) throws ParseException
-	{
-		if(node.isOperator()) return visitOp(node,data);
-		if(node.getPFMC() instanceof Diff)
-		{
-			return visitDiff(node,data);
-		}
-		
-		MatrixNodeI children[] = visitChildrenAsArray(node,data);
-		ASTMFunNode res = (ASTMFunNode) nf.buildFunctionNode(node,children);
-		return res;
 	}
 
 	/** the differential opperator 

@@ -15,6 +15,11 @@ import org.lsmp.djep.vectorJep.values.*;
 
 import org.nfunk.jep.*;
 
+/**
+ * The Dot operator. 
+ * @author Rich Morris
+ * Created on 23-Feb-2004
+ */
 public class Dot extends MMultiply implements BinaryOperatorI
 {
 	public Dot() {
@@ -63,7 +68,8 @@ public class Dot extends MMultiply implements BinaryOperatorI
 
 		return;
 	}
-	
+
+	/** returns param1 . param2. Defaults to scaler mult if parameters are not vectors. */
 	public Object dot(Object param1, Object param2)	throws ParseException
 	{
 		if(param1 instanceof MVector && param2 instanceof MVector)
@@ -71,6 +77,7 @@ public class Dot extends MMultiply implements BinaryOperatorI
 		return super.mul(param1,param2);
 	}
 	
+	/** returns lhs . rhs */
 	public Object dot(MVector lhs, MVector rhs) throws ParseException
 	{
 		if(!lhs.getDim().equals(rhs.getDim())) throw new ParseException("Dot: Miss match in sizes ("+lhs.getDim()+","+rhs.getDim()+")");
