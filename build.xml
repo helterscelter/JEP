@@ -5,12 +5,6 @@
   JEP - Java Expression Parser
   http://jep.sourceforge.net
 
-  Requirements for compiling JEP with the ant build tool
-    1. Ant is installed (http://jakarta.apache.org/ant/)
-    2. The optional tasks for ant are installed
-    3. JavaCC is installed (http://www.webgain.com/products/java_cc/)
-    4. The classes.zip file for the Sun JDK 1.1.8 is on your system
-
   Setting up your system to compile JEP:
     1. Set the JAVACCHOME environment variable to the location of the
        library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
