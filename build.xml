@@ -27,7 +27,7 @@
 	<property name="doc"     value="doc"/>
 	<property name="lib"     value="lib"/>
 	<!-- <property name="website" value="website"/> -->
-	<property name="version" value="2.24"/>
+	<property name="version" value="2.25a"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
