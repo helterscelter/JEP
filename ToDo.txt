@@ -1,11 +1,20 @@
 == TODO for version 2.3.1 ===============================================
-- convert docs to frameset
 - fix link problem to JavaDoc in documentation
+- documentation requirements
+  1 - easy to find what you're looking for
+  2 - comprehensive
+  3 - cross linked, externally linkable
+  4 - JEP and DJEP should be separable
+  5 - easy updating of menu/content (not required to use dreamweaver or other difficult accessible tool)
+  6 - correct spelling
+  7 - no broken links
+
 - Run spell check on docs
 - fix if(a, b, c) doc error
 - fix menu highlighting
 - change contact to About Us
 - new section DJEP
+- compiling JEP section
 
 == TODO for version 2.3.0 ===========================================
 - update CVS

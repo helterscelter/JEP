@@ -6,48 +6,51 @@
 </head>
 
 <body>
-<!-- #BeginEditable "Sub%20Menu" --> <!-- #BeginLibraryItem "/Library/Docu Menu.lbi" --><!-- NAVIGATION ---------------------------------------------------- -->
-<div id="navcontainer">
-<ul>
-<li><a href="file:///G|/eclipse/jep/doc/javadoc/index.html" target="_blank">JavaDoc*</a></li>
-</ul>
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc*</a></li>
 
-<hr/>
+  </ul>
+  <hr/>
+  <ul>
+    <li><a href="../index.html">Usage</a></li>
+    <li><a href="../op_and_func.html">Operators &amp; Functions</a></li>
+    <li><a href="../grammar.html">Grammar</a></li>
 
-<ul>
-<li><a href="../index.html">Usage</a></li>
-<li><a href="../op_and_func.html">Operators &amp; Functions</a></li>
-<li><a href="../grammar.html">Grammar</a></li>
-<li><a href="../cust_func.html">Custom Functions</a></li>
-<li><a href="../newfeatures-2.3.html">New Features</a></li>
-<li><a href="../faq.html">FAQ</a></li>
+    <li><a href="../cust_func.html">Custom Functions</a></li>
+    <li><a href="../newfeatures-2.3.html">New Features</a></li>
+    <li><a href="../faq.html">FAQ</a></li>
     <li><a href="../version.html">Version History</a></li>
-</ul>
+  </ul>
+  <hr/>
+  <ul>
 
-<hr/>
+    <li><a href="index.html">DJEP</a></li>
+    <li><a href="XJep.html">XJep</a></li>
+    <li><a href="DJep.html">Differentiation</a></li>
+    <li><a href="groups.html">Groups</a></li>
+    <li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
 
-<ul>
-<li><a href="index.html">DJEP</a></li>
-<li><a href="XJep.html">XJep</a></li>
-<li><a href="DJep.html">Differentiation</a></li>
-<li><a href="groups.html">Groups</a></li>
-<li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
-<li><a href="version.html">Version History</a></li>
-</ul>
-</div><!-- #EndLibraryItem --><!-- #EndEditable -->
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+</div>
+
+<!-- CENTER CONTENT -------------------------------------------------- -->
 <div id="centercontent">
 <!-- #BeginEditable "Text" --> 
         <h1><a name="top"></a>DJep - differentiation of equations in JEP</h1>
         
       <p><br>
-Faculties for differentiation are offered by <a href="../../javadoc/org/lsmp/djep/djep/DJep.html">DJep</a> class in the 
- <a href="../../javadoc/org/lsmp/djep/djep/package-summary.html"><tt>org.lsmp.djep.djep</tt></a> package. The DJep class should be used instead of the JEP or XJep classes and has all the features of both classes.<br>
+Faculties for differentiation are offered by <a href="../javadoc/org/lsmp/djep/djep/DJep.html">DJep</a> class in the 
+ <a href="../javadoc/org/lsmp/djep/djep/package-summary.html"><tt>org.lsmp.djep.djep</tt></a> package. The DJep class should be used instead of the JEP or XJep classes and has all the features of both classes.<br>
       </p>
       <p>There are two main ways
  differentiation can be used:
  </p>
 <ol>
- <li>Using the <tt><a href="../../javadoc/org/lsmp/djep/djep/DJep.html#differentiate%28org.nfunk.jep.Node,%20java.lang.String%29">differentiate(Node node,String name)</a> method of DJep.</tt><a href="../../javadoc/org/lsmp/djep/djep/DJep.html"><tt><br>
+    <li>Using the <tt><a href="../javadoc/org/lsmp/djep/djep/DJep.html#differentiate(org.nfunk.jep.Node, java.lang.String)">differentiate(Node 
+      node,String name)</a> method of DJep.</tt><a href="../javadoc/org/lsmp/djep/djep/DJep.html"><tt><br>
           </tt></a></li>
  <li>Using the "<tt>diff</tt>"<b> </b>operator in an equation.</li>
  </ol>
@@ -61,12 +64,11 @@ which can be simplified to "<tt>2*x</tt>".<br>
       <br>
 
 
-<p>
-Note also that if the <tt>diff(eqn,var)</tt> operator is used then
-the <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#preprocess%28org.nfunk.jep.Node%29"><tt>preprocess</tt></a> must be called. This method
-will scan the equation looking for any instances of <tt>diff</tt>
-when it encounters one it will differentiate the first argument
-with respect to the second argument, which must be a variable. For example preprocessing will convert "<tt>diff(x^3,x)</tt>" to "<tt>3*x^2</tt>".<br>
+  <p> Note also that if the <tt>diff(eqn,var)</tt> operator is used then the <a href="../javadoc/org/lsmp/djep/xjep/XJep.html#preprocess(org.nfunk.jep.Node)"><tt>preprocess</tt></a> 
+    must be called. This method will scan the equation looking for any instances 
+    of <tt>diff</tt> when it encounters one it will differentiate the first argument 
+    with respect to the second argument, which must be a variable. For example 
+    preprocessing will convert "<tt>diff(x^3,x)</tt>" to "<tt>3*x^2</tt>".<br>
 
 </p><p>
 The <tt>diff</tt> operator can be used several times in an expression
@@ -78,7 +80,7 @@ Differentiation can be combined with assignment so it is possible to
 set the equation of a variable using 'y=x^5' and then differentiate it
 using 'diff(y,x)':
 </p><pre>// Combine assignment and differentiation<br>Node node1 = j.parse("y=x^5");<br>j.preprocess(node1);<br>// A diff operator with an equation involving a variable as first argument<br>Node node2 = j.parse("diff(y,x)");<br>Node simp2 = j.simplify(j.preprocess(node4));<br>j.println(simp2);<br></pre><p> When "<tt>diff(y,x)</tt>" is encountered
-during preprocessing and "y" is a variable with an equation then special <a href="../../javadoc/org/lsmp/djep/djep/PartialDerivative.html">PartialDerivative</a> variable {<tt>dy/dx</tt>} is created
+during preprocessing and "y" is a variable with an equation then special <a href="../javadoc/org/lsmp/djep/djep/PartialDerivative.html">PartialDerivative</a> variable {<tt>dy/dx</tt>} is created
 and its equation calculated from the equation for "<tt>y</tt>". In the above example the variable {<tt>dy/dx</tt>} would have equation "<tt>5*x^4</tt>", and simp4 would be just contain a reference to the {<tt>dy/dx</tt>} variable. Things work 
 correctly for more complicated expressions like "<tt>diff(y^2+x,x)</tt>" which would become "<tt>2*y*{dy/dx}+1</tt>".</p>
       <p>A slight change is made to the printing routines which can 
@@ -88,23 +90,24 @@ and partial derivatives (default: on). Hence
 <pre>j.println(simp2);                      // prints 5.0*x^4.0<br>j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);<br>j.println(simp2);                      // prints dy/dx<br>Node node5 = j.parse("y");<br>j.println(node5);                      // prints y<br>j.dpv.setPrintVariableEquations(true);<br>j.println(node5); 		       // prints x^5<br><br></pre>
       <h3>Differentiation of functions<br>
       </h3>
-      <p>The chain rule is used for differentiating functions
-diff(f(y),x) -&gt; diff(f,y)*diff(y,x) and the instructions for
-differentiating a function are specified by objects which implement the <a href="../../javadoc/org/lsmp/djep/djep/DiffRulesI.html">DiffRulesI </a>interface. A variety of different classes are provided in the <a href="../../javadoc/org/lsmp/djep/djep/diffRules/package-summary.html">org.lsmp.djep.djep.diffRules</a> package which allow specific rules to be created. A rule is added using the <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addDiffRule%28org.lsmp.djep.djep.DiffRulesI%29">addDiffRule</a> method and the standard rules are added using <a href="../../javadoc/org/lsmp/djep/djep/DJep.html#addStandardDiffRules%28%29">addStandardDiffRules</a>. For example<br>
+      
+  <p>The chain rule is used for differentiating functions diff(f(y),x) -&gt; diff(f,y)*diff(y,x) 
+    and the instructions for differentiating a function are specified by objects 
+    which implement the <a href="../javadoc/org/lsmp/djep/djep/DiffRulesI.html">DiffRulesI 
+    </a>interface. A variety of different classes are provided in the <a href="../javadoc/org/lsmp/djep/djep/diffRules/package-summary.html">org.lsmp.djep.djep.diffRules</a> 
+    package which allow specific rules to be created. A rule is added using the 
+    <a href="../javadoc/org/lsmp/djep/djep/DJep.html#addDiffRule(org.lsmp.djep.djep.DiffRulesI)">addDiffRule</a> 
+    method and the standard rules are added using <a href="../javadoc/org/lsmp/djep/djep/DJep.html#addStandardDiffRules()">addStandardDiffRules</a>. 
+    For example<br>
       </p>
       
   <pre>&nbsp;&nbsp;&nbsp; j.addDiffRule(new MacroDiffRules(j,"COs","-sin(x)"))</pre>
       
   <p>adds the rule for differentiating COs which is specified by the string "-sin(x)". 
     There are several other ways rules can be constructed which are discussed 
-    in the JavaDoc.<br>
+    in the JavaDoc.
       </p>
-      <p><br>
-      </p>
-<ul>
-</ul>
-
-        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
 </tr>
@@ -114,7 +117,8 @@ differentiating a function are specified by objects which implement the <a href=
 <br/>
 <br/>
 <br/>
-  <div id="footer"> &copy; 2004 Singular Systems</div>
+<div id="footer">&copy; 2004 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a></div>
 </div>
 </body>
 <!-- #EndTemplate --></html>
