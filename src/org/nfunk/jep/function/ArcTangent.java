@@ -18,7 +18,6 @@ public class ArcTangent extends PostfixMathCommand
 	public ArcTangent()
 	{
 		numberOfParameters = 1;
-	
 	}
 	
 	public void run(Stack inStack)
