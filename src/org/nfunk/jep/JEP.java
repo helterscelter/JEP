@@ -305,7 +305,7 @@ public class JEP {
 		
 		try {
 			// try parsing
-			errorList.clear();
+			errorList.removeAllElements();
 			topNode = parser.parseStream(reader, this);
 		} catch (Throwable e) {
 			// an exception was thrown, so there is no parse tree
@@ -315,7 +315,7 @@ public class JEP {
 			if (e instanceof ParseException) {
 				// the ParseException object contains additional error
 				// information
-				errorList.add(((ParseException)e).getErrorInfo());
+				errorList.addElement(((ParseException)e).getErrorInfo());
 			} else {
 				// if the exception was not a ParseException, it was most
 				// likely a syntax error
@@ -323,7 +323,7 @@ public class JEP {
 					System.out.println(e.getMessage());
 					e.printStackTrace();
 				}
-				errorList.add("Syntax error");
+				errorList.addElement("Syntax error");
 			}
 		}
 		
