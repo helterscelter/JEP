@@ -127,6 +127,7 @@
 					 doc/**,
 					 bin/**,
 					 build.xml,
+					 compile.bat,
 					 LICENSE.txt"/>
 		</copy>
 
