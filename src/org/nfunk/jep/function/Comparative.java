@@ -141,6 +141,12 @@ public class Comparative extends PostfixMathCommand
 		{
 			return ((Complex)param2).equals(new Complex((Number)param1), tolerance);
 		}
+		if ((param1 instanceof Number) && (param2 instanceof Number))
+		{
+			double x = ((Number)param1).doubleValue();
+			double y = ((Number)param2).doubleValue();
+			return (x==y);
+		}
 		
 		// if we get to here, just use the equal function
 		return param1.equals(param2);
@@ -159,6 +165,12 @@ public class Comparative extends PostfixMathCommand
 		if ((param2 instanceof Complex) && (param1 instanceof Double))
 		{
 			return !((Complex)param2).equals(new Complex((Number) param1), tolerance);
+		}
+		if ((param1 instanceof Number) && (param2 instanceof Number))
+		{
+			double x = ((Number)param1).doubleValue();
+			double y = ((Number)param2).doubleValue();
+			return (x!=y);
 		}
 		return !param1.equals(param2);
 	}
