@@ -40,7 +40,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 		{
 			String key = (String) enume.nextElement();
 			Object val = xjep.getSymbolTable().getValue(key);
-			localSymTab.setVarValue(key,val);
+			localSymTab.addVariable(key,val);
 		}
 		/** first evaluate the arguments **/
 		for(int i=1;i<nchild;i+=2)

@@ -222,12 +222,16 @@ public class DVariable extends XVariable
 	 * Sets the value of the variable. Constant values cannot be changed.
 	 * @return false if tried to change a constant value.
 	 */
-	public boolean setValue(Object object) {
+/*
+ * Should not be needed as functionality now caried out using java.util.observer/observable model. 
+ 
+	public boolean setValueRaw(Object object) {
 		for(Enumeration en = derivatives.elements();en.hasMoreElements();)
 		{
 			PartialDerivative pd = (PartialDerivative) en.nextElement();
 			pd.setValidValue(false);
 		}
-		return super.setValue(object);
+		return super.setValueRaw(object);
 	}
+*/
 }

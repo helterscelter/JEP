@@ -77,14 +77,40 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 		this.invalidateAll();
 	}
 
+	/** returns the value, uses the Scaler type. */
 	public MatrixValueI getMValue() { return mvalue; }	
+
+	/** returns the value, unpacks Scalers so they just return its elements. */
 	public Object getValue() { 
 		if(mvalue instanceof Scaler)
 		return mvalue.getEle(0);
 		else
 			return mvalue;
 	}	
+
+	/**
+	 * Sets the value of this variable.
+	 * Needed when using marco functions in matrix calculations.
+	 * TODO might be better to change macro function behaviour.
+	 */
+	protected boolean setValueRaw(Object val) {
+		if(val instanceof MatrixValueI)
+		{
+			mvalue = (MatrixValueI) val;
+			this.dims = mvalue.getDim();
+		}
+		else 
+			mvalue.setEle(0,val);
+		return true;
+	}
 	 
+	public void setMValue(MatrixValueI val) {
+		if(this.isConstant()) return;
+		mvalue.setEles(val);
+		setChanged();
+		notifyObservers();
+//		setValidValue(true);
+	}
 	
 //	public void setMValue(VectorMatrixTensorI value) 
 //	{ this.mvalue = value; this.invalidateAll(); }
@@ -115,27 +141,5 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 		System.out.print(sb.toString());
 	}
 	
-	/**
-	 * Sets the value of this variable.
-	 * Needed when using marco functions in matrix calculations.
-	 * TODO might be better to change macro function behaviour.
-	 */
-	public boolean setValue(Object val) {
-		for(Enumeration en = derivatives.elements();en.hasMoreElements();)
-		{
-			PartialDerivative pd = (PartialDerivative) en.nextElement();
-			pd.setValidValue(false);
-		}
-
-		if(val instanceof MatrixValueI)
-		{
-			mvalue = (MatrixValueI) val;
-			this.dims = mvalue.getDim();
-		}
-		else 
-			mvalue.setEle(0,val);
-		setValidValue(true);
-		return true;
-	}
 
 }

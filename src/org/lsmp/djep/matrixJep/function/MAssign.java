@@ -57,11 +57,9 @@ public class MAssign extends Assign implements MatrixSpecialEvaluationI
 		if(lhsNode instanceof ASTMVarNode)
 		{
 			ASTMVarNode vn = (ASTMVarNode) lhsNode;
-			MatrixVariable var = (MatrixVariable) vn.getVar();
-			MatrixValueI val = var.getMValue();
-			val.setEles(rhsVal);
-			var.setValidValue(true);
-			return (MatrixValueI) rhsVal;
+			MatrixVariableI var = (MatrixVariableI) vn.getVar();
+			var.setMValue(rhsVal);
+			return rhsVal;
 		}
 		throw new ParseException("Assignment should have a variable for the lhs.");
 	}

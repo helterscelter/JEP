@@ -27,6 +27,8 @@ public interface MatrixVariableI {
 	 * setting the individual elements of value container.
 	 */
 	public abstract MatrixValueI getMValue();
+	/** Sets the value of the variable (matrix aware). */
+	public abstract void setMValue(MatrixValueI val);
 	/** Is the value of this variable meaningful? */
 	public abstract boolean hasValidValue();
 	/** makes the vaule valid. */

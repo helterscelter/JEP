@@ -49,9 +49,9 @@ public class MatrixEvaluator implements ParserVisitor
 		else
 		{
 			MatrixValueI res = (MatrixValueI) var.getEquation().jjtAccept(this,data);
-			MatrixValueI val = var.getMValue();
-			val.setEles(res);
-			var.setValidValue(true);
+			var.setMValue(res);
+//			val.setEles(res);
+//			var.setValidValue(true);
 			return res;
 		}
 	}

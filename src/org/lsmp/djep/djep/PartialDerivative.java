@@ -8,13 +8,16 @@
 package org.lsmp.djep.djep;
 import org.nfunk.jep.*;
 import org.lsmp.djep.xjep.*;
+
+import java.util.Observable;
+import java.util.Observer;
 /**
  * Contains infomation about a PartialDerivative of a variable.
  * Should  
  * @author Rich Morris
  * Created on 29-Oct-2003
  */
-public class PartialDerivative extends XVariable  {
+public class PartialDerivative extends XVariable  implements Observer {
 
 	private DVariable root;
 	private String dnames[] = null;
@@ -30,6 +33,7 @@ public class PartialDerivative extends XVariable  {
 		dnames = derivnames;
 		setEquation(deriv);
 		printString = DVariable.makeDerivString(root.getName(),derivnames);
+		root.addObserver(this);
 	}
 	
 	public String getName() { return printString; }
@@ -51,5 +55,20 @@ public class PartialDerivative extends XVariable  {
 		throws ParseException
 	{
 		return root.findDerivative(this,name,jep);
-	}	
+	}
+	
+	
+	/**
+	 * When the value of the root object is changed
+	 * makes the value of this partial derivative invalid.
+	 * 
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	public void update(Observable arg0, Object arg1) {
+		if(root.equals(arg0))
+		{
+			setValidValue(false);
+		}
+	}
+
 }

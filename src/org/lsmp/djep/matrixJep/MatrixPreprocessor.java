@@ -119,6 +119,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			var.setDimensions(rhsDim);
 			Node copy =mjep.deepCopy(children[1]);
 			Node simp = mjep.simplify(copy);
+			//Node preproc = (Node) simp.jjtAccept(this,data);
 			var.setEquation(simp);
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,rhsDim);
 		}

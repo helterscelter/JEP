@@ -6,6 +6,7 @@
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 package org.nfunk.jep;
+import java.util.*;
 
 /**
  * Information about a variable. 
@@ -18,8 +19,9 @@ package org.nfunk.jep;
  * <p>
  * @author Rich Morris
  * Created on 18-Nov-2003
+ * @version 2.3.3 Now extends Observable so observers can track if the value has been changed.
  */
-public class Variable {
+public class Variable extends Observable {
 	protected String name;
 	private Object value;
 	private boolean isConstant=false;
@@ -58,14 +60,37 @@ public class Variable {
 
 	/**
 	 * Sets the value of the variable. Constant values cannot be changed.
+	 * <p>
+	 * This method call java.util.Observable.notifyObservers()
+	 * to indicate to anyone interested that the value has been changed.
+	 * Note subclasses should override setValueRaw rather than this
+	 * method so they do not need to handle the Observable methods.
+	 *  
 	 * @return false if tried to change a constant value.
+	 * @version 2.3.3 added Observable
 	 */
 	public boolean setValue(Object object) {
+		if(!setValueRaw(object)) return false;
+		setChanged();
+		notifyObservers();
+		return true;
+	}
+
+	/**
+	 * In general subclasses should override this method rather than
+	 * setValue. This is because setValue notifies any observers
+	 * and then calls this method.
+	 * @param object
+	 * @return
+	 * @since 2.3.3
+	 */
+	protected boolean setValueRaw(Object object) {
 		if(isConstant) return false;
 		validValue=true;
 		value = object;
 		return true;
 	}
+
 	public String toString() {
 		if(!validValue || value==null)
 			return name + ": null";
