@@ -1,17 +1,53 @@
+/*****************************************************************************
+
+@header@
+@date@
+@copyright@
+@license@
+
+*****************************************************************************/
+
 package org.nfunk.jeptesting;
 
 import java.io.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
-import junit.framework.*;
 
+import junit.framework.Assert;
+import junit.framework.TestCase;
+
+import org.nfunk.jep.JEP;
+import org.nfunk.jep.type.Complex;
+
+/**
+* This class is designed for testing the validity of JEP evaluations.
+* Expressions from a text file are evaluated with JEP in pairs of two, and
+* the result are compared. If they do not match the two expressions are 
+* printed to standard output.<p>
+* Take for example an input text file containing the two lines
+* <pre>1+2
+* 3</pre>.
+* The expressions '1+2' and '3' are evaluated with JEP and the results compared.
+*/
 public class JEPTest extends TestCase {
-	
+
 	/** The parser */
 	JEP myParser;
 	
 	/** Current line position */
 	int lineCount;
+
+	/**
+	 * Constructor
+	 *
+	public JEPTester() {
+		// Set up the parser
+		myParser = new JEP();
+		myParser.setImplicitMul(true);
+		myParser.addStandardFunctions();
+		myParser.addStandardConstants();
+		myParser.addComplex();
+		myParser.setTraverse(false);
+		lineCount = 0;
+	}*/
 	
 	/**
 	 * Creates a new JEPTest instance
@@ -38,14 +74,15 @@ public class JEPTest extends TestCase {
 	 * Runs the test.
 	 */
 	public void runTest() {
-		String fileName = "JEPTesterExpressions.txt";
+		String fileName = "JEPTestExpressions.txt";
 		testWithFile(fileName);
 		testGetValue();
 		testGetComplexValue();
 	}
-
+	
 	/**
-	 *
+	 * The main method checks the arguments and creates an instance
+	 * and calls it's run method.
 	 */
 	public static void main(String args[]) {
 		String fileName;
@@ -54,27 +91,26 @@ public class JEPTest extends TestCase {
 		if (args!=null && args.length>0) {
 			fileName = args[0];
 		} else {
-			fileName = "JEPTesterExpressions.txt";
+			fileName = "JEPTestExpressions.txt";
 			println("Using default input file: " + fileName);
 			println("Start with \"java org.nfunk.jepexamples."+
-			"JEPTester <filename>\" to load a different input file.");
+			"JEPTest <filename>\" to load a different input file.");
 		}
 		
 		// Create an instance of this class and analyse the file
-		JEPTest jt = new JEPTest("JEPTest");
+		JEPTest jt = new JEPTest("JEP Test");
 		jt.setUp();
 		jt.testWithFile(fileName);
-	}	
-	
-	
+	}
+
 	/**
 	 * Loads the file specified in fileName. Evaluates the expressions listed
 	 * in it and compares the expressions with the results.
 	 */
 	public void testWithFile(String fileName) {
 		BufferedReader reader;
-		Complex c1, c2;
-		int compareCount = 0;
+		Object v1, v2;
+		boolean hasError = false;
 
 		// Load the input file
 		try {
@@ -90,81 +126,108 @@ public class JEPTest extends TestCase {
 		// cycle through the expressions in pairs of two
 		println("Evaluating and comparing expressions...");
 		while (true) {
-			compareCount++;
-
-			// parse the two lines compared
-			c1 = parseNextLine(reader);
-			c2 = parseNextLine(reader);
-
-			if (c1==null || c2==null) break;
-			
-			// TODO: add comparison method that handles all types (Strings...)
-			String errorMsg = "";
-			
-			if (!c1.equals(c2,1e-15)) {
-				errorMsg += "Line: " + lineCount + ": ";
-				if (c1.im() == 0)
-					errorMsg += c1.re();
-				else
-					errorMsg += c1;
-					
-				errorMsg += " != ";
-				
-				if (c2.im() == 0)
-					errorMsg += c2.re();
-				else
-					errorMsg += c2;
-				
-				println(errorMsg);
+			// get values of a pair of two lines
+			try {
+				v1 = parseNextLine(reader); //returns null when end of file is reached
+				v2 = parseNextLine(reader);
+			} catch (Exception e) {
+				println(e.getMessage());
+				hasError = true;
+				break;
 			}
-			// JUnit assertion
-			Assert.assertTrue(errorMsg, c1.equals(c2, 1e-15));
+
+			// v1 or v2 is null when end of file is reached
+			if (v1 == null || v2 == null) {
+				println("Reached end of file.");
+				break;
+			}
+
+			// compare the results
+			try {			
+				if (!equal(v1, v2)) {
+					hasError = true;
+					print("Line: " + lineCount + ": ");
+					println(v1.toString() + " != " + v2.toString());
+				}
+			} catch (Exception e) {
+				hasError = true;
+				println(e.getMessage());
+			}
 		}
-		println("Done. " + compareCount*2 + " expressions compared.");
+		
+		// Closing remarks
+		print("\n" + lineCount + " lines processed. ");
+		if (hasError) {
+			print("Errors were found.\n\n");
+		} else {
+			print("No errors were found.\n\n");
+		}
 	}
 	
 	/**
 	 * Parses a single line from the reader, and returns the
 	 * evaluation of that line.
+	 * @return evaluated line. Returns null when the end of the file
+	 *         is reached.
+	 * @throws Exception when IOException occurs, parsing fails, or when
+	 *         evaluation fails
 	 */
-	private Complex parseNextLine(BufferedReader reader) {
-		Complex value;
+	private Object parseNextLine(BufferedReader reader) throws Exception {
+		Object value;
 		String line, errorStr;
 		
 		// cycle till a valid line is found
 		do {
-			try {
-				line = reader.readLine();
-				lineCount++;
-			} catch (Exception e) {
-				return null;
-			}
+			line = reader.readLine(); // returns null on end of file
+			if (line == null) return null;
+			lineCount++;
+		} while (line.length() == 0 || line.trim().charAt(0) == '#');
 
-			if (line==null) return null;
-
-		} while (line.length()==0 || line.trim().charAt(0)=='#');
-			
 		// parse the expression
 		myParser.parseExpression(line);
 		// did an error occur while parsing?
-		errorStr = myParser.getErrorInfo();
-		if (errorStr != null) {
-			println("Error while parsing line " + lineCount + ": " + errorStr);
-			return null;
+		if (myParser.hasError()) {
+			errorStr = myParser.getErrorInfo();
+			throw new Exception("Error while parsing line " + lineCount + ": " + errorStr);
 		}
 		
 		// evaluate the expression
-		value = myParser.getComplexValue();
+		value = myParser.getValueAsObject();
 		// did an error occur while evaluating?
-		errorStr = myParser.getErrorInfo();
-		if ((value == null) || (errorStr != null)) {
-			println("Error while evaluating line " + lineCount + ": " + errorStr);
-			return null;
+		if (value == null || myParser.hasError()) {
+			errorStr = myParser.getErrorInfo();
+			throw new Exception("Error while evaluating line " + lineCount + ": " + errorStr);
 		}
 			
 		return value;
 	}
-	
+
+	/**
+	 * Compares o1 and o2. Copied from Comparative.java.
+	 * @return true if o1 and o2 are equal. false otherwise.
+	 */
+	private boolean equal(Object param1, Object param2) throws Exception
+	{
+		double tolerance = 1e-15;
+		if ((param1 instanceof Complex) && (param2 instanceof Complex)) {
+			return ((Complex)param1).equals((Complex)param2, tolerance);
+		}
+		if ((param1 instanceof Complex) && (param2 instanceof Number)) {
+			return ((Complex)param1).equals(new Complex((Number) param2), tolerance);
+		}
+		if ((param2 instanceof Complex) && (param1 instanceof Number)) {
+			return ((Complex)param2).equals(new Complex((Number) param1), tolerance);
+		}
+		if ((param1 instanceof Number) && (param2 instanceof Number)) {
+			return Math.abs(((Number)param1).doubleValue()-((Number)param1).doubleValue())
+					< tolerance;
+		}
+		// test any other types here
+		return param1.equals(param2);
+		
+//		throw new Exception("Unable to compare the values of this type");
+	}
+
 	/**
 	 * Test the getValue() method.
 	 */
@@ -215,5 +278,5 @@ public class JEPTest extends TestCase {
 	 */
 	private static void println(String str) {
 		System.out.println(str);
-	}	
+	}
 }
