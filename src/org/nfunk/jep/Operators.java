@@ -83,4 +83,12 @@ public class Operators {
 		new Not(),
 		new Power()
 	};
+	
+	/**
+	 * Returns true if the id is within the boundaries of valid id numbers.
+	 * <code>id>=0 && id<name.length</code>
+	 */
+	public static boolean isValidID(int id) {
+		return (id>=0 && id<name.length);
+	}
 }
