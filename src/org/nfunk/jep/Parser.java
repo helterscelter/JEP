@@ -11,6 +11,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         public Node parseStream(java.io.Reader stream, JEP jep_in)
                                                         throws ParseException {
                 ReInit(stream);
+
                 jep = jep_in;
 
                 // Parse the expression, and return the 
@@ -147,7 +148,7 @@ GRAMMAR START
         AndExpression();
                   jjtree.closeNodeScope(jjtn001,  2);
                   jjtc001 = false;
-                        jjtn001.setFunction(tokenImage[OR], new Logical(1));
+                        jjtn001.setOperator(Operators.OP_OR);
       } catch (Throwable jjte001) {
             if (jjtc001) {
               jjtree.clearNodeScope(jjtn001);
@@ -190,7 +191,7 @@ GRAMMAR START
         EqualExpression();
                   jjtree.closeNodeScope(jjtn001,  2);
                   jjtc001 = false;
-                        jjtn001.setFunction(tokenImage[AND], new Logical(0));
+                        jjtn001.setOperator(Operators.OP_AND);
       } catch (Throwable jjte001) {
             if (jjtc001) {
               jjtree.clearNodeScope(jjtn001);
@@ -236,7 +237,7 @@ GRAMMAR START
           RelationalExpression();
               jjtree.closeNodeScope(jjtn001,  2);
               jjtc001 = false;
-            jjtn001.setFunction(tokenImage[NE], new Comparative(4));
+            jjtn001.setOperator(Operators.OP_NE);
         } catch (Throwable jjte001) {
             if (jjtc001) {
               jjtree.clearNodeScope(jjtn001);
@@ -266,7 +267,7 @@ GRAMMAR START
           RelationalExpression();
               jjtree.closeNodeScope(jjtn002,  2);
               jjtc002 = false;
-              jjtn002.setFunction(tokenImage[EQ], new Comparative(5));
+              jjtn002.setOperator(Operators.OP_EQ);
         } catch (Throwable jjte002) {
             if (jjtc002) {
               jjtree.clearNodeScope(jjtn002);
@@ -320,7 +321,7 @@ GRAMMAR START
           AdditiveExpression();
         jjtree.closeNodeScope(jjtn001,  2);
         jjtc001 = false;
-            jjtn001.setFunction(tokenImage[LT], new Comparative(0));
+            jjtn001.setOperator(Operators.OP_LT);
         } catch (Throwable jjte001) {
       if (jjtc001) {
         jjtree.clearNodeScope(jjtn001);
@@ -350,7 +351,7 @@ GRAMMAR START
           AdditiveExpression();
         jjtree.closeNodeScope(jjtn002,  2);
         jjtc002 = false;
-        jjtn002.setFunction(tokenImage[GT], new Comparative(1));
+        jjtn002.setOperator(Operators.OP_GT);
         } catch (Throwable jjte002) {
       if (jjtc002) {
         jjtree.clearNodeScope(jjtn002);
@@ -380,7 +381,7 @@ GRAMMAR START
           AdditiveExpression();
         jjtree.closeNodeScope(jjtn003,  2);
         jjtc003 = false;
-            jjtn003.setFunction(tokenImage[LE], new Comparative(2));
+            jjtn003.setOperator(Operators.OP_LE);
         } catch (Throwable jjte003) {
       if (jjtc003) {
         jjtree.clearNodeScope(jjtn003);
@@ -410,7 +411,7 @@ GRAMMAR START
           AdditiveExpression();
         jjtree.closeNodeScope(jjtn004,  2);
         jjtc004 = false;
-        jjtn004.setFunction(tokenImage[GE], new Comparative(3));
+        jjtn004.setOperator(Operators.OP_GE);
         } catch (Throwable jjte004) {
       if (jjtc004) {
         jjtree.clearNodeScope(jjtn004);
@@ -462,7 +463,7 @@ GRAMMAR START
           MultiplicativeExpression();
         jjtree.closeNodeScope(jjtn001,  2);
         jjtc001 = false;
-        jjtn001.setFunction(tokenImage[PLUS], new Add());
+        jjtn001.setOperator(Operators.OP_PLUS);
         } catch (Throwable jjte001) {
       if (jjtc001) {
         jjtree.clearNodeScope(jjtn001);
@@ -492,7 +493,7 @@ GRAMMAR START
           MultiplicativeExpression();
         jjtree.closeNodeScope(jjtn002,  2);
         jjtc002 = false;
-        jjtn002.setFunction(tokenImage[MINUS], new Subtract());
+        jjtn002.setOperator(Operators.OP_MINUS);
         } catch (Throwable jjte002) {
       if (jjtc002) {
         jjtree.clearNodeScope(jjtn002);
@@ -541,7 +542,7 @@ GRAMMAR START
         if (!jep.implicitMul) {if (true) throw new ParseException(
                 "Syntax Error (implicit multiplication not enabled)");}
 
-        jjtn001.setFunction(tokenImage[MUL], new Multiply());
+        jjtn001.setOperator(Operators.OP_MUL);
         } catch (Throwable jjte001) {
       if (jjtc001) {
         jjtree.clearNodeScope(jjtn001);
@@ -572,7 +573,7 @@ GRAMMAR START
             UnaryExpression();
         jjtree.closeNodeScope(jjtn002,  2);
         jjtc002 = false;
-        jjtn002.setFunction(tokenImage[MUL], new Multiply());
+        jjtn002.setOperator(Operators.OP_MUL);
           } catch (Throwable jjte002) {
       if (jjtc002) {
         jjtree.clearNodeScope(jjtn002);
@@ -602,7 +603,7 @@ GRAMMAR START
             UnaryExpression();
         jjtree.closeNodeScope(jjtn003,  2);
         jjtc003 = false;
-        jjtn003.setFunction(tokenImage[DIV], new Divide());
+        jjtn003.setOperator(Operators.OP_DIV);
           } catch (Throwable jjte003) {
       if (jjtc003) {
         jjtree.clearNodeScope(jjtn003);
@@ -632,7 +633,7 @@ GRAMMAR START
             UnaryExpression();
         jjtree.closeNodeScope(jjtn004,  2);
         jjtc004 = false;
-        jjtn004.setFunction(tokenImage[MOD], new Modulus());
+        jjtn004.setOperator(Operators.OP_MOD);
           } catch (Throwable jjte004) {
       if (jjtc004) {
         jjtree.clearNodeScope(jjtn004);
@@ -677,7 +678,7 @@ GRAMMAR START
         UnaryExpression();
       jjtree.closeNodeScope(jjtn001,  1);
       jjtc001 = false;
-          jjtn001.setFunction(tokenImage[MINUS], new UMinus());
+          jjtn001.setOperator(Operators.OP_UMINUS);
       } catch (Throwable jjte001) {
     if (jjtc001) {
       jjtree.clearNodeScope(jjtn001);
@@ -707,7 +708,7 @@ GRAMMAR START
         UnaryExpression();
       jjtree.closeNodeScope(jjtn002,  1);
       jjtc002 = false;
-          jjtn002.setFunction(tokenImage[NOT], new Not());
+          jjtn002.setOperator(Operators.OP_NOT);
       } catch (Throwable jjte002) {
     if (jjtc002) {
       jjtree.clearNodeScope(jjtn002);
@@ -751,7 +752,7 @@ GRAMMAR START
         UnaryExpression();
       jjtree.closeNodeScope(jjtn001,  2);
       jjtc001 = false;
-      jjtn001.setFunction(tokenImage[POWER], new Power());
+      jjtn001.setOperator(Operators.OP_POWER);
       } catch (Throwable jjte001) {
     if (jjtc001) {
       jjtree.clearNodeScope(jjtn001);
