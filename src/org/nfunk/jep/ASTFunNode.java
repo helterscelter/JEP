@@ -23,11 +23,15 @@ public class ASTFunNode extends SimpleNode {
 	/** Name of the function */
 	private String name;
 	
+	/** ID of the operator (if it is one) */
+	private int opID;
+	
 	/**
 	 * Creates a new ASTFunNode
 	 */
 	public ASTFunNode(int id) {
 		super(id);
+		opID = -1;
 	}
 	
 	/**
@@ -35,6 +39,7 @@ public class ASTFunNode extends SimpleNode {
 	 */
 	public ASTFunNode(Parser p, int id) {
 		super(p, id);
+		opID = -1;
 	}
 	
 	/**
@@ -51,6 +56,16 @@ public class ASTFunNode extends SimpleNode {
 	public void setFunction(String name_in, PostfixMathCommandI pfmc_in) {
 		name = name_in;
 		pfmc = pfmc_in;
+	}
+	
+	/**
+	 * Sets the opID, name and pfmc for this node by looking up the values
+	 * in the Operators class
+	 */
+	public void setOperator(int opID_in) {
+		opID = opID_in;
+		name = Operators.name[opID];
+		pfmc = Operators.pfmc[opID];
 	}
 
 	/**
@@ -72,5 +87,12 @@ public class ASTFunNode extends SimpleNode {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Returns the id number of the operator if the node is an operator.
+	 */
+	public int getOpID() {
+		return opID;
 	}
 }
