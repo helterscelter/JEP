@@ -35,19 +35,27 @@ import org.nfunk.jep.*;
  * If an arbitrary number of parameters should be allowed, initialize this
  * member to -1.
  */
-public class PostfixMathCommand
+public class PostfixMathCommand implements PostfixMathCommandI
 {
 	/**
-	 * Number of parameters a the function can take. Initialize this value to
-	 * -1 if any number of parameters should be allowed
+	 * Number of parameters a the function requires. Initialize this value to
+	 * -1 if any number of parameters should be allowed.
 	 */
 	protected int numberOfParameters;
+	
+	/**
+	 * Number of parameters to be used for the next run() invocation. Applies
+	 * only if the required umber of parameters is variable
+	 * (numberOfParameters = -1).
+	 */
+	protected int curNumberOfParameters;
 	
 	/**
 	 * Creates a new PostfixMathCommand class.
 	 */
 	public PostfixMathCommand() {
-		numberOfParameters = 0;	
+		numberOfParameters = 0;
+		curNumberOfParameters = 0;
 	}
 
 	/**
@@ -61,9 +69,28 @@ public class PostfixMathCommand
 	}
 
 	/**
-	 * Return the number of parameters
+	 * Return the required number of parameters.
 	 */
 	public int getNumberOfParameters() {
 		return numberOfParameters;
+	}
+	
+	/**
+	 * Sets the number of current number of parameters used in the next call
+	 * of run(). This method is only called when the reqNumberOfParameters is
+	 * -1.
+	 */
+	public void setCurNumberOfParameters(int n) {
+		curNumberOfParameters = n;
+	}
+	
+	/**
+	 * Throws an exception because this method should never be called under
+	 * normal circumstances. Each function should use it's own run() method
+	 * for evaluating the function. This includes popping off the parameters
+	 * from the stack, and pushing the result back on the stack.
+	 */
+	public void run(Stack s) throws ParseException {
+		throw new ParseException("run() method of PostfixMathCommand called");
 	}
 }

@@ -29,6 +29,7 @@ Copyright (C) 2000 Nathan Funk
 package org.nfunk.jep;
 
 import java.util.*;
+import org.nfunk.jep.function.PostfixMathCommandI;
 
 /**
  * This class is used for the evaluation of an expression. It uses the Visitor
@@ -70,6 +71,7 @@ public class EvaluatorVisitor implements ParserVisitor
 	public EvaluatorVisitor() {
 		debug = false;
 		errorList = null;
+		symTab = null;
 		stack = new Stack();
 	}
 	
@@ -97,23 +99,36 @@ public class EvaluatorVisitor implements ParserVisitor
 	/**
 	 * Returns the value of the expression as an object. The expression
 	 * tree is specified with its top node. The algorithm uses a stack
-	 * for evaluation. The <code>errorList_in</code> parameter is used to
-	 * add error information that may occur during the evaluation.<br>
+	 * for evaluation.
+	 * <p>
+	 * The <code>errorList_in</code> parameter is used to
+	 * add error information that may occur during the evaluation. It is not
+	 * required, and may be set to <code>null</code> if no error information is
+	 * needed.
+	 * <p>
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
 	 */
-	public Object getValue(Node topNode,
-						   Vector errorList_in,
-						   SymbolTable symTab_in) throws Exception {
-		errorList = errorList_in;
-		symTab = symTab_in;
+	public Object getValue(Node topNode, Vector errorList_in,
+						   SymbolTable symTab_in)
+						   throws Exception {
 		
+		// check if arguments are ok
 		if (topNode == null) {
-			throw new Exception(
-				"EvaluatorVisitor.getValue(): topNode parameter is null");
+			throw new IllegalArgumentException(
+				"topNode parameter is null");
+		}
+		
+		if (symTab_in == null) {
+			throw new IllegalArgumentException(
+				"symTab_in parameter is null");
 		}
 
+		// set member vars
+		errorList = errorList_in;
+		symTab = symTab_in;
 		errorFlag = false;
+
 		// evaluate by letting the top node accept the visitor
 		topNode.jjtAccept(this, null);
 		
@@ -150,6 +165,8 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * with the node is used to evaluate the function.
 	 */
 	public Object visit(ASTFunNode node, Object data) {
+		PostfixMathCommandI pfmc;
+		
 		if (node == null) return null;
 		
 		if (debug == true) {
@@ -163,15 +180,22 @@ public class EvaluatorVisitor implements ParserVisitor
 		}
 
 		// check if the function class is set
-		if (node.getPFMC() == null) {
+		pfmc = node.getPFMC();
+		if (pfmc == null) {
 			addToErrorList("No function class associated with "
 							+ node.getName());
 			return data;
 		}
 		
+		if (pfmc.getNumberOfParameters() == -1) {
+			// need to tell the class how many parameters it can take off
+			// the stack because it accepts a variable number of params
+			pfmc.setCurNumberOfParameters(node.jjtGetNumChildren());
+		}
+
 		// try to run the function
 		try {
-			node.getPFMC().run(stack);
+			pfmc.run(stack);
 		} catch (ParseException e) {
 			addToErrorList(e.getMessage());
 			errorFlag = true;
@@ -191,21 +215,16 @@ public class EvaluatorVisitor implements ParserVisitor
 	public Object visit(ASTVarNode node, Object data) {
 		String message = "Could not evaluate " + node.getName() + ": ";
 
-		if (symTab == null) {
-			message += "the symbol table is null";
+		// TODO: optimize (table lookup is costly)
+		Object temp = symTab.get(node.getName());
+			
+		if (temp == null) {
+			message += "the variable was not found in the symbol table";
 			addToErrorList(message);
 		} else {
-			// TODO: optimize (table lookup is costly)
-			Object temp = symTab.get(node.getName());
-			
-			if (temp == null) {
-				message += "the variable was not found in the symbol table";
-				addToErrorList(message);
-			} else {
-				// all is fine
-				// push the value on the stack
-				stack.push(temp);
-			}
+			// all is fine
+			// push the value on the stack
+			stack.push(temp);
 		}
 
 		return data;
