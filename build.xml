@@ -26,8 +26,7 @@ javadoc/
 
 <project name="JEP" default="compile" basedir=".">
 	
-	<!-- set global properties for this build 
-	<property name="build.compiler" value="jvc"/>-->
+	<!-- set global properties for this build -->
 	<property name="src" value="src"/>
 	<property name="build"   value="build"/>
 	<property name="dist"    value="dist"/>
@@ -78,7 +77,13 @@ javadoc/
 <!-- COMPILE -->
 	<target name="compile" depends="javacc">
 		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}" destdir="${build}" target="1.1"/>
+		<javac srcdir="${src}"
+		       destdir="${build}"
+		       target="1.1">
+			<bootclasspath>
+				<pathelement path="c:\jdk1.1.8\lib\classes.zip"/>
+			</bootclasspath>
+		</javac>
 	</target>
 
 
@@ -98,7 +103,7 @@ javadoc/
 	<target name="dist" depends="compile">
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}"/>
-		
+
 		<!-- Put everything in ${build} into the jep-${DSTAMP}.jar file -->
 		<jar jarfile="${dist}/jep-${version}.jar"
 		     basedir="${build}"
@@ -163,7 +168,7 @@ javadoc/
 	<target name="clean">
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${build}"/>
-		<!--<delete dir="${dist}"/>-->
+		<delete dir="${dist}"/>
 	</target>
 
 
