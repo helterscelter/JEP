@@ -16,7 +16,7 @@ import org.nfunk.jep.type.*;
  * Implements the arcSinH function.
  * 
  * @author Nathan Funk
- * @since 2.3.2 - Now returns Double result rather than Complex for Double arguments. 
+ * @since 2.3.0 beta 2 - Now returns Double result rather than Complex for Double arguments. 
  */
 public class ArcSineH extends PostfixMathCommand
 {

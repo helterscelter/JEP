@@ -29,7 +29,7 @@ public interface SpecialEvaluationI {
 	 * @param data	The data passed to visitor, typically not used
 	 * @param pv	The visitor, can be used evaluate the children
 	 * @param stack	The stack of the evaluator
-	 * @param symTab The symbol table 
+	 * @param symTab The symbol table
 	 * @return the value after evaluation
 	 * @throws ParseException
 	 */

@@ -16,7 +16,7 @@ import org.nfunk.jep.type.*;
  * Implements the arcCosH function.
  * 
  * @author Nathan Funk
- * @since 2.3.2 - Now returns Double result rather than Complex for x >= 1 
+ * @since 2.3.0 beta 2 - Now returns Double result rather than Complex for x >= 1 
  */
 public class ArcCosineH extends PostfixMathCommand
 {

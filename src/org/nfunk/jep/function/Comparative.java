@@ -20,8 +20,8 @@ import org.nfunk.jep.type.*;
  * For other types care might be needed.
  * 
  * @author N Funk and R Morris
- * @since 2.3.1 a bit of a rewrite to make sub classing easier, now allows Complex to be compared to Double i.e. 1+0 i == 1.
- * @since 2.3.2 changed the internal lt,gt,le,ge,ne and eq method to return boolean.
+ * @since 2.3.0 beta 1 a bit of a rewrite to make sub classing easier, now allows Complex to be compared to Double i.e. 1+0 i == 1.
+ * @since 2.3.0 beta 2 changed the internal lt,gt,le,ge,ne and eq method to return boolean.
  * If this breaks anything use
  * 		if(lt(obj1,obj2)) inStack.push(new Double(1));
  *		else 	inStack.push(new Double(0));
