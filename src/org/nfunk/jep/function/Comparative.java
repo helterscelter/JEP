@@ -148,7 +148,7 @@ public class Comparative extends PostfixMathCommand
 	}
 
 
-/*
+/* old code
 		if ((param1 instanceof Complex) || (param2 instanceof Complex))
 			throw new ParseException(">= not defined for complex numbers");
 		if ((param1 instanceof Number) && (param2 instanceof Number))
