@@ -13,7 +13,6 @@
    between nodes. */
 package org.nfunk.jep;
 
-import java.util.*;
 
 public interface Node {
 

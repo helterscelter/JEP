@@ -11,7 +11,6 @@ package org.nfunk.jep;
 
 import java.io.*;
 import java.util.*;
-import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 import org.nfunk.jep.type.*;
 

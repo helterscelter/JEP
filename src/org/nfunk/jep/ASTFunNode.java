@@ -10,7 +10,6 @@
 package org.nfunk.jep;
 
 import org.nfunk.jep.function.*;
-import java.util.*;
 
 /**
  * Function Node

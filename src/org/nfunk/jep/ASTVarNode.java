@@ -10,7 +10,6 @@
 
 package org.nfunk.jep;
 
-import java.util.*;
 /**
  * Variable Node
  */
