@@ -171,7 +171,7 @@ public class Polynomial extends Number {
 	public String getSymbol() { return symbol; }
 	/** Returns the coefficients of polynomial.
 	 * TODO use defensive copying
-	 * @return
+	 * @return the array of coefficients, constant coefficient is element 0.
 	 */
 	public Number[] getCoeffs() { return coeffs; }
 	public Number getCoeff(int i) { return coeffs[i]; }
