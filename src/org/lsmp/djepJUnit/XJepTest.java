@@ -64,6 +64,10 @@ public class XJepTest extends TestCase {
 		assertEquals(1,1);
 	}
 
+	public void valueTestInt(String expr,int dub) throws Exception
+	{
+		valueTest(expr,new Integer(dub));
+	}
 	public void valueTest(String expr,double dub) throws Exception
 	{
 		valueTest(expr,new Double(dub));
@@ -568,6 +572,41 @@ public class XJepTest extends TestCase {
 		System.out.println(c.toString(format,true));
 	}
 
+	public void testBinom() throws ParseException,Exception
+	{
+		valueTestInt("binom(0,0)",1);
+		valueTestInt("binom(1,0)",1);
+		valueTestInt("binom(1,1)",1);
+		valueTestInt("binom(2,0)",1);
+		valueTestInt("binom(2,1)",2);
+		valueTestInt("binom(2,2)",1);
+		valueTestInt("binom(3,0)",1);
+		valueTestInt("binom(3,1)",3);
+		valueTestInt("binom(3,2)",3);
+		valueTestInt("binom(3,3)",1);
+		valueTestInt("binom(4,0)",1);
+		valueTestInt("binom(4,1)",4);
+		valueTestInt("binom(4,2)",6);
+		valueTestInt("binom(4,3)",4);
+		valueTestInt("binom(4,4)",1);
+		valueTestInt("binom(5,0)",1);
+		valueTestInt("binom(5,1)",5);
+		valueTestInt("binom(5,2)",10);
+		valueTestInt("binom(5,3)",10);
+		valueTestInt("binom(5,4)",5);
+		valueTestInt("binom(5,5)",1);
+
+		valueTestInt("binom(6,0)",1);
+		valueTestInt("binom(6,1)",6);
+		valueTestInt("binom(6,2)",15);
+		valueTestInt("binom(6,3)",20);
+		valueTestInt("binom(6,4)",15);
+		valueTestInt("binom(6,5)",6);
+		valueTestInt("binom(6,6)",1);
+		
+		valueTestInt("binom(10,1)",10);
+		valueTestInt("binom(10,5)",252);
+	}
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)

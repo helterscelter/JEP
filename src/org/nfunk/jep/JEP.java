@@ -27,6 +27,7 @@ import org.nfunk.jep.type.*;
  * for the newest version of JEP, and complete documentation.
  *
  * @author Nathan Funk
+ * @since 04/02/13 added Binom function
  */
 public class JEP {
 
@@ -205,6 +206,9 @@ public class JEP {
 		// rjm additions
 		funTab.put("if", new If());
 		funTab.put("str", new Str());
+		
+		// rjm 13/2/05
+		funTab.put("binom", new Binomial());
 	}
 
 	/**
