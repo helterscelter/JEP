@@ -1,7 +1,8 @@
 == TODO for version 2.3.0 ===========================================
- - ensure EvaluatorVisitor reports multiple errors for one evaluation
+- finalize docs
+- ensure EvaluatorVisitor reports multiple errors for one evaluation
    (compare Rich's code to version 1.12)
- 
+- document hasError() better with examples 
 
 == Todo before v2.25 ================================================
  - state clearly that NumberFactory has been changed to create the
