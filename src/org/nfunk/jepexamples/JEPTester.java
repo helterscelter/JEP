@@ -91,6 +91,7 @@ public class JEPTester {
 
 			if (c1==null || c2==null) break;
 			
+			// TODO: add comparison method that handles all types (Strings...)
 			if (!c1.equals(c2,1e-15)) {
 				print("Line: " + lineCount + ": ");
 				if (c1.im() == 0)
