@@ -174,10 +174,10 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * symbol table (symTab) and pushed onto the stack.
 	 */
 	public Object visit(ASTVarNode node, Object data) {
-		String message = "Could not evaluate " + node.getName() + ": ";
 
 		if (symTab == null) {
-			message += "the symbol table is null";
+			String message = "Could not evaluate " + node.getName() + ": "
+							+ "the symbol table is null";
 			addToErrorList(message);
 			return data;
 		}
@@ -185,7 +185,8 @@ public class EvaluatorVisitor implements ParserVisitor
 		Object temp = symTab.get(node.getName());
 		
 		if (temp == null) {
-			message += "the variable was not found in the symbol table";
+			String message = "Could not evaluate " + node.getName() + ": "
+						+ "the variable was not found in the symbol table";
 			addToErrorList(message);
 		} else {
 			// all is fine
