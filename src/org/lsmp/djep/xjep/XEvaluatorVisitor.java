@@ -43,6 +43,11 @@ public class XEvaluatorVisitor extends EvaluatorVisitor {
 		Object val = null;
 		if(var.hasValidValue()) {
 			val = var.getValue();
+			if (trapNullValues && val == null) {
+				String message = "Could not evaluate " + node.getName() + ": null value";
+				throw new ParseException(message);
+			}
+			stack.push(val);
 		} 
 		else if(var instanceof XVariable)
 		{
@@ -52,15 +57,14 @@ public class XEvaluatorVisitor extends EvaluatorVisitor {
 			// TODO causes stack overflow if recursive eqn with undefined value is used: recurse = recurse+1
 			equation.jjtAccept(this,data);
 			val = stack.peek();
+			if (trapNullValues && val == null) {
+				String message = "Could not evaluate " + node.getName() + ": null value";
+				throw new ParseException(message);
+			}
 		}
 		else
 		{
 			throw new ParseException("Could not evaluate " + node.getName() + ": value not set");
-		}
-
-		if (trapNullValues && val == null) {
-			String message = "Could not evaluate " + node.getName() + ": null value";
-			throw new ParseException(message);
 		}
 
 		return data;
