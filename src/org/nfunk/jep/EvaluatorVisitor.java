@@ -149,6 +149,7 @@ public class EvaluatorVisitor implements ParserVisitor
 			System.out.println("Stack size before childrenAccept: " + stack.size());
 		}
 		
+		// evaluate all children (each leaves their result on the stack)
 		data = node.childrenAccept(this, data);
 		
 		if (debug == true) {
