@@ -21,6 +21,7 @@
 	<property name="build"   value="build"/>
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
+	<property name="lib"     value="lib"/>
 	<property name="website" value="website"/>
 	<property name="version" value="2.23"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
@@ -30,6 +31,7 @@
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
 	<property name="bootclasspath" value="c:\jdk1.1.8\lib\classes.zip"/>
+	<property name="classpath" value="${lib}/junit.jar"/>
 
 	<taskdef name="jjtree"
 	classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
@@ -77,6 +79,7 @@
 		<!-- Compile the java code from ${src} into ${build} -->
 		<javac srcdir="${src}"
 		       destdir="${build}"
+		       classpath="${classpath}"
 		       target="1.1">
 			<bootclasspath>
 				<pathelement path="${bootclasspath}"/>
@@ -98,13 +101,14 @@
 		</javadoc>
 	</target>
 
+
 <!--======================================================================-->
-<!-- DIST -->
-	<target name="dist" depends="compile,javadoc">
+<!-- JAR -->
+	<target name="jar" depends="compile">
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}"/>
 
-		<!-- Put everything in ${build} into the jep-${DSTAMP}.jar file -->
+		<!-- Main jar -->
 		<jar jarfile="${dist}/jep-${version}.jar"
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**"/>
@@ -113,7 +117,11 @@
 		<jar jarfile="${dist}/jep-${version}-withexamples.jar"
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
-		
+	</target>
+
+<!--======================================================================-->
+<!-- DIST -->
+	<target name="dist" depends="jar,javadoc">
 		<!-- Create a temp dir for contents of packages-->
 		<mkdir dir="${disttemp}/jep-${version}"/>
 
@@ -136,6 +144,7 @@
 					 ${src}/org/nfunk/jepexamples/**,
 					 ${doc}/**,
 					 ${bin}/**,
+					 ${lib}/**,
 					 ${build}/**,
 					 build.xml,
 					 compile.bat,
