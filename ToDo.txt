@@ -1,35 +1,17 @@
-== Web site todo ====================================================
- - add Double -> Number?
-
-== v2.23 todos ======================================================
- x support for Number type
- x update javadoc on website
- x figure out way to distribute documentation with each version
- x update Main page
- x add doc for loading custom NumberFactory
- x change version in license
- x Run all tests
- x Update download page
- x Update license
- x Update documentation with new features
- x Test web site in multiple browsers
- x Run spell check on changed pages
- x use "ant dist"
- x upload distribution
- x upload license pdf
- x upload new website
- x Download package and test
- x Add message on SourceForge list
- x Update version number+ feature list from JARS, share*it,...
- x Add CVS tag for version (e.g. v223)
-
-== Further todos ====================================================
- - add JUnit testing
+== Todo before v2.24 ================================================
+ - add more JUnit tests
+ - automatisize testing in ant script
  - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
  - replace @license_info@ with GPL info using replace task and loadfile
  - new commercial license (like UCalc??)
  - make same change to getValue as for ERIN
  - add Exponential class
+
+== Web site todo ====================================================
+ - add Double -> Number?
+
+
+== Further todos ====================================================
  - add shell scripts for starting up in linux
  - comparison needs to be more flexible with complex type ((i-i) == 0)
  - automaticize web site uploading/cvs
@@ -63,6 +45,9 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - use <apply></apply> instead (content MathML?)
  - allow download from JEP web site?
 
+== User Wish List ===================================================
+ - Mathematica link with J/Link by importing Expr expressions.
+
 == Release Check List ===============================================
  - Run all tests
  - use "ant dist"
@@ -80,4 +65,25 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - Update version number+ feature list from JARS, share*it,...
  - Add CVS tag for version (e.g. v223)
 
-== User Wish List ===================================================
+== v2.23 todos ======================================================
+ x support for Number type
+ x update javadoc on website
+ x figure out way to distribute documentation with each version
+ x update Main page
+ x add doc for loading custom NumberFactory
+ x change version in license
+ x Run all tests
+ x Update download page
+ x Update license
+ x Update documentation with new features
+ x Test web site in multiple browsers
+ x Run spell check on changed pages
+ x use "ant dist"
+ x upload distribution
+ x upload license pdf
+ x upload new website
+ x Download package and test
+ x Add message on SourceForge list
+ x Update version number+ feature list from JARS, share*it,...
+ x Add CVS tag for version (e.g. v223)
+
