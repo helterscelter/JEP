@@ -33,6 +33,8 @@ public class XVariable extends Variable {
 	{
 		equation = eqn; 
 		this.setValidValue(false);
+		this.setChanged();
+		this.notifyObservers(eqn);
 	}
 	/** get the equation */
 	public Node getEquation() { return equation; }

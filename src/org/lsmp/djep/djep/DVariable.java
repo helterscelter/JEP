@@ -134,7 +134,6 @@ public class DVariable extends XVariable
  * then return null.
  * 
  * @param derivnames
- * @param dv
  * @return The derivative or null if it cannot be calculated.
  * @throws ParseException
  */
@@ -165,8 +164,8 @@ public class DVariable extends XVariable
 		{
 			return null;
 		}
-		Node deriv = (Node) jep.differentiate(lowereqn,derivnames[origlen-1]);
-		Node simp = (Node) jep.simplify(deriv);
+		Node deriv = jep.differentiate(lowereqn,derivnames[origlen-1]);
+		Node simp = jep.simplify(deriv);
 		res = createDerivative(derivnames,simp); 
 		setDerivative(derivnames,res);
 		return res;	
@@ -187,13 +186,13 @@ public class DVariable extends XVariable
 		return findDerivativeSorted(newnames,jep);
 	}
 
-	public PartialDerivative findDerivative(PartialDerivative deriv,String name,DJep jep)
+	public PartialDerivative findDerivative(PartialDerivative deriv,String dname,DJep jep)
 		throws ParseException
 	{
 		int len = deriv.getDnames().length;
 		String newnames[] = new String[len+1];
 		System.arraycopy(deriv.getDnames(),0,newnames,0,len);
-		newnames[len]=name;
+		newnames[len]=dname;
 		return findDerivative(newnames,jep);
 	}
 	

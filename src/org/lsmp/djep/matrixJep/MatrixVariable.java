@@ -30,14 +30,6 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 	private Dimensions dims;
 	private MatrixValueI mvalue = null;
 
-	
-//	private VariableInfo(String name,MatrixNodeI eqn,Dimensions dims) 
-//	{ 
-//		this.name = name; this.equation = eqn; this.dims = dims;
-//		value = Tensor.getInstance(dims);
-//		this.validValue=false;
-//	}
-
 	protected PartialDerivative createDerivative(String derivnames[],Node eqn)
 	{
 		return new MatrixPartialDerivative(this,derivnames,eqn);
@@ -81,14 +73,13 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 	/** returns the value, unpacks Scalers so they just return its elements. */
 	public Object getValue() { 
 		if(mvalue instanceof Scaler)
-		return mvalue.getEle(0);
-		else
-			return mvalue;
+			return mvalue.getEle(0);
+		return mvalue;
 	}	
 
 	/**
 	 * Sets the value of this variable.
-	 * Needed when using marco functions in matrix calculations.
+	 * Needed when using macro functions in matrix calculations.
 	 * TODO might be better to change macro function behaviour.
 	 */
 	protected boolean setValueRaw(Object val) {
@@ -107,7 +98,7 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 		mvalue.setEles(val);
 		setValidValue(true);
 		setChanged();
-		notifyObservers();
+		notifyObservers(val);
 	}
 	
 //	public void setMValue(VectorMatrixTensorI value) 

@@ -77,7 +77,7 @@ public class Variable extends Observable {
 	public boolean setValue(Object object) {
 		if(!setValueRaw(object)) return false;
 		setChanged();
-		notifyObservers();
+		notifyObservers(object);
 		return true;
 	}
 
