@@ -16,7 +16,7 @@ import org.lsmp.djep.vectorJep.*;
  * @version 1.3.0.2 now extends number
  */
 
-public class MVector extends Number implements MatrixValueI
+public class MVector implements MatrixValueI
 {
 	private Object data[] = null;
 	private Dimensions dim;

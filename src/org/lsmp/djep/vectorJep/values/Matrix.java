@@ -20,7 +20,7 @@ import org.lsmp.djep.vectorJep.*;
  * @version 2.3.1.1 Bug with non square matricies fixed.
  * @since 2.3.2 Added equals method.
  */
-public class Matrix extends Number implements MatrixValueI 
+public class Matrix implements MatrixValueI 
 {
 	// want package access to simplify addition of matricies
 	int rows=0;

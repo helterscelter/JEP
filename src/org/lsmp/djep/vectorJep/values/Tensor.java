@@ -14,7 +14,7 @@ import org.lsmp.djep.vectorJep.*;
  * Created on 07-Jul-2003
  * @version 1.3.0.2 now extends number
  */
-public class Tensor extends Number implements MatrixValueI {
+public class Tensor implements MatrixValueI {
 	private Object values[]=null;
 	private Dimensions dims;
 	//DoubleMatrix jsciMat;
