@@ -134,7 +134,20 @@ also be simplified (in this case giving <tt>7</tt>).
 The simplification algorithm is not perfect and there may well
 be some expressions which will not be simplified completely. We hope
 to improve the algorithm more at a later date.
-
+</p>
+<p>
+<b><i>Experimental</i></b> A more advanced simplification routine is offered by the
+and <a href="../../javadoc/org/lsmp/djep/sjep/package-summary.html">org.lsmp.djep.sjep.*</a> package.
+This converts nodes to an internal polynomial representation, ensuring
+that monomials of the same type are added together.
+Also allows full expansion of polynomials.
+It should also work with functions which contain other functions.
+</p>
+<p>
+<b><i>Experimental</i></b> The 
+and <a href="../../javadoc/org/lsmp/djep/rewrite/package-summary.html">org.lsmp.djep.rewrite.*</a> package.
+allows arbitaty rewrite of equations. Very early in development.
+</p>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
 <tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>

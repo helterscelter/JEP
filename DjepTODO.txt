@@ -1,0 +1,9 @@
+TODO for djep suite
+03 April 2005
+
+Check new functions in Vectorjep work with MatrixJep.
+Check new functions can be differented.
+
+Handle partial derivatives which have constant equations.
+
+Many more I'm sure.

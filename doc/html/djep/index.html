@@ -40,17 +40,19 @@
         <p><br>The DJep collection of packages offers a number of extensions to the standard JEP package:</p>
         
   <ul>
-    <li>Printing: equations can be easily printed or converted to strings with 
+    <li><b>Printing:</b> equations can be easily printed or converted to strings with 
       intelligent handling of brackets.</li>
-    <li>Simplification equations like <tt>2.0*x^1.0*1.0+0.0</tt> equations can 
+    <li><b>Simplification:</b> equations like <tt>2.0*x^1.0*1.0+0.0</tt> equations can 
       be simplified to produce <tt>2.0*x</tt></li>
-    <li>Differentiation: equations can be differentiated, these can be specified 
+    <li><b>Differentiation:</b> equations can be differentiated, these can be specified 
       either programtically or in the equations themselves.</li>
-    <li>Vectors and Matrices: Full support for vector and matrix operations.</li>
+    <li><b>Vectors and Matrices:</b> Full support for vector and matrix operations.</li>
     <li>Utilities for working with parse trees a number of utilities are available 
       for programtically creating and copying and working with the parse trees.</li>
-    <li><a href="groups.html">Groups</a> Exact arithmetic over integers rationals 
+    <li><b>Groups</b> Exact arithmetic over integers rationals 
       and other groups.</li>
+    <li><b>Fast Evaluation</b> Evaluation routines for calculations over doubles. Can be up to 10 times as fast.
+      </li>
   </ul>
 		
   <p> These facilities are offered by packages in the <a href="../../javadoc/index.html">org.lsmp.djep</a> 
@@ -69,7 +71,8 @@
     </tr>
     <tr> 
       <td valign="top"><a href="XJep.html#simp">Simplification</a></td>
-      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a>,
+      and <a href="../../javadoc/org/lsmp/djep/sjep/package-summary.html">org.lsmp.djep.sjep.*</a></td>
     </tr>
     <tr> 
       <td valign="top"><a href="XJep.html#reenter">re-entrant parser</a></td>
@@ -111,6 +114,13 @@
       <td valign="top">Calculation over arbitrary <a href="groups.html">groups</a> 
         including exact arithmetic over integers and rationals.</td>
       <td valign="top"><a href="../../javadoc/org/lsmp/djep/matrixJep/package-summary.html">org.lsmp.djep.groupJep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top">Fast evaluation.
+      <td valign="top">
+      Single valued <a href="../../javadoc/org/lsmp/djep/rpe/package-summary.html">org.lsmp.djep.rpe.*</a>
+      Matrix and vectors <a href="../../javadoc/org/lsmp/djep/mrpe/package-summary.html">org.lsmp.djep.mrpe.*</a>
+      </td>
     </tr>
     </tbody> 
   </table>
