@@ -39,5 +39,4 @@ public class ASTMConstant extends ASTConstant implements MatrixNodeI
 	public void setValue(Object val) {
 		scalerval.setEle(0,val);
 	}
-	
 }
