@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+  
+  
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" -->
+  <title>DJep - Version history</title>
+<!-- #EndEditable -->
+
+
+  <link rel="stylesheet" type="text/css" href="../main.css" title="style1">
+  <meta name="description" content="Tutorial on using XJep for printing, simplification, etc.">
+</head><body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<br>
+
+
+
+
+<div align="center"> 
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody><tr> 
+      <td bgcolor="#000033"><img src="../img/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+    <tr> 
+      <td align="center"><table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tbody><tr> 
+      <td><!-- #BeginEditable "Sub%20Menu" --> <!-- #BeginLibraryItem "/Library/Docu Menu.lbi" -->
+      <a href="../index.html">JEP</a>
+<font color="#cccccc">|</font> <a href="index.html">DJep overview</a>
+<font color="#cccccc">|</font> <a href="XJep.html">XJep</a>
+<font color="#cccccc">|</font> <a href="DJep.html">Differentation</a>
+<font color="#cccccc">|</font> <a href="VectorJep.html">Vector and Matricies</a>
+<font color="#cccccc">|</font> <a href="groups.html">Groups</a>
+<font color="#cccccc">|</font> <a href="version.html">Version History</a><!-- #EndLibraryItem --><!-- #EndEditable --></td>
+    </tr>
+  </tbody></table></td>
+    </tr>
+    <tr> 
+      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1" alt=""></td>
+    </tr>
+	</tbody></table>
+	
+  <br>
+  <table cellpadding="0" cellspacing="0" border="0" width="590">
+    <tbody><tr> 
+      <td><!-- #BeginEditable "Text" --> 
+        <h1><a name="top"></a>DJep Version History</h1>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
+</tbody></table>
+
+<h2>Known bugs in version 2.3.0a</h2>
+
+Several bugs are known in version 2.3.0a.
+<ul>
+<li>Differential of "diff(a^x,x)" should be "a^x * ln(a)" but it's "a^x * ln(x)".
+<li>Evaluation of "(x*x)*(x*x)" causes a ParseError in VectorJep and MatrixJep.
+	Quick fix: edit org.lsmp.djep.vectorJep.function.MMultiply.java<br>
+	On line 72: in the run method, comment out the line
+	<pre>if(stack.size()!=2) throw new ParseException("Multiply: should have two children its got "+stack.size());</pre>
+<li>Matrix multiplication (i.e. matrix * matrix) does not work. Fix: upgrade to later version.
+<li>vector * vector multiplication does not work.
+<li>cannot combine results of matrix operations with functions ie. "sqrt([1,2].[1,2])" fails. Fix: upgrade.
+<li>Dot and cross product cannot be dfferentiated.
+<li>uminus is broken for MatrixJep.
+<li>Problems repeaated evaluation of sequences of equations.<br>
+	Quick fix: always uses before reevaluation. j.getSymbolTable().clearValues();
+<li>Problems with using different types of JEP in the same application. They share a static Operator class
+	which can have the wrong pfmc's for the type of JEP.
+</ul>
+
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr>
+    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr></tbody></table>
+
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable --></td>
+    </tr>
+
+  </tbody></table><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tbody><tr bgcolor="#000033"> 
+      <td bgcolor="#000033"><img src="../img/spacer.gif" width="1" height="3" alt=""></td>
+    </tr>
+	</tbody></table>
+  <table width="590" border="0" cellspacing="0" cellpadding="0">
+    <tbody><tr>
+      <td align="left"><font size="-2" color="#999999"><b>::</b></font></td>
+      <td align="right"> <font size="-2" color="#999999">&copy; 2004 Nathan Funk and Richard Morris</font></td>
+    </tr>
+  </tbody></table>
+  <p class="menu">&nbsp;</p>
+</div>
+
+
+
+
+<!-- #EndTemplate --></body></html>
+ 
