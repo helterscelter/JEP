@@ -65,8 +65,7 @@ public class MRpSpeed {
 		System.out.println("> and <"+eqn2+">");
 		doVec(eqns,eqn2);
 		doMat(eqns,eqn2);
-		doMRpe1(eqns,eqn2);
-		doRpe2(eqns,eqn2);
+		doRpe(eqns,eqn2);
 		System.out.println();
 	}
 
@@ -134,53 +133,6 @@ public class MRpSpeed {
 	}
 	
 	static void doRpe(String eqns[], String eqn2)
-	{
-		try
-		{
-			for(int i=0;i<eqns.length;++i)	{
-				Node node2 = mj.simplify(mj.preprocess(mj.parse(eqns[i])));
-				mj.evaluate(node2);
-			}
-
-			Node node3 = mj.simplify(mj.preprocess(mj.parse(eqn2)));
-			RpEvalOld rpe = new RpEvalOld();
-			rpe.compile(node3,mj);
-			rpe.copyVars();
-			long t1 = System.currentTimeMillis();
-	//		System.out.println("mat parse"+(t1-t4));
-			for(int i=0;i<num_itts;++i)
-				rpe.evaluate();
-			long t2 = System.currentTimeMillis();
-			System.out.println("Using RpEval:\t\t"+(t2-t1));
-		}
-		catch(Exception e) {System.out.println("Error"+e.getMessage());e.printStackTrace();}
-	}
-
-	static void doMRpe1(String eqns[], String eqn2)
-	{
-		try
-		{
-			for(int i=0;i<eqns.length;++i)	{
-				Node node2 = mj.simplify(mj.preprocess(mj.parse(eqns[i])));
-				mj.evaluate(node2);
-			}
-			Node node3 = mj.simplify(mj.preprocess(mj.parse(eqn2)));
-			MRpEvalOld rpe = new MRpEvalOld(mj);
-			MRpCommandList list = rpe.compile(node3);
-			long t1 = System.currentTimeMillis();
-	//		System.out.println("mat parse"+(t1-t4));
-			for(int i=0;i<num_itts;++i)
-				rpe.evaluate(list);
-			long t2 = System.currentTimeMillis();
-			System.out.print("Using MRpEval:\t\t"+(t2-t1));
-			Object res = rpe.evaluate(list);
-			System.out.println("\t"+res.toString());			
-			rpe.cleanUp();
-		}
-		catch(Exception e) {System.out.println("Error"+e.getMessage());e.printStackTrace();}
-	}
-
-	static void doRpe2(String eqns[], String eqn2)
 	{
 		try
 		{

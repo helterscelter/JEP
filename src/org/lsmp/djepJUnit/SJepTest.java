@@ -75,25 +75,27 @@ public class SJepTest extends TestCase {
 	public void valueTest(String expr,Object expected) throws Exception
 	{
 		Node node = j.parse(expr);
-		Object res = j.evaluate(node);
+		Node n2 = j.preprocess(node);
+		Object res = j.evaluate(n2);
 		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Sucess value of <"+expr+"> is "+res);
+		System.out.println("Success value of <"+expr+"> is "+res);
 	}
 	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
 	{
 		Node node = j.parse(expr);
-		Object res = j.evaluate(node);
+		Node n2 = j.preprocess(node);
+		Object res = j.evaluate(n2);
 		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
 			expected.equals((Complex) res,tol));
-		System.out.println("Sucess value of <"+expr+"> is "+res);
+		System.out.println("Success value of <"+expr+"> is "+res);
 	}
 
-	public Object calcValue(String expr)
+	public Object calcValue(String expr) throws ParseException
 	{
-		j.parseExpression(expr);
-		if(j.hasError())
-			fail("Parse Failure: "+expr);
-		return j.getValueAsObject();
+		Node node = j.parse(expr);
+		Node n2 = j.preprocess(node);
+		Object res = j.evaluate(n2);
+		return res;
 	}
 	
 	public void simplifyTest(String expr,String expected) throws ParseException
