@@ -51,7 +51,7 @@ public class ThreadTest {
 				fooValue="NLT";
 			}
 
-			myParser.addVariableAsObject("foo",fooValue);
+			myParser.addVariable("foo",fooValue);
 			myParser.parseExpression("foo==\""+fooValue + "\"");
 
 			if (myParser.getValue() < 1.0)

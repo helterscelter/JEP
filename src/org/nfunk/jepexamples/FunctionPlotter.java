@@ -7,9 +7,8 @@ HTML code for applet:
 
 package org.nfunk.jepexamples;
 
-import java.awt.*;
 import java.applet.*;
-import java.util.*;
+import java.awt.*;
 
 /**
  * This applet is a demonstration of the possible applications of the JEP

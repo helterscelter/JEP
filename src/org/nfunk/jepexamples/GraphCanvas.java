@@ -10,8 +10,8 @@
 package org.nfunk.jepexamples;
 
 import java.awt.*;
-import java.util.*;
-import org.nfunk.jep.*;
+
+import org.nfunk.jep.JEP;
 
 /**
  * This class plots a graph using the JEP API.

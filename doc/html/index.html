@@ -178,9 +178,9 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
           Complex object. Note that the class used internally for Complex numbers 
           is also used for returning the value.</p>
         <p>Adding a complex variable or constant to the parser before evaluating 
-          an expression can be done with <a href="../javadoc/org/nfunk/jep/JEP.html#addComplexVariable(java.lang.String,%20double,%20double)" target="_blank">addComplexValue()</a>. 
-          It takes three parameters: the name of the variable as string, the real 
-          component, and the imaginary component.</p>
+          an expression can be done with <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String,%20double,%20double)" target="_blank">addVariable(String 
+          name, double re, double im)</a>. It takes three parameters: the name 
+          of the variable as string, the real component, and the imaginary component.</p>
         <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top" border="0"></a></td>
@@ -194,9 +194,9 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
           expression involving a vector is: 
         <pre>[3, 4, 5]*2</pre>
         <p>It would be evaluated as [6, 8, 10] by JEP. To add a vector as variable, 
-          use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariableAsObject(java.lang.String, java.lang.Object)" target="_blank">addVariableAsObject()</a> 
-          method. If the result of an expression is a vector, it can be obtained 
-          by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
+          use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String,%20java.lang.Object)" target="_blank">addVariable(String 
+          name, Object value)</a> method. If the result of an expression is a 
+          vector, it can be obtained by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
           function.</p>
         <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -210,9 +210,9 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
           != relational operators. A sample expression involving the string type 
           is &quot;foo&quot; + &quot;bar&quot; == &quot;foobar&quot;, which would 
           be evaluated by JEP as 1 (true).</p>
-        <p>To add a string as a variable, use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariableAsObject(java.lang.String, java.lang.Object)" target="_blank">addVariableAsObject()</a> 
-          method. If the result of an expression is a string, it can be obtained 
-          by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
+        <p>To add a string as a variable, use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String,%20java.lang.Object)" target="_blank">addVariable(String 
+          name, Object value)</a> method. If the result of an expression is a 
+          string, it can be obtained by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
           function.</p>
         <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -224,9 +224,9 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
         <p>In most cases, you will only need to work with the few built in types 
           that JEP supplies (Double, Complex, Vector, String). But suppose you 
           want to evaluate expressions that involve other types. This is possible 
-          by using the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariableAsObject(java.lang.String,%20java.lang.Object)" target="_blank">addVariableAsObject()</a> 
-          method to add variables of any type. The only place where the type of 
-          a variable matters, is in the function classes.</p>
+          by using the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String,%20java.lang.Object)" target="_blank">addVariableAsObject(String 
+          name, Object value)</a> method to add variables of any type. The only 
+          place where the type of a variable matters, is in the function classes.</p>
         <p>When an expression is evaluated, values are operated on with the classes 
           in the function package. These include the operators (such as <a href="../javadoc/org/nfunk/jep/function/Add.html" target="_blank">Add</a> 
           and <a href="../javadoc/org/nfunk/jep/function/Subtract.html" target="_blank">Subtract</a>), 

@@ -14,16 +14,15 @@
 */
 package org.nfunk.jepexamples;
 
+import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.applet.*;
-import java.util.*;
 
 public class Fractal extends Applet implements ActionListener {
 
 	private TextField exprField, itField;
 	private Button button, button2;
-	private ComplexCanvas complexCanvas;
+	private FractalCanvas complexCanvas;
 
 
 	/** Initializes the applet Fractal */
@@ -96,7 +95,7 @@ public class Fractal extends Applet implements ActionListener {
 		c.weighty = 1;
 //		button2 = new Button("test");
 		
-		complexCanvas = new ComplexCanvas(expr, exprField);
+		complexCanvas = new FractalCanvas(expr, exprField);
 		gridbag.setConstraints(complexCanvas, c);
 		add(complexCanvas);
 	}

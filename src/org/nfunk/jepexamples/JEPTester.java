@@ -10,8 +10,9 @@
 package org.nfunk.jepexamples;
 
 import java.io.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
+
+import org.nfunk.jep.JEP;
+import org.nfunk.jep.type.Complex;
 
 /**
 * This class is designed for testing the validity of JEP evaluations.

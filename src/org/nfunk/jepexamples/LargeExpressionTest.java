@@ -9,8 +9,9 @@
 
 package org.nfunk.jepexamples;
 
-import org.nfunk.jep.*;
 import java.util.*;
+
+import org.nfunk.jep.JEP;
 
 /**
  * This example tests how the evaluation time is influenced by the size of the

@@ -20,11 +20,11 @@ HTML code for running the applet:
 */
 package org.nfunk.jepexamples;
 
+import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
-import java.applet.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
+
+import org.nfunk.jep.JEP;
 
 
 /**

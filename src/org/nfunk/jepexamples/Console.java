@@ -16,8 +16,8 @@
 
 package org.nfunk.jepexamples;
 
-import org.nfunk.jep.*;
 import java.io.*;
+import org.nfunk.jep.JEP;
 //import org.nfunk.sovler.*;
 
 /**
