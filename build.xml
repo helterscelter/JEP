@@ -137,7 +137,8 @@
 		<!-- Copy src, doc, bin, build, and single files -->
 		<copy todir="${disttemp}">
 			<fileset dir="."
-					includes="${src}/org/nfunk/jep/**,
+					includes="
+					 ${src}/org/nfunk/jep/**,
 					 ${src}/org/nfunk/jepexamples/**,
 					 ${doc}/**,
 					 ${bin}/**,
@@ -145,7 +146,7 @@
 					 build.xml,
 					 compile.bat,
 					 LICENSE.txt,
-					 README.txt"/>
+					 README.html"/>
 		</copy>
 
 		<!-- zip file -->
