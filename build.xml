@@ -45,7 +45,7 @@
 <!-- INIT -->
 	<target name="init">
 		<!-- Create the time stamp -->
-                <tstamp/>
+		<tstamp/>
 
 		<!-- Ensure JavaCC is present -->
 		<available property="javacc.present"
@@ -91,7 +91,7 @@
 
 <!--======================================================================-->
 <!-- JAVADOC -->
-	<target name="javadoc">
+	<target name="javadoc" depends="init">
 		<mkdir dir="${doc}/javadoc"/>
 		<javadoc packagenames="org.nfunk.jep.*"
 				sourcepath="src"
@@ -103,7 +103,7 @@
 
 <!--======================================================================-->
 <!-- DIST -->
-	<target name="dist" depends="compile">
+	<target name="dist" depends="compile,javadoc">
 		<!-- Create the distribution directory -->
 		<mkdir dir="${dist}"/>
 
