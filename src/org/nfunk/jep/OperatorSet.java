@@ -13,12 +13,17 @@ import org.nfunk.jep.Operator;
 /**
  * The standard set of operators used in JEP.
  * <p>
- * 
+ * This creates instances of the PostfixMathCommands for each operator,
+ * saving the need for multiple objects to be created. To get a reference to a particular operator use
  * <pre>
- * OperatorSet opSet = new OperatorSet();
+ * OperatorSet opSet = jep.getOperatorSet();
  * Operator myOp = opSet.getAdd();
  * </pre> 
- * <p>   
+ * <p>
+ * If a new operator ABC is added to the parser the this class
+ * should be extended to include a method Operator getABC().
+ * <p>
+ * Sub classes can change which Operator is returned by each method.
  * @author Rich Morris
  * Created on 19-Oct-2003
  */
