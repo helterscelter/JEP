@@ -1,131 +1,257 @@
 <!--
+
 jar for distribution (without examples)
+
 jar for website (with examples)
+
 source package with GPL
+
 source package without GPL
+
 javadoc documentation
+
 compile jjt file
+
 normal compile jep
+
 compile for each example
+
 compile all
+
 backup
+
 CVS
+
 testing (JUnit)
+
 CRLF conversion
+
 separate build.xml for subprojects?
+
 /
+
  src/   (contains org... with source files)
+
  build/ (contains org... with class files)
+
  dist/  (zip, tar.gz)
+
    lib/ (jar)
+
  doc/
+
    javadoc/
+
  bin/ (scripts for starting things)
+
 -->
 
+
+
 <project name="JEP" default="compile" basedir=".">
+
 	
+
 	<!-- set global properties for this build -->
+
 	<property name="src" value="src"/>
+
 	<property name="build"   value="build"/>
+
 	<property name="dist"    value="dist"/>
+
 	<property name="doc"     value="doc"/>
+
 	<property name="version" value="2.20"/>
+
 	<property name="jar"     value="${app.name}-${version}.jar"/>
+
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
+
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
 	<property environment="env"/>
+
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
 
+
 	<taskdef name="jjtree" classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
+
 	<taskdef name="javacc" classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
 
 
+
+
+
 <!-- INIT -->
+
 	<target name="init">
+
 		<!-- Create the time stamp -->
+
 		<tstamp/>
 
+
+
 		<!-- Create the build directory structure used by compile -->
+
 		<mkdir dir="${build}"/>
 
+
+
 		<!-- Ensure JavaCC is present -->
+
 		<available property="javacc.present"
+
 			classname="COM.sun.labs.javacc.Main" 
+
 			classpath="${javacchome}/JavaCC.zip" />
+
 	</target>
+
+
 
 <!-- JJTREE -->
+
 	<target name="jjtree" depends="init" if="javacc.present">
+
 		<jjtree
+
 			target="${src}/org/nfunk/jep/Parser.jjt"
+
 			javacchome="${javacchome}"
+
 		/>
+
 	</target>
+
+
 
 <!-- JAVACC -->
+
 	<target name="javacc" depends="jjtree">
+
 		<javacc
+
 			target="${src}/org/nfunk/jep/Parser.jj"
+
 			javacchome="${javacchome}"
+
 		/>
+
 	</target>
 
+
+
       
+
 <!-- COMPILE -->
+
 	<target name="compile" depends="javacc">
+
 		<!-- Compile the java code from ${src} into ${build} -->
+
 		<javac srcdir="${src}" destdir="${build}"/>
+
 	</target>
+
+
+
 
 
 <!-- DIST -->
+
 	<target name="dist" depends="compile">
+
 		<!-- Create the distribution directory -->
+
 		<mkdir dir="${dist}/lib"/>
+
 		
+
 		<!-- Put everything in ${build} into the jep-${DSTAMP}.jar file -->
+
 		<jar jarfile="${dist}/lib/jep-${DSTAMP}.jar"
+
 		     basedir="${build}"/>
+
 		
-		<!-- Create the source distribution zip file -->
-		<delete file="${dist}/jep-${DSTAMP}-src.zip"/>
-		<zip zipfile="${dist}/jep-${DSTAMP}-src.zip"
-		     basedir="${src}"
-		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"
-		     >
-		</zip>
 
 		<!-- Create the source distribution zip file -->
-		<delete file="${dist}/jep-${DSTAMP}-src.tar.gz"/>
-		<tar tarfile="${dist}/jep-${DSTAMP}-src.tar"
+
+		<delete file="${dist}/jep-${DSTAMP}-src.zip"/>
+
+		<zip zipfile="${dist}/jep-${DSTAMP}-src.zip"
+
 		     basedir="${src}"
+
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"
+
 		     >
+
+		</zip>
+
+
+
+		<!-- Create the source distribution zip file -->
+
+		<delete file="${dist}/jep-${DSTAMP}-src.tar.gz"/>
+
+		<tar tarfile="${dist}/jep-${DSTAMP}-src.tar"
+
+		     basedir="${src}"
+
+		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"
+
+		     >
+
 		</tar>
+
 		<gzip zipfile="${dist}/jep-${DSTAMP}-src.tar.gz"
+
 		      src="${dist}/jep-${DSTAMP}-src.tar"/>
+
 		<delete file="${dist}/jep-${DSTAMP}-src.tar"/>
+
 	</target>
+
+
+
 
 
 <!-- CLEAN -->
+
 	<target name="clean">
+
 		<!-- Delete the ${build} and ${dist} directory trees -->
+
 		<delete dir="${build}"/>
+
 		<!--<delete dir="${dist}"/>-->
+
 	</target>
 
 
+
+
+
 <!-- JAVADOC -->
+
 	<target name="javadoc">
+
 		<mkdir dir="${doc}/javadoc"/>
+
 		<javadoc packagenames="org.nfunk.jep.*"
+
 				sourcepath="src"
+
 				destdir="${doc}/javadoc"
+
 				windowtitle="JEP API">
-			<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>
+
+			<!--<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>-->
+
 		</javadoc>
+
 	</target>
 
 <!-- EOLUNIX -->
@@ -134,4 +260,6 @@ separate build.xml for subprojects?
 			eol="lf" eof="remove"
 		/>
 	</target>
+
 </project>
+
