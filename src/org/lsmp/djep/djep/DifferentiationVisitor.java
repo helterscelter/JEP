@@ -279,7 +279,15 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 			return nf.buildConstantNode(tu.getONE());
 		else if(difvar.hasEquation())
 		{
-			PartialDerivative deriv = difvar.findDerivative((String) data,localDJep);
+			if(difvar.getEquation() instanceof ASTConstant)
+				return nf.buildConstantNode(tu.getZERO());
+			if(difvar.getEquation() instanceof ASTVarNode) {
+				XVariable tmp = (XVariable) ((ASTVarNode) difvar.getEquation()).getVar();
+				if(tmp.hasEquation() && tmp.getEquation() instanceof ASTConstant)
+					return nf.buildConstantNode(tu.getZERO());
+			}
+
+				PartialDerivative deriv = difvar.findDerivative(varName,localDJep);
 			return nf.buildVariableNode(deriv);
 		}
 		else
@@ -288,6 +296,14 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 	   if(var instanceof PartialDerivative)
 	   {
 			PartialDerivative pvar = (PartialDerivative) var;
+			if(pvar.getEquation() instanceof ASTConstant)
+				return nf.buildConstantNode(tu.getZERO());
+			if(pvar.getEquation() instanceof ASTVarNode) {
+				XVariable tmp = (XVariable) ((ASTVarNode) pvar.getEquation()).getVar();
+				if(tmp.hasEquation() && tmp.getEquation() instanceof ASTConstant)
+					return nf.buildConstantNode(tu.getZERO());
+			}
+
 			DVariable dvar = pvar.getRoot();
 			PartialDerivative deriv = dvar.findDerivative(pvar,varName,localDJep);
 			return nf.buildVariableNode(deriv);

@@ -403,10 +403,12 @@ private Object visitFun(ASTFunNode node) throws ParseException
 	public int getMode() {
 		return mode;
 	}
-	
+	public boolean getMode(int testmode) {
+		return( (this.mode | testmode ) == testmode); 
+	}
 	/**
 	 * Set printing mode.
-	 * In full bracket mode the brackets each element in the tree will be suronded
+	 * In full bracket mode the brackets each element in the tree will be surrounded
 	 * by brackets to indicate the tree structure. 
 	 * In the default mode, (full bracket off) the number of brackets is
 	 * minimised so (x+y)+z will be printed as x+y+z.

@@ -193,6 +193,8 @@ public class DVariable extends XVariable
 	
 	public String toString(PrintVisitor bpv)
 	{
+		boolean mode = bpv.getMode(DPrintVisitor.PRINT_VARIABLE_EQNS);
+		bpv.setMode(DPrintVisitor.PRINT_VARIABLE_EQNS,false);
 		StringBuffer sb = new StringBuffer(name);
 		sb.append(":\t");
 		if(hasValidValue()) sb.append(getValue() );
@@ -211,6 +213,7 @@ public class DVariable extends XVariable
 			sb.append("\t");
 			sb.append(bpv.toString(var.getEquation()));
 		}
+		bpv.setMode(DPrintVisitor.PRINT_VARIABLE_EQNS,mode);
 		return sb.toString();
 	}
 
