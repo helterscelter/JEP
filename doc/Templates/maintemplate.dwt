@@ -28,8 +28,9 @@
     <li><a href="../html/djep/index.html">DJEP</a></li>
     <li><a href="../html/djep/XJep.html">XJep</a></li>
     <li><a href="../html/djep/DJep.html">Differentiation</a></li>
-    <li><a href="../html/djep/groups.html">Groups</a></li>
     <li><a href="../html/djep/VectorJep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="../html/djep/GroupJep.html">Groups</a></li>
+	<li><a href="../html/djep/AddingOperators.html">Adding Operators to the Parser</a></li>
     <li><a href="../html/djep/version.html">Version History</a></li>
   </ul>
 </div>

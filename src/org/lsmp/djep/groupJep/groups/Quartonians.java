@@ -33,20 +33,26 @@ public class Quartonians extends Group implements RingI {
 			if(x!=0.0) { sb.append(x); flag = true; }
 			if(y!=0.0) { 
 				if(flag && y>0.0) sb.append("+");
-				sb.append(y);
+				if(y==1.0) {}
+				else if(y==-1.0) { sb.append("-"); }
+				else sb.append(y); 
 				sb.append("i");
 				flag=true;
 			}
 			
 			if(z!=0.0) { 
 				if(flag && z>0.0) sb.append("+");
-				sb.append(z);
+				if(z==1.0) {}
+				else if(z==-1.0) { sb.append("-"); }
+				else sb.append(z); 
 				sb.append("j");
 				flag=true;
 			}
 			if(w!=0.0) { 
 				if(flag && w>0.0) sb.append("+");
-				sb.append(w);
+				if(w==1.0) {}
+				else if(w==-1.0) { sb.append("-"); }
+				else sb.append(w); 
 				sb.append("k");
 				flag=true;
 			}

@@ -91,7 +91,7 @@ public class AlgebraicExtension extends ExtendedFreeGroup implements RingI {
 	
 	public String toString()
 	{
-		return baseRing.toString() +poly.toString();
+		return baseRing.toString() + '[' + poly.toString() + ']';
 	}
 	
 	/** Returns the polynomial defining the algebraic number. */

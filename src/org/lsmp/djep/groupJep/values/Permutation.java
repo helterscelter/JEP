@@ -71,13 +71,13 @@ public class Permutation extends Number {
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
-		sb.append("(");
+		sb.append("[");
 		for(int i=0;i<this.perm.length;++i)
 		{
 			if(i>0) sb.append(",");
 			sb.append(this.perm[i].toString());
 		}
-		sb.append(")");
+		sb.append("]");
 		return sb.toString();
 	}
 	/** Just returns 0. Minimal implematation for compatability with Number. */

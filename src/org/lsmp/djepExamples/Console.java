@@ -389,15 +389,16 @@ public class Console extends Applet implements KeyListener {
 //			System.out.println("before ("+ before+")");
 //			System.out.println("after ("+ after+")");
 			int startOfLine = before.lastIndexOf('\n');
-			String line=null;
+			if(startOfLine > 0)
+					before = before.substring(startOfLine+1);
 			String prompt = getPrompt();
-			if(startOfLine == -1)
-					line = before.substring(prompt.length());
-			else
-					line = before.substring(startOfLine+1+prompt.length());
-					
+			String line=null;
+			if(before.startsWith(prompt))
+			{
+				line = before.substring(prompt.length());					
+				this.processCommand(line);
+			}
 //			System.out.println("line ("+line+")");
-			this.processCommand(line);
 			//if(!flag) this.exit();
 			this.print(getPrompt());
 		}

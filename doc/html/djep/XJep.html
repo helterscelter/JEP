@@ -27,11 +27,12 @@
 <hr/>
 
 <ul>
-<li><a href="index.html">DJEP</a></li>
+<li><a href="index.html">DJEP Overview</a></li>
 <li><a href="XJep.html">XJep</a></li>
 <li><a href="DJep.html">Differentiation</a></li>
-<li><a href="groups.html">Groups</a></li>
+<li><a href="GroupJep.html">Groups</a></li>
 <li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
+<li><a href="AddingOperators.html">Adding Operators to Parser</a></li>
 <li><a href="version.html">Version History</a></li>
 </ul>
 </div><!-- #EndLibraryItem --><!-- #EndEditable -->
@@ -43,10 +44,16 @@
         <li><a href="#simp">Simplification</a> equations like <tt>2.0*x^1.0*1.0+0.0</tt> equations can be simplified to produce <tt>2.0*x</tt></li><li><a href="#reenter">Re-entrant parsers</a> allows equations to be separated by ;.</li>
         <li><a href="#variable">Variable</a> with equations and lazy evaluation.</li>
         <li><a href="#macro">Macro functions</a> functions specified by a simple function call.</li>
+        <li><a href="#funct">New functions</a> include <tt>Sum(x^2,x,1,10)</tt> finds the sum of <tt>x^2</tt> with <tt>x</tt> running from 1 to 10.</li>
 <li><a href="#utils">Utilities</a>
 for working with parse trees a number of utilities are available for
 programatically creating and copying and working with the parse trees.</li>
 </ul>
+
+<p>
+An interactive console applet
+<a href="http://www.singsurf.org/djep/XJep.html">interactive console applet</a>
+illustrates the functionality of XJep.
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
@@ -356,7 +363,7 @@ See the <a href="../../javadoc/org/lsmp/djep/xjep/MacroFunction.html">MacroFunct
 <tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
 </tbody></table>
 
-<h3>Sum type function</h3>
+<h3><a name="funct"></a>Sum type function</h3>
 <p>
 An equivilent of the sigma notation for summation
 are provided by 
@@ -408,7 +415,9 @@ of node and accessing its properties.</li><li><a href="../../javadoc/org/lsmp/dj
 <br/>
 <br/>
 <br/>
-  <div id="footer"> &copy; 2004 Singular Systems</div>
+<div id="footer">&copy; 2004 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+and Rich Morris <a href="http://www.singsurf.org/">www.singsurf.org</a> &copy; 2005</div>
 </div>
 </body>
 <!-- #EndTemplate --></html>

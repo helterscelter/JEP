@@ -27,11 +27,12 @@
 <hr/>
 
 <ul>
-<li><a href="index.html">DJEP</a></li>
+<li><a href="index.html">DJEP Overview</a></li>
 <li><a href="XJep.html">XJep</a></li>
 <li><a href="DJep.html">Differentiation</a></li>
-<li><a href="groups.html">Groups</a></li>
+<li><a href="GroupJep.html">Groups</a></li>
 <li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
+<li><a href="AddingOperators.html">Adding Operators to Parser</a></li>
 <li><a href="version.html">Version History</a></li>
 </ul>
 </div><!-- #EndLibraryItem --><!-- #EndEditable -->
@@ -48,6 +49,11 @@
 		This package is primarily a bit of a play thing, allowing the JEP parser and evaluator to be used with arbitrary groups.
 		It should not be treated as a substitute for a dedicated computer algebra package
 		but it does allow a bit of experimentation with different groups rings and fields.
+
+<p>
+An interactive console applet
+<a href="http://www.singsurf.org/djep/GroupJep.html">interactive console applet</a>
+illustrates the functionality of GroupJep.
 		
         <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -96,35 +102,35 @@ by repeatedly extending a ring:
 Polynomials in multiple variables can be defined by repeatidly
 extending. 
 <pre>
-		RingI ring = new Reals();
-		FreeGroup fg = new ExtendedFreeGroup(ring,"x");
-		FreeGroup fg2 = new ExtendedFreeGroup(fg,"y");
-		j = new GroupJep(fg2);
-		j.addStandardConstants();
-		j.setAllowAssignment(true);
-		j.setAllowUndeclared(true);
-		Node n2 = j.parse("(x+1)*(y-2)");	
-		FreeGroupElement fge = (FreeGroupElement) j.evaluate(n2);
+RingI ring = new Reals();
+FreeGroup fg = new ExtendedFreeGroup(ring,"x");
+FreeGroup fg2 = new ExtendedFreeGroup(fg,"y");
+j = new GroupJep(fg2);
+j.addStandardConstants();
+j.setAllowAssignment(true);
+j.setAllowUndeclared(true);
+Node n2 = j.parse("(x+1)*(y-2)");	
+FreeGroupElement fge = (FreeGroupElement) j.evaluate(n2);
 </pre>
 The coefficients of the polynomial can be found using:
 <pre>
-		Number co1[] = fge.getCoeffs();
-		for(int i=0;i&lt;co1.length;++i)
-		{
-			FreeGroupElement fge3 = (FreeGroupElement) co1[i];
-			Number co2[] = fge3.getCoeffs();
-			for(int j=0;j&lt;co2.length;++j)
-				System.out.print(co2[j]+"\t");
-			System.out.println();
-		}
+Number co1[] = fge.getCoeffs();
+for(int i=0;i&lt;co1.length;++i)
+{
+	FreeGroupElement fge3 = (FreeGroupElement) co1[i];
+	Number co2[] = fge3.getCoeffs();
+	for(int j=0;j&lt;co2.length;++j)
+		System.out.print(co2[j]+"\t");
+	System.out.println();
+}
 </pre>
 
 To calculate
 <pre>
-		fg.setRootVal(new Complex(5.0));
-		fg2.setRootVal(new Complex(4.0));
-		System.out.println(fge2.toString());
-		Complex val = fge2.getComplexValue();		
+fg.setRootVal(new Complex(5.0));
+fg2.setRootVal(new Complex(4.0));
+System.out.println(fge2.toString());
+Complex val = fge2.getComplexValue();		
 </pre>
 
 <h3>Algebraic Numbers</h3>
@@ -218,7 +224,10 @@ public Number list(Number eles[]);<br>
 <br/>
 <br/>
 <br/>
-  <div id="footer"> &copy; 2004 Singular Systems</div>
+<div id="footer">&copy; 2004 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+and Rich Morris <a href="http://www.singsurf.org/">www.singsurf.org</a> &copy; 2005</div>
+</div>
 </div>
 </body>
 <!-- #EndTemplate --></html>

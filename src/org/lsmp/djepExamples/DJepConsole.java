@@ -92,7 +92,9 @@ public class DJepConsole extends XJepConsole
 		if(command.startsWith("verbose"))
 		{
 			String words[] = split(command);
-			if(words[1].equals("on"))
+			if(words.length<2)
+				println("verbose should be on or off");
+			else if(words[1].equals("on"))
 				verbose = true;
 			else if(words[1].equals("off"))
 				verbose = true;

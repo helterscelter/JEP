@@ -73,7 +73,7 @@ public class XJepConsole extends Console
 
 		if( command.equals("invalidate"))
 		{
-			invalidate();
+			resetVars();
 			return false;
 		}
 
@@ -123,7 +123,7 @@ public class XJepConsole extends Console
 		}
 	}
 
-	public void invalidate()
+	public void resetVars()
 	{
 		this.j.getSymbolTable().clearValues();
 	}

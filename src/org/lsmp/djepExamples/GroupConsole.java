@@ -53,6 +53,7 @@ public class GroupConsole extends Console
 	public void printIntroText()
 	{
 		println("GroupJep: evaluation over abstract groups");
+		printGroup();
 		super.printStdHelp();
 	}
 
@@ -75,6 +76,7 @@ public class GroupConsole extends Console
 		GroupJep gj = (GroupJep) j;
 		if(!super.testSpecialCommands(command)) return false;
 		String words[] = split(command);
+		if(words.length==0) return true;
 		if(words[0].equals("group"))
 		{
 			if(words.length == 1) {	}
@@ -124,7 +126,9 @@ public class GroupConsole extends Console
 		{
 			RingI ring = (RingI) gj.getGroup();
 
-			if(words.length == 2) /* Add a free variable */
+			if(words.length < 2)
+				println("extend must have at least one argument");
+			else if(words.length == 2) /* Add a free variable */
 			{
 				initialise(new ExtendedFreeGroup(ring, words[1]));
 			}

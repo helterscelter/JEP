@@ -28,7 +28,7 @@ public class VectorJepTest extends TestCase {
 	public static void main(String args[]) {
 		// Create an instance of this class and analyse the file
 
-		TestSuite suite= new TestSuite(MatrixJepTest.class);
+		TestSuite suite= new TestSuite(VectorJepTest.class);
 //		DJepTest jt = new DJepTest("DJepTest");
 //		jt.setUp();
 		suite.run(new TestResult());

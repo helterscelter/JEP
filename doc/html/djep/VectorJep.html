@@ -27,11 +27,12 @@
 <hr/>
 
 <ul>
-<li><a href="index.html">DJEP</a></li>
+<li><a href="index.html">DJEP Overview</a></li>
 <li><a href="XJep.html">XJep</a></li>
 <li><a href="DJep.html">Differentiation</a></li>
-<li><a href="groups.html">Groups</a></li>
+<li><a href="GroupJep.html">Groups</a></li>
 <li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
+<li><a href="AddingOperators.html">Adding Operators to Parser</a></li>
 <li><a href="version.html">Version History</a></li>
 </ul>
 </div><!-- #EndLibraryItem --><!-- #EndEditable -->
@@ -47,7 +48,7 @@ There are two packages which offer support for vectors and matrices
 second
 package allows differentiation of equations with vectors and matrices;
 the overloading of the ^ operator to be both power and cross product;
-a slight speed advantages; and the calculation of the dimensions
+a speed advantages; and the calculation of the dimensions
 of each equation. The downside is that it adds about 65K to the size of
 the required packages.
 
@@ -72,6 +73,11 @@ parser.<br>
         </li>
 
 </ul>
+
+<p>
+Two interactive console applet illustrate the functionality of 
+<a href="http://www.singsurf.org/djep/VectorJep.html">VectorJep</a> and
+<a href="http://www.singsurf.org/djep/MatrixJep.html">MatrixJep</a>.
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
@@ -193,6 +199,25 @@ Several functions are added with the VectorJep package these are:
 	<td>Generates a square matrix with a given diagonal.</td>
 	<td><tt>diag([1,2,3])==[[1,0,0],[0,2,0],[0,0,3]]</tt></td>
 </tr>
+
+<tr bgcolor="#FFFFFF" valign="top">
+	<td>GenMat</td>
+	<td>Generates vectors and matrixies</td>
+	<td>First argument specifies size of the vector (3) and matricies ([2,2]).
+	Second argument is formula for each element, constants (1), functions (rand()),
+	Third argument (if present) is list of variables used in formula.
+	For vectors a single variable is specified whos value runs from 1 to number of elements.
+	For matricies a two variable list ([ii,jj]) is specified whos value are the column and row indicies.
+
+<pre>
+GenMat(3,1) -> [1,1,1]
+GenMat(3,ii,ii) -> [1,2,3]
+GenMat(3,rand()) -> [0.343,0.974,0.567]
+GenMat([2,2],ii+jj,[ii,jj]) -> [[2,3],[3,4]]
+</pre>
+</td>
+</tr>
+
 <tr bgcolor="#FFFFFF" valign="top">
 	<td>ele</td>
 	<td>Extracts an element from a vector, matrix or tensor.</td>
@@ -208,10 +233,10 @@ The third and subsequent arguments are the vectors or matricies the function is 
 During evaluation the variables will be set to each element of the vectors or matricies.
 For example
 </p>
-<pre>Map(x^3,x,[1,2,3]) is [1.0,8.0,27.0]
-Map(x*y,[x,y],[1,2,3],[4,5,6]) is [4.0,10.0,18.0]
-Map(if(x>0,x,0),x,[-2,-1,0,1,2]) is [0.0,0.0,0.0,1.0,2.0]
-Map(abs(x),x,[[-2,-1],[1,2]]) is [[2.0,1.0],[1.0,2.0]]
+<pre>Map(x^3,x,[1,2,3]) -> [1.0,8.0,27.0]
+Map(x*y,[x,y],[1,2,3],[4,5,6]) -> [4.0,10.0,18.0]
+Map(if(x>0,x,0),x,[-2,-1,0,1,2]) -> [0.0,0.0,0.0,1.0,2.0]
+Map(abs(x),x,[[-2,-1],[1,2]]) -> [[2.0,1.0],[1.0,2.0]]
 </pre>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -221,6 +246,7 @@ Map(abs(x),x,[[-2,-1],[1,2]]) is [[2.0,1.0],[1.0,2.0]]
 </table>
 
 <h2><a name="MAT"></a>MatrixJep</h2>
+<p>
 The MatrixJep package offers the same functionality as the VectorJep
 package however it is implemented in a different manner internally
 which offers a few new features:<br>
@@ -241,8 +267,24 @@ equations of variables.<br>
       <p>Note that in MatrixJep variables and Node have dimensions. Each variable will be of type <a href="../../javadoc/org/lsmp/djep/matrixJep/MatrixVariableI.html">MatrixVariableI</a> and the dimension of this can be found by the <a href="../../javadoc/org/lsmp/djep/matrixJep/MatrixVaraibleI.html#getDim">getDim</a> method. After the <a href="../../javadoc/org/lsmp/djep/matrixJep/MatrixJep.html#preprocess%28org.nfunk.jep.Node%29">preprocess</a> method is called the nodes in the parse tree all implement <a href="../../javadoc/org/lsmp/djep/matrixJep/nodeTypes/MatrixNodeI.html">MatrixNodeI</a> which have a <a href="../../javadoc/org/lsmp/djep/matrixJep/nodeTypes/MatrixNodeI.html#getDimensions">getDimensions</a> method. Each node also has a object of type <a href="../../javadoc/org/lsmp/djep/vectorJep/values/MatrixValueI.html">MatrixValueI</a> which stores intermediate values. By reusing these objects evaluation speeds are increased by a third.<br>
       </p>
 
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
+</tbody>
+</table>
 
+<h2><a name="JAMA"></a>JAMA</h2>
 
+<p>
+JAMA <a href="http://math.nist.gov/javanumerics/jama/">http://math.nist.gov/javanumerics/jama/</a>
+is a library of matrix fuctions, offering matrix solving, and other advanced
+matrix operations.
+</p>
+
+<p>
+The <a href="../../javadoc/org/lsmp/djep/jama/package-summary.html">org.lsmp.djep.jama</a>
+package allows these sophsticated matrix functions to be used with VectorJep and MatrixJep.
+Currently only a small subset (solve, rank, inverse) are implemented.
 
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -256,7 +298,10 @@ equations of variables.<br>
 <br/>
 <br/>
 <br/>
-  <div id="footer"> &copy; 2004 Singular Systems</div>
+<div id="footer">&copy; 2004 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+and Rich Morris <a href="http://www.singsurf.org/">www.singsurf.org</a> &copy; 2005</div>
+</div>
 </div>
 </body>
 <!-- #EndTemplate --></html>

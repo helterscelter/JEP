@@ -54,9 +54,24 @@ public class MatrixConsole extends DJepConsole
 	public void processEquation(Node node) throws Exception
 	{
 		MatrixJep mj = (MatrixJep) j;
-		Node matEqn = mj.preprocess(node);
-		mj.println(matEqn);
-		Object val = mj.evaluate(matEqn);
+		
+		if(verbose) {
+			print("Parsed:\t\t"); 
+			println(mj.toString(node));
+		}
+		Node processed = mj.preprocess(node);
+		if(verbose) {
+			print("Processed:\t"); 
+			println(mj.toString(processed));
+		}
+					
+		Node simp = mj.simplify(processed);
+		if(verbose) 
+			print("Simplified:\t"); 
+		println(mj.toString(simp));
+
+
+		Object val = mj.evaluate(simp);
 		String s = mj.getPrintVisitor().formatValue(val);
 		println("Value:\t\t"+s);
 	}
