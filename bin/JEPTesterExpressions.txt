@@ -113,6 +113,51 @@ tan(pi)
 0
 
 ####################################################
+# Inverse trig functions
+
+asin(0)
+0
+
+asin(1)
+pi/2
+
+asin(-1)
+-pi/2
+
+acos(0)
+pi/2
+
+acos(1)
+0
+
+acos(-1)
+pi
+
+atan(0)
+0
+
+atan(1)
+pi/4
+
+atan(-1)
+-pi/4
+
+atan2(0, 0)
+0
+
+atan2(1, 0)
+pi/2
+
+atan2(0, 1)
+0
+
+atan2(-1, 0)
+-pi/2
+
+atan2(0, -1)
+pi
+
+####################################################
 # Logarithmic functions
 
 ln(1)
