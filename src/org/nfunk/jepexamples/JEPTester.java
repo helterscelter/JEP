@@ -75,6 +75,7 @@ public class JEPTester {
 	public void run(String fileName) {
 		BufferedReader reader;
 		Complex c1, c2;
+		boolean hasError = false;
 
 		// Load the input file
 		try {
@@ -90,6 +91,7 @@ public class JEPTester {
 		// cycle through the expressions in pairs of two
 		println("Evaluating and comparing expressions...");
 		while (true) {
+			// get values of a pair of two lines
 			c1 = parseNextLine(reader);
 			c2 = parseNextLine(reader);
 
@@ -97,6 +99,7 @@ public class JEPTester {
 			
 			// TODO: add comparison method that handles all types (Strings...)
 			if (!c1.equals(c2,1e-15)) {
+				hasError = true;
 				print("Line: " + lineCount + ": ");
 				if (c1.im() == 0)
 					print("" + c1.re() + " != ");
@@ -108,6 +111,10 @@ public class JEPTester {
 				else
 					println("" + c2);
 			}
+		}
+		
+		if (!hasError) {
+			print("\n" + lineCount + " lines processed. No errors were found.\n\n");
 		}
 	}
 	
