@@ -280,7 +280,7 @@ public class JEP {
 	 * contained in the expression.
 	 * @param name Name of the variable to be added
 	 * @param re Initial real value or new real value for the variable
-	 * @param re Initial imaginary value or new imaginary value for the variable
+	 * @param im Initial imaginary value or new imaginary value for the variable
 	 * @return Complex object of the variable
 	 */
 	public Complex addVariable(String name, double re, double im) {

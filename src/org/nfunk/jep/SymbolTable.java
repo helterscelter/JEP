@@ -41,7 +41,7 @@ public class SymbolTable extends Hashtable
 	{
 		vf = varFac;
 	}
-	/** private default constructors, SymbolTable should always be constructed with an explicit variable factory. */
+	/** Private default constructors, SymbolTable should always be constructed with an explicit variable factory. */
 	private SymbolTable() {}
 	
 	/**
@@ -50,7 +50,7 @@ public class SymbolTable extends Hashtable
 	public Object get(Object key) { return getValue(key); }
 	
 
-	/** finds the value of the variable with the given name. 
+	/** Finds the value of the variable with the given name. 
 	 * Returns null if variable does not exist. */
 	public Object getValue(Object key)
 	{
@@ -59,7 +59,7 @@ public class SymbolTable extends Hashtable
 		return var.getValue();
 	}
 	
-	/** finds the variable with given name. 
+	/** Finds the variable with given name. 
 	* Returns null if variable does not exist. */
 	public Variable getVar(String name)
 	{
@@ -134,7 +134,7 @@ public class SymbolTable extends Hashtable
 		}
 	}
 
-	/** In necessary create a variable with the given name.
+	/** If necessary create a variable with the given name.
 	 * If the variable exists its value will not be changed.
 	 * @return the Variable.
 	 */
@@ -149,7 +149,7 @@ public class SymbolTable extends Hashtable
 	}
 
 	/**
-	 * Returns a list of variable, one per line.
+	 * Returns a list of variables, one per line.
 	 */
 	public String toString()
 	{
@@ -165,7 +165,7 @@ public class SymbolTable extends Hashtable
 
 	/**
 	 * Clears the values of all variables.
-	 * Finer control is availiable through the
+	 * Finer control is available through the
 	 * {@link Variable#setValidValue Variable.setValidValue} method.
 	 */
 	public void clearValues()

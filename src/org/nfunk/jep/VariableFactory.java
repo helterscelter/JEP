@@ -1,9 +1,13 @@
+/*****************************************************************************
+
+@header@
+@date@
+@copyright@
+@license@
+
+*****************************************************************************/
 /* @author rich
  * Created on 19-Dec-2003
- *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 package org.nfunk.jep;
 
@@ -20,7 +24,7 @@ package org.nfunk.jep;
 public class VariableFactory
 {
 	/** Create a variable with a name and value */
-	public Variable createVariable(String name,Object value) {
+	public Variable createVariable(String name, Object value) {
 		return new Variable(name,value);
 	}
 

@@ -1,9 +1,13 @@
+/*****************************************************************************
+
+@header@
+@date@
+@copyright@
+@license@
+
+*****************************************************************************/
 /* @author rich
  * Created on 18-Nov-2003
- *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 package org.nfunk.jep;
 import java.util.*;
@@ -19,13 +23,13 @@ import java.util.*;
  * <p>
  * @author Rich Morris
  * Created on 18-Nov-2003
- * @version 2.3.3 Now extends Observable so observers can track if the value has been changed.
+ * @version 2.3.0 beta 2 Now extends Observable so observers can track if the value has been changed.
  */
 public class Variable extends Observable {
 	protected String name;
 	private Object value;
-	private boolean isConstant=false;
-	private boolean validValue=false;
+	private boolean isConstant = false;
+	private boolean validValue = false;
 //	private static final Double ZERO = new Double(0.0);
 
 	/** Constructors are protected. Variables should only
@@ -35,8 +39,8 @@ public class Variable extends Observable {
 	protected Variable(String name)
 	{
 		this.name = name;
-		this.value= null;
-		validValue=false;
+		this.value = null;
+		validValue = false;
 	}
 	/** Constructors are protected. Variables should only
 	 * be created through the associated {@link VariableFactory}
@@ -45,14 +49,14 @@ public class Variable extends Observable {
 	protected Variable(String name,Object value)
 	{
 		this.name = name;
-		this.value=value;
-		validValue= (value!=null);
+		this.value = value;
+		validValue = (value!=null);
 	}
 	public String getName() {return name;}
 	//private void setName(String string) {name = string;	}
 	public boolean isConstant() { return this.isConstant; }
 	public void setIsConstant(boolean b) { this.isConstant = b; }
-	public Object getValue() {return value;}
+	public Object getValue() { return value; }
 	/** Is the value of this variable valid? **/
 	public boolean hasValidValue() { return validValue; }
 	/** Sets whether the value of variable is valid. **/
@@ -67,7 +71,7 @@ public class Variable extends Observable {
 	 * method so they do not need to handle the Observable methods.
 	 *  
 	 * @return false if tried to change a constant value.
-	 * @since 2.3.3 added Observable
+	 * @since 2.3.0 beta 2 added Observable
 	 */
 	public boolean setValue(Object object) {
 		if(!setValueRaw(object)) return false;
@@ -82,21 +86,29 @@ public class Variable extends Observable {
 	 * and then calls this method.
 	 * @param object
 	 * @return false if tried to change a constant value.
-	 * @since 2.3.3
+	 * @since 2.3.0 beta 2
 	 */
 	protected boolean setValueRaw(Object object) {
 		if(isConstant) return false;
-		validValue=true;
+		validValue = true;
 		value = object;
 		return true;
 	}
 
+	/**
+	 * Returns a string with the variable name followed by it's value.
+	 * For example for the variable "a" with the value 10, the following
+	 * string is returned:
+	 * <pre>a: 10</pre>
+	 * If the variable is a constant the string " (Constant" is appended.
+	 * @return A string with the variable name and value.
+	 */
 	public String toString() {
-		if(!validValue || value==null)
+		if(!validValue || value == null)
 			return name + ": null";
 		else if(isConstant)
-			return name + ": "+value.toString() + " (Constant)";
+			return name + ": " + value.toString() + " (Constant)";
 		else
-			return name + ": "+value.toString(); 
+			return name + ": " + value.toString(); 
 	}
 }

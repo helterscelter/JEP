@@ -23,7 +23,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 
         /** 
 	 * Restart the parse with the given stream.
-	 * @since 2.3.1
+	 * @since 2.3.0 beta 1
 	 */
         public void restart(java.io.Reader stream, JEP jep_in)
         {
