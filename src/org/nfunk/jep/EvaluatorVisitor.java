@@ -33,9 +33,6 @@ public class EvaluatorVisitor implements ParserVisitor
 	/** The symbol table for variable lookup */
 	private SymbolTable symTab;
 	
-	/** Flag for errors during evaluation */
-	private boolean errorFlag;
-	
 	/** Debug flag */
 	private static final boolean debug = false;
 	
@@ -85,16 +82,22 @@ public class EvaluatorVisitor implements ParserVisitor
 		// set member vars
 		errorList = errorList_in;
 		symTab = symTab_in;
-		errorFlag = false;
+		
+		// ensure stack is clear (incase last evaluation failed)
+		stack.removeAllElements();
 
 		// evaluate by letting the top node accept the visitor
 		topNode.jjtAccept(this, null);
 		
 		// something is wrong if not exactly one item remains on the stack
 		// or if the error flag has been set
-		if (errorFlag || stack.size() != 1) {
+		if (errorList != null && !errorList.isEmpty()) {
 			throw new Exception(
-				"EvaluatorVisitor.getValue(): Error during evaluation");
+				"EvaluatorVisitor.getValue(): Error(s) during evaluation");
+		}
+		
+		if (stack.size() != 1) {
+			throw new Exception("EvaluatorVisitor.getValue(): Stack size is not 1");
 		}
 
 		// return the value of the expression
@@ -157,7 +160,6 @@ public class EvaluatorVisitor implements ParserVisitor
 			pfmc.run(stack);
 		} catch (ParseException e) {
 			addToErrorList(e.getMessage());
-			errorFlag = true;
 		}
 		
 		if (debug == true) {
@@ -182,7 +184,7 @@ public class EvaluatorVisitor implements ParserVisitor
 		
 		// TODO: optimize (table lookup is costly?)
 		Object temp = symTab.get(node.getName());
-			
+		
 		if (temp == null) {
 			message += "the variable was not found in the symbol table";
 			addToErrorList(message);
