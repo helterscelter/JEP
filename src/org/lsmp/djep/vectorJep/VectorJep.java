@@ -9,6 +9,8 @@ package org.lsmp.djep.vectorJep;
 
 import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.function.*;
+import org.lsmp.djep.vectorJep.values.*;
+import java.util.*;
 
 /**
  * An extension of JEP with support for basic vectors and matricies.
@@ -45,6 +47,25 @@ public class VectorJep extends JEP {
 
 	public VectorJep(JEP j) {
 		super(j);
+	}
+
+	/** Evaluate a node. If the result is a scaler it
+	 * will be unwrapped, i.e. it will return a Double and not a Scaler.
+	 */
+	public Object evaluate(Node node) throws Exception
+	{
+		Object res = ev.getValue(node,new Vector(),this.getSymbolTable());
+		if(res instanceof Scaler)
+			return ((Scaler) res).getEle(0);
+		else 
+			return res;
+	}
+
+	/** Evaluate a node. Does not unwrap scalers. */
+	public Object evaluateRaw(Node node) throws Exception
+	{
+		Object res = ev.getValue(node,new Vector(),this.getSymbolTable());
+		return res;
 	}
 
 }

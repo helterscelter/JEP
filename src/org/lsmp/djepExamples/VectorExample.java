@@ -33,10 +33,11 @@ public class VectorExample {
 		doStuff("[[1,2],[3,4]]");         // Value: [[1.0,2.0],[3.0,4.0]]
 		doStuff("[[1,2],[3,4]]*[1,0]");   // Value: [1.0,3.0]
 		doStuff("[1,0]*[[1,2],[3,4]]");   // Value: [1.0,2.0]
+		doStuff("[[1,2],[3,4]]*[[1,2],[3,4]]");   // Value: [1.0,2.0]
 		doStuff("x=[1,2,3]");             // Value: [1.0,2.0,3.0]
 		doStuff("x+x");                   // Value: [2.0,4.0,6.0]
-		doStuff("x . x");                 // Value: 14.0
-		doStuff("x^^x");                  // Value: [0.0,0.0,0.0]
+		doStuff("x.x");                 // Value: 14.0
+		doStuff("x^x");                  // Value: [0.0,0.0,0.0]
 		doStuff("ele(x,2)");              // Value: 2.0
 		doStuff("y=[[1,2],[3,4]]");       // Value: [[1.0,2.0],[3.0,4.0]]
 		doStuff("y * y");                 // Value: [[7.0,10.0],[15.0,22.0]]

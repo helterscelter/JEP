@@ -132,6 +132,7 @@ public class JEP {
 	 * Sub classes can call this 
 	 * protected constructor and set the individual components
 	 * themselves.
+	 * @since 2.3.0
 	 */
 	protected JEP(JEP j)
 	{
@@ -169,6 +170,8 @@ public class JEP {
 	 * produce an "Unrecognized function..." error.
 	 * In most cases, this method should be called immediately after the JEP
 	 * object is created.
+	 * @since 2.3.0 added if and exp functions
+	 * @since 2.3.1 added str function
 	 */
 	public void addStandardFunctions() {
 		//add functions to Function Table
@@ -199,7 +202,8 @@ public class JEP {
 		funTab.put("rand", new org.nfunk.jep.function.Random());
 		
 		// rjm additions
-		funTab.put("if", new org.nfunk.jep.function.If());
+		funTab.put("if", new If());
+		funTab.put("Str", new Str());
 	}
 
 	/**

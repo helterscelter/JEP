@@ -122,7 +122,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			var.setEquation(simp);
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,rhsDim);
 		}
-		else if(pfmc instanceof Power)
+		else if(pfmc instanceof Power || pfmc instanceof MPower)
 		{
 			if(node.jjtGetNumChildren()!=2) throw new ParseException("Operator "+node.getOperator().getName()+" must have two elements, it has "+children.length);
 			Dimensions lhsDim = children[0].getDim();

@@ -25,14 +25,10 @@ import org.nfunk.jep.function.*;
 public class ExteriorProduct extends PostfixMathCommand implements BinaryOperatorI
 {
 	private Subtract sub = new Subtract();
-	//private Add add = new Add(); 
 	private Multiply mul = new Multiply();
 	
 	public ExteriorProduct()
 	{
-		//add = (Add) Operator.OP_ADD.getPFMC();
-		//sub = (Subtract) Operator.OP_SUBTRACT.getPFMC();
-		//mul = (Multiply) Operator.OP_MULTIPLY.getPFMC();
 		numberOfParameters = 2;
 	}
 
@@ -77,7 +73,6 @@ public class ExteriorProduct extends PostfixMathCommand implements BinaryOperato
 	{
 		if(param1 instanceof MVector && param2 instanceof MVector)
 			return exteriorProduct((MVector) param1,(MVector) param2);
-
 		throw new ParseException("Sorry: can currently only do cross product on 3D vectors");
 	}
 	

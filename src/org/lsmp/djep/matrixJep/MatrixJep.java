@@ -10,6 +10,7 @@ package org.lsmp.djep.matrixJep;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.djep.diffRules.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.xjep.*;
@@ -47,8 +48,9 @@ public class MatrixJep extends DJep {
 	{
 		super.addStandardFunctions();
 		this.getFunctionTable().remove("if");
-		this.getFunctionTable().put("if",new MIf());
-		super.addFunction("ele",new Ele());
+		addFunction("pow",new Power());
+		addFunction("if",new MIf());
+		addFunction("ele",new Ele());
 	}
 
 	/** Evaluate a node. If the result is a scaler it
