@@ -9,24 +9,22 @@ package org.nfunk.jep.function;
 import org.nfunk.jep.*;
 import java.util.Stack;
 /**
+ * Functions which require greater control over their evaluation should implement this interface.
+ *
  * @author Rich Morris
  * Created on 18-Nov-2003
  */
 public interface SpecialEvaluationI {
 
 	/**
-	 * Performs the specified action on an expression tree.
-	 * Serves no function in standard JEP but 
-	 * @param node top node of the tree
-	 * @param data	The data passed to visitor, typically not used.
-	 * @param pv	The visitor, can be used decend on the children.
-	 * @return top node of the results.
-	 * @throws ParseException
-	 */
-//	public Node process(Node node,Object data,ParserVisitor pv) throws ParseException;
-
-	/**
 	 * Performs some special evaluation on the node.
+	 * This method has the responsability for evaluating the children of the node
+	 * and it should generally call
+	 * <pre>
+	 * node.jjtGetChild(i).jjtAccept(pv,data);	
+	 * </pre>
+	 * for each child.
+	 *
 	 * @param node	The current node
 	 * @param data	The data passed to visitor, typically not used
 	 * @param pv	The visitor, can be used evaluate the children
