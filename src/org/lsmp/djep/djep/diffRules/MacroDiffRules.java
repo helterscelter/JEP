@@ -19,7 +19,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
    * <pre>diff(f(g(x),h(x)),x) -> df/dg dg/dx + df/dh dh/dx</pre> 
    * for example 
    * <pre>
-   * DifferentationVisitor dv = new DifferentationVisitor(new TreeUtils(jep));
+   * DifferentiationVisitor dv = new DifferentiationVisitor(new TreeUtils(jep));
    * DiffRulesI rule = new MacroDiffRules(dv,"sin","cos(x)");
    * </pre>
    **/

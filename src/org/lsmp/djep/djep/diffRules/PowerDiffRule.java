@@ -97,7 +97,7 @@ import org.nfunk.jep.*;
 						djep.deepCopy(children[0]), 
 						djep.deepCopy(children[1])),
 					djep.getNodeFactory().buildFunctionNode("ln",funTab.get("ln"), // ln(z)
-						new Node[]{djep.deepCopy(children[1])})),
+						new Node[]{djep.deepCopy(children[0])})),
 				dchildren[1]));
 				// TODO will NaturalLog always have the name "ln"
    }

@@ -11,8 +11,8 @@ import org.lsmp.djep.xjep.PrintVisitor;
 
 /**
  * An extension of PrintVisitor which will print the equations of a variable if required.
- * The behavious of this class is determined by two flags
- * printPartialEquations and printVariableEquations.
+ * The behavious of this class is determined by two modes
+ * PRINT_PARTIAL_EQNS and PRINT_VARIABLE_EQNS.
  * When a variable or partial derivative is encountered then
  * its equation may be printed.
  * By default equations for PartialDerivatives are printed
@@ -23,9 +23,17 @@ import org.lsmp.djep.xjep.PrintVisitor;
  * Created on 26-Feb-2004
  */
 public class DPrintVisitor extends PrintVisitor {
-	private boolean printPartialEquations = true;
-	private boolean printVariableEquations = false;
+	public static final int PRINT_PARTIAL_EQNS = 16;
+	public static final int PRINT_VARIABLE_EQNS = 32;
 	
+	/**
+	 * 
+	 */
+	public DPrintVisitor() {
+		super();
+		setMode(PRINT_PARTIAL_EQNS,true);
+	}
+
 	/** Prints the variable or its equation.
 	 * Depends on the statr of the flags and whether the variable has an equation.
 	 */
@@ -35,7 +43,7 @@ public class DPrintVisitor extends PrintVisitor {
 		if(var instanceof PartialDerivative)
 		{
 			PartialDerivative deriv = (PartialDerivative) var;
-			if(printPartialEquations && deriv.hasEquation())
+			if(((mode & PRINT_PARTIAL_EQNS)!=0) && deriv.hasEquation())
 				deriv.getEquation().jjtAccept(this,null);
 			else
 				sb.append(node.getName());
@@ -43,7 +51,7 @@ public class DPrintVisitor extends PrintVisitor {
 		else if(var instanceof DVariable)
 		{
 			DVariable dvar = (DVariable) var;
-			if(printVariableEquations && dvar.hasEquation())
+			if(((mode & PRINT_VARIABLE_EQNS)!=0) && dvar.hasEquation())
 				dvar.getEquation().jjtAccept(this,null);
 			else
 				sb.append(node.getName());
@@ -53,25 +61,4 @@ public class DPrintVisitor extends PrintVisitor {
 
 	  return data;
 	}
-
-	/** Whether to print equations for partial derivatives? */
-	public boolean isPrintPartialEquations() {
-		return printPartialEquations;
-	}
-
-	/** Whether to print equations for normal variables? */
-	public boolean isPrintVariableEquations() {
-		return printVariableEquations;
-	}
-
-	/** Switches printing of equations for partial derivatives on or off. */
-	public void setPrintPartialEquations(boolean b) {
-		printPartialEquations = b;
-	}
-
-	/** Switches printing of equations for normal variables on or off. */
-	public void setPrintVariableEquations(boolean b) {
-		printVariableEquations = b;
-	}
-
 }

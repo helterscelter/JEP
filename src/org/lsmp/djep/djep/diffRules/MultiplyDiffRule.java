@@ -27,6 +27,13 @@ import org.lsmp.djep.xjep.*;
 	  //dv = inDv;
 	  name = inName;
 	}
+	Operator mulOp=null;
+	public MultiplyDiffRule(String inName,Operator op)
+	{	  
+	  //dv = inDv;
+	  name = inName;
+	  mulOp = op;
+	}
 
 	public String toString()
 	{	  return name + "  \t\tdiff(f*g,x) -> diff(f,x)*g+f*diff(g,x)";  }
@@ -34,16 +41,18 @@ import org.lsmp.djep.xjep.*;
   	
 	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJep djep) throws ParseException
 	{
-		OperatorSet op = djep.getOperatorSet();
+		OperatorSet opset = djep.getOperatorSet();
 		NodeFactory nf = djep.getNodeFactory();
-
+		Operator op = opset.getMultiply();
+		if(mulOp!=null) op = mulOp;
+		
 	  int nchild = node.jjtGetNumChildren();
 	  if(nchild==2) 
-		  return nf.buildOperatorNode(op.getAdd(),
-			nf.buildOperatorNode(op.getMultiply(),
+		  return nf.buildOperatorNode(opset.getAdd(),
+			nf.buildOperatorNode(op,
 			  dchildren[0],
 			  djep.deepCopy(children[1])),
-			nf.buildOperatorNode(op.getMultiply(),
+			nf.buildOperatorNode(op,
 			  djep.deepCopy(children[0]),
 			  dchildren[1]));
 	  else

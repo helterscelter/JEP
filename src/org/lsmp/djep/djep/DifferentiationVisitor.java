@@ -20,7 +20,7 @@ import java.io.PrintStream;
  * To use do
  * <pre>
  * JEP j = ...; Node in = ...;
- * DifferentationVisitor dv = new DifferentationVisitor(jep);
+ * DifferentiationVisitor dv = new DifferentiationVisitor(jep);
  * dv.addStandardDiffRules();
  * Node out = dv.differentiate(in,"x");
  * </pre>
@@ -35,11 +35,11 @@ import java.io.PrintStream;
  * {@link MacroDiffRules MacroDiffRules}
  * allow the rule for differentiation to be specified by strings.
  * New rules can be added using
- * {@link #addDiffRule} method.
+ * {@link DJep#addDiffRule} method.
  * @author R Morris
  * Created on 19-Jun-2003
  */
-public class DifferentationVisitor extends DeepCopyVisitor
+public class DifferentiationVisitor extends DeepCopyVisitor
 {
 	private static final boolean DEBUG = false; 
 	private DJep localDJep;
@@ -51,7 +51,7 @@ public class DifferentationVisitor extends DeepCopyVisitor
    * Construction with a given set of tree utilities 
    * @param tu
    */
-  public DifferentationVisitor(DJep jep)
+  public DifferentiationVisitor(DJep jep)
   {
 	this.globalDJep = jep;
 	
@@ -81,7 +81,7 @@ public class DifferentationVisitor extends DeepCopyVisitor
    * </pre>
    * @return false on error
    */
-  public boolean addStandardDiffRules()
+  boolean addStandardDiffRules()
   {
   	try
   	{
@@ -116,8 +116,8 @@ public class DifferentationVisitor extends DeepCopyVisitor
 		
 		globalDJep.addFunction("exp",new Exp());
 		addDiffRule(new MacroDiffRules(globalDJep,"exp","exp(x)"));
-		globalDJep.addFunction("pow",new Pow());
-		addDiffRule(new MacroDiffRules(globalDJep,"pow","y*(pow(x,y-1))","(ln(x)) (pow(x,y))"));
+//		globalDJep.addFunction("pow",new Pow());
+//		addDiffRule(new MacroDiffRules(globalDJep,"pow","y*(pow(x,y-1))","(ln(x)) (pow(x,y))"));
 		addDiffRule(new MacroDiffRules(globalDJep,"ln","1/x"));
 		addDiffRule(new MacroDiffRules(globalDJep,"log",	// -> (1/ln(10)) /x = log(e) / x but don't know if e exists
 			globalDJep.getNodeFactory().buildOperatorNode(globalDJep.getOperatorSet().getDivide(),
@@ -164,15 +164,15 @@ public class DifferentationVisitor extends DeepCopyVisitor
   }
   
   /** The set of all differentation rules indexed by name of function. */ 
-  protected Hashtable diffRules = new Hashtable();
+  Hashtable diffRules = new Hashtable();
   /** Adds the rules for a given function. */
-  public void addDiffRule(DiffRulesI rule)
+  void addDiffRule(DiffRulesI rule)
   {
 	diffRules.put(rule.getName(),rule);
 	if(DEBUG) System.out.println("Adding rule for "+rule.getName());
   }
   /** finds the rule for function with given name. */
-  public DiffRulesI getDiffRule(String name)
+  DiffRulesI getDiffRule(String name)
   {
 	return (DiffRulesI) diffRules.get(name);
   }
