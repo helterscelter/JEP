@@ -22,10 +22,12 @@
 <project name="JEP" default="compile" basedir=".">
 	
 	<!-- set global properties for this build -->
-	<property name="src" value="src"/>
+	<property name="src"     value="src"/>
+	<property name="bin"     value="bin"/>
 	<property name="build"   value="build"/>
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
+	<property name="website" value="website"/>
 	<property name="version" value="2.23"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
@@ -92,10 +94,11 @@
 <!--======================================================================-->
 <!-- JAVADOC -->
 	<target name="javadoc" depends="init">
-		<mkdir dir="${doc}/javadoc"/>
+		<delete dir="${website}/htdocs/doc/javadoc"/>
+		<mkdir dir="${website}/htdocs/doc/javadoc"/>
 		<javadoc packagenames="org.nfunk.jep.*"
 				sourcepath="src"
-				destdir="${doc}/javadoc"
+				destdir="${website}/htdocs/doc/javadoc"
 				windowtitle="JEP API">
 			<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>
 		</javadoc>
@@ -117,16 +120,28 @@
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
 		
-		<!-- Create a temp dir and copy all jar+class+source+doc files -->
+		<!-- Create a temp dir -->
 		<mkdir dir="${disttemp}"/>
+
+		<!-- Copy jar -->
 		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}"/>
+
+		<!-- Copy web site -->
+		<mkdir dir="${doc}/website"/>
+		<copy todir="${doc}/website">
+			<fileset dir="${website}/htdocs"
+					includes="**"
+					excludes="_notes/**, Library/**, Templates/**"/>
+		</copy>
+
+		<!-- Copy src, doc, bin, build, and single files -->
 		<copy todir="${disttemp}">
-		      <fileset dir="."
-			       includes="src/org/nfunk/jep/**,
-					 src/org/nfunk/jepexamples/**,
-					 doc/**,
-					 bin/**,
-					 build/**,
+			<fileset dir="."
+					includes="${src}/org/nfunk/jep/**,
+					 ${src}/org/nfunk/jepexamples/**,
+					 ${doc}/**,
+					 ${bin}/**,
+					 ${build}/**,
 					 build.xml,
 					 compile.bat,
 					 LICENSE.txt,
