@@ -114,11 +114,11 @@
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
 		
-		<!-- Create a temp dir -->
-		<mkdir dir="${disttemp}"/>
+		<!-- Create a temp dir for contents of packages-->
+		<mkdir dir="${disttemp}/jep-${version}"/>
 
 		<!-- Copy jar -->
-		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}"/>
+		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}/jep-${version}"/>
 
 		<!-- Copy web site -->
 		<mkdir dir="${doc}/website"/>
@@ -129,7 +129,7 @@
 		</copy>
 
 		<!-- Copy src, doc, bin, build, and single files -->
-		<copy todir="${disttemp}">
+		<copy todir="${disttemp}/jep-${version}">
 			<fileset dir="."
 					includes="
 					 ${src}/org/nfunk/jep/**,
