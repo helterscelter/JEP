@@ -64,12 +64,11 @@ public class EvaluatorVisitor implements ParserVisitor
 	private boolean errorFlag;
 	
 	/** Debug flag */
-	private boolean debug;
+	private static final boolean debug = false;
 	
 	
 	/** Constructor. Initialize the stack member */
 	public EvaluatorVisitor() {
-		debug = false;
 		errorList = null;
 		symTab = null;
 		stack = new Stack();
@@ -83,9 +82,10 @@ public class EvaluatorVisitor implements ParserVisitor
 		if (instance == null) {
 			instance = new EvaluatorVisitor();
 		}
-			
+
 		return instance;	
 	}
+	
 
 	/**
 	 * Adds an error message to the list of errors
@@ -109,7 +109,7 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
 	 */
-	public Object getValue(Node topNode, Vector errorList_in,
+	public synchronized Object getValue(Node topNode, Vector errorList_in,
 						   SymbolTable symTab_in)
 						   throws Exception {
 		
