@@ -18,7 +18,7 @@ import org.lsmp.djep.xjep.*;
  */
 public class MatrixOperatorSet extends XOperatorSet {
 	protected Operator TENSOR = new XOperator("TENSOR",new MList(),XOperator.NARY);
-	public Operator getMTensorFun() { return TENSOR; }
+	public Operator getMList() { return TENSOR; }
 
 	public MatrixOperatorSet() {
 		super();
@@ -29,7 +29,9 @@ public class MatrixOperatorSet extends XOperatorSet {
 		OP_POWER.setPFMC(new MPower());
 		OP_UMINUS.setPFMC(new MUMinus());
 		OP_DOT.setPFMC(new MDot());
-		OP_CROSS.setPFMC(new ExteriorProduct());
+//		OP_CROSS= new XOperator("^^","^",new ExteriorProduct(),XOperator.BINARY+XOperator.RIGHT);
+		OP_CROSS= new XOperator("^^","^",new ExteriorProduct(),XOperator.BINARY+XOperator.RIGHT,((XOperator) OP_CROSS).getPrecedence());
+//		OP_CROSS.setPFMC(new ExteriorProduct());
 		OP_ASSIGN.setPFMC(new MAssign());
 	}
 	

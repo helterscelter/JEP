@@ -117,7 +117,9 @@ public class MatrixPreprocessor implements ParserVisitor
 			Dimensions rhsDim = children[1].getDim();
 			MatrixVariable var = (MatrixVariable) ((ASTVarNode) children[0]).getVar();
 			var.setDimensions(rhsDim);
-			var.setEquation(mjep.deepCopy(children[1]));
+			Node copy =mjep.deepCopy(children[1]);
+			Node simp = mjep.simplify(copy);
+			var.setEquation(simp);
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,rhsDim);
 		}
 		else if(pfmc instanceof Power)
@@ -149,7 +151,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			{
 				if(children[i] instanceof ASTMFunNode)
 				{
-					if(((ASTMFunNode) children[i]).getOperator() != opSet.getMTensorFun())
+					if(((ASTMFunNode) children[i]).getOperator() != opSet.getMList())
 					{
 						flag=false; break;
 					}
@@ -162,7 +164,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			{
 				ASTMFunNode opNode1 = (ASTMFunNode) children[0];
 				Dimensions dim = Dimensions.valueOf(children.length,opNode1.getDim());
-				ASTMFunNode res = (ASTMFunNode) nf.buildUnfinishedOperatorNode(opSet.getMTensorFun());
+				ASTMFunNode res = (ASTMFunNode) nf.buildUnfinishedOperatorNode(opSet.getMList());
 				int k=0;
 				res.setDim(dim);
 				res.jjtOpen();
@@ -183,7 +185,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			{
 				MatrixNodeI node1 = (MatrixNodeI) children[0];
 				Dimensions dim = Dimensions.valueOf(children.length,node1.getDim());
-				ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(opSet.getMTensorFun(),children,dim);
+				ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(opSet.getMList(),children,dim);
 				return res;
 			}
 		}
@@ -232,7 +234,6 @@ public class MatrixPreprocessor implements ParserVisitor
 			throw new ParseException("rhs of diff opperator should be a variable.");
 		ASTMVarNode varNode = (ASTMVarNode) children[1];
 		Node diff = mjep.differentiate(children[0],varNode.getName());
-		Node simp = mjep.simplify(diff);
-		return simp;
+		return diff;
 	}
 }

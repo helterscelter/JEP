@@ -11,6 +11,7 @@ import org.lsmp.djep.djep.*;
 import org.lsmp.djep.djep.diffRules.*;
 import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.values.*;
+import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.matrixJep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
@@ -31,19 +32,15 @@ public class MatrixJep extends DJep {
 		nf = new MatrixNodeFactory();
 		symTab = new DSymbolTable(mvf);
 		opSet = new MatrixOperatorSet();
-		
-/*		Operator.OP_ADD.setPFMC(new MAdd());
-		Operator.OP_SUBTRACT.setPFMC(new MSubtract());
-		Operator.OP_MULTIPLY.setPFMC(new MMultiply());
-		Operator.OP_POWER.setPFMC(new MPower());
-		Operator.OP_UMINUS.setPFMC(new MUMinus());
-		Operator.OP_DOT.setPFMC(new MDot());
-		Operator.OP_CROSS.setPFMC(new ExteriorProduct());
-		Operator.OP_ASSIGN.setPFMC(new Assignment());
-*/
-		Operator tens = ((MatrixOperatorSet) opSet).getMTensorFun();
+		this.parser.setInitialTokenManagerState(Parser.NO_DOT_IN_IDENTIFIERS);
+
+		Operator tens = ((MatrixOperatorSet) opSet).getMList();
 		pv.addSpecialRule(tens,(PrintVisitor.PrintRulesI) tens.getPFMC());
-		dv.addDiffRule(new PassThroughDiffRule(tens.getName(),tens.getPFMC()));
+		addDiffRule(new PassThroughDiffRule(tens.getName(),tens.getPFMC()));
+		Operator cross = ((MatrixOperatorSet) opSet).getCross();
+		addDiffRule(new MultiplyDiffRule(cross.getName(),cross));
+		Operator dot = ((MatrixOperatorSet) opSet).getDot();
+		addDiffRule(new MultiplyDiffRule(dot.getName(),dot));
 	}
 
 	public void addStandardFunctions()
@@ -51,13 +48,12 @@ public class MatrixJep extends DJep {
 		super.addStandardFunctions();
 		this.getFunctionTable().remove("if");
 		this.getFunctionTable().put("if",new MIf());
-	}
-	public Node differentiate(Node node,String name) throws ParseException
-	{
-		Node res = dv.differentiate(node,name,this);
-		return res;
+		super.addFunction("ele",new Ele());
 	}
 
+	/** Evaluate a node. If the result is a scaler it
+	 * will be unwrapped, i.e. it will return a Double and not a Scaler.
+	 */
 	public Object evaluate(Node node) throws ParseException
 	{
 		Object res = mev.evaluate((MatrixNodeI) node,this);
@@ -67,6 +63,7 @@ public class MatrixJep extends DJep {
 			return res;
 	}
 
+	/** Evaluate a node. Does not unwrap scalers. */
 	public Object evaluateRaw(Node node) throws ParseException
 	{
 		Object res = mev.evaluate((MatrixNodeI) node,this);
@@ -77,11 +74,6 @@ public class MatrixJep extends DJep {
 	public Node preprocess(Node node) throws ParseException
 	{
 		return dec.preprocess(node,this);
-	}
-
-	public MatrixJep(DJep j) {
-		super(j);
-		nf = new MatrixNodeFactory();
 	}
 
 	/* (non-Javadoc)
@@ -103,5 +95,4 @@ public class MatrixJep extends DJep {
 			return null;
 		}
 	}
-
 }

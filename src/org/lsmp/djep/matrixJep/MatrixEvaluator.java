@@ -67,20 +67,20 @@ public class MatrixEvaluator implements ParserVisitor
 		}
 		else if(pfmc instanceof BinaryOperatorI)
 		{
-			BinaryOperatorI bin = (BinaryOperatorI) node.getOperator().getPFMC();
+			BinaryOperatorI bin = (BinaryOperatorI) pfmc;
 			MatrixValueI lhsval = (MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data);
 			MatrixValueI rhsval = (MatrixValueI) node.jjtGetChild(1).jjtAccept(this,data);
 			return bin.calcValue(mnode.getMValue(),lhsval,rhsval);
 		}
 		else if(pfmc instanceof UnaryOperatorI)
 		{
-			UnaryOperatorI uni = (UnaryOperatorI) node.getOperator().getPFMC();
+			UnaryOperatorI uni = (UnaryOperatorI) pfmc;
 			MatrixValueI val = (MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data);
 			return uni.calcValue(mnode.getMValue(),val);
 		}
 		else if(pfmc instanceof NaryOperatorI)
 		{
-			NaryOperatorI uni = (NaryOperatorI) node.getOperator().getPFMC();
+			NaryOperatorI uni = (NaryOperatorI) pfmc;
 			MatrixValueI results[] = new MatrixValueI[node.jjtGetNumChildren()];
 			for(int i=0;i<results.length;++i)
 				results[i] = (MatrixValueI) node.jjtGetChild(i).jjtAccept(this,data);
