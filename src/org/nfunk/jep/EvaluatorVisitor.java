@@ -106,6 +106,9 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * required, and may be set to <code>null</code> if no error information is
 	 * needed.
 	 * <p>
+	 * The symTab parameter can be null, if no variables are expected in the
+	 * expression. If a variable is found, an error is added to the error list.
+	 * <p>
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
 	 */
@@ -119,11 +122,6 @@ public class EvaluatorVisitor implements ParserVisitor
 				"topNode parameter is null");
 		}
 		
-		if (symTab_in == null) {
-			throw new IllegalArgumentException(
-				"symTab_in parameter is null");
-		}
-
 		// set member vars
 		errorList = errorList_in;
 		symTab = symTab_in;
@@ -215,7 +213,13 @@ public class EvaluatorVisitor implements ParserVisitor
 	public Object visit(ASTVarNode node, Object data) {
 		String message = "Could not evaluate " + node.getName() + ": ";
 
-		// TODO: optimize (table lookup is costly)
+		if (symTab == null) {
+			message += "the symbol table is null";
+			addToErrorList(message);
+			return data;
+		}
+		
+		// TODO: optimize (table lookup is costly?)
 		Object temp = symTab.get(node.getName());
 			
 		if (temp == null) {
