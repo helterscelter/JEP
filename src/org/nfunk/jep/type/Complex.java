@@ -177,7 +177,8 @@ public class Complex
 	}
 	
 	/**
-	 * Returns the absolute value of the complex number.<br>
+	 * Returns the absolute value of the complex number.
+	 * <p>
 	 * Adapted from Numerical Recipes in C -
 	 * The Art of Scientific Computing<br>
 	 * ISBN 0-521-43108-5
