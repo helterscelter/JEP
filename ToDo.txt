@@ -1,4 +1,4 @@
-== Todo before v2.24 ================================================
+== Todo before v2.25 ================================================
  - fix "ln(e) = 0" with getValue()
  - add more JUnit tests
  - change %dp0 to %dps0 in scripts
