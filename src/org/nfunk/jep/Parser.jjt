@@ -60,6 +60,7 @@ options {
 //	NODE_PACKAGE = "org.nfunk.jep.parser";
 //	BUILD_NODE_FILES=false;
 	STATIC = false;
+//	DEBUG_TOKEN_MANAGER = true;
 }
 
 
@@ -74,36 +75,74 @@ import java.util.Vector;
 import org.nfunk.jep.function.*;
 import org.nfunk.jep.type.*;
 
-public class Parser implements ParserI {
+public class Parser {
 	private JEP     jep;
 	private SymbolTable symTab;
 	private OperatorSet opSet;
+	private int initialTokenManagerState = DEFAULT;
 	
 	public Node parseStream(java.io.Reader stream, JEP jep_in)
 							throws ParseException {
+		restart(stream,jep_in);
+		// Parse the expression, and return the 
+		enable_tracing();
+		Node res = Start();
+		if(res == null) throw new ParseException("No expression entered");
+		return res.jjtGetChild(0);
+	}
+
+	/** 
+	 * Restart the parse with the given stream.
+	 * @since 2.3.1
+	 */
+	public void restart(java.io.Reader stream, JEP jep_in)
+	{
 		ReInit(stream);
-		
+   		this.token_source.SwitchTo(initialTokenManagerState);
 		jep = jep_in;
 		symTab = jep.getSymbolTable();
 		opSet = jep.getOperatorSet();
-		// Parse the expression, and return the 
-		return Start().jjtGetChild(0);
 	}
-
-//	public Node parseStream(java.io.Reader stream, JEP jep_in,SymbolTable symTab)
-//							throws ParseException {
-//		ReInit(stream);
-//		
-//		jep = jep_in;
-//		this.symTab = symTab;
-//		// Parse the expression, and return the 
-//		return Start().jjtGetChild(0);
-//	}
+	/**
+	 * Continue parsing without re-initilising stream.
+	 * Allows renetrancy of parser so that strings like
+	 * "x=1; y=2; z=3;" can be parsed.
+	 * When a semi colon is encountered parsing finishes leaving the rest of the string unparsed.
+	 * Parsing can be resumed from the current position by using this method.
+	 * For example
+	 * <pre>
+	 * XJep j = new XJep();
+	 * Parser parse = j.getParse();
+	 * StringReader sr = new StringReader("x=1; y=2; z=3;");
+	 * parse.restart(sr,j);
+	 * Node node;
+	 * try {
+	 * while((node = j.continueParse())!=null) {
+	 *    j.println(node);
+	 * } }catch(ParseException e) {}
+	 * </pre>
+	 */
+	public Node continueParse() throws ParseException
+	{
+		ASTStart node = Start();
+		if(node==null) return null;
+		return node.jjtGetChild(0);
+	}
 
 	private void addToErrorList(String errorStr) {
 		jep.errorList.addElement(errorStr);		
 	}
 
+	/**
+	 * Sets the initial state that the token manager is in.
+	 * Can be used to change how x.x is interpreted, either as a single
+	 * identifier (DEFAULT) or as x <DOT> x (NO_DOT_IN_IDENTIFIERS)
+	 * @param state the state to be in. Currently the only legal values are DEFAULT and NO_DOT_IN_IDENTIFIER
+	 */
+	public void setInitialTokenManagerState(int state)
+	{
+		initialTokenManagerState = state;
+	}
 	/**
 	 * Translate all escape sequences to characters. Inspired by Rob Millar's
 	 * unescape() method in rcm.util.Str fron the Web Sphinx project.
@@ -156,20 +195,19 @@ public class Parser implements ParserI {
 
 PARSER_END(Parser)
 
-
 /***************************************************************
 SKIP
 ***************************************************************/
 
-SKIP :
+<*> SKIP :
 {
   " "
   | "\t"
   | "\n"
   | "\r"
 
-//| <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
-//| <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
+  | <"//" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+  | <"/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/">
 }
 
 
@@ -177,7 +215,7 @@ SKIP :
 TOKENS
 ***************************************************************/
 
-TOKEN : /* LITERALS */
+<*> TOKEN : /* LITERALS */
 {
 	< INTEGER_LITERAL:
 		<DECIMAL_LITERAL>
@@ -206,13 +244,19 @@ TOKEN : /* LITERALS */
 	
 	Letters before version 2.22
 	< #LETTER: ["_","a"-"z","A"-"Z"] >
+
+	In Ver 2.3.0.1 prescance of . in an identifier is switchable.
+	In the DEFAULT lexical state identifiers can contain a .
+	In the NO_DOT_IN_IDENTIFIERS state identifiers cannot contain a .
+	the state can be set by using
+	Parser.setInitialTokenManagerState
 */
-// TODO x.y is treated as a single identifier!
-TOKEN :
+
+<DEFAULT> TOKEN:
 {
-	< IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>|".")* >
-|
-	< #LETTER:
+	<INDENTIFIER1: <LETTER1>(<LETTER1>|<DIGIT1>|".")*>
+	|
+	< #LETTER1:
 	[
 		"\u0024",           // $
 		"\u0041"-"\u005a",  // A - Z
@@ -230,11 +274,36 @@ TOKEN :
 	]
 	>	
 |
-	< #DIGIT: ["0"-"9"] >
+	< #DIGIT1: ["0"-"9"] >
+}
+
+<NO_DOT_IN_IDENTIFIERS> TOKEN:
+{
+	<INDENTIFIER2: <LETTER2>(<LETTER2>|<DIGIT2>)*>
+	|
+	< #LETTER2:
+	[
+		"\u0024",           // $
+		"\u0041"-"\u005a",  // A - Z
+		"\u005f",           // _
+		"\u0061"-"\u007a",  // a - z
+		"\u00c0"-"\u00d6",  // Upper case symbols of Latin-1 Supplement
+		"\u00d8"-"\u00f6",  // Lower case symbols of Latin-1 Supplement
+		"\u00f8"-"\u00ff",  // More lower case symbols of Latin-1 Supplement
+		"\u0100"-"\u1fff",  // Many languages (including Greek)
+		"\u3040"-"\u318f",  // Hiragana, Katakana, Bopomofo, Hangul Compatibility Jamo
+		"\u3300"-"\u337f",  // CJK Compatibility
+		"\u3400"-"\u3d2d",  // CJK Unified Ideographs Extension A
+		"\u4e00"-"\u9fff",  // CJK Unified Ideographs
+		"\uf900"-"\ufaff"   // CJK Compatibility Ideographs
+	]
+	>	
+	|
+	< #DIGIT2: ["0"-"9"] >
 }
 
 /* OPERATORS */
-TOKEN:
+<*> TOKEN:
 {
 	< ASSIGN:"="  > // rjm
 |	< SEMI:	";" >	// rjm
@@ -258,6 +327,8 @@ TOKEN:
 |	< CROSS:"^^"  > // rjm
 |	< LSQ:	"["  >	// rjm
 |	< RSQ:	"]"	 >	// rjm
+|	< LRND:	"("  >	// rjm
+|	< RRND:	")"	 >	// rjm
 }
 
 
@@ -272,7 +343,7 @@ ASTStart Start() #Start :
 	Expression() ( <EOF> | <SEMI> ) { return jjtThis; }
 	|  ( <EOF> | <SEMI> )
 	{
-		throw new ParseException("No expression entered");
+		//throw new ParseException("No expression entered");
 		addToErrorList("No expression entered");
 		return null;
 	}
@@ -504,14 +575,14 @@ void UnaryExpressionNotPlusMinus() :
 {
 	AnyConstant()
 |
-	( LOOKAHEAD({ getToken(1).kind == IDENTIFIER &&
+	( LOOKAHEAD({ (getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
 				  jep.funTab.containsKey(getToken(1).image) })
 		Function()
 		|
 		Variable()
 	)
 	|
-	"(" Expression() ")"
+	<LRND> Expression() <RRND>
 	|
 	ListExpression()
 }
@@ -566,7 +637,7 @@ void Function() :
 			}
 		}
 		
-		"("ArgumentList(reqArguments, identString)")"
+		<LRND> ArgumentList(reqArguments, identString) <RRND>
 		
 	) #FunNode
 }
@@ -601,10 +672,7 @@ String Identifier() :
   Token t;
 }
 {
-	t=<IDENTIFIER>
-	{
-		return t.image;
-	}
+	( t = <INDENTIFIER1> |	t = <INDENTIFIER2> ) { return t.image; }
 }
 
 
@@ -640,19 +708,19 @@ Vector Array() :
 	Vector result = new Vector();
 }
 {
-	"["
+	<LSQ>
 	value = RealConstant()
 	{
 		result.addElement(value);
 	}
 	(
-		","
+		<COMMA>
 		value = RealConstant()
 		{
 			result.addElement(value);
 		}
 	)* 
-	"]"
+	<RSQ>
 	{
 		return result;
 	}
@@ -668,9 +736,7 @@ Object RealConstant() :
   Object value;
 }
 {
-	(t=<INTEGER_LITERAL>
-	|
-	t=<FLOATING_POINT_LITERAL>)
+	(t=<INTEGER_LITERAL>	|	t=<FLOATING_POINT_LITERAL>)
 	{
 		try {
 			value = jep.getNumberFactory().createNumber(t.image);

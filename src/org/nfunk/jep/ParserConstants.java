@@ -4,38 +4,44 @@ package org.nfunk.jep;
 public interface ParserConstants {
 
   int EOF = 0;
-  int INTEGER_LITERAL = 5;
-  int DECIMAL_LITERAL = 6;
-  int FLOATING_POINT_LITERAL = 7;
-  int EXPONENT = 8;
-  int STRING_LITERAL = 9;
-  int IDENTIFIER = 10;
-  int LETTER = 11;
-  int DIGIT = 12;
-  int ASSIGN = 13;
-  int SEMI = 14;
-  int COMMA = 15;
-  int GT = 16;
-  int LT = 17;
-  int EQ = 18;
-  int LE = 19;
-  int GE = 20;
-  int NE = 21;
-  int AND = 22;
-  int OR = 23;
-  int PLUS = 24;
-  int MINUS = 25;
-  int MUL = 26;
-  int DOT = 27;
-  int DIV = 28;
-  int MOD = 29;
-  int NOT = 30;
-  int POWER = 31;
-  int CROSS = 32;
-  int LSQ = 33;
-  int RSQ = 34;
+  int INTEGER_LITERAL = 7;
+  int DECIMAL_LITERAL = 8;
+  int FLOATING_POINT_LITERAL = 9;
+  int EXPONENT = 10;
+  int STRING_LITERAL = 11;
+  int INDENTIFIER1 = 12;
+  int LETTER1 = 13;
+  int DIGIT1 = 14;
+  int INDENTIFIER2 = 15;
+  int LETTER2 = 16;
+  int DIGIT2 = 17;
+  int ASSIGN = 18;
+  int SEMI = 19;
+  int COMMA = 20;
+  int GT = 21;
+  int LT = 22;
+  int EQ = 23;
+  int LE = 24;
+  int GE = 25;
+  int NE = 26;
+  int AND = 27;
+  int OR = 28;
+  int PLUS = 29;
+  int MINUS = 30;
+  int MUL = 31;
+  int DOT = 32;
+  int DIV = 33;
+  int MOD = 34;
+  int NOT = 35;
+  int POWER = 36;
+  int CROSS = 37;
+  int LSQ = 38;
+  int RSQ = 39;
+  int LRND = 40;
+  int RRND = 41;
 
-  int DEFAULT = 0;
+  int NO_DOT_IN_IDENTIFIERS = 0;
+  int DEFAULT = 1;
 
   String[] tokenImage = {
     "<EOF>",
@@ -43,14 +49,19 @@ public interface ParserConstants {
     "\"\\t\"",
     "\"\\n\"",
     "\"\\r\"",
+    "<token of kind 5>",
+    "<token of kind 6>",
     "<INTEGER_LITERAL>",
     "<DECIMAL_LITERAL>",
     "<FLOATING_POINT_LITERAL>",
     "<EXPONENT>",
     "<STRING_LITERAL>",
-    "<IDENTIFIER>",
-    "<LETTER>",
-    "<DIGIT>",
+    "<INDENTIFIER1>",
+    "<LETTER1>",
+    "<DIGIT1>",
+    "<INDENTIFIER2>",
+    "<LETTER2>",
+    "<DIGIT2>",
     "\"=\"",
     "\";\"",
     "\",\"",
