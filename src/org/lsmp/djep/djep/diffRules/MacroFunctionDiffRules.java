@@ -5,9 +5,10 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.djep;
+package org.lsmp.djep.djep.diffRules;
 
-import org.lsmp.djep.xjep.MacroFunction;
+import org.lsmp.djep.djep.DJepI;
+import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 
 /**
@@ -26,7 +27,7 @@ import org.nfunk.jep.*;
 		  name = fun.getName();
 		  pfmc = fun;
 		  
-		SymbolTable localSymTab = djep.getSymbolTable().newInstance();
+		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
 		DJepI localJep = (DJepI) djep.newInstance(localSymTab);
 

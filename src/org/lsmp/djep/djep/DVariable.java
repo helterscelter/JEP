@@ -23,10 +23,9 @@ import org.lsmp.djep.xjep.*;
  * @author Rich Morris
  * Created on 26-Oct-2003
  */
-public class DVariable extends Variable implements DVariableI 
+public class DVariable extends XVariable 
 {
 	protected Hashtable derivatives = new Hashtable();
-	private Node equation;
 	
 //	private VariableInfo(String name,MatrixNodeI eqn,Dimensions dims) 
 //	{ 
@@ -46,26 +45,19 @@ public class DVariable extends Variable implements DVariableI
 	protected DVariable(String name) 
 	{ 
 		super(name);
-		this.equation = null; 
 	}
 
 	protected DVariable(String name,Object value) 
 	{ 
 		super(name,value);
-		this.equation = null; 
 	}
 
-	/** Does this variable has an associated equation? **/
-	public boolean hasEquation() { return equation != null; }
 	/** sets the equation */
 	public void setEquation(Node eqn)
 	{
-		equation = eqn; 
-		this.setValidValue(false);
+		super.setEquation(eqn);
 		derivatives.clear(); 
 	}
-	/** get the equation */
-	public Node getEquation() { return equation; }
 
 	/** makes value and values of all derivatives invalid. **/
 	public void invalidateAll()
@@ -100,14 +92,7 @@ public class DVariable extends Variable implements DVariableI
 		return sb.toString();
 
 	}
-		
-/*
-	public void setDerivative(String derivname,PartialDerivative eqn)
-	{
-		derivatives.put(derivname,eqn);
-	}
-*/	
-
+	/** returns a sorted copy of the input array of strings */		
 	private String[] sortedNames(String names[])
 	{
 		String newnames[] = new String[names.length]; 
@@ -162,7 +147,7 @@ public class DVariable extends Variable implements DVariableI
 	public PartialDerivative findDerivativeSorted(String derivnames[],DJepI jep)
 		throws ParseException
 	{
-		if(equation==null) return null;
+		if(getEquation()==null) return null;
 		
 		if(derivnames == null) throw new ParseException("findDerivativeSorted: Null array of names");
 		PartialDerivative res = getDerivativeSorted(derivnames);
@@ -174,7 +159,7 @@ public class DVariable extends Variable implements DVariableI
 		if(origlen < 1)
 			throw new ParseException("findDerivativeSorted: Empty Array of names");
 		else if(origlen == 1)
-			lowereqn = equation;
+			lowereqn = getEquation();
 		else
 		{
 			String newnames[] = new String[origlen-1];
@@ -226,7 +211,7 @@ public class DVariable extends Variable implements DVariableI
 		if(hasValidValue()) sb.append(" val "+getValue() );
 		else	sb.append(" val invalid");
 		sb.append(" ");
-		if(equation!=null) sb.append(bpv.toString(equation));
+		if(getEquation()!=null) sb.append(bpv.toString(getEquation()));
 		sb.append("\n");
 		for(Enumeration e = derivatives.elements(); e.hasMoreElements(); ) 
 		{
@@ -239,5 +224,18 @@ public class DVariable extends Variable implements DVariableI
 			sb.append("\n");
 		}
 		System.out.print(sb.toString());
+	}
+
+	/**
+	 * Sets the value of the variable. Constant values cannot be changed.
+	 * @return false if tried to change a constant value.
+	 */
+	public boolean setValue(Object object) {
+		for(Enumeration en = derivatives.elements();en.hasMoreElements();)
+		{
+			PartialDerivative pd = (PartialDerivative) en.nextElement();
+			pd.setValidValue(false);
+		}
+		return super.setValue(object);
 	}
 }

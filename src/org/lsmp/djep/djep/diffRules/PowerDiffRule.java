@@ -5,8 +5,10 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.djep;
+package org.lsmp.djep.djep.diffRules;
 
+import org.lsmp.djep.djep.DJepI;
+import org.lsmp.djep.djep.DiffRulesI;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.ASTConstant;
 import org.nfunk.jep.ASTFunNode;

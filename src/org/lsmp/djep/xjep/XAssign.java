@@ -5,9 +5,8 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.djep;
+package org.lsmp.djep.xjep;
 
-import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 
@@ -41,7 +40,7 @@ public class XAssign extends Assign implements CommandVisitorI {
 		if(lhsNode instanceof ASTVarNode)
 		{
 			ASTVarNode vn = (ASTVarNode) lhsNode;
-			DVariable var = (DVariable) vn.getVar();
+			XVariable var = (XVariable) vn.getVar();
 			var.setEquation(xjep.deepCopy(children[1]));
 			TreeUtils.copyChildrenIfNeeded(node,children);
 			return node;

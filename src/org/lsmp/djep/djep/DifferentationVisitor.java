@@ -7,6 +7,7 @@
  */
    
 package org.lsmp.djep.djep;
+import org.lsmp.djep.djep.diffRules.*;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
@@ -39,7 +40,7 @@ import java.io.PrintStream;
  * @author R Morris
  * Created on 19-Jun-2003
  */
-public class DifferentationVisitor extends DeepCopyVisitor implements DiffVisitorI
+public class DifferentationVisitor extends DeepCopyVisitor
 {
 	private static final boolean DEBUG = false; 
 	private DJepI localDJep;
@@ -120,7 +121,8 @@ public class DifferentationVisitor extends DeepCopyVisitor implements DiffVisito
 		addDiffRule(new MacroDiffRules(globalDJep,"log",	// -> (1/ln(10)) /x = log(e) / x but don't know if e exists
 			globalDJep.getNodeFactory().buildOperatorNode(globalDJep.getOperatorSet().getDivide(),
 				globalDJep.getNodeFactory().buildConstantNode(1/Math.log(10.0)),
-				globalDJep.getNodeFactory().buildVariableNode(globalDJep.getSymbolTable().getVar("x")))));
+				globalDJep.getNodeFactory().buildVariableNode(globalDJep.getSymbolTable().makeVarIfNeeded("x")))));
+		// TODO problems here with using a global variable (x) in an essentially local context
 		addDiffRule(new MacroDiffRules(globalDJep,"abs","abs(x)/x"));
 		addDiffRule(new MacroDiffRules(globalDJep,"angle","y/(x^2+y^2)","-x/(x^2+y^2)"));
 		addDiffRule(new MacroDiffRules(globalDJep,"mod","1","0"));

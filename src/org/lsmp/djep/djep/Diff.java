@@ -19,16 +19,11 @@ import org.nfunk.jep.function.*;
    */
   public class Diff extends PostfixMathCommand implements CommandVisitorI,SpecialEvaluationI
   {
-	//protected DiffVisitorI dv;
-
 	  public Diff() {
 		  super();
 		  numberOfParameters = 2;
-		  //dv = inDv;
 	  }
 	
-	  //private Diff() {}
-	  
 	  /**
 	   * Should never be evaluated!
 	   * @throws ParseException if called by evaluator.

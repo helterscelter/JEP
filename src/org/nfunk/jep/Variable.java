@@ -9,8 +9,12 @@ package org.nfunk.jep;
 
 /**
  * Information about a variable. 
- * Each variable has a name, a value and a flag to indicate
+ * Each variable has a name, a value.
+ * There is a flag to indicate
  * whether it is a constant or not (constants cannot have their value changed).
+ * There is also a flag to indicate whether the value of the
+ * variable is valid, if the variable is initialised without a value
+ * then its value is said to be invalid.
  * <p>
  * @author Rich Morris
  * Created on 18-Nov-2003
@@ -22,9 +26,9 @@ public class Variable {
 	private boolean validValue=false;
 	private static final Double ZERO = new Double(0.0);
 
-	/** constructors are protected. They should only be called
-	 * through the SymbolTable methods.
-	 * @param name
+	/** Constructors are protected. Variables should only
+	 * be created through the associated {@link VariableFactory}
+	 * which are in turned called by {@link SymbolTable}.
 	 */
 	protected Variable(String name)
 	{
@@ -32,6 +36,10 @@ public class Variable {
 		this.value= ZERO;
 		validValue=false;
 	}
+	/** Constructors are protected. Variables should only
+	 * be created through the associated {@link VariableFactory}
+	 * which are in turned called by {@link SymbolTable}.
+	 */
 	protected Variable(String name,Object value)
 	{
 		this.name = name;

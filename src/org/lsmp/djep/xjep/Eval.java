@@ -43,7 +43,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 		int nchild = children.length;
 		if(nchild %2 == 0)
 			throw new ParseException("Number of parameters must be odd");
-		SymbolTable localSymTab = xjep.getSymbolTable().newInstance(); //new SymbolTable();
+		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) xjep.getSymbolTable()).newInstance();
 		XJepI localJep = xjep.newInstance(localSymTab);
 
 		for(Enumeration enume = xjep.getSymbolTable().keys();enume.hasMoreElements();)

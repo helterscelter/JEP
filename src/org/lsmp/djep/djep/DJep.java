@@ -18,14 +18,12 @@ public class DJep extends XJep implements DJepI {
 	public DifferentationVisitor dv = new DifferentationVisitor(this);
 	public DifferentationVisitor getDV() { return dv; }
 	public DSymbolTable getVarTab() { return (DSymbolTable) this.getSymbolTable(); } 
-	public VariableFactoryI vf = new PartialVariableFactory();
+	public VariableFactory vf = new DVariableFactory();
 //	public DSymbolTable varTab = new DSymbolTable(vf); 
 	public DPrintVisitor dpv = new DPrintVisitor();
 	public DJep()
 	{
-		this.symTab = new DSymbolTable(vf); 
-		this.ev = new DEvaluatorVisitor();
-		this.opSet.getAssign().setPFMC(new XAssign());
+		this.symTab = new DSymbolTable(vf);
 		this.pv = dpv;
 	}
 	public Node differentiate(Node node,String name) throws ParseException
@@ -49,4 +47,5 @@ public class DJep extends XJep implements DJepI {
 		newJep.symTab = st;
 		return newJep;
 	}
+	
 }

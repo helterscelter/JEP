@@ -29,6 +29,7 @@ public class XJep extends JEP implements XJepI {
 	public SimplificationVisitor simpv = null;
 	public CommandVisitor commandv = null;
 	public PrintVisitor pv = null;
+	public VariableFactory vf = new XVariableFactory();
 
 	public XJep()
 	{
@@ -40,10 +41,13 @@ public class XJep extends JEP implements XJepI {
 		tu = TreeUtils.getInstance();
 		copier = new DeepCopyVisitor();
 		subv = new SubstitutionVisitor();
-		ev = new EvaluatorVisitor();
+		ev = new XEvaluatorVisitor();
 		simpv = new SimplificationVisitor();
 		commandv = new CommandVisitor();
 		pv = new PrintVisitor();
+		this.symTab = new XSymbolTable(vf); 
+		
+		this.opSet.getAssign().setPFMC(new XAssign());
 	}
 
 	protected XJep(XJep j)
@@ -117,5 +121,11 @@ public class XJep extends JEP implements XJepI {
 	public OperatorSet getOperatorSet() {return opSet;}
 	public TreeUtils getTreeUtils() { return tu; }
 //	public SimplificationVisitor getSimpV() { return simpv; }
+
+	public Object findVarValue(String name) throws Exception
+	{
+		XVariable xvar = (XVariable) getVar(name);
+		return xvar.findValue(this);
+	}
 
 }

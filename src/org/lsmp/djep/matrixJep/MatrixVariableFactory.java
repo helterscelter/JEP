@@ -7,9 +7,7 @@
  */
 package org.lsmp.djep.matrixJep;
 
-import org.lsmp.djep.djep.DVariable;
-import org.lsmp.djep.djep.PartialDerivative;
-import org.lsmp.djep.djep.PartialVariableFactoryI;
+import org.lsmp.djep.djep.*;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.Variable;
 
@@ -19,7 +17,7 @@ import org.nfunk.jep.Variable;
  * @author Rich Morris
  * Created on 19-Dec-2003
  */
-public class MatrixVariableFactory implements PartialVariableFactoryI {
+public class MatrixVariableFactory extends DVariableFactory {
 
 	/** create a derivative */
 	public PartialDerivative createDerivative(DVariable var,String[] dnames,Node eqn) {

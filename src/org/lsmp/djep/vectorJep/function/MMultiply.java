@@ -69,7 +69,7 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 	public void run(Stack stack) throws ParseException 
 	{
 		checkStack(stack); // check the stack
-		if(stack.size()!=2) throw new ParseException("Multiply: should have two children its got "+stack.size());
+		//if(this.curNumberOfParameters!=2) throw new ParseException("Multiply: should have two children its got "+stack.size());
 		Object param2 = stack.pop();
 		Object param1 = stack.pop();
 		Object product = mul(param1, param2);

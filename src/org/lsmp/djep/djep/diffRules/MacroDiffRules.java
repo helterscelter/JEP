@@ -5,9 +5,10 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.djep;
+package org.lsmp.djep.djep.diffRules;
 
 import org.nfunk.jep.*;
+import org.lsmp.djep.djep.DJepI;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.function.PostfixMathCommandI;
 
@@ -75,7 +76,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 			if(nParam != 1)
 				throw new ParseException("Number of rules must match number of parameters for "+inName+" which is "+nParam);
 		}
-		SymbolTable localSymTab = djep.getSymbolTable().newInstance();
+		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
 		XJepI localJep = djep.newInstance(localSymTab);
 		Node node = localJep.parse(rule);
@@ -104,7 +105,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 			if(nParam != 2)
 			throw new ParseException("Number of rules must match number of parameters for "+inName+" which is "+nParam);
 		}
-		SymbolTable localSymTab = djep.getSymbolTable().newInstance();
+		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
 		XJepI localJep = djep.newInstance(localSymTab);
 		Node node1 = localJep.parse(rule1);
@@ -186,7 +187,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 			throw new ParseException("Number of rules must match number of parameters for "+inName+" which is "+nParam);
 		}
 		
-		SymbolTable localSymTab = djep.getSymbolTable().newInstance();
+		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
 		XJepI localJep = djep.newInstance(localSymTab);
 

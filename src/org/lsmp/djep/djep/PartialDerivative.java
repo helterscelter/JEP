@@ -7,19 +7,18 @@
  */
 package org.lsmp.djep.djep;
 import org.nfunk.jep.*;
-
+import org.lsmp.djep.xjep.*;
 /**
  * Contains infomation about a PartialDerivative of a variable.
  * Should  
  * @author Rich Morris
  * Created on 29-Oct-2003
  */
-public class PartialDerivative extends Variable implements DVariableI {
+public class PartialDerivative extends XVariable  {
 
 	private DVariable root;
 	private String dnames[] = null;
 	private String printString;
-	private Node eqn;
 	/**
 	 * Protected constructor, should only be constructed
 	 * through the findDerivative method in {@link DVariable DVariable}.
@@ -29,14 +28,10 @@ public class PartialDerivative extends Variable implements DVariableI {
 		super(var.getName());
 		root = var;
 		dnames = derivnames;
-		eqn = deriv;
+		setEquation(deriv);
 		printString = DVariable.makeDerivString(root.getName(),derivnames);
 	}
 	
-	/** Does this variable has an associated equation? **/
-	public boolean hasEquation() { return eqn != null; }
-	/** return the equation */
-	public Node getEquation() { return eqn; }
 	public String getName() { return printString; }
 	
 	/**

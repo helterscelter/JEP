@@ -207,8 +207,8 @@ public class JEP {
 	 */
 	public void addStandardConstants() {
 		//add constants to Symbol Table
-		symTab.makeConstant("pi", new Double(Math.PI));
-		symTab.makeConstant("e", new Double(Math.E));
+		symTab.addConstant("pi", new Double(Math.PI));
+		symTab.addConstant("e", new Double(Math.E));
 	}
 	
 	/**
@@ -221,7 +221,7 @@ public class JEP {
 	 */
 	public void addComplex() {
 		//add constants to Symbol Table
-		symTab.makeConstant("i", new Complex(0,1));
+		symTab.addConstant("i", new Complex(0,1));
 		funTab.put("re", new Real());
 		funTab.put("im", new Imaginary());
 		funTab.put("arg", new Arg());
@@ -301,9 +301,10 @@ public class JEP {
 	public Object getVarValue(String name) {
 		return symTab.getVar(name).getValue();
 	}
-	/** set the value of a variable 
+	/** set the value of a variable.
+	 * Returns false if variable does not exist or if its value cannot be changed. 
 	 * Added RJM Feb 04 */
-	public Object setVarValue(String name,Object val) {
+	public boolean setVarValue(String name,Object val) {
 		return symTab.setVarValue(name,val);
 	}
 	/** get the object represeing the variable 

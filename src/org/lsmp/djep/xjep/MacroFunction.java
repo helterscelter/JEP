@@ -13,7 +13,18 @@ import java.util.*;
 /**
  * A function specified by a string.
  * For example
- * <tt>new MacroFunction("sec",1,"1/cos(x)",tu)</tt>
+ * <pre>
+ * XJepI jep = new XJep();
+ * j.addFunction("zap",new MacroFunction("zap",1,"x*(x-1)/2",j));
+ * Node node = j.parse("zap(10)");
+ * System.out.println(j.evaluate(node)); // print 45
+ * </pre>
+ * The names of the variables used inside the fuction depends on the number of arguments:
+ * <ul>
+ * <li>One argument variable must be x: <tt>new MacroFunction("sec",1,"1/cos(x)",j)</tt></li>
+ * <li>Two arguments variables must be x or y: <tt>new MacroFunction("myPower",2,"x^y",j)</tt></li>
+ * <li>Three or more arguments variables must be x1, x2, x3,...: <tt>new MacroFunction("add3",3,"x1+x2+x3",j)</tt></li>
+ * </ul>
  * @author R Morris.
  * Created on 18-Jun-2003
  */
@@ -24,7 +35,7 @@ public class MacroFunction extends PostfixMathCommand
 	private Node topNode;
 	private EvaluatorVisitor ev = new EvaluatorVisitor();
 	private XJepI localJep;
-	private SymbolTable mySymTab;
+	private XSymbolTable mySymTab;
 	
 	public String getName() { return name; }
 	public Node getTopNode() { return topNode; }
@@ -43,8 +54,9 @@ public class MacroFunction extends PostfixMathCommand
 		super();
 		name = inName;
 
-		SymbolTable jepSymTab = jep.getSymbolTable(); 
-		mySymTab = jepSymTab.newInstance(); 
+		XSymbolTable jepSymTab = (XSymbolTable) jep.getSymbolTable();
+		mySymTab = (XSymbolTable) jepSymTab.newInstance(); 
+		//new SymbolTable();
 		mySymTab.copyConstants(jepSymTab);
 		localJep = jep.newInstance(mySymTab);
 		macroExpression = expression;

@@ -7,7 +7,7 @@ JEP - Java Math Expression Parser 2.24
 
 *****************************************************************************/
 
-package org.lsmp.djep.djep;
+package org.lsmp.djep.xjep;
 
 import org.nfunk.jep.*;
 
@@ -27,10 +27,10 @@ import org.nfunk.jep.*;
  * Simplifies error handeling by making visit methods throw ParseException.
  * Changed visit(ASTVarNode node) so messages not calculated every time. 
  */
-public class DEvaluatorVisitor extends EvaluatorVisitor {
+public class XEvaluatorVisitor extends EvaluatorVisitor {
 
 	/** Constructor. Initialize the stack member */
-	public DEvaluatorVisitor() {
+	public XEvaluatorVisitor() {
 //		errorList = null;
 //		symTab = null;
 //		stack = new Stack();
@@ -48,21 +48,14 @@ public class DEvaluatorVisitor extends EvaluatorVisitor {
 			String message = "Could not evaluate " + node.getName() + ": ";
 			throw new ParseException(message + " variable not set");
 		}
+		
 		if(var.hasValidValue())
 		{
 			stack.push(var.getValue());
 		} 
-		else if(var instanceof DVariable)
+		else if(var instanceof XVariable)
 		{
-			Node equation = ((DVariable) var).getEquation();
-			if(equation==null)
-				throw new ParseException("Cannot find value of "+var.getName()+" no equation.");
-			equation.jjtAccept(this,data);
-			var.setValue(stack.peek());
-		}
-		else if(var instanceof PartialDerivative)
-		{
-			Node equation = ((PartialDerivative) var).getEquation();
+			Node equation = ((XVariable) var).getEquation();
 			if(equation==null)
 				throw new ParseException("Cannot find value of "+var.getName()+" no equation.");
 			equation.jjtAccept(this,data);

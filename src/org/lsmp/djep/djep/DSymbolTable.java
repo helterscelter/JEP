@@ -13,28 +13,31 @@ import java.util.*;
 /**
  * A SymbolTable which works with partial derivatives of variables.
  * Closely linked with 
- * {@link PartialVariableFactory PartialVariableFactory}
+ * {@link DVariableFactory DVariableFactory}
  *   
  * @author Rich Morris
  * Created on 23-Nov-2003
  */
-public class DSymbolTable extends SymbolTable {
-	private VariableFactoryI vf;
-	public DSymbolTable(VariableFactoryI varFac)
+public class DSymbolTable extends XSymbolTable {
+	private VariableFactory vf;
+	public DSymbolTable(VariableFactory varFac)
 	{
 		super(varFac);
 		vf=varFac;
 	}
+
+	/** Creates a new SymbolTable with the same variable factory as this. */
+	public SymbolTable newInstance()
+	{
+		return new DSymbolTable(vf);
+	}
+
 	public PartialDerivative getPartialDeriv(String name,String dnames[])
 	{
 		DVariable var = (DVariable) getVar(name);
 		return var.getDerivative(dnames);
 	}
 	
-	public SymbolTable newInstance()
-	{
-		return new DSymbolTable(vf);
-	}
 
 	public void clearValues()
 	{
@@ -43,15 +46,5 @@ public class DSymbolTable extends SymbolTable {
 			DVariable var = (DVariable) e.nextElement();
 			var.invalidateAll();
 		}
-	}	
-	
-	public void print(PrintVisitor pv)
-	{
-		for(Enumeration e = this.elements(); e.hasMoreElements(); ) 
-		{
-			DVariable var = (DVariable) e.nextElement();
-			var.print(pv);
-		}
-
 	}	
 }

@@ -24,7 +24,7 @@ public class Dimensions
 	public static final Dimensions THREE = new Dimensions(3);
 	
 	private Dimensions() {};	
-	/** Sets the dimension to a single number, i.e. for vectors */
+	/** Sets the dimension to a single number. Implies its a Scaler or MVector. */
 	private Dimensions(int d) {	dims = new int[] {d};	}
 	/** Use this method for matricies. */
 	private Dimensions(int d1,int d2) {	dims = new int[] {d1,d2}; }
@@ -94,11 +94,11 @@ public class Dimensions
 	public int getLastDim() {	return dims[dims.length-1];	}
 	public int getIthDim(int i) { return dims[i]; }
 	
-	/** Is it 0D, i.e. a simple number. **/
+	/** Is it 0D, ie a simple number. **/
 	public boolean is0D() { return dims.length == 1 && dims[0] == 1; }
-	/** Is it 1D, i.e. a vector [1,2,3]. **/
+	/** Is it 1D, ie a vector [1,2,3]. **/
 	public boolean is1D() {	return dims.length == 1 && dims[0] != 1; }
-	/** Is it 2D, i.e. a matrix [[1,2,3],[4,5,6]]. **/
+	/** Is it 2D, ie a matrix [[1,2,3],[4,5,6]]. **/
 	public boolean is2D() {	return dims.length == 2; }
 	/**
 	 * The total number of elements.
