@@ -1,6 +1,8 @@
 == TODO for version 2.3.1 ===============================================
 - Run spell check on docs
+- fix all bugs
 - fix link problem to JavaDoc in documentation
+- fix if(a, b, c) doc error
 
 == TODO for version 2.3.0 ===========================================
 - update CVS

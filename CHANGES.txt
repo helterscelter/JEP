@@ -1,7 +1,9 @@
 =====================================================================
 == org.nfunk.* ======================================================
 
-Oct 4  rjm - Changes the SpecialEvaluationI interface to include a SymbolTable parameter.
+Oct 22 njf - added simple sum test to JEPTesterExpressions.txt
+
+Oct  4 rjm - Changes the SpecialEvaluationI interface to include a SymbolTable parameter.
        rjm - Added rules to differentiate atan2 removed support for angle
        rjm - Doc update for GroupJep, improved consol and unit test or working with polynomials over the reals (Doubles).
 
