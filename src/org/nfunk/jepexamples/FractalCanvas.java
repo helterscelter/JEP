@@ -188,7 +188,12 @@ public class FractalCanvas extends Canvas {
 		
 		c = myParser.addVariable("c", 0, 0);
 		z = myParser.addVariable("z", 0, 0);
-		commands = expressionCompiler.compile(myParser.getTopNode());
+		try {
+			commands = expressionCompiler.compile(myParser.getTopNode());
+		} catch (ParseException e) {
+			System.out.println("Failed to compile expression");
+			e.printStackTrace();
+		}
 
 		for (int x = 0; x <= (dimensions.width-1); x++) {
 			for (int y = 0; y <= (dimensions.height-1); y++) {

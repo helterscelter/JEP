@@ -22,7 +22,7 @@ public class ExpressionCompiler implements ParserVisitor {
 		commands = new Vector();
 	}
 	
-	public CommandElement[] compile(Node node) {
+	public CommandElement[] compile(Node node) throws ParseException{
 		commands.removeAllElements();
 		node.jjtAccept(this, null);
 		CommandElement[] temp = new CommandElement[commands.size()];
@@ -34,7 +34,7 @@ public class ExpressionCompiler implements ParserVisitor {
 		return temp;
 	}
 
-	public Object visit(ASTFunNode node, Object data) {
+	public Object visit(ASTFunNode node, Object data) throws ParseException {
 		node.childrenAccept(this,data);
 		
 		CommandElement c = new CommandElement();

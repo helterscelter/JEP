@@ -15,11 +15,12 @@ package org.nfunk.jep;
  */
 public class ASTVarNode extends SimpleNode {
 	
-	private String varName;
+	//private String varName;
+	private Variable var;
 	
 	public ASTVarNode(int id) {
 		super(id);
-		varName = "";
+		var = null;
 	}
 	
 	public ASTVarNode(Parser p, int id) {
@@ -29,24 +30,27 @@ public class ASTVarNode extends SimpleNode {
 	/**
 	 * Accept the visitor.
 	 */
-	public Object jjtAccept(ParserVisitor visitor, Object data) {
+	public Object jjtAccept(ParserVisitor visitor, Object data) throws ParseException
+	{
 		return visitor.visit(this, data);
 	}
 
 	/**
 	 * Sets the name of the variable.
 	 */
-	public void setName(String varName_in)
-	{
-		varName = varName_in;
-	}
+	//public void setName(String varName_in)
+	//{
+	//	var = varName_in;
+	//}
+	public void setVar(Variable variable) {	var = variable;	}
+	public Variable getVar() { return var; }
 	
 	/**
 	 * Returns the name of the variable.
 	 */
 	public String getName()
 	{
-		return varName;
+		return var.getName();
 	}
 
 	/**

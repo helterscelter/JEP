@@ -47,6 +47,7 @@ in this grammar.
 ***************************************************************/
 
 
+
 /***************************************************************
 OPTIONS
 ***************************************************************/
@@ -54,7 +55,10 @@ options {
 	JAVA_UNICODE_ESCAPE = true;
 	MULTI = true;
 	VISITOR = true;
+	VISITOR_EXCEPTION = "ParseException";
 	NODE_DEFAULT_VOID = true;
+//	NODE_PACKAGE = "org.nfunk.jep.parser";
+//	BUILD_NODE_FILES=false;
 	STATIC = false;
 }
 
@@ -70,18 +74,29 @@ import java.util.Vector;
 import org.nfunk.jep.function.*;
 import org.nfunk.jep.type.*;
 
-public class Parser {
+public class Parser implements ParserI {
 	private JEP     jep;
-
+	private SymbolTable symTab;
+	
 	public Node parseStream(java.io.Reader stream, JEP jep_in)
 							throws ParseException {
 		ReInit(stream);
 		
 		jep = jep_in;
-
+		symTab = jep.getSymbolTable();
 		// Parse the expression, and return the 
 		return Start().jjtGetChild(0);
 	}
+
+//	public Node parseStream(java.io.Reader stream, JEP jep_in,SymbolTable symTab)
+//							throws ParseException {
+//		ReInit(stream);
+//		
+//		jep = jep_in;
+//		this.symTab = symTab;
+//		// Parse the expression, and return the 
+//		return Start().jjtGetChild(0);
+//	}
 
 	private void addToErrorList(String errorStr) {
 		jep.errorList.addElement(errorStr);		
@@ -190,7 +205,7 @@ TOKEN : /* LITERALS */
 	Letters before version 2.22
 	< #LETTER: ["_","a"-"z","A"-"Z"] >
 */
-
+// TODO x.y is treated as a single identifier!
 TOKEN :
 {
 	< IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>|".")* >
@@ -219,7 +234,10 @@ TOKEN :
 /* OPERATORS */
 TOKEN:
 {
-	< GT:   ">"  >
+	< ASSIGN:"="  > // rjm
+|	< SEMI:	";" >	// rjm
+|	< COMMA: "," >	// rjm
+|	< GT:   ">"  >
 |	< LT:   "<"  >
 |	< EQ:   "==" >
 |	< LE:   "<=" >
@@ -230,10 +248,14 @@ TOKEN:
 |	< PLUS: "+"  >
 |	< MINUS:"-"  >
 |	< MUL:  "*"  >
+|	< DOT:  "."  >	// rjm
 |	< DIV:  "/"  >
 |	< MOD:  "%"  >
 |	< NOT:  "!"  >
 |	< POWER:"^"  >
+|	< CROSS:"^^"  > // rjm
+|	< LSQ:	"["  >	// rjm
+|	< RSQ:	"]"	 >	// rjm
 }
 
 
@@ -245,8 +267,8 @@ ASTStart Start() #Start :
 {
 }
 {
-	Expression() <EOF> { return jjtThis; }
-	|  <EOF>
+	Expression() ( <EOF> | <SEMI> ) { return jjtThis; }
+	|  ( <EOF> | <SEMI> )
 	{
 		throw new ParseException("No expression entered");
 		addToErrorList("No expression entered");
@@ -254,14 +276,31 @@ ASTStart Start() #Start :
 	}
 }
 
-
+// Expresions can be like
+// x=3
+// x=y=3 parsed as x=(y=3)
 
 void Expression() : {}
 {
+	LOOKAHEAD(3)		// need to prevent javacc warning with left recusion
+	AssignExpression() // rjm changes from OrExpresion
+	|
 	OrExpression()
 }
 
-
+void AssignExpression() : {} // rjm addition
+{
+	
+	( Variable() <ASSIGN> Expression()
+		{
+			if (!jep.getAllowAssignment()) throw new ParseException(
+        	"Syntax Error (assignment not enabled)");
+			
+			jjtThis.setOperator(Operator.OP_ASSIGN);
+		}
+	  )
+	  #FunNode(2)
+}
 void OrExpression() :
 {
 }
@@ -270,7 +309,7 @@ void OrExpression() :
 	(
 	  ( <OR> AndExpression()
 		{
-			jjtThis.setOperator(Operators.OP_OR);
+			jjtThis.setOperator(Operator.OP_OR);
 		}
 	  ) #FunNode(2)
 	)*
@@ -285,7 +324,7 @@ void AndExpression() :
 	(
 	  ( <AND> EqualExpression()
 		{
-			jjtThis.setOperator(Operators.OP_AND);
+			jjtThis.setOperator(Operator.OP_AND);
 		}
 	  ) #FunNode(2)
 	)*
@@ -301,13 +340,13 @@ void EqualExpression() :
 	(
 	  ( <NE> RelationalExpression()
 	    {
-	    jjtThis.setOperator(Operators.OP_NE);
+	    jjtThis.setOperator(Operator.OP_NE);
 	    }
 	  ) #FunNode(2)
 	|
 	  ( <EQ> RelationalExpression()
 	    {
-	      jjtThis.setOperator(Operators.OP_EQ);
+	      jjtThis.setOperator(Operator.OP_EQ);
 	    }
 	  ) #FunNode(2)
 	)*
@@ -323,25 +362,25 @@ void RelationalExpression() :
   (
     ( <LT> AdditiveExpression()
       {
-	    jjtThis.setOperator(Operators.OP_LT);
+	    jjtThis.setOperator(Operator.OP_LT);
       }
 	) #FunNode(2)
 	|
     ( <GT> AdditiveExpression()
       {
-        jjtThis.setOperator(Operators.OP_GT);
+        jjtThis.setOperator(Operator.OP_GT);
       }
     ) #FunNode(2)
     |
     ( <LE> AdditiveExpression()
       {
-	    jjtThis.setOperator(Operators.OP_LE);
+	    jjtThis.setOperator(Operator.OP_LE);
       }
 	) #FunNode(2)
 	|
     ( <GE> AdditiveExpression()
       {
-        jjtThis.setOperator(Operators.OP_GE);
+        jjtThis.setOperator(Operator.OP_GE);
       }
     ) #FunNode(2)
   )*
@@ -356,13 +395,13 @@ void AdditiveExpression() :
   (
     ( <PLUS> MultiplicativeExpression()
       {
-        jjtThis.setOperator(Operators.OP_PLUS);
+        jjtThis.setOperator(Operator.OP_ADD);
       }
     ) #FunNode(2)
     |
     ( <MINUS> MultiplicativeExpression()
       {
-        jjtThis.setOperator(Operators.OP_MINUS);
+        jjtThis.setOperator(Operator.OP_SUBTRACT);
       }
     ) #FunNode(2)
   )*
@@ -381,25 +420,37 @@ void MultiplicativeExpression() :
         if (!jep.implicitMul) throw new ParseException(
         	"Syntax Error (implicit multiplication not enabled)");
         	
-        jjtThis.setOperator(Operators.OP_MUL);
+        jjtThis.setOperator(Operator.OP_MULTIPLY);
       }
     ) #FunNode(2)
     |
     ( <MUL> UnaryExpression()
       {
-        jjtThis.setOperator(Operators.OP_MUL);
+        jjtThis.setOperator(Operator.OP_MULTIPLY);
+      }
+    ) #FunNode(2)
+    |
+    ( <DOT> UnaryExpression()
+      {
+        jjtThis.setOperator(Operator.OP_DOT);
+      }
+    ) #FunNode(2)
+    |
+    ( <CROSS> UnaryExpression()
+      {
+        jjtThis.setOperator(Operator.OP_CROSS);
       }
     ) #FunNode(2)
 	|
     ( <DIV> UnaryExpression()
       {
-        jjtThis.setOperator(Operators.OP_DIV);
+        jjtThis.setOperator(Operator.OP_DIVIDE);
       }
     ) #FunNode(2)
     |
     ( <MOD> UnaryExpression()
       {
-        jjtThis.setOperator(Operators.OP_MOD);
+        jjtThis.setOperator(Operator.OP_MOD);
       }
     ) #FunNode(2)
   )*
@@ -414,13 +465,13 @@ void UnaryExpression() :
 |
   ( <MINUS> UnaryExpression()
     {
-	  jjtThis.setOperator(Operators.OP_UMINUS);
+	  jjtThis.setOperator(Operator.OP_UMINUS);
     }
   ) #FunNode(1)
 |
   ( <NOT> UnaryExpression()
     {
-	  jjtThis.setOperator(Operators.OP_NOT);
+	  jjtThis.setOperator(Operator.OP_NOT);
     }
   ) #FunNode(1)
 |
@@ -436,7 +487,7 @@ void PowerExpression() :
   [
   ( <POWER> UnaryExpression()
     {
-      jjtThis.setOperator(Operators.OP_POWER);
+      jjtThis.setOperator(Operator.OP_POWER);
     }
   ) #FunNode(2)
   ]
@@ -459,6 +510,16 @@ void UnaryExpressionNotPlusMinus() :
 	)
 	|
 	"(" Expression() ")"
+	|
+	ListExpression()
+}
+
+void ListExpression() #FunNode:
+{
+	jjtThis.setOperator(Operator.OP_LIST);
+}
+{
+	( <LSQ> Expression() ( <COMMA> Expression() )* <RSQ> ) 
 }
 
 
@@ -469,12 +530,11 @@ void Variable() :
 {
 	(identString = Identifier()
 	{
-		if (jep.symTab.containsKey(identString)) {
-			jjtThis.setName(identString);
+		if (symTab.containsKey(identString)) {
+			jjtThis.setVar(symTab.getVar(identString));
 		} else {
 			if (jep.allowUndeclared) {
-				jep.symTab.put(identString,new Double(0));
-				jjtThis.setName(identString);
+				jjtThis.setVar(symTab.makeVarIfNeeded(identString));
 			} else {
 				addToErrorList("Unrecognized symbol \"" + identString +"\"");
 			}
@@ -518,7 +578,7 @@ void ArgumentList(int reqArguments, String functionName) :
 	[
 	Expression() { count++; }
 	(
-		","
+		<COMMA>
 		Expression() { count++; }
 	)*
 	]
@@ -564,14 +624,14 @@ void AnyConstant() #Constant:
 	|
 	value = RealConstant() {
 		jjtThis.setValue(value);
-	}
-	|
-	value = Array() {
-		jjtThis.setValue(value);
+//	}
+//	|
+//	value = Array() {
+//		jjtThis.setValue(value);
 	}
 }
 
-
+/*
 Vector Array() :
 {
 	Object value;
@@ -595,6 +655,7 @@ Vector Array() :
 		return result;
 	}
 }
+*/
 
 
 

@@ -10,6 +10,8 @@
 package org.nfunk.jep;
 
 import org.nfunk.jep.function.*;
+// rjm unneeded import
+// import java.util.*;
 
 /**
  * Function Node
@@ -23,14 +25,13 @@ public class ASTFunNode extends SimpleNode {
 	private String name;
 	
 	/** ID of the operator (if it is one) */
-	private int opID;
+	private Operator opID=null;
 	
 	/**
 	 * Creates a new ASTFunNode
 	 */
 	public ASTFunNode(int id) {
 		super(id);
-		opID = -1;
 	}
 	
 	/**
@@ -38,13 +39,13 @@ public class ASTFunNode extends SimpleNode {
 	 */
 	public ASTFunNode(Parser p, int id) {
 		super(p, id);
-		opID = -1;
 	}
 	
 	/**
 	 * Accept the visitor.
 	 */
-	public Object jjtAccept(ParserVisitor visitor, Object data) {
+	public Object jjtAccept(ParserVisitor visitor, Object data) throws ParseException
+	{
 		return visitor.visit(this, data);
 	}
 
@@ -61,14 +62,10 @@ public class ASTFunNode extends SimpleNode {
 	 * Sets the opID, name and pfmc for this node by looking up the values
 	 * in the Operators class
 	 */
-	public void setOperator(int opID_in) {
-		if (Operators.isValidID(opID_in)) {
-			opID = opID_in;
-			name = Operators.name[opID];
-			pfmc = Operators.pfmc[opID];
-		} else {
-			
-		}
+	public void setOperator(Operator op) {
+			opID = op;
+			pfmc = op.getPFMC();
+			name = op.getName();
 	}
 
 	/**
@@ -95,7 +92,14 @@ public class ASTFunNode extends SimpleNode {
 	/**
 	 * Returns the id number of the operator if the node is an operator.
 	 */
-	public int getOpID() {
+	public Operator getOperator() {
 		return opID;
+	}
+
+	/**
+	 * Returns true if node is an operator.
+	 */
+	public boolean isOperator() {
+		return (opID != null);
 	}
 }

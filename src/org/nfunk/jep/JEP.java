@@ -39,6 +39,9 @@ public class JEP {
 	/** Allow undeclared variables option */
 	protected boolean allowUndeclared;
 	
+	/** Allow undeclared variables option */
+	protected boolean allowAssignment;
+	
 	/** Implicit multiplication option */
 	protected boolean implicitMul;
 	
@@ -50,18 +53,18 @@ public class JEP {
 	
 	/** Error List */
 	protected Vector errorList;
-
+	
 	/** The parser object */
-	private Parser parser;
+	protected ParserI parser;
 	
 	/** Node at the top of the parse tree */
 	private Node topNode;
 
 	/** Evaluator */
-	private EvaluatorVisitor ev;
+	protected EvaluatorVisitor ev;
 	
 	/** Number factory */
-	private NumberFactory numberFactory;
+	protected NumberFactory numberFactory;
 
 	/**
 	 * Creates a new JEP instance with the default settings.
@@ -75,6 +78,7 @@ public class JEP {
 		topNode = null;
 		traverse = false;
 		allowUndeclared = false;
+		allowAssignment  = false;
 		implicitMul = false;
 		numberFactory = new DoubleNumberFactory();
 		initSymTab();
@@ -82,10 +86,10 @@ public class JEP {
 		errorList = new Vector();
 		ev = new EvaluatorVisitor();
 		parser = new Parser(new StringReader(""));
-		
+
 		//Ensure errors are reported for the initial expression
 		//e.g. No expression entered
-		parseExpression("");
+		//parseExpression("");
 	}
 
 	/**
@@ -120,13 +124,33 @@ public class JEP {
 		parseExpression("");		
 	}
 
+	/** This constructor suppresses the construction
+	 * of the default componants. Sub classes can call this 
+	 * protected constructor and set the individual components
+	 * themselves.
+	 * @param use_defaults
+	 */
+	protected JEP(JEP j)
+	{
+		topNode = null;
+		traverse = j.traverse;
+		allowUndeclared = j.allowUndeclared;
+		allowAssignment  = j.allowAssignment;
+		implicitMul = j.implicitMul;
+		this.ev =j.ev;
+		this.funTab=j.funTab;
+		this.numberFactory=j.numberFactory;
+		this.parser=j.parser;
+		this.symTab=j.symTab;
+		this.traverse=j.traverse;
+	}
 
 	/**
 	 * Creates a new SymbolTable object as symTab.
 	 */
 	public void initSymTab() {
 		//Init SymbolTable
-		symTab = new SymbolTable();
+		symTab = new SymbolTable(new VariableFactory());
 	}
 
 	/**
@@ -162,6 +186,7 @@ public class JEP {
 
 		funTab.put("log", new Logarithm());
 		funTab.put("ln", new NaturalLogarithm());
+		funTab.put("exp", new Exp());
 
 		funTab.put("sqrt",new SquareRoot());
 		funTab.put("angle", new Angle());
@@ -170,6 +195,9 @@ public class JEP {
 		funTab.put("sum", new Sum());
 
 		funTab.put("rand", new org.nfunk.jep.function.Random());
+		
+		// rjm additions
+		funTab.put("if", new org.nfunk.jep.function.If());
 	}
 
 	/**
@@ -179,8 +207,8 @@ public class JEP {
 	 */
 	public void addStandardConstants() {
 		//add constants to Symbol Table
-		symTab.put("pi", new Double(Math.PI));
-		symTab.put("e", new Double(Math.E));
+		symTab.makeConstant("pi", new Double(Math.PI));
+		symTab.makeConstant("e", new Double(Math.E));
 	}
 	
 	/**
@@ -188,12 +216,16 @@ public class JEP {
 	 * complex numbers. This method specifies "i" as the imaginary unit
 	 * (0,1). Two functions re() and im() are also added for extracting the
 	 * real or imaginary components of a complex number respectively.
+	 *<p>
+	 *RJM addition The functions cmod and arg are added to get the modulus and argument. 
 	 */
 	public void addComplex() {
 		//add constants to Symbol Table
-		symTab.put("i", new Complex(0,1));
+		symTab.makeConstant("i", new Complex(0,1));
 		funTab.put("re", new Real());
 		funTab.put("im", new Imaginary());
+		funTab.put("arg", new Arg());
+		funTab.put("cmod", new Abs());
 	}
 
 	/**
@@ -220,7 +252,7 @@ public class JEP {
 	 */
 	public Double addVariable(String name, double value) {
 		Double object = new Double(value);
-		symTab.put(name, object);
+		symTab.makeVarIfNeeded(name, object);
 		return object;
 	}
 
@@ -236,7 +268,7 @@ public class JEP {
 	 */
 	public Complex addVariable(String name, double re, double im) {
 		Complex object = new Complex(re,im);
-		symTab.put(name, object);
+		symTab.makeVarIfNeeded(name, object);
 		return object;
 	}
 		
@@ -249,7 +281,7 @@ public class JEP {
 	 * @param object Initial value or new value for the variable
 	 */
 	public void addVariable(String name, Object object) {
-		symTab.put(name, object);
+		symTab.makeVarIfNeeded(name, object);
 	}
 	
 	/**
@@ -301,6 +333,8 @@ public class JEP {
 		implicitMul = value;
 	}
 	
+	public boolean getImplicitMul() { return implicitMul; }
+	
 	/**
 	 * Sets the value for the undeclared variables option. If this option
 	 * is set to true, expressions containing variables that were not
@@ -318,6 +352,41 @@ public class JEP {
 		allowUndeclared = value;
 	}
 
+	public boolean getAllowUndeclared() { return allowUndeclared; }
+	
+	/**
+	 * Whether assignment equation <tt>y=x+1</tt> equations are allowed.
+	 * Added by RJM Nov 03.
+	 */
+	public boolean getAllowAssignment() { return allowAssignment; }
+
+	public void setAllowAssignment(boolean value) {
+		allowAssignment = value;
+	}
+
+	
+	/**
+	 * parses an expression. 
+	 * Returns a object of type Node, does not catch errors.
+	 * Added by RJM Oct 03.
+	 * @param expression represeded as a string.
+	 * @return The top node of an tree representing the parsed expression.
+	 * @throws ParseException
+	 */
+	public Node parse(String expression) throws ParseException
+	{
+		java.io.StringReader sr = new java.io.StringReader(expression);
+		Node node = parser.parseStream(sr,this);
+		return node;
+	}
+
+//	public Node parse(String expression,SymbolTable symTab) throws ParseException
+//	{
+//		java.io.StringReader sr = new java.io.StringReader(expression);
+//		Node node = parser.parseStream(sr,this,symTab);
+//		return node;
+//	}
+
 	/**
 	 * Parses the expression. If there are errors in the expression,
 	 * they are added to the <code>errorList</code> member.
@@ -331,7 +400,9 @@ public class JEP {
 			// try parsing
 			errorList.removeAllElements();
 			topNode = parser.parseStream(reader, this);
-		} catch (Throwable e) {
+		} 
+		catch (Throwable e) 
+		{
 			// an exception was thrown, so there is no parse tree
 			topNode = null;
 			
@@ -339,7 +410,8 @@ public class JEP {
 			if (e instanceof ParseException) {
 				// the ParseException object contains additional error
 				// information
-				errorList.addElement(((ParseException)e).getErrorInfo());
+				errorList.addElement(((ParseException)e).getMessage());
+				//getErrorInfo());
 			} else {
 				// if the exception was not a ParseException, it was most
 				// likely a syntax error
@@ -356,7 +428,14 @@ public class JEP {
 		// standard output
 		if (traverse && !hasError()) {
 			ParserVisitor v = new ParserDumpVisitor();
-			topNode.jjtAccept(v, null);
+			try
+			{
+				topNode.jjtAccept(v, null);
+			}
+			catch(ParseException e) 
+			{
+				errorList.addElement(e.getMessage());
+			}
 		}
 	}
 

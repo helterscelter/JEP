@@ -13,6 +13,7 @@
    between nodes. */
 package org.nfunk.jep;
 
+import java.util.*;
 
 public interface Node {
 
@@ -41,7 +42,7 @@ public interface Node {
   public int jjtGetNumChildren();
 
   /** Accept the visitor. **/
-  public Object jjtAccept(ParserVisitor visitor, Object data);
+  public Object jjtAccept(ParserVisitor visitor, Object data)  throws ParseException;
 
   /** Push the value of the node on the stack *
   public void evaluate(Stack stack) throws ParseException;

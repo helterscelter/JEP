@@ -22,7 +22,8 @@ public class ASTStart extends SimpleNode {
   }
 
   /** Accept the visitor. **/
-  public Object jjtAccept(ParserVisitor visitor, Object data) {
+  public Object jjtAccept(ParserVisitor visitor, Object data) throws ParseException
+  {
     return visitor.visit(this, data);
   }
 }

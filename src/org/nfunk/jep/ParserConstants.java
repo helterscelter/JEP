@@ -12,21 +12,28 @@ public interface ParserConstants {
   int IDENTIFIER = 10;
   int LETTER = 11;
   int DIGIT = 12;
-  int GT = 13;
-  int LT = 14;
-  int EQ = 15;
-  int LE = 16;
-  int GE = 17;
-  int NE = 18;
-  int AND = 19;
-  int OR = 20;
-  int PLUS = 21;
-  int MINUS = 22;
-  int MUL = 23;
-  int DIV = 24;
-  int MOD = 25;
-  int NOT = 26;
-  int POWER = 27;
+  int ASSIGN = 13;
+  int SEMI = 14;
+  int COMMA = 15;
+  int GT = 16;
+  int LT = 17;
+  int EQ = 18;
+  int LE = 19;
+  int GE = 20;
+  int NE = 21;
+  int AND = 22;
+  int OR = 23;
+  int PLUS = 24;
+  int MINUS = 25;
+  int MUL = 26;
+  int DOT = 27;
+  int DIV = 28;
+  int MOD = 29;
+  int NOT = 30;
+  int POWER = 31;
+  int CROSS = 32;
+  int LSQ = 33;
+  int RSQ = 34;
 
   int DEFAULT = 0;
 
@@ -44,6 +51,9 @@ public interface ParserConstants {
     "<IDENTIFIER>",
     "<LETTER>",
     "<DIGIT>",
+    "\"=\"",
+    "\";\"",
+    "\",\"",
     "\">\"",
     "\"<\"",
     "\"==\"",
@@ -55,15 +65,16 @@ public interface ParserConstants {
     "\"+\"",
     "\"-\"",
     "\"*\"",
+    "\".\"",
     "\"/\"",
     "\"%\"",
     "\"!\"",
     "\"^\"",
-    "\"(\"",
-    "\")\"",
-    "\",\"",
+    "\"^^\"",
     "\"[\"",
     "\"]\"",
+    "\"(\"",
+    "\")\"",
   };
 
 }

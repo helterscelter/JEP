@@ -7,11 +7,11 @@
 
 *****************************************************************************/
 
-
 package org.nfunk.jep;
 
 import java.util.*;
 import org.nfunk.jep.function.PostfixMathCommandI;
+import org.nfunk.jep.function.SpecialEvaluationI;
 
 /**
  * This class is used for the evaluation of an expression. It uses the Visitor
@@ -21,38 +21,46 @@ import org.nfunk.jep.function.PostfixMathCommandI;
  * Function nodes are evaluated by first evaluating all the children nodes,
  * then applying the function class associated with the node. Variable and
  * constant nodes are evaluated by pushing their value onto the stack.
+
+ * <p>
+ * Some changes implemented by rjm. Nov 03.
+ * Added hook to SpecialEvaluationI.
+ * Clears stack before evaluation.
+ * Simplifies error handeling by making visit methods throw ParseException.
+ * Changed visit(ASTVarNode node) so messages not calculated every time. 
  */
-public class EvaluatorVisitor implements ParserVisitor
-{
+public class EvaluatorVisitor implements ParserVisitor {
 	/** Stack used for evaluating the expression */
-	private Stack stack;
-	
+	protected Stack stack;
+
 	/** The current error list */
-	private Vector errorList;
-	
+	protected Vector errorList;
+
 	/** The symbol table for variable lookup */
-	private SymbolTable symTab;
-	
+	protected SymbolTable symTab;
+
+	/** Flag for errors during evaluation */
+	protected boolean errorFlag;
+
 	/** Debug flag */
 	private static final boolean debug = false;
-	
-	
+
 	/** Constructor. Initialize the stack member */
 	public EvaluatorVisitor() {
 		errorList = null;
 		symTab = null;
 		stack = new Stack();
 	}
-	
+
 	/**
 	 * Adds an error message to the list of errors
 	 */
-	private void addToErrorList(String errorStr) {
+	protected void addToErrorList(String errorStr) {
 		if (errorList != null) {
 			errorList.addElement(errorStr);
 		}
 	}
-	
+
 	/**
 	 * Returns the value of the expression as an object. The expression
 	 * tree is specified with its top node. The algorithm uses a stack
@@ -69,86 +77,102 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
 	 */
-	public Object getValue(Node topNode, Vector errorList_in,
-						   SymbolTable symTab_in)
-						   throws Exception {
-		
+	public Object getValue(
+		Node topNode,
+		Vector errorList_in,
+		SymbolTable symTab_in)
+		throws Exception {
+
 		// check if arguments are ok
 		if (topNode == null) {
-			throw new IllegalArgumentException(
-				"topNode parameter is null");
+			throw new IllegalArgumentException("topNode parameter is null");
 		}
-		
+
 		// set member vars
 		errorList = errorList_in;
 		symTab = symTab_in;
-		
-		// ensure stack is clear (incase last evaluation failed)
-		stack.removeAllElements();
+		errorFlag = false;
+		stack.clear();
+		// rjm addition ensure stack is correct before beginning.
 
 		// evaluate by letting the top node accept the visitor
-		topNode.jjtAccept(this, null);
-		
+		try {
+			topNode.jjtAccept(this, null);
+		} catch (ParseException e) {
+			this.addToErrorList(e.getMessage());
+			throw e;
+		}
+
 		// something is wrong if not exactly one item remains on the stack
 		// or if the error flag has been set
-		if (errorList != null && !errorList.isEmpty()) {
-			throw new Exception(
-				"EvaluatorVisitor.getValue(): Error(s) during evaluation");
-		}
-		
-		if (stack.size() != 1) {
-			throw new Exception("EvaluatorVisitor.getValue(): Stack size is not 1");
+		if (errorFlag || stack.size() != 1) {
+			throw new Exception("EvaluatorVisitor.getValue(): Error during evaluation");
 		}
 
 		// return the value of the expression
 		return stack.pop();
 	}
-	
+
 	/**
 	 * This method should never be called when evaluation a normal
 	 * expression.
 	 */
-	public Object visit(SimpleNode node, Object data) {
-		return data;
+	public Object visit(SimpleNode node, Object data) throws ParseException {
+		throw new ParseException(
+			"No visit method for " + node.getClass().toString());
 	}
-	
+
 	/**
 	 * This method should never be called when evaluating a normal
 	 * expression.
 	 */
-	public Object visit(ASTStart node, Object data) {
-		return data;
+	public Object visit(ASTStart node, Object data) throws ParseException {
+		throw new ParseException("Start node encountered during evaluation");
 	}
-	
+
 	/**
 	 * Visit a function node. The values of the child nodes
 	 * are first pushed onto the stack. Then the function class associated
 	 * with the node is used to evaluate the function.
+	 * <p>
+	 * If a function implements SpecialEvaluationI then the
+	 * evaluate method of PFMC is called.
 	 */
-	public Object visit(ASTFunNode node, Object data) {
-		PostfixMathCommandI pfmc;
-		
-		if (node == null) return null;
-		
-		if (debug == true) {
-			System.out.println("Stack size before childrenAccept: " + stack.size());
-		}
-		
-		// evaluate all children (each leaves their result on the stack)
-		data = node.childrenAccept(this, data);
-		
-		if (debug == true) {
-			System.out.println("Stack size after childrenAccept: " + stack.size());
-		}
+	public Object visit(ASTFunNode node, Object data) throws ParseException {
+
+		if (node == null)
+			return null;
+		PostfixMathCommandI pfmc = node.getPFMC();
 
 		// check if the function class is set
-		pfmc = node.getPFMC();
-		if (pfmc == null) {
-			addToErrorList("No function class associated with "
-							+ node.getName());
-			return data;
+		if (pfmc == null)
+			throw new ParseException(
+				"No function class associated with " + node.getName());
+
+		// Some operators (=) need a special method for evaluation
+		// as the pfmc.run method does not have enough information
+		// in such cases we call the evaluate method which passes
+		// all available info. Note evaluating the children is
+		// the responsability of the evaluate method. 
+		if (pfmc instanceof SpecialEvaluationI) {
+			return ((SpecialEvaluationI) node.getPFMC()).evaluate(
+				node,data,this,stack,symTab);
 		}
-		
+
+		if (debug == true) {
+			System.out.println(
+				"Stack size before childrenAccept: " + stack.size());
+		}
+
+		// evaluate all children (each leaves their result on the stack)
+
+		data = node.childrenAccept(this, data);
+
+		if (debug == true) {
+			System.out.println(
+				"Stack size after childrenAccept: " + stack.size());
+		}
+
 		if (pfmc.getNumberOfParameters() == -1) {
 			// need to tell the class how many parameters it can take off
 			// the stack because it accepts a variable number of params
@@ -156,12 +180,9 @@ public class EvaluatorVisitor implements ParserVisitor
 		}
 
 		// try to run the function
-		try {
-			pfmc.run(stack);
-		} catch (ParseException e) {
-			addToErrorList(e.getMessage());
-		}
-		
+
+		pfmc.run(stack);
+
 		if (debug == true) {
 			System.out.println("Stack size after run: " + stack.size());
 		}
@@ -173,21 +194,28 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * Visit a variable node. The value of the variable is obtained from the
 	 * symbol table (symTab) and pushed onto the stack.
 	 */
-	public Object visit(ASTVarNode node, Object data) {
+	public Object visit(ASTVarNode node, Object data) throws ParseException {
 
-		if (symTab == null) {
-			String message = "Could not evaluate " + node.getName() + ": "
-							+ "the symbol table is null";
-			addToErrorList(message);
-			return data;
+		// old code
+		//		if (symTab == null)
+		//			throw new ParseException(message += "the symbol table is null");
+
+		// optimize (table lookup is costly?)
+		//		Object temp = symTab.get(node.getName());
+
+		// new code
+
+		Variable var = node.getVar();
+		if (var == null) {
+			String message = "Could not evaluate " + node.getName() + ": ";
+			throw new ParseException(message + " variable not set");
 		}
-		
-		Object temp = symTab.get(node.getName());
-		
+
+		Object temp = var.getValue();
+
 		if (temp == null) {
-			String message = "Could not evaluate " + node.getName() + ": "
-						+ "the variable was not found in the symbol table";
-			addToErrorList(message);
+			String message = "Could not evaluate " + node.getName() + ": ";
+			throw new ParseException(message + "the variable was not found in the symbol table");
 		} else {
 			// all is fine
 			// push the value on the stack
