@@ -1,19 +1,20 @@
 == Release Check List ===============================================
- - Run all tests
- - use "ant dist"
- - Update download page
- - Update license
- - Download package and test
- - add jep-x.xx-withexamples.jar to website folder
- - Update documentation with new features
- - Run spell check on changed pages
- - Test web site in multiple browsers
- - Upload new distribution file(s)
- - Upload license pdf
- - Upload web site
- - Add message on SourceForge list
- - Update version number+ feature list from JARS, share*it,...
- - Add CVS tag for version (e.g. v223)
+x Update documentation with new features
+- Run spell check on changed pages
+x Run all tests
+x use "ant dist"
+x Update download page
+x Upload new documentation
+x Update license
+x Upload new distribution file(s)
+x Download package and test
+x add jep-x.xx-withexamples.jar to website folder
+x Test web site in multiple browsers
+x Upload web site
+x Add message on SourceForge list
+- Update version number+ feature list from JARS, share*it,...
+x check PayPal payment
+- Add CVS tag for version (e.g. v231)
 
 == TODO for version 2.3.0 ===========================================
 - update CVS
