@@ -128,8 +128,8 @@ public class JEP {
 		parseExpression("");		
 	}
 
-	/** This constructor copies the SymbolTable and other componants of the arguments to the new instance.
-	 * Sub classes can call this 
+	/** This constructor copies the SymbolTable and other components 
+	 * of the arguments to the new instance. Subclasses can call this 
 	 * protected constructor and set the individual components
 	 * themselves.
 	 * @since 2.3.0
@@ -182,6 +182,7 @@ public class JEP {
 		funTab.put("asin", new ArcSine());
 		funTab.put("acos", new ArcCosine());
 		funTab.put("atan", new ArcTangent());
+		funTab.put("atan2", new ArcTangent2());
 
 		funTab.put("sinh", new SineH());
 		funTab.put("cosh", new CosineH());
@@ -195,7 +196,6 @@ public class JEP {
 		funTab.put("exp", new Exp());
 
 		funTab.put("sqrt",new SquareRoot());
-		funTab.put("angle", new Angle());
 		funTab.put("abs", new Abs());
 		funTab.put("mod", new Modulus());
 		funTab.put("sum", new Sum());
