@@ -8,8 +8,12 @@
   Setting up your system to compile JEP:
     1. Set the JAVACCHOME environment variable to the location of the
        library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
-    2. Set the value of the "bootclasspath" variable in this script to the
-       location of the classes.zip file.
+    2. This script uses Java JDK 1.1.8 to check for compatibility.
+	   Specifically the "classes.zip" file is required. Install the old
+	   JDK 1.1.8 and set the "bootclasspath" property to the location of
+	   the 1.1.8 classes.zip file. You can still use a newer SDK for 
+	   compiling, the classes.zip file is only needed to ensure
+	   compatibility.
 =============================================================================
 -->
 
