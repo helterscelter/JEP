@@ -75,6 +75,7 @@
           <li><a href="#usingstrings">Using Strings</a></li>
           <li><a href="#customtypes">Custom types</a></li>
           <li><a href="#manipulating">Manipulating expressions</a></li>
+          <li><a href="#usingcustomnumberclasses">Using custion number classes</a></li>
         </ul>
         <h3><a name="basicusage"></a>Basic usage</h3>
         <p>Using the JEP package of classes in your project is simple. The following 
@@ -302,15 +303,33 @@ result = myParser.<a href="javadoc/org/nfunk/jep/JEP.html#getValue()" target="_b
           is an example class used to print out all the nodes). Look at the <a href="javadoc/org/nfunk/jep/EvaluatorVisitor.html" target="_blank">EvaluatorVisitor</a> 
           class to see how expressions are evaluated using the Visitor design 
           pattern.</p>
-        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <h3><!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="../images/top.gif" width="38" height="15" name="top" border="0"></a></td>
 </tr>
 <tr>
  <td bgcolor="#CCCCCC"><img src="../images/spacer.gif" width="1" height="1"></td></tr></table>
- <br><br><!-- #EndLibraryItem --> 
-        <p>&nbsp;</p>
-        <!-- #EndEditable --></td>
+ <br><br><!-- #EndLibraryItem --><a name="usingcustomnumberclasses"></a>Using 
+          custom number classes</h3>
+        <p>By default when an expression such as &quot;1+2&quot; is parsed, the 
+          constants &quot;1&quot; and &quot;2&quot; are created internally as 
+          Double objects. In most cases this is fine, but in some cases you may 
+          want to use custom classes for representing numbers.</p>
+        <p>This is made possible through creating a number class that implements 
+          the <a href="javadoc/org/nfunk/jep/type/NumberFactory.html" target="_blank">NumberFactory</a> 
+          interface. It includes one method called <a href="javadoc/org/nfunk/jep/type/NumberFactory.html#createNumber(double)" target="_blank">createNumber(double 
+          value)</a>, which should return an object initialized to the value of 
+          the parameter. You can specify your custom number factory in the JEP 
+          constructor <code>JEP(boolean traverse_in, boolean allowUndeclared_in, 
+          boolean implicitMul_in, NumberFactory numberFactory_in)</code>.</p>
+        <p>The custom number objects need to be handled by custom functions which 
+          you can create by following the instructions on the <a href="doc_cust_func.htm">Custom 
+          Functions</a> page. </p>
+        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="../images/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="../images/spacer.gif" width="1" height="1"></td></tr></table><br><br><!-- #EndLibraryItem --><!-- #EndEditable --></td>
     </tr>
     <tr> 
       <td><br>
