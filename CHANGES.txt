@@ -1,6 +1,14 @@
 =====================================================================
 == org.nfunk.* ======================================================
 
+Oct 23 njf - added source="1.2" to javac options in build.xml
+             avoids compile time error with 1.5 compiler by ensuring
+             1.2 source compatibility
+       njf - fixed [ 1046349 ] bug in sum()
+       njf - fixed [ 1051988 ] JEPTester falsely reports "No errors"
+       njf - improved value comparison and error reporting in JEPTester
+       njf - reformated Comparative.java, added comments
+
 Oct 22 njf - added simple sum test to JEPTesterExpressions.txt
 
 Oct  4 rjm - Changes the SpecialEvaluationI interface to include a SymbolTable parameter.
