@@ -38,6 +38,12 @@ pi*sin(0)
 cos(pi)
 -1
 
+sum(1,2)
+3
+
+# The following expression does not evaluate correctly in JEP 2.20 and 2.21
+1+sum(1)
+2
 
 ####################################################
 # 'Correct' precedence of unary - and ^
