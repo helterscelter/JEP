@@ -39,7 +39,7 @@ public class Add extends PostfixMathCommand
             
             // add it to the sum (order is important for String arguments)
             sum = add(param, sum);
-                
+            
             i++;
         }
         		
@@ -69,7 +69,7 @@ public class Add extends PostfixMathCommand
 	}
 	
 	public Double add(Number d1, Number d2) {
-		return new Double(d1.doubleValue()+d2.doubleValue());
+		return new Double(d1.doubleValue() + d2.doubleValue());
 	}
 	
 	public Complex add(Complex c1, Complex c2) {
