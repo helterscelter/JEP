@@ -27,8 +27,7 @@ public class JEPTester {
 	int lineCount;
 	
 
-	public JEPTester()
-	{
+	public JEPTester() {
 		// Set up the parser
 		myParser = new JEP();
 		myParser.addStandardFunctions();
@@ -42,17 +41,13 @@ public class JEPTester {
 	* The main method checks the arguments and creates an instance
 	* and calls it's run method.
 	*/
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 		String fileName;
 		
 		// get filename from argument, or use default
-		if (args!=null && args.length>0)
-		{
+		if (args!=null && args.length>0) {
 			fileName = args[0];
-		}
-		else
-		{
+		} else {
 			fileName = "JEPTesterExpressions.txt";
 			println("Using default input file: " + fileName);
 			println("Start with \"java org.nfunk.jepexamples."+
@@ -68,8 +63,7 @@ public class JEPTester {
 	* Loads the file specified in fileName. Evaluates the expressions listed
 	* in it and compares the expressions with the results.
 	*/
-	public void run(String fileName)
-	{
+	public void run(String fileName) {
 		BufferedReader reader;
 		Complex c1, c2;
 
@@ -92,8 +86,7 @@ public class JEPTester {
 
 			if (c1==null || c2==null) break;
 			
-			if (!c1.equals(c2,1e-15))
-			{
+			if (!c1.equals(c2,1e-15)) {
 				print("Line: " + lineCount + ": ");
 				if (c1.im() == 0)
 					print("" + c1.re() + " != ");
@@ -112,8 +105,7 @@ public class JEPTester {
 	* Parses a single line from the reader, and returns the
 	* evaluation of that line.
 	*/
-	private Complex parseNextLine(BufferedReader reader)
-	{
+	private Complex parseNextLine(BufferedReader reader) {
 		Complex value;
 		String line, errorStr;
 		
@@ -136,8 +128,7 @@ public class JEPTester {
 		value = myParser.getComplexValue();
 
 		// did an error occur while parsing / evaluating?
-		if ((errorStr = myParser.getErrorInfo()) != null)
-		{
+		if ((errorStr = myParser.getErrorInfo()) != null) {
 			println("Error while parsing line " + lineCount + ": " + errorStr);
 			return null;
 		}
@@ -145,13 +136,11 @@ public class JEPTester {
 		return value;
 	}
 	
-	private static void print(String str)
-	{
+	private static void print(String str) {
 		System.out.print(str);
 	}
 
-	private static void println(String str)
-	{
+	private static void println(String str) {
 		System.out.println(str);
 	}
 }

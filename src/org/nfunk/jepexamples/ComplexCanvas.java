@@ -43,8 +43,7 @@ public class ComplexCanvas extends Canvas {
 	/**
 	* Initializes the parser
 	*/
-	private void initParser(String initialExpression)
-	{
+	private void initParser(String initialExpression) {
 		//Init Parser
 		myParser = new JEP();
 
@@ -65,8 +64,7 @@ public class ComplexCanvas extends Canvas {
 	/**
 	* Parses a new expression
 	*/
-	public void setExpressionString(String newString)
-	{
+	public void setExpressionString(String newString) {
 		nEvals = 0;
 
 		//Parse the new expression
@@ -82,20 +80,17 @@ public class ComplexCanvas extends Canvas {
 		changedFunction = true;
 	}
 
-	public void setIterations(int iterations_in)
-	{
+	public void setIterations(int iterations_in) {
 		iterations = iterations_in;
 	}
 
-	private void paintWhite(Graphics g)
-	{
+	private void paintWhite(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(0,0,dimensions.width,dimensions.height);
 	}
 
 
-	private void paintFractalSansJEP(Graphics g)
-	{
+	private void paintFractalSansJEP(Graphics g) {
 		System.out.println("paintFractalSansJEP()");
 
 		//paintRegion(g, 0,0,256,256,0,8);
@@ -103,13 +98,13 @@ public class ComplexCanvas extends Canvas {
 		System.out.println("done.");
 	}
 	
-	private void paintRegion(Graphics g, int x, int y, int width, int height, int depth, int depth_max)
-	{
+	private void paintRegion(Graphics g, int x, int y,
+							int width, int height, int depth,
+							int depth_max) {
 		double re, im, p, q, resq, imsq, imtemp;
 		int count;
 
-		if (depth == depth_max)
-		{
+		if (depth == depth_max) {
 			p = (double)(x+width/2-230)/scaleX;
 			q = (double)(y+height/2-150)/scaleY;
 			count = 0;
@@ -118,8 +113,7 @@ public class ComplexCanvas extends Canvas {
 			resq = 0;
 			imsq = 0;
 
-			while ( (count < iterations) && ((resq + imsq) < 4.0) )
-			{
+			while ((count < iterations) && ((resq + imsq) < 4.0)) {
 				imtemp = 2 * re * im;
 				re = resq - imsq + p;
 				im = imtemp + q;
@@ -129,15 +123,12 @@ public class ComplexCanvas extends Canvas {
 				nEvals++;
 			}
 			//System.out.println("At: " + x + ", " + y + ": " + count + " "+ result);
-			if (count != iterations)
-			{
+			if (count != iterations) {
 				g.setColor(new Color(0, 0, (int)(255.0*(Math.sqrt(count)/Math.sqrt(iterations)))));
 				g.fillRect(x, y, width, height);
 			}
 
-		}
-		else
-		{
+		} else {
 			paintRegion(g,           x,            y, width/2, height - height/2, depth+1, depth_max);
 			paintRegion(g, x + width/2,            y, width - width/2, height/2, depth+1, depth_max);
 			paintRegion(g,           x, y + height/2, width/2, height - height/2, depth+1, depth_max);
@@ -145,32 +136,27 @@ public class ComplexCanvas extends Canvas {
 		}
 	}
 
-	private void paintFractal(Graphics g)
-	{
+	private void paintFractal(Graphics g) {
 		Complex z,c,temp;
 		int count;
 		
 		c = myParser.addComplexVariable("c", 0, 0);
 		z = myParser.addComplexVariable("z", 0, 0);
 
-		for (int x = 0; x <= (dimensions.width-1); x++)
-		{
-			for (int y = 0; y <= (dimensions.height-1); y++)
-			{
+		for (int x = 0; x <= (dimensions.width-1); x++) {
+			for (int y = 0; y <= (dimensions.height-1); y++) {
 				count = 0;
 				c.set((double)(x-230)/scaleX,
 				      (double)(y-150)/scaleY);
 				z.set(0,0);
 				
-				while ((count < iterations) && (z.abs2() < 4.0))
-				{
+				while ((count < iterations) && (z.abs2() < 4.0)) {
 					z.set(myParser.getComplexValue());
 					count++;
 					nEvals++;
 				}
 
-				if (count != iterations)
-				{
+				if (count != iterations) {
 					g.setColor(new Color(0, 0, (int)(255.0*(Math.sqrt(count)/Math.sqrt(iterations)))));
 					g.fillRect(x, y, 1, 1);
 				}
@@ -178,15 +164,12 @@ public class ComplexCanvas extends Canvas {
 		}
 	}
 
-	private void paintFractal2(Graphics g)
-	{
+	private void paintFractal2(Graphics g) {
 		double re, im, p, q, resq, imsq, imtemp;
 		int count;
 
-		for (int x = 0; x <= (dimensions.width-1); x++)
-		{
-			for (int y = 0; y <= (dimensions.height-1); y++)
-			{
+		for (int x = 0; x <= (dimensions.width-1); x++) {
+			for (int y = 0; y <= (dimensions.height-1); y++) {
 				p = (double)(x-230)/scaleX;
 				q = (double)(y-150)/scaleY;
 				count = 0;
@@ -195,8 +178,7 @@ public class ComplexCanvas extends Canvas {
 				resq = 0;
 				imsq = 0;
 	
-				while ( (count < iterations) && ((resq + imsq) < 4.0) )
-				{
+				while ( (count < iterations) && ((resq + imsq) < 4.0) ) {
 					imtemp = 2 * re * im;
 					re = resq - imsq + p;
 					im = imtemp + q;
@@ -206,8 +188,7 @@ public class ComplexCanvas extends Canvas {
 					nEvals++;
 				}
 				//System.out.println("At: " + x + ", " + y + ": " + count + " "+ result);
-				if (count != iterations)
-				{
+				if (count != iterations) {
 					g.setColor(new Color(0, 0, (int)(255.0*(Math.sqrt(count)/Math.sqrt(iterations)))));
 					g.fillRect(x, y, 1, 1);
 				}
@@ -215,14 +196,12 @@ public class ComplexCanvas extends Canvas {
 		}
 	}
 
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
 		Date start, finish;
 
 		dimensions = getSize();
 		paintWhite(g);
-		if (!hasError)
-		{
+		if (!hasError) {
 			System.out.print("Painting... ");
 			start = new Date();
 			nEvals = 0;

@@ -30,8 +30,8 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Constructor
 	 */
-	public GraphCanvas(String initialExpression, java.awt.TextField exprField_in)
-	{
+	public GraphCanvas(String initialExpression,
+						java.awt.TextField exprField_in) {
 		scaleX = 1;
 		scaleY = 1;
 		dimensions = getSize();
@@ -45,8 +45,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Initializes the parser
 	 */
-	private void initParser(String initialExpression)
-	{
+	private void initParser(String initialExpression) {
 		// Init Parser
 		myParser = new JEP();
 
@@ -66,8 +65,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Sets a new string to be used as function
 	 */
-	public void setExpressionString(String newString)
-	{
+	public void setExpressionString(String newString) {
 		// Parse the new expression
 		myParser.parseExpression(newString);
 
@@ -84,8 +82,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * @return The value of the function at an x value of the parameter.
 	 */
-	private double getYValue(double xValue)
-	{
+	private double getYValue(double xValue) {
 		// Save the new value in the symbol table
 		myParser.addVariable("x", xValue);
 
@@ -95,8 +92,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Fills the background with white.
 	 */
-	private void paintWhite(Graphics g)
-	{
+	private void paintWhite(Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(0,0,dimensions.width,dimensions.height);
 	}
@@ -104,8 +100,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Paints the axes for the graph.
 	 */
-	private void paintAxes(Graphics g)
-	{
+	private void paintAxes(Graphics g) {
 		g.setColor(new Color(204,204,204));
 		g.drawLine(0,dimensions.height/2,dimensions.width-1,dimensions.height/2);
 		g.drawLine(dimensions.width/2,0,dimensions.width/2,dimensions.height-1);
@@ -114,8 +109,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Paints the graph of the function.
 	 */
-	private void paintCurve(Graphics g)
-	{
+	private void paintCurve(Graphics g) {
 		boolean firstpoint=true;
 		int lastX=0, lastY=0;
 
@@ -155,8 +149,7 @@ public class GraphCanvas extends Canvas {
 	 * drawn on the buffer image, then that image is drawn on the Graphics
 	 * object.
 	 */
-	public void paint(Graphics g)
-	{
+	public void paint(Graphics g) {
 		boolean changedDimensions = !dimensions.equals(getSize());
 		
 		// If the buffer has not been initialized, do it now

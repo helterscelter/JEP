@@ -26,7 +26,6 @@ public class FunctionPlotter extends Applet {
 	/** The canvas for plotting the graph */
 	private GraphCanvas graphCanvas;
 
-
 	/**
 	 * Initializes the applet FunctionPlotter
 	 */

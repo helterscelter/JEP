@@ -18,8 +18,7 @@ public class Fractal extends Applet implements ActionListener {
 
 
 	/** Initializes the applet Fractal */
-	public void init ()
-	{
+	public void init () {
 		initComponents();
 	}
 
@@ -95,25 +94,21 @@ public class Fractal extends Applet implements ActionListener {
 
 
 
-	private void exprFieldTextValueChanged (java.awt.event.TextEvent evt)
-	{
+	private void exprFieldTextValueChanged (java.awt.event.TextEvent evt) {
 		String newExpressionString = exprField.getText();
 		complexCanvas.setExpressionString(newExpressionString);
 		//complexCanvas.repaint();
 	}
 
-	private void itFieldTextValueChanged (java.awt.event.TextEvent evt)
-	{
+	private void itFieldTextValueChanged (java.awt.event.TextEvent evt) {
 		Integer newIterationsValue = new Integer(itField.getText());
 		complexCanvas.setIterations(newIterationsValue.intValue());
 		//complexCanvas.repaint();
 	}
 
-	public void actionPerformed(ActionEvent ae) 
-	{
+	public void actionPerformed(ActionEvent ae) {
 		String str = ae.getActionCommand();
-		if (str.equals("Render"))
-		{
+		if (str.equals("Render")) {
 			String newExpressionString = exprField.getText();
 			complexCanvas.setExpressionString(newExpressionString);
 			complexCanvas.repaint();
