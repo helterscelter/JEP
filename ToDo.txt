@@ -4,7 +4,7 @@
  - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
  - replace @license_info@ with GPL info using replace task and loadfile
  - new commercial license (like UCalc??)
- - make same change to getValue as for ERIN
+ x change getValue() and getComplexValue()
  - add Exponential class
 
 == Web site todo ====================================================
