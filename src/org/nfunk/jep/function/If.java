@@ -29,6 +29,7 @@ import java.util.Stack;
  * @author Rich Morris
  * Created on 18-Nov-2003
  * @version 2.3.0 beta 1 now supports a Boolean first arguement.
+ * @since Feb 05 Handles Number arguments, so works with Integers rather than just Doubles
  */
 public class If extends PostfixMathCommand implements SpecialEvaluationI {
 
@@ -54,7 +55,9 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 //		return null;
 //	}
 
-	/** For assignment **/
+	/**
+	 * 
+	 */
 	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack,SymbolTable symTab) throws ParseException
 	{
 		int num = node.jjtGetNumChildren(); 
@@ -77,13 +80,13 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 				node.jjtGetChild(2).jjtAccept(pv,data);
 			return data;
 		}
-		if(condVal instanceof Double)
-		{
-			val = ((Double) condVal).doubleValue();
-		}
 		else if(condVal instanceof Complex)
 		{
 			val = ((Complex) condVal).re();
+		}
+		else if(condVal instanceof Number)
+		{
+			val = ((Number) condVal).doubleValue();
 		}
 		else
 		{
