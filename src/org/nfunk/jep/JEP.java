@@ -451,6 +451,8 @@ public class JEP {
 	}
 
 	/**
+	 * Returns true if an error occured during the most recent
+	 * action (parsing or evaluation).
 	 * @return Returns <code>true</code> if an error occured during the most
 	 * recent action (parsing or evaluation).
 	 */
