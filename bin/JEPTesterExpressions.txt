@@ -3,6 +3,12 @@
 1+1
 2
 
+1+1+1+1+1+1+1+1
+8
+
+1+(1+(1+(1)))
+4
+
 1-1
 0
 
@@ -140,4 +146,38 @@ sin(0)3
 
 sin(3 sin(0))
 0
+
+####################################################
+# String functions
+# (need to use == operator in one line and compare
+# to value because JEPTester does not handle String
+# results.
+
+"ab" == "ab"
+1
+
+"a" == "b"
+0
+
+"ab" + "c" == "abc"
+1
+
+"a" + "b" + "c" + "d" == "abcd"
+1
+
+"abcd" + "efg" == "abcdefg"
+1
+
+"abcd" + "efg" == "abcd"
+0
+
+"abcd" + "efg" == "efg"
+0
+
+"A" == "a"
+0
+
+"a" + "b" == "ab"
+1
+
 
