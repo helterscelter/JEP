@@ -15,8 +15,9 @@ import org.lsmp.djep.vectorJep.*;
  * Represents a matrix.
  * @author Rich Morris
  * Created on 07-Jul-2003
+ * @version 1.3.0.2 now extends number
  */
-public class Matrix implements MatrixValueI 
+public class Matrix extends Number implements MatrixValueI 
 {
 	// want package access to simplify addition of matricies
 	int rows=0;
@@ -108,6 +109,11 @@ public class Matrix implements MatrixValueI
 	{
 		return data[i][j];
 	}
+	
+	public Object[][] getEles()
+	{
+		return data;
+	}
 	/** sets the elements to those of the arguments. */
 	public void setEles(MatrixValueI val)
 	{
@@ -115,4 +121,13 @@ public class Matrix implements MatrixValueI
 		for(int i=0;i<rows;++i)
 			System.arraycopy(((Matrix) val).data[i],0,data[i],0,cols);
 	}
+
+	/** value of ele(1,1). */	
+	public int intValue() {return ((Number) data[0][0]).intValue();	}
+	/** value of ele(1,1). */	
+	public long longValue() {return ((Number) data[0][0]).longValue();	}
+	/** value of ele(1,1). */	
+	public float floatValue() {	return ((Number) data[0][0]).floatValue();	}
+	/** value of ele(1,1). */	
+	public double doubleValue() {return ((Number) data[0][0]).doubleValue();	}
 }

@@ -33,6 +33,7 @@ public class VectorJep extends JEP {
 		Operator.OP_LIST.setPFMC(new VList());
 */
 		opSet = new VOperatorSet();
+		this.parser.setInitialTokenManagerState(Parser.NO_DOT_IN_IDENTIFIERS);
 	}
 
 	public void addStandardFunctions()

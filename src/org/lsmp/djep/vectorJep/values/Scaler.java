@@ -13,8 +13,9 @@ import org.lsmp.djep.vectorJep.*;
  * Degenerate i.e. rank 0 Tensor. Just has a single element.
  * @author Rich Morris
  * Created on 04-Nov-2003
+ * @version 1.3.0.2 now extends number
  */
-public class Scaler implements MatrixValueI {
+public class Scaler extends Number implements MatrixValueI {
 
 	Object value = new Double(0.0);
 	public Dimensions getDim() {return Dimensions.ONE; }
@@ -30,4 +31,14 @@ public class Scaler implements MatrixValueI {
 		if(!(val.getDim().equals(Dimensions.ONE))) return;
 		value = val.getEle(0);
 	}
+	
+	/** value of constant coeff. */	
+	public int intValue() {return ((Number) value).intValue();	}
+	/** value of constant coeff. */	
+	public long longValue() {return ((Number) value).longValue();	}
+	/** value of constant coeff. */	
+	public float floatValue() {	return ((Number) value).floatValue();	}
+	/** value of constant coeff. */	
+	public double doubleValue() {return ((Number) value).doubleValue();	}
+
 }

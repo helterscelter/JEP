@@ -74,7 +74,8 @@ public class MDot extends MMultiply implements BinaryOperatorI
 	{
 		if(param1 instanceof MVector && param2 instanceof MVector)
 			return dot((MVector) param1,(MVector) param2);
-		return super.mul(param1,param2);
+		else
+			return super.mul(param1,param2);
 	}
 	
 	/** returns lhs . rhs */
@@ -82,6 +83,7 @@ public class MDot extends MMultiply implements BinaryOperatorI
 	{
 		if(!lhs.getDim().equals(rhs.getDim())) throw new ParseException("Dot: Miss match in sizes ("+lhs.getDim()+","+rhs.getDim()+")");
 		Scaler res = new Scaler();
-		return calcValue(res,lhs,rhs);
+		calcValue(res,lhs,rhs);
+		return res.getEle(0);
 	}
 }

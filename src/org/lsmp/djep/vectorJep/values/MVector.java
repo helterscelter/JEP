@@ -13,9 +13,10 @@ import org.lsmp.djep.vectorJep.*;
  * A Vector of elements.
  * @author Rich Morris
  * Created on 07-Jul-2003
+ * @version 1.3.0.2 now extends number
  */
 
-public class MVector implements MatrixValueI
+public class MVector extends Number implements MatrixValueI
 {
 	private Object data[] = null;
 	private Dimensions dim;
@@ -68,5 +69,14 @@ public class MVector implements MatrixValueI
 		if(!dim.equals(val.getDim())) return;
 		System.arraycopy(((MVector) val).data,0,data,0,getNumEles());
 	}
+
+	/** value of constant ele(1). */	
+	public int intValue() {return ((Number) data[0]).intValue();	}
+	/** value of constant ele(1). */	
+	public long longValue() {return ((Number) data[0]).longValue();	}
+	/** value of constant ele(1). */	
+	public float floatValue() {	return ((Number) data[0]).floatValue();	}
+	/** value of constant ele(1). */	
+	public double doubleValue() {return ((Number) data[0]).doubleValue();	}
 	
 }

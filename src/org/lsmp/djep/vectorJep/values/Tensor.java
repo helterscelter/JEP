@@ -12,8 +12,9 @@ import org.lsmp.djep.vectorJep.*;
  * Represents tensor (generalisation of Matrix/Vector).
  * @author Rich Morris
  * Created on 07-Jul-2003
+ * @version 1.3.0.2 now extends number
  */
-public class Tensor implements MatrixValueI {
+public class Tensor extends Number implements MatrixValueI {
 	private Object values[]=null;
 	private Dimensions dims;
 	//DoubleMatrix jsciMat;
@@ -113,4 +114,13 @@ public class Tensor implements MatrixValueI {
 		bufferAppend(sb,0);
 		return sb.toString();
 	}
+
+	/** value of constant ele(1). */	
+	public int intValue() {return ((Number) values[0]).intValue();	}
+	/** value of constant ele(1). */	
+	public long longValue() {return ((Number) values[0]).longValue();	}
+	/** value of constant ele(1). */	
+	public float floatValue() {	return ((Number) values[0]).floatValue();	}
+	/** value of constant ele(1). */	
+	public double doubleValue() {return ((Number) values[0]).doubleValue();	}
 }
