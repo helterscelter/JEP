@@ -302,7 +302,7 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Absolute Value / Magnitude</td>
-      <td width="91">abs()</td>
+      <td width="91">abs(x)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center">&nbsp;</td>
@@ -318,7 +318,7 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Modulus</td>
-      <td width="91">mod()</td>
+      <td width="91">mod(x,y) = x % y</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center">&nbsp;</td>
       <td width="91" align="center">&nbsp;</td>
@@ -326,7 +326,7 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Square Root</td>
-      <td width="91">sqrt()</td>
+      <td width="91">sqrt(x)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center">&nbsp;</td>
@@ -334,15 +334,15 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Sum</td>
-      <td width="91">sum()</td>
+      <td width="91">sum(x,y,z)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
-      <td width="81" align="center">&nbsp;</td>
-      <td width="91" align="center">&nbsp;</td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center">&nbsp;</td>
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">If</td>
-      <td width="91">if()</td>
+      <td width="91">if(cond,trueval,falseval)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center">&nbsp;</td>
       <td width="91" align="center">&nbsp;</td>
@@ -350,11 +350,19 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Str</td>
-      <td width="91">str()</td>
+      <td width="91">str(x)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Binomial coeficients</td>
+      <td width="91">binom(n,i)</td>
+      <td width="76" align="center">Integer values</td>
+      <td width="81" align="center"></td>
+      <td width="91" align="center"></td>
+      <td width="91" align="center"></td>
     </tr>
   </table>
         <br>
@@ -371,7 +379,7 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Real Component</td>
-      <td width="91">re()</td>
+      <td width="91">re(c)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center">&nbsp;</td>
@@ -379,7 +387,7 @@
     </tr>
     <tr bgcolor="#FFFFFF"> 
       <td width="225">Imaginary Component</td>
-      <td width="91">im()</td>
+      <td width="91">im(c)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center">&nbsp;</td>
@@ -387,15 +395,39 @@
     </tr>
     <tr bgcolor="#FFFFFF">
       <td width="225">Complex Modulus (Absolute Value)</td>
-      <td width="91">cmod()</td>
+      <td width="91">cmod(c)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="91" align="center">&nbsp;</td>
       <td width="91" align="center">&nbsp;</td>
     </tr>
     <tr bgcolor="#FFFFFF">
-      <td width="225">Complex</td>
-      <td width="91">complex()</td>
+      <td width="225">Argument (Angle of complex value, in radians)</td>
+      <td width="91">arg(c)</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF">
+      <td width="225">Complex conjugate</td>
+      <td width="91">conj(c)</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+     <tr bgcolor="#FFFFFF">
+      <td width="225">Complex, constructs a complex number from real and imaginar parts</td>
+      <td width="91">complex(x,y)</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+     <tr bgcolor="#FFFFFF">
+      <td width="225">Polar, constructs a complex number from modulus and argument</td>
+      <td width="91">polar(r,theta)</td>
       <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
       <td width="81" align="center">&nbsp;</td>
       <td width="91" align="center">&nbsp;</td>
