@@ -1,6 +1,9 @@
 =====================================================================
 == org.nfunk.* ======================================================
 
+Nov  1 njf - changed documentation to frames
+           - added new FAQ item
+
 Oct 23 njf - added source="1.2" to javac options in build.xml
              avoids compile time error with 1.5 compiler by ensuring
              1.2 source compatibility

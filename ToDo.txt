@@ -1,8 +1,11 @@
 == TODO for version 2.3.1 ===============================================
 - Run spell check on docs
+- convert docs to frameset
+- talk about floating point precision
 - fix link problem to JavaDoc in documentation
 - fix if(a, b, c) doc error
 - fix menu highlighting
+- fix duplicate JEPTest and JEPTester
 - update web site version history (link to doc?)
 - change contact to About Us
 - add mail address
