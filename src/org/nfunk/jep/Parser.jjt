@@ -186,12 +186,30 @@ TOKEN :
 		"\u4e00"-"\u9fff",  // CJK Unified Ideographs
 		"\uf900"-"\ufaff"   // CJK Compatibility Ideographs
 	]
-	>
-	
+	>	
 |
 	< #DIGIT: ["0"-"9"] >
 }
 
+/* OPERATORS */
+TOKEN:
+{
+	< GT:   ">"  >
+|	< LT:   "<"  >
+|	< EQ:   "==" >
+|	< LE:   "<=" >
+|	< GE:   ">=" >
+|	< NE:   "!=" >
+|	< AND:  "&&" >
+|	< OR:   "||" >
+|	< PLUS: "+"  >
+|	< MINUS:"-"  >
+|	< MUL:  "*"  >
+|	< DIV:  "/"  >
+|	< MOD:  "%"  >
+|	< NOT:  "!"  >
+|	< POWER:"^"  >
+}
 
 
 /***************************************************************
@@ -225,9 +243,9 @@ void OrExpression() :
 {
 	AndExpression()
 	(
-	  ( "||" AndExpression()
+	  ( <OR> AndExpression()
 		{
-			jjtThis.setFunction("||", new Logical(1));
+			jjtThis.setFunction(tokenImage[OR], new Logical(1));
 		}
 	  ) #FunNode(2)
 	)*
@@ -240,9 +258,9 @@ void AndExpression() :
 {
 	EqualExpression()
 	(
-	  ( "&&" EqualExpression()
+	  ( <AND> EqualExpression()
 		{
-			jjtThis.setFunction("&&", new Logical(0));
+			jjtThis.setFunction(tokenImage[AND], new Logical(0));
 		}
 	  ) #FunNode(2)
 	)*
@@ -256,15 +274,15 @@ void EqualExpression() :
 {
 	RelationalExpression()
 	(
-	  ( "!=" RelationalExpression()
+	  ( <NE> RelationalExpression()
 	    {
-	    jjtThis.setFunction("!=", new Comparative(4));
+	    jjtThis.setFunction(tokenImage[NE], new Comparative(4));
 	    }
 	  ) #FunNode(2)
 	|
-	  ( "==" RelationalExpression()
+	  ( <EQ> RelationalExpression()
 	    {
-	      jjtThis.setFunction("==", new Comparative(5));
+	      jjtThis.setFunction(tokenImage[EQ], new Comparative(5));
 	    }
 	  ) #FunNode(2)
 	)*
@@ -278,27 +296,27 @@ void RelationalExpression() :
 {
   AdditiveExpression()
   (
-    ( "<" AdditiveExpression()
+    ( <LT> AdditiveExpression()
       {
-	    jjtThis.setFunction("<", new Comparative(0));
+	    jjtThis.setFunction(tokenImage[LT], new Comparative(0));
       }
 	) #FunNode(2)
 	|
-    ( ">" AdditiveExpression()
+    ( <GT> AdditiveExpression()
       {
-        jjtThis.setFunction(">", new Comparative(1));
+        jjtThis.setFunction(tokenImage[GT], new Comparative(1));
       }
     ) #FunNode(2)
     |
-    ( "<=" AdditiveExpression()
+    ( <LE> AdditiveExpression()
       {
-	    jjtThis.setFunction("<=", new Comparative(2));
+	    jjtThis.setFunction(tokenImage[LE], new Comparative(2));
       }
 	) #FunNode(2)
 	|
-    ( ">=" AdditiveExpression()
+    ( <GE> AdditiveExpression()
       {
-        jjtThis.setFunction(">=", new Comparative(3));
+        jjtThis.setFunction(tokenImage[GE], new Comparative(3));
       }
     ) #FunNode(2)
   )*
@@ -311,15 +329,15 @@ void AdditiveExpression() :
 {
   MultiplicativeExpression()
   (
-    ( "+" MultiplicativeExpression()
+    ( <PLUS> MultiplicativeExpression()
       {
-        jjtThis.setFunction("+", new Add());
+        jjtThis.setFunction(tokenImage[PLUS], new Add());
       }
     ) #FunNode(2)
     |
-    ( "-" MultiplicativeExpression()
+    ( <MINUS> MultiplicativeExpression()
       {
-        jjtThis.setFunction("-", new Subtract());
+        jjtThis.setFunction(tokenImage[MINUS], new Subtract());
       }
     ) #FunNode(2)
   )*
@@ -338,25 +356,25 @@ void MultiplicativeExpression() :
         if (!jep.implicitMul) throw new ParseException(
         	"Syntax Error (implicit multiplication not enabled)");
         	
-        jjtThis.setFunction("*", new Multiply());
+        jjtThis.setFunction(tokenImage[MUL], new Multiply());
       }
     ) #FunNode(2)
     |
-    ( "*" UnaryExpression()
+    ( <MUL> UnaryExpression()
       {
-        jjtThis.setFunction("*", new Multiply());
+        jjtThis.setFunction(tokenImage[MUL], new Multiply());
       }
     ) #FunNode(2)
 	|
-    ( "/" UnaryExpression()
+    ( <DIV> UnaryExpression()
       {
-        jjtThis.setFunction("/", new Divide());
+        jjtThis.setFunction(tokenImage[DIV], new Divide());
       }
     ) #FunNode(2)
     |
-    ( "%" UnaryExpression()
+    ( <MOD> UnaryExpression()
       {
-        jjtThis.setFunction("%", new Modulus());
+        jjtThis.setFunction(tokenImage[MOD], new Modulus());
       }
     ) #FunNode(2)
   )*
@@ -367,17 +385,17 @@ void UnaryExpression() :
 {
 }
 {
-  ( "+" UnaryExpression())
+  ( <PLUS> UnaryExpression())
 |
-  ( "-" UnaryExpression()
+  ( <MINUS> UnaryExpression()
     {
-	  jjtThis.setFunction("-", new UMinus());
+	  jjtThis.setFunction(tokenImage[MINUS], new UMinus());
     }
   ) #FunNode(1)
 |
-  ( "!" UnaryExpression()
+  ( <NOT> UnaryExpression()
     {
-	  jjtThis.setFunction("!", new Not());
+	  jjtThis.setFunction(tokenImage[NOT], new Not());
     }
   ) #FunNode(1)
 |
@@ -391,9 +409,9 @@ void PowerExpression() :
 {
   UnaryExpressionNotPlusMinus()
   [
-  ( "^" UnaryExpression()
+  ( <POWER> UnaryExpression()
     {
-      jjtThis.setFunction("^", new Power());
+      jjtThis.setFunction(tokenImage[POWER], new Power());
     }
   ) #FunNode(2)
   ]
