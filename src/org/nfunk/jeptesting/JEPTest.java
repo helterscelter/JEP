@@ -39,7 +39,9 @@ public class JEPTest extends TestCase {
 	 */
 	public void runTest() {
 		String fileName = "JEPTesterExpressions.txt";
-		testParseAndEval(fileName);
+		testWithFile(fileName);
+		testGetValue();
+		testGetComplexValue();
 	}
 
 	/**
@@ -61,16 +63,9 @@ public class JEPTest extends TestCase {
 		// Create an instance of this class and analyse the file
 		JEPTest jt = new JEPTest("JEPTest");
 		jt.setUp();
-		jt.testParseAndEval(fileName);
+		jt.testWithFile(fileName);
 	}	
 	
-	/**
-	 * The test for parsing and evaluation.
-	 */
-	public void testParseAndEval(String fileName) {
-		testWithFile(fileName);
-	}
-
 	
 	/**
 	 * Loads the file specified in fileName. Evaluates the expressions listed
@@ -170,6 +165,44 @@ public class JEPTest extends TestCase {
 		return value;
 	}
 	
+	/**
+	 * Test the getValue() method.
+	 */
+	public void testGetValue() {
+		// Test whether a normal double value is returned correctly
+		myParser.parseExpression("2.1345");
+		Assert.assertEquals(myParser.getValue(), 2.1345, 0);
+		
+		// Test whether NaN is returned for Somplex numbers
+		myParser.parseExpression("i");
+		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+		
+		// Test whether NaN is returned for String results
+		myParser.parseExpression("\"asdf\"");
+		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+	}
+	
+	/**
+	 * Test the getComplexValue() method.
+	 */
+	public void testGetComplexValue() {
+		// Test whether a normal double value is returned as a Complex
+		myParser.parseExpression("2.1345");
+		Assert.assertTrue(new Complex(2.1345, 0).equals(
+							myParser.getComplexValue(), 0));
+		
+		// Test whether (0, 1) is returned for i
+		myParser.parseExpression("i");
+		Complex z = myParser.getComplexValue();
+		Assert.assertTrue(z != null);
+		Assert.assertTrue(z.re() == 0);
+		Assert.assertTrue(z.im() == 1);
+		
+		// Test whether NaN is returned for String results
+		myParser.parseExpression("\"asdf\"");
+		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+	}
+
 	/**
 	 * Helper function for printing.
 	 */
