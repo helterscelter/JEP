@@ -127,11 +127,11 @@
 	<target name="javadoc" depends="init">
 		<delete dir="doc/javadoc"/>
 		<mkdir dir="doc/javadoc"/>
-		<javadoc packagenames="org.nfunk.jep.*"
+		<javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
 				sourcepath="src"
 				destdir="doc/javadoc"
 				windowtitle="JEP API">
-			<bottom><![CDATA[<A HREF=\"http://www.singularsys.com/jep\" TARGET=\"_blank\">http://www.singularsys.com/jep</A> Copyright &#169; 2000 Nathan Funk]]></bottom>
+			<bottom><![CDATA[<A HREF=\"http://www.singularsys.com/jep\" TARGET=\"_blank\">http://www.singularsys.com/jep</A> Copyright &#169; 2004 Singular Systems]]></bottom>
 		</javadoc>
 	</target>
 
