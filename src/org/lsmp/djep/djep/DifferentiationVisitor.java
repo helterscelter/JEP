@@ -55,7 +55,8 @@ public class DifferentiationVisitor extends DeepCopyVisitor
   {
 	this.globalDJep = jep;
 	
-	addDiffRule(new AdditionDiffRule("+"));
+	//addDiffRule(new AdditionDiffRule("+"));
+	addDiffRule(new PassThroughDiffRule("+",globalDJep.getOperatorSet().getAdd().getPFMC()));
 	addDiffRule(new SubtractDiffRule("-"));
 	addDiffRule(new MultiplyDiffRule("*"));
 	addDiffRule(new DivideDiffRule("/"));

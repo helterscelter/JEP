@@ -79,6 +79,7 @@ public class FreeGroup extends Group implements RingI {
 
 	public Number getZERO() { return zeroPoly; }
 	public Number getONE() { return unitPoly; }
+	public Number getTPoly() { return tPoly; }
 	public Number getInverse(Number a)	{
 		return sub(zeroPoly,(FreeGroupElement) a);
 	}
@@ -125,6 +126,9 @@ public class FreeGroup extends Group implements RingI {
 		return symbol;
 	}
 
-	
+	/** Whether the given polynomial is constant. */
+	public boolean isConstantPoly(Number poly) {
+		return ((FreeGroupElement) poly).isConstantPoly();
+	}
 
 }

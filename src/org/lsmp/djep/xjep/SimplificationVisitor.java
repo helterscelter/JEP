@@ -21,6 +21,8 @@ import org.nfunk.jep.*;
  * 
  * @author Rich Morris
  * Created on 20-Jun-2003
+ * TODO cope with 'a - (-1) * b'
+ * TODO cope with '0 - uminus(b)' 
  */
 
 public class SimplificationVisitor extends DoNothingVisitor
@@ -275,6 +277,30 @@ public class SimplificationVisitor extends DoNothingVisitor
 			nf.buildConstantNode(opSet.getUMinus(),rhs));
 		return newnode;
 	}
+	
+	if(tu.getOperator(rhs)==opSet.getUMinus())
+	{
+		Node newnode = simplifyBuiltOperatorNode(opSet.getAdd(),
+			lhs,
+			rhs.jjtGetChild(0));
+		return newnode;
+	}
+/*	if(tu.getOperator(rhs)==opSet.getMultiply())
+	{
+		if(tu.isNegative(rhs.jjtGetChild(0))) // a - (-2) * b -> a + 2 * b
+		{
+			Node newnode = simplifyBuiltOperatorNode(
+				opSet.getAdd(),
+				lhs,
+				nf.buildOperatorNode(
+					opSet.getMultiply(),
+					nf.buildConstantNode(
+						opSet.getUMinus(),rhs.jjtGetChild(0)),
+					rhs.jjtGetChild(1)));
+			return newnode;
+		}
+	}
+*/
 	return null;
 //	return nf.buildOperatorNode(((ASTOpNode) node).getOperator(),lhs,rhs);
 //	return tu.buildSubtract(lhs,rhs);

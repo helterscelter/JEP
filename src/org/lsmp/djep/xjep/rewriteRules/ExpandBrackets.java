@@ -15,23 +15,14 @@ import org.lsmp.djep.xjep.*;
  * @author Rich Morris
  * Created on 01-Oct-2004
  */
-public class ExpandBrackets implements RewriteRuleI {
-
-	private NodeFactory nf;
-	private OperatorSet opSet;
-	private TreeUtils tu;
-	private XJep xj;
+public class ExpandBrackets extends AbstractRewrite {
 
 	/**
-	 * 
+	 * TODO cope with a * uminus(x+x)
 	 */
 	public ExpandBrackets(XJep xj) {
-		opSet = xj.getOperatorSet();
-		tu = xj.getTreeUtils();
-		nf = xj.getNodeFactory();
-		this.xj = xj;
+		super(xj);
 	}
-	private ExpandBrackets() {}
 	/* (non-Javadoc)
 	 * @see org.lsmp.djep.xjep.RewriteRuleI#test(org.nfunk.jep.Node, org.nfunk.jep.Node[])
 	 */

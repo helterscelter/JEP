@@ -41,4 +41,13 @@ public abstract class Group implements GroupI {
 	{
 		return "general group";
 	}
+	
+	
+	/** Default implementation.
+	 * Returns true.
+	 */
+	public boolean isConstantPoly(Number a) {
+		return true;
+	}
+
 }

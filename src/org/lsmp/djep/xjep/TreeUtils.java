@@ -48,7 +48,8 @@ public class TreeUtils {
 	protected static Double NegInf = new Double(Double.NEGATIVE_INFINITY);
 	
 	/**
-	 * default constructor is private class can never in insantated.
+	 * Default constructor.
+	 * TODO Should use the NumberFactory to create numbers!
 	 */
 	public TreeUtils() {}
 	//public static TreeUtils getInstance() { return INSTANCE; }

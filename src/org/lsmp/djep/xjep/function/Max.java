@@ -12,7 +12,7 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 
 /**
- * A product function product(x^2,x,1,10) finds the product of x^2 with x running from 1 to 10.
+ * A max function Max(x^2,x,1,10) finds the max of x^2 with x running from 1 to 10.
  *
  * @author Rich Morris
  * Created on 10-Sept-2004

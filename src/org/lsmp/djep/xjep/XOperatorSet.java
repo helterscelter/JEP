@@ -6,6 +6,8 @@
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 package org.lsmp.djep.xjep;
+import org.lsmp.djep.vectorJep.function.*;
+import org.lsmp.djep.xjep.function.*;
 import org.nfunk.jep.*;
 
 /**

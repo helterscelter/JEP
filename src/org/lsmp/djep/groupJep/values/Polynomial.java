@@ -110,6 +110,39 @@ public class Polynomial extends Number {
 		return valueOf(lcoeffs);
 	}
 
+	public Polynomial div(Polynomial poly)
+	{
+		if(!poly.isConstantPoly())
+			throw new IllegalArgumentException("Can currently only divide by numbers and not polynomials");
+		
+		int deg = coeffs.length-1;
+		Number lcoeffs[] = new Number[deg+1];
+		for(int i=0;i<deg+1;++i)
+			lcoeffs[i] = ((HasDivI) baseRing).div(coeffs[i],poly.getCoeff(0));
+
+		return valueOf(lcoeffs);
+	}
+	
+	public Polynomial pow(int exp)
+	{
+		if(exp == 0) return valueOf(new Number[]{baseRing.getONE()});
+		if(exp == 1) return valueOf(this.getCoeffs());
+		if(exp < 0)
+			throw new IllegalArgumentException("Tried to rais a Polynomial to a negative power");
+
+		Polynomial res = valueOf(new Number[]{baseRing.getONE()});
+		Polynomial currentPower = this;
+		
+		while(exp != 0)
+		{
+			if((exp & 1) == 1)
+				res = res.mul(currentPower);
+			exp >>= 1;
+			if(exp == 0) break;
+			currentPower = currentPower.mul(currentPower);
+		}
+		return res;
+	}
 	private String stripBrackets(Number num)
 	{
 		String s = num.toString();
@@ -186,6 +219,11 @@ public class Polynomial extends Number {
 	/** value of constant coeff. */	
 	public double doubleValue() {return coeffs[0].doubleValue();	}
 
+	/** Is this a constant polynomial? **/
+	public boolean isConstantPoly() {
+		if( coeffs.length > 1) return false;
+		return baseRing.isConstantPoly(coeffs[0]);
+	}
 	public boolean equals(Polynomial n)
 	{
 		if(this.getDegree()!=n.getDegree()) return false;

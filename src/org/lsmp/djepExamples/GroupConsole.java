@@ -218,7 +218,7 @@ class GroupConsole {
 			else if(splits[0].equals("extend") && splits.length == 2)
 			{
 				RingI ring = (RingI) j.getGroup();
-				j = new GroupJep(new FreeGroup(ring, splits[1]));
+				j = new GroupJep(new ExtendedFreeGroup(ring, splits[1]));
 			}
 			else if(splits[0].equals("extend") && splits.length > 2)
 			{

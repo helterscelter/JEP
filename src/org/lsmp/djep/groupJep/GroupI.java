@@ -36,4 +36,7 @@ public interface GroupI {
 	public void addStandardConstants(JEP j);
 	/** adds the standard function for this group */
 	public void addStandardFunctions(JEP j);
+	/** For groups like rings of polynomials this determins if a given element is a constant polynomial. */	
+	public boolean isConstantPoly(Number a);
+
 }
