@@ -24,12 +24,17 @@ public class JEPTester {
 
 	/** The parser */
 	JEP myParser;
-	int lineCount;
 	
+	/** Current line position */
+	int lineCount;
 
+	/**
+	 * Constructor
+	 */
 	public JEPTester() {
 		// Set up the parser
 		myParser = new JEP();
+		myParser.setImplicitMul(true);
 		myParser.addStandardFunctions();
 		myParser.addStandardConstants();
 		myParser.addComplex();
@@ -38,9 +43,9 @@ public class JEPTester {
 	}
 	
 	/**
-	* The main method checks the arguments and creates an instance
-	* and calls it's run method.
-	*/
+	 * The main method checks the arguments and creates an instance
+	 * and calls it's run method.
+	 */
 	public static void main(String args[]) {
 		String fileName;
 		
@@ -54,15 +59,15 @@ public class JEPTester {
 			"JEPTester <filename>\" to load a different input file.");
 		}
 		
-		// 
+		// Create an instance of this class and analyse the file
 		JEPTester jt = new JEPTester();
 		jt.run(fileName);
 	}
 
 	/**
-	* Loads the file specified in fileName. Evaluates the expressions listed
-	* in it and compares the expressions with the results.
-	*/
+	 * Loads the file specified in fileName. Evaluates the expressions listed
+	 * in it and compares the expressions with the results.
+	 */
 	public void run(String fileName) {
 		BufferedReader reader;
 		Complex c1, c2;
@@ -102,9 +107,9 @@ public class JEPTester {
 	}
 	
 	/**
-	* Parses a single line from the reader, and returns the
-	* evaluation of that line.
-	*/
+	 * Parses a single line from the reader, and returns the
+	 * evaluation of that line.
+	 */
 	private Complex parseNextLine(BufferedReader reader) {
 		Complex value;
 		String line, errorStr;
@@ -120,8 +125,7 @@ public class JEPTester {
 
 			if (line==null) return null;
 
-		} while (line.length()==0 ||
-		         line.trim().charAt(0)=='#');
+		} while (line.length()==0 || line.trim().charAt(0)=='#');
 			
 		// parse and evaluate the expression
 		myParser.parseExpression(line);
@@ -136,10 +140,16 @@ public class JEPTester {
 		return value;
 	}
 	
+	/**
+	 * Helper function for printing.
+	 */
 	private static void print(String str) {
 		System.out.print(str);
 	}
 
+	/**
+	 * Helper function for printing lines.
+	 */
 	private static void println(String str) {
 		System.out.println(str);
 	}
