@@ -76,6 +76,8 @@ public class JEP {
 	/** Node at the top of the parse tree */
 	private Node topNode;
 
+	/** Evaluator */
+	private EvaluatorVisitor ev;
 
 	/**
 	 * Constructor; initializes all member variables.
@@ -89,7 +91,7 @@ public class JEP {
 		initSymTab();
 		initFunTab();
 		errorList = new Vector();
-
+		ev = new EvaluatorVisitor();
 		parser = new Parser(new StringReader(""));
 
 		//Ensure errors are reported for the initial expression
@@ -395,8 +397,7 @@ public class JEP {
 		if (topNode != null && !hasError()) {
 			// evaluate the expression
 			try {
-				result = EvaluatorVisitor.getInstance().
-							getValue(topNode,errorList,symTab);
+				result = ev.getValue(topNode,errorList,symTab);
 			} catch (Exception e) {
 				if (debug) System.out.println(e);
 				return null;
