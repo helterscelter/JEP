@@ -16,7 +16,7 @@ import org.lsmp.djep.vectorJep.function.*;
 /**
  * Find the rank of a matrix.
  * Serves a wrapper around the Jama linear algebra function.
- * <a href="http://math.nist.gov/javanumerics/jama/">http://math.nist.gov/javanumerics/jama/</a>
+ * @see <a href="http://math.nist.gov/javanumerics/jama/">http://math.nist.gov/javanumerics/jama/</a>
  * 
  * @author Rich Morris
  * Created on 15-Feb-2005

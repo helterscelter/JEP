@@ -7,8 +7,18 @@ package org.lsmp.djep.jama;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
 /**
+ * Utility functions for adding Jama matrix functions.
+ * To add these functions to a VectorJep or MatrixJep instance use
+ * <pre>
+ * VectorJep j = new VectorJep();
+ * j.addStandardFunctions();
+ * ...
+ * JamaUtil.addStandardFunctions(j);
+ * </pre>
+ * 
  * @author Rich Morris
  * Created on 15-Feb-2005
+ * @see <a href="http://math.nist.gov/javanumerics/jama/">http://math.nist.gov/javanumerics/jama/</a>
  */
 public final class JamaUtil
 {
@@ -90,7 +100,7 @@ public final class JamaUtil
 	
 	public static void addStandardFunctions(JEP j)
 	{
-		j.addFunction("inv",new Inverse());
+		j.addFunction("inverse",new Inverse());
 		j.addFunction("rank",new Rank());
 		j.addFunction("solve",new Solve());
 	}
