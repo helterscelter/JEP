@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * A fast evaluation algorithm for equations over Doubles, does not work with vectors or matricies.
  * This is based around reverse polish notation
- * and is optimised for speed at every oportunity.
+ * and is optimised for speed at every opportunity.
  * <p>
  * To use do
  * <pre>
@@ -20,12 +20,12 @@ import java.util.*;
  * Node node = ...; 
  * RpEval rpe = new RpEval(j);
  * RpCommandList list = rpe.compile(node);
- * double val rpRes = rpe.evaluate(list);
+ * double val = rpe.evaluate(list);
  * System.out.println(val);
  * rpe.cleanUp();
  * </pre>
- * The compile methods converts the expresion represented by node
- * into a string of commands. For example the expresion "1+2*3" will
+ * The compile methods converts the expression represented by node
+ * into a string of commands. For example the expression "1+2*3" will
  * be converted into the sequence of commands
  * <pre>
  * Constant no 1 (pushes constant onto stack)
@@ -36,17 +36,17 @@ import java.util.*;
  * </pre>
  * The evaluate method executes these methods sequentially
  * using a stack 
- * and returns thoe last object on the stack. 
+ * and returns the last object on the stack. 
  * <p>
  * A few cautionary notes:
  * Its very unlikely to be thread safe. It only works over doubles
- * expresions with complex numbers or strings will cause problems.
+ * expressions with complex numbers or strings will cause problems.
  * It only works for expressions involving scalers.
  * <p>
  * <b>Implementation notes</b>
- * A lot of things have been done to make it as fast as posible:
+ * A lot of things have been done to make it as fast as possible:
  * <ul>
- * <li>Everything is final which maximises the possibility for inlining.</li>
+ * <li>Everything is final which maximises the possibility for in-lining.</li>
  * <li>All object creation happens during compile.</li>
  * <li>All calculations done using double values.</li>
  * <li>Each operator/function is hand coded. To extend functionality you will have to modify the source.</li>
@@ -57,7 +57,6 @@ import java.util.*;
  */
 public final class RpEval implements ParserVisitor {
 
-	/** The mjep reference **/
 	private OperatorSet opSet;
 	private ScalerStore scalerStore = new ScalerStore();
 	/** Contains the constant values **/
@@ -169,12 +168,9 @@ public final class RpEval implements ParserVisitor {
 	 * Base class for storage for each type of data.
 	 * Each subclass should define
 	 * <pre>
-	 * private Obj stack[];
-	 * private Obj heep[];
-	 * private Obj vars[]= new Obj[0];
+	 * private double stack[];
+	 * private double vars[]= new double[0];
 	 * </pre>
-	 * where Obj is an Object of the specific type, eg V2Obj.
-	 * Memory for the data is allocated from the heep
 	 * and the stack is the current data used for calculations.
 	 * Data for Variables is stored in vars and references to the Variables
 	 * in varRefs. 
@@ -383,7 +379,7 @@ public final class RpEval implements ParserVisitor {
 	}
 	
 	/**
-	 * Compile the expresions to produce a set of commands in reverse Polish notation.
+	 * Compile the expressions to produce a set of commands in reverse Polish notation.
 	 */
 	public final RpCommandList compile(Node node) throws ParseException
 	{

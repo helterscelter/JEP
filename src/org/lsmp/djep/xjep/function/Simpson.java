@@ -42,9 +42,7 @@ public class Simpson extends SumType {
 		}
 		return ret;
 	}
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.xjep.function.SumType#evaluate(org.nfunk.jep.Node, org.nfunk.jep.Variable, double, double, double, java.lang.Object, org.nfunk.jep.ParserVisitor, java.util.Stack)
-	 */
+
 	public Object evaluate(
 		Node node,
 		Variable var,
@@ -55,7 +53,6 @@ public class Simpson extends SumType {
 		ParserVisitor pv,
 		Stack stack)
 		throws ParseException {
-		// TODO Auto-generated method stub
 		int i=0;
 		double val;
 		Object[] res=new Object[(int) ((max-min)/inc)+1];	

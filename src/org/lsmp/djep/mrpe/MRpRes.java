@@ -5,7 +5,7 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.rpe;
+package org.lsmp.djep.mrpe;
 
 import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.MatrixValueI;
@@ -18,7 +18,7 @@ import org.nfunk.jep.ParseException;
  * @author Rich Morris
  * Created on 04-May-2004
  */
-public abstract class RpObj {
+public abstract class MRpRes {
 	/** The Dimension of the object */
 	public abstract Dimensions getDims();
 	/** 

@@ -5,7 +5,8 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.rpe;
+package org.lsmp.djep.mrpe;
+
 
 
 

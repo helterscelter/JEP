@@ -53,8 +53,6 @@ public final class RpCommandList {
 	RpCommand commands[] = new RpCommand[STACK_INC];
 	/** Current position in the command Stack. **/
 	private short commandPos;
-	/** The return type at end of evaluation */
-	private int finalType;
 	
 	/** Package private constructor */
 	RpCommandList() {}
@@ -85,8 +83,6 @@ public final class RpCommandList {
 	}
 
 	public int getNumCommands() { return commandPos;}
-	public int getFinalType() {	return finalType;	}
-	public void setFinalType(int i) { finalType = i;}
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();

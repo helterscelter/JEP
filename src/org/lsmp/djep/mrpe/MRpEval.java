@@ -5,7 +5,7 @@
  * Attribution, Non Commercial, Share Alike license
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
-package org.lsmp.djep.rpe;
+package org.lsmp.djep.mrpe;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
@@ -25,7 +25,7 @@ import java.util.*;
  * Node node = ...; 
  * MRpEval rpe = new MRpEval(j);
  * MRpCommandList list = rpe.compile(node);
- * RpObj rpRes = rpe.evaluate(list);
+ * MRpRes rpRes = rpe.evaluate(list);
  * System.out.println(rpRes.toString());
  * MatrixValueI mat = rpRes.toVecMat();
  * rpe.cleanUp();
@@ -36,7 +36,7 @@ import java.util.*;
  * need to be repeatedly evaluated with different values for the variables.
  * MRpEval use an internal store for variable values different from those
  * used in the main Jep classes. Changes in the Jep variable values, 
- * say by calling {@link org.nfunk.jep.JEP#setVarValue},
+ * say by calling {@link org.nfunk.jep.JEP#setVarValue JEP.setVarValue},
  * are reflected
  * in changes in MRpEval variables, (the converse does not hold).
  * A more efficient way is to use <code>int ref=getVarRef(var)</code>
@@ -52,6 +52,9 @@ import java.util.*;
  * }
  * </pre>
  * 
+ * <p>
+ * Combining mrpe with differentation requires special techniques
+ * to cope with that fact that internal equations are used
  * <p>
  * The compile methods converts the expression represented by node
  * into a string of commands. For example the expression "1+2*3" will
@@ -338,7 +341,7 @@ public final class MRpEval implements ParserVisitor {
 		scalerStore.setVarValue(ref,val);
 	}
 	
-	private final static class ScalerObj extends RpObj {
+	private final static class ScalerObj extends MRpRes {
 		double a;
 		private ScalerObj(double val) {a =val; }
 		public final Dimensions getDims() { return Dimensions.ONE; }
@@ -351,7 +354,7 @@ public final class MRpEval implements ParserVisitor {
 	}
 	private ScalerObj scalerRes = new ScalerObj(0.0);
 	
-	private abstract static class VecObj extends RpObj {
+	private abstract static class VecObj extends MRpRes {
 		public final void copyToVecMat(MatrixValueI res)  throws ParseException {
 			if(! getDims().equals(res.getDim())) throw new ParseException("CopyToVecMat: dimension of argument "+res.getDim()+" is not equal to dimension of object "+getDims());
 			copyToVec((MVector) res);
@@ -365,7 +368,7 @@ public final class MRpEval implements ParserVisitor {
 //		public abstract void fromArray(double array[]);
 	}
 	
-	private abstract static class MatObj extends RpObj  {
+	private abstract static class MatObj extends MRpRes  {
 		public final void copyToVecMat(MatrixValueI res)  throws ParseException {
 			if(! getDims().equals(res.getDim())) throw new ParseException("CopyToVecMat: dimension of argument "+res.getDim()+" is not equal to dimension of object "+getDims());
 			copyToMat((Matrix) res);
@@ -2986,7 +2989,7 @@ public final class MRpEval implements ParserVisitor {
 	 * 
 	 * @return the value after evaluation
 	 */
-	public final RpObj evaluate(MRpCommandList comList)
+	public final MRpRes evaluate(MRpCommandList comList)
 	{
 		scalerStore.reset();
 		v2Store.reset();
