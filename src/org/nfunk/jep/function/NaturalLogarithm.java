@@ -8,10 +8,16 @@
 *****************************************************************************/
 package org.nfunk.jep.function;
 
+import java.lang.Math;
 import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * Natural logarithm.
+ *
+ * RJM Change: fixed so ln(positive Double) is Double.
+ */
 public class NaturalLogarithm extends PostfixMathCommand
 {
 	public NaturalLogarithm()
@@ -34,9 +40,15 @@ public class NaturalLogarithm extends PostfixMathCommand
 	{
 		if (param instanceof Number)
 		{
-			// TODO: think about only returning Complex if param is <0
-			Complex temp = new Complex(((Number)param).doubleValue());
-			return temp.log();
+			// TODODONE: think about only returning Complex if param is <0
+			double num = ((Number) param).doubleValue();
+			if( num > 0)
+				return new Double(Math.log(num));
+			else
+			{	
+				Complex temp = new Complex(num);
+				return temp.log();
+			}
 		}
 		else if (param instanceof Complex)
 		{
