@@ -19,6 +19,7 @@
 <li><a href="../op_and_func.html">Operators &amp; Functions</a></li>
 <li><a href="../grammar.html">Grammar</a></li>
 <li><a href="../cust_func.html">Custom Functions</a></li>
+<li><a href="../newfeatures-2.3.html">New Features</a></li>
 <li><a href="../faq.html">FAQ</a></li>
     <li><a href="../version.html">Version History</a></li>
 </ul>
@@ -38,88 +39,85 @@
 <!-- #BeginEditable "Text" --> 
         <h1><a name="top"></a>DJep - differentiation, vectors and matrices in JEP</h1>
         <p><br>The DJep collection of packages offers a number of extensions to the standard JEP package:</p>
-        <ul>
-        <li><a href="#assignment">Assignment</a>: By using the <tt>x=a+b</tt> syntax the values of variables can be set by equations.</li>
-        <li><a href="#print">Printing</a>: equations can be easily printed or converted to strings with intelligent handling of brackets.</li>
-        <li><a href="#simp">Simplification</a> equations like <tt>2.0*x^1.0*1.0+0.0</tt> equations can be simplified to produce <tt>2.0*x</tt></li>
-        <li><a href="#diff">Differentiation</a>: equations can be differentiated, these can be specified either programtically or in the equations themselves.</li>
-        <li><a href="#matrix">Vectors and Matrices</a>: Full support for vector and matrix operations.</li>
-		<li><a href="#util">Utilities</a>
-for working with parse trees a number of utilities are available for
-programtically creating and copying and working with the parse trees.</li>
-		<li><a href="groups.html">Groups</a> Exact arithmetic over integers rationals and other groups.</li>
-        </ul>
-		<p>
-		These facilities are offered by packages in the <a href="../../javadoc/index.html">org.lsmp.djep</a> tree with a few changes to the core <a href="file:///C:/bin/eclipse/workspace/Main%20Jep/jep/doc/javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep</a> package.
-		</p><br>
-      <table cellpadding="2" cellspacing="2" border="0" width="100%">
-        <tbody>
-          <tr>
-            <td valign="top"><b>Feature</b></td>
-            <td valign="top"><b>Package (JavaDoc)</b></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="#ASSIGN">Assignment</a></td>
-            <td valign="top"><a href="../../javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="#SYNTAX">New Syntax for parsing and evaluation</a> (allows several expressions to be used simultaneously)</td>
-            <td valign="top"><a href="../../javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="#FUN">New Functions</a></td>
-            <td valign="top"><a href="../../javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top">Changes to ways <a href="#VAR">variables</a> are implemented.</td>
-            <td valign="top"><a href="../../javadoc/org/nfunk/jep/package-summary.html">org.nfunk.jep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="XJep.html#PRINT">Printing</a></td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="XJep.html#simp">Simplification</a></td>
-            <td valign="top"><a href="../..javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
-          </tr><tr>
-            <td valign="top"><a href="XJep.html#reenter">re-entrant parser</a></td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="XJep.html#variable">Variables with equations</a></td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="XJep.html#macro">Macro Functions</a> (functions defined by an equation)</td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="XJep.html#util">Utilities </a>for examining and modifying the parse trees<br>
-            </td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="DJep.html">Differentiation<br>
-            </a></td>
-            <td valign="top">
-            <p><a href="../../javadoc/org/lsmp/djep/djep/package-summary.html">org.lsmp.djep.djep.*</a>  (1)</p>
-</td>
-          </tr>
-          <tr>
-            <td valign="top"><a href="VectorJep.html#VEC">Basic Vectors and Matrices</a></td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/vectorJep/package-summary.html">org.lsmp.djep.vectorJep.*</a></td>
-          </tr><tr>
-            <td valign="top"><a href="VectorJep.html#VEC">Advanced Vectors and Matrices</a></td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/matrixJep/package-summary.html">org.lsmp.djep.matrixJep.*</a> (2)</td>
-          </tr>
-          <tr>
-            <td valign="top">Calculation over arbitrary <a href="groups.html">groups</a> including exact arithmetic over integers and rationals.</td>
-            <td valign="top"><a href="../../javadoc/org/lsmp/djep/matrixJep/package-summary.html">org.lsmp.djep.groupJep.*</a></td>
-          </tr>
-
-
-        </tbody>
-      </table><br>
+        
+  <ul>
+    <li><a href="#print">Printing</a>: equations can be easily printed or converted 
+      to strings with intelligent handling of brackets.</li>
+    <li><a href="#simp">Simplification</a> equations like <tt>2.0*x^1.0*1.0+0.0</tt> 
+      equations can be simplified to produce <tt>2.0*x</tt></li>
+    <li><a href="#diff">Differentiation</a>: equations can be differentiated, 
+      these can be specified either programtically or in the equations themselves.</li>
+    <li><a href="#matrix">Vectors and Matrices</a>: Full support for vector and 
+      matrix operations.</li>
+    <li><a href="#util">Utilities</a> for working with parse trees a number of 
+      utilities are available for programtically creating and copying and working 
+      with the parse trees.</li>
+    <li><a href="groups.html">Groups</a> Exact arithmetic over integers rationals 
+      and other groups.</li>
+  </ul>
+		
+  <p> These facilities are offered by packages in the <a href="../../javadoc/index.html">org.lsmp.djep</a> 
+    tree.</p>
+  <br>
+      
+  <table cellpadding="2" cellspacing="2" border="0" width="100%">
+    <tbody> 
+    <tr> 
+      <td valign="top"><b>Feature</b></td>
+      <td valign="top"><b>Package (JavaDoc)</b></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="XJep.html#PRINT">Printing</a></td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="XJep.html#simp">Simplification</a></td>
+      <td valign="top"><a href="../..javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="XJep.html#reenter">re-entrant parser</a></td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="XJep.html#variable">Variables with equations</a></td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="XJep.html#macro">Macro Functions</a> (functions 
+        defined by an equation)</td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="XJep.html#util">Utilities </a>for examining and 
+        modifying the parse trees<br>
+      </td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/xjep/package-summary.html">org.lsmp.djep.xjep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="DJep.html">Differentiation<br>
+        </a></td>
+      <td valign="top"> 
+        <p><a href="../../javadoc/org/lsmp/djep/djep/package-summary.html">org.lsmp.djep.djep.*</a> 
+          (1)</p>
+      </td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="VectorJep.html#VEC">Basic Vectors and Matrices</a></td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/vectorJep/package-summary.html">org.lsmp.djep.vectorJep.*</a></td>
+    </tr>
+    <tr> 
+      <td valign="top"><a href="VectorJep.html#VEC">Advanced Vectors and Matrices</a></td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/matrixJep/package-summary.html">org.lsmp.djep.matrixJep.*</a> 
+        (2)</td>
+    </tr>
+    <tr> 
+      <td valign="top">Calculation over arbitrary <a href="groups.html">groups</a> 
+        including exact arithmetic over integers and rationals.</td>
+      <td valign="top"><a href="../../javadoc/org/lsmp/djep/matrixJep/package-summary.html">org.lsmp.djep.groupJep.*</a></td>
+    </tr>
+    </tbody> 
+  </table>
+  <br>
 Notes: (1) the org.lsmp.djep.xjep.* package also needs to be included when using differentiation.
 (2) the org.lsmp.djep.xjep.*, org.lsmp.djep.djep.* org.lsmp.djep.vectorJep.* packages need to be included when using MatrixJep.<br>
       <h2>Example applications</h2>
@@ -132,93 +130,8 @@ other types of examples are console applications which allow equations
 to be typed in, these are DJepConsole, VectorConsole, MatrixConsole and GroupConsole. <br>
       <br>
 Some JUnit test are available in the <a href="../../javadoc/org/lsmp/djepJUnit/package-summary.html">org.lsmp.djepJUnit.*</a> package. These test many features of the packages and illustrate some of the features.<br>
-&nbsp;<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr>
-    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-</tr>
-<tr>
- <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr></tbody></table>
 
-
-      <h1>Additional features and changes to the core JEP package<br>
-      </h1>
-      <h2><a name="ASSIGN"></a>Assignment</h2>
-
-
-        <p>
-        Assignment allows the values of variables to be set by using the <tt>=</tt> operator in equations
-        so it is possible to do something like
-        <tt>x=3</tt> then <tt>y=x^2</tt> and <tt>y</tt> will have the value 9.
-        Assignment can be used with the standard JEP package, there is no need to use
-        any of the packages in the org.lsmp.djep tree. To switch on assignment facilities
-        the <a href="../../javadoc/org/nfunk/jep/JEP.html#setAllowAssignment%28boolean%29">setAllowAssignment</a> method of the main JEP object should be called.
-        </p><pre>// standard initialisation<br>JEP j = new JEP();<br>j.addStandardConstants();<br>j.addStandardFunctions();<br>j.addComplex();<br>j.setAllowUndeclared(true);<br>j.setImplicitMul(true);<br><br>// switch assignment facilities on<br>j.setAllowAssignment(true);<br><br>// parse assignment equations<br>j.parseExpression("x=3");<br>// evaluate it - no need to save the value returned (unless you want to)<br>j.getValueAsObject();<br>// parse a second equation<br>j.parseExpression("y=2");<br>j.getValueAsObject();<br><br>// an equation involving above variables<br>j.parseExpression("x^y");<br>Object val3 = j.getValueAsObject();<br>System.out.println("Value is "+val3);<br></pre>
-        
 <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr>
-    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-</tr>
-<tr>
- <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr></tbody></table>
-
-
-        <h2><a name="SYNTAX"></a>Alternate syntax</h2>
-        <p>A couple of utility functions have been added to the 
-        make it easier to work with a set of related equations.
-        These are:
-        </p><pre>public Node <a href="../../javadoc/org/nfunk/jep/JEP.html#parse%28java.lang.String%29">parse(String expression)</a> throws ParseException<br>public Object <a href="../../javadoc/org/nfunk/jep/JEP.html#evaluate%28org.nfunk.jep.Node%29">evaluate(Node node)</a> throws Exception<br></pre>
-        which parse and evaluate the expression. These can be used like
-        <pre>try<br>{<br>	// Alternative syntax<br>	Node node1 = j.parse("z=i*pi");<br>	j.evaluate(node1);<br>	Node node2 = j.parse("exp(z)");<br>	Object val2 = j.evaluate(node2);<br>	System.out.println("Value: "+val2);<br>}<br>catch(ParseException e)	{<br>	System.out.println("Error with parsing");<br>}<br>catch(Exception e)	{<br>	System.out.println("Error with evaluation");<br>}</pre>
-        <p>Hence its a bit easier to keep track of a number of
-        equations. Note that using this syntax Exceptions need to be caught
-        and the <a href="../../javadoc/org/nfunk/jep/JEP.html#getTopNode%28%29">getTopNode()</a> method will
-        not return meaningful results.
-
-<!-- #BeginLibraryItem "/Library/top bar.lbi" --></p>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-
-<tbody><tr>
-    <td align="right"><a href="index.html#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-</tr>
-<tr>
- <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr></tbody>
-      </table>
-
-
-
-      <h2><a name="FUN"></a>New Functions</h2>
-A number of new functions have been added to the standard list of functions. These are:<br>
-      <ul>
-        <li><tt>if(a,b,c)</tt> if a is positive or zero gives the value of b otherwise gives the value of c.</li><li><tt>exp(x)</tt> calculates the exponential e^x of a number.<br>
-        </li>
-
-        <li><tt>str(x)</tt> converts a number to its string representation.</li>
-        <li><tt>arg(z)</tt> returns the argument of a complex number z.</li>
-        <li><tt>cmod(z)</tt> returns the modulus of a complex number z.</li>
-        <li><tt>complex(x,y)</tt> converts a pair of real numbers into a complex number x + i y.</li>
-        <li><tt>polar(r,theta)</tt> converts a radius and argument to a complex number z = r * e^(i theta).</li>
-      </ul>
-&nbsp;<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr>
-    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-</tr>
-<tr>
- <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr></tbody></table>
-
-
-<h2><a name="VAR"></a>Working with variables</h2>
-<p>
-The value of a variable can be set and queried using
-the <a href="../../javadoc/org/nfunk/jep/JEP.html#setVarValue%28java.lang.String,%20java.lang.Object%29">setVarValue</a> and <a href="../../javadoc/org/nfunk/jep/JEP.html#getVarValue%28java.lang.String%29">getVarVal</a> methods of the jep instance.
-A further method <a href="../../javadoc/org/nfunk/jep/JEP.html#setVarValue%28java.lang.String%29">getVar</a> returns an object representing the
-variable.
-</p><pre>JEP j = new JEP();<br>try {<br>    Node node = j.parse("z=x^y");<br>    j.setVarValue("x",new Double(2));<br>    j.setVarValue("y",new Double(3));<br>    j.evaluate(node);<br>    System.out.println(j.getVarValue("z")); // prints 8<br>} catch .....<br></pre>
-      <p>The SymbolTable class now stores objects representing variables rather than just their values and the <a href="../../javadoc/org/nfunk/jep/SymbolTable.html#get%28java.lang.Object%29">get</a> and <a href="../../javadoc/org/nfunk/jep/SymbolTable.html#put%28java.lang.Object,%20java.lang.Object%29">put</a> methods of this class are deprecated. This results in a slight speed up during evaluation.<br>
-      </p>
-      <p>Variables can be constants which cannot have their values changed. To add a new constant use <a href="../../javadoc/org/nfunk/jep/JEP.html#addConstant%28java.lang.String,%20java.lang.Object%29">addConstant</a> to add a mutable variable use&nbsp;<a href="../../javadoc/org/nfunk/jep/JEP.html#addVariable%28java.lang.String,%20java.lang.Object%29">addVariable</a>.</p>
-
-
-        <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
 </tr>
@@ -228,9 +141,7 @@ variable.
 <br/>
 <br/>
 <br/>
-<div id="footer">
-&copy; 2004 Nathan Funk and Richard Morris
-</div>
+  <div id="footer"> &copy; 2004 Singular Systems</div>
 </div>
 </body>
 <!-- #EndTemplate --></html>
