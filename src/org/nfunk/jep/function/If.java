@@ -21,11 +21,11 @@ import java.util.Stack;
  * <p>
  * An alternate form if(condExpr,posExpr,negExpr,zeroExpr)
  * is also availiable. Note most computations
- * are caried out over floating point doubles so
+ * are carried out over floating point doubles so
  * testing for zero can be dangerous.
  * <p>
  * This function implements the SpecialEvaluationI interface
- * so that it handles seting the value of a variable. 
+ * so that it handles setting the value of a variable. 
  * @author Rich Morris
  * Created on 18-Nov-2003
  */
@@ -56,7 +56,7 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 	/** For assignment **/
 	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack/*,SymbolTable symTab*/) throws ParseException
 	{
-		int num =node.jjtGetNumChildren(); 
+		int num = node.jjtGetNumChildren(); 
 		if( num < 3 || num > 4)
 			throw new ParseException("If operator must have 3 or 4 arguments.");
 
@@ -77,7 +77,10 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 			val = ((Complex) condVal).re();
 		}
 		else
+		{
 			throw new ParseException("Condition in if operator must be double or complex");
+		}
+
 		if(val>0.0)
 		{
 			node.jjtGetChild(1).jjtAccept(pv,data);
@@ -90,6 +93,7 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 		{
 			node.jjtGetChild(3).jjtAccept(pv,data);
 		}
+		
 		return data;
 	}
 
