@@ -396,8 +396,8 @@ public class DJepTest extends TestCase {
 		simplifyTest("diff(ln(x),x)","1/x");
 		simplifyTest("diff(log(x),x)","(1/ln(10)) /x");
 		simplifyTest("diff(abs(x),x)","abs(x)/x");
-		simplifyTest("diff(angle(x,y),x)","y/(x^2+y^2)");
-		simplifyTest("diff(angle(x,y),y)","-x/(x^2+y^2)");
+		simplifyTest("diff(atan2(y,x),x)","y/(y^2+x^2)");
+		simplifyTest("diff(atan2(y,x),y)","-x/(y^2+x^2)");
 		simplifyTest("diff(mod(x,y),x)","1");
 		simplifyTest("diff(mod(x,y),y)","0");
 		simplifyTest("diff(sum(x,x^2,x^3),x)","sum(1,2 x,3 x^2)");

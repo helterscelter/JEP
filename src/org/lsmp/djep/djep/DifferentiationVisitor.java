@@ -126,7 +126,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 				globalDJep.getNodeFactory().buildVariableNode(globalDJep.getSymbolTable().makeVarIfNeeded("x")))));
 		// TODO problems here with using a global variable (x) in an essentially local context
 		addDiffRule(new MacroDiffRules(globalDJep,"abs","abs(x)/x"));
-		addDiffRule(new MacroDiffRules(globalDJep,"angle","y/(x^2+y^2)","-x/(x^2+y^2)"));
+		addDiffRule(new MacroDiffRules(globalDJep,"atan2","-y/(x^2+y^2)","x/(x^2+y^2)"));
 		addDiffRule(new MacroDiffRules(globalDJep,"mod","1","0"));
 		addDiffRule(new PassThroughDiffRule(globalDJep,"sum"));
 		addDiffRule(new PassThroughDiffRule(globalDJep,"re"));

@@ -157,7 +157,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 		// the responsability of the evaluate method. 
 		if (pfmc instanceof SpecialEvaluationI) {
 			return ((SpecialEvaluationI) node.getPFMC()).evaluate(
-				node,data,this,stack);
+				node,data,this,stack,this.symTab);
 		}
 
 		if (debug == true) {

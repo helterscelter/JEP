@@ -97,13 +97,13 @@ public class GroupJepTest extends TestCase {
 		valueToStringTest("(1/2)-(1/3)","1/6");
 	}
 	
-	/** Tests rationals */
+	/** Tests Quartonians */
 	public void testQuartonians() throws Exception
 	{
 		j = new GroupJep(new Quartonians());
 		j.addStandardConstants();
 		System.out.println(j.getGroup().toString());
-		valueToStringTest("i*j","0.0+0.0 i +0.0 j +-1.0 k");
+		valueToStringTest("i*j","-1.0k");
 	}
 
 	/** Tests integers mod 5 */
@@ -162,6 +162,46 @@ public class GroupJepTest extends TestCase {
 		valueToStringTest("t*t*t*t*t","<1>");
 	}
 
+	public void testPolynomials() throws Exception
+	{
+		RingI ring = new Reals();
+		FreeGroup fg = new FreeGroup(ring,"x");
+		j = new GroupJep(fg);
+		j.addStandardConstants();
+		j.setAllowAssignment(true);
+		j.setAllowUndeclared(true);
+		Node n = j.parse("(x+7.6)*(x+5.8832)*(x-55.12)");	
+		FreeGroupElement fge = (FreeGroupElement) j.evaluate(n);
+		Number coeffs[] = fge.getCoeffs();
+		for(int i=0;i<coeffs.length;++i)
+			System.out.println("Coeffs ["+i+"] "+coeffs[i]);
+		Complex val = fge.calculateComplexValue(new Complex(1.0));
+		System.out.println("Value "+val);
+		System.out.println(fge.toString());
+		myAssertEquals("(x+7.6)*(x+5.8832)*(x-55.12): x=1.0",val.toString(),"(-3203.6615424, 0.0)");
+		System.out.println("rounding error 7.6+5.8832-55.12 = "+(7.6+5.8832-55.12));
+		FreeGroup fg2 = new FreeGroup(fg,"y");
+		j = new GroupJep(fg2);
+		j.addStandardConstants();
+		j.setAllowAssignment(true);
+		j.setAllowUndeclared(true);
+		Node n2 = j.parse("(x+1)*(y-2)");	
+		FreeGroupElement fge2 = (FreeGroupElement) j.evaluate(n2);
+		Number co1[] = fge2.getCoeffs();
+		for(int i=0;i<co1.length;++i)
+		{
+			FreeGroupElement fge3 = (FreeGroupElement) co1[i];
+			Number co2[] = fge3.getCoeffs();
+			for(int j=0;j<co2.length;++j)
+				System.out.print(co2[j]+"\t");
+			System.out.println();
+		}
+		fg.setRootVal(new Complex(5.0));
+		fg2.setRootVal(new Complex(4.0));
+		System.out.println(fge2.toString());
+		myAssertEquals("(x+1)*(y-2): x=5,y=4",fge2.getComplexValue().toString(),"(12.0, 0.0)");		
+		
+	}
 	public void testZRoot2Root5() throws Exception
 	{
 		RingI ring = new Integers();

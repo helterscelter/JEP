@@ -27,7 +27,7 @@ public class Assign extends PostfixMathCommand implements SpecialEvaluationI {
 	/** For assignment set the value of the variable on the lhs to value returned by evaluating the righthand side.
 	 *   
 	 */
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack/*,SymbolTable symTab*/) throws ParseException
+	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack,SymbolTable symTab) throws ParseException
 	{
 		if(node.jjtGetNumChildren()!=2)
 			throw new ParseException("Assignment opperator must have 2 operators.");

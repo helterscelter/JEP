@@ -33,7 +33,7 @@ import org.nfunk.jep.function.*;
 		throw new ParseException("Cannot evaluate the diff function. ");
 	}
 
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack) throws ParseException
+	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack,SymbolTable symTab) throws ParseException
 	{
 		throw new ParseException("Cannot evaluate the diff function. ");
 	}

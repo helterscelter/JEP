@@ -23,7 +23,7 @@ public interface SpecialEvaluationI {
 	 * <pre>
 	 * node.jjtGetChild(i).jjtAccept(pv,data);	
 	 * </pre>
-	 * for each child.
+	 * for each child. Breifly the symbol table was removed as argumnets to this method, it is now reinserted.
 	 *
 	 * @param node	The current node
 	 * @param data	The data passed to visitor, typically not used
@@ -33,5 +33,5 @@ public interface SpecialEvaluationI {
 	 * @return the value after evaluation
 	 * @throws ParseException
 	 */
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack stack/*,SymbolTable symTab*/) throws ParseException;
+	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack stack,SymbolTable symTab) throws ParseException;
 }

@@ -42,7 +42,7 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 		Node node,
 		Object data,
 		ParserVisitor pv,
-		Stack stack)
+		Stack stack,SymbolTable symTab)
 		throws ParseException {
 
 		int numParams =  node.jjtGetNumChildren();

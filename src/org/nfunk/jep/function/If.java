@@ -54,7 +54,7 @@ public class If extends PostfixMathCommand implements SpecialEvaluationI {
 //	}
 
 	/** For assignment **/
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack/*,SymbolTable symTab*/) throws ParseException
+	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack,SymbolTable symTab) throws ParseException
 	{
 		int num = node.jjtGetNumChildren(); 
 		if( num < 3 || num > 4)
