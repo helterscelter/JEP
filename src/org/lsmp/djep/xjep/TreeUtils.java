@@ -282,10 +282,7 @@ public class TreeUtils {
 	}
 	
 	/**
-	 * 
-	 * @param node
-	 * @param children
-	 * @return
+	 * Sets the children of a node if they have changed for it current children.
 	 */
 	public static Node copyChildrenIfNeeded(Node node,Node children[]) throws ParseException
 	{
@@ -301,6 +298,7 @@ public class TreeUtils {
 		return node;
 	}
 
+	/** returns the children of a node as an array of nodes. */
 	static public Node[] getChildrenAsArray(Node node)
 	{
 		int n = node.jjtGetNumChildren();

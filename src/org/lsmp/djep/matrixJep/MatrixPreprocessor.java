@@ -183,9 +183,11 @@ public class MatrixPreprocessor implements ParserVisitor
 		}
 		else if(pfmc instanceof NaryOperatorI)
 		{
-			if(children.length!=1) throw new ParseException("Operator "+node.getOperator().getName()+" must have one elements, it has "+children.length);
+			Dimensions dims[] = new Dimensions[children.length];
+			for(int i=0;i<children.length;++i)
+				dims[i]=((MatrixNodeI) children[i]).getDim();
 			NaryOperatorI uni = (NaryOperatorI) pfmc;
-			Dimensions dim = uni.calcDim(children);
+			Dimensions dim = uni.calcDim(dims);
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,dim);
 		}
 		else

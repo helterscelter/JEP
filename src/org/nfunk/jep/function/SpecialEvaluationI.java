@@ -32,7 +32,7 @@ public interface SpecialEvaluationI {
 	 * @param pv	The visitor, can be used evaluate the children
 	 * @param stack	The stack of the evaluator
 	 * @param symTab The symbol table 
-	 * @return
+	 * @return the value after evaluation
 	 * @throws ParseException
 	 */
 	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack stack,SymbolTable symTab) throws ParseException;

@@ -243,8 +243,7 @@ public class Complex
 	}
 	
 	/**
-	 * Returns the result of dividing this complex number by the parameter
-	 * <pre>b</pre>.
+	 * Returns the result of dividing this complex number by the parameter.
 	 */
 	public Complex div(Complex b) {
 		// Adapted from Numerical Recipes in C - The Art of Scientific Computing

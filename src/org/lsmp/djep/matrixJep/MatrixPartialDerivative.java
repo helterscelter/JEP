@@ -12,7 +12,7 @@ import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 /**
  * Contains infomation about a PartialDerivative of a variable.
- * Should  
+ * 
  * @author Rich Morris
  * Created on 29-Oct-2003
  */
@@ -22,7 +22,7 @@ public class MatrixPartialDerivative extends PartialDerivative implements Matrix
 
 	/**
 	 * Protected constructor, should only be constructed
-	 * through the findDerivative method in {@see VariableInfo}.
+	 * through the findDerivative method in {@link MatrixVariable}.
 	**/ 
 	protected MatrixPartialDerivative(MatrixVariable var, String derivnames[],Node deriv)
 	{

@@ -2,7 +2,7 @@
 <p>
 Classes to performs differentaion of equations and various utility classes.
 The main class is 
-{@link DifferentationVisitor DifferentationVisitor}
+{@link org.lsmp.djep.djep.DifferentationVisitor DifferentationVisitor}
 which performs the differentation by repeated applications
 of the chain, product and quotient rules.
 Typically the result of differentation should be simplified
@@ -14,16 +14,16 @@ For each function a rule is used to specify how to differentiate it.
 For example the differative of <tt>sin</tt> is specified using
 <pre>addDiffRule(new MacroDiffRules(Jep,"sin","cos(x)"))</pre>
 There are various classes of differentation rule which
-all implement {@link DiffRulesI DiffRulesI} and have special behavious.
+all implement {@link org.lsmp.djep.djep.DiffRulesI DiffRulesI} and have special behavious.
 </p>
 <p>
 Variables can also be differentiated, and the derivative of
 <tt>y</tt> with respect to <tt>x</tt> will be represented 
-by the {@link PartialDerivative PartialDerivative} <tt>dy/dx</tt>.
-To allow this the {@link DVariable DVariable} is used to represent 
+by the {@link org.lsmp.djep.djep.PartialDerivative PartialDerivative} <tt>dy/dx</tt>.
+To allow this the {@link org.lsmp.djep.djep.DVariable DVariable} is used to represent 
 variable and
-{@link DSymbolTable DSymbolTable} and 
-{@link DVariableFactory DVariableFactory} are used to control
+{@link org.lsmp.djep.djep.DSymbolTable DSymbolTable} and 
+{@link org.lsmp.djep.djep.PartialVariableFactory PartialVariableFactory} are used to control
 the look up of variables and the creation of new variables.
 </p>
 </body>

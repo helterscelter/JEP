@@ -197,12 +197,12 @@ public class MatrixNodeFactory extends NodeFactory {
 		}
 		else if(pfmc instanceof NaryOperatorI)
 		{
-			MatrixNodeI mkids[] = new MatrixNodeI[children.length];
+			Dimensions dims[] = new Dimensions[children.length];
 			for(int i=0;i<children.length;++i)
-				mkids[i]=(MatrixNodeI) children[i];
+				dims[i]=((MatrixNodeI) children[i]).getDim();
 			//if(arguments.length!=1) throw new ParseException("Operator "+op.getName()+" must have one elements, it has "+arguments.length);
 			NaryOperatorI uni = (NaryOperatorI) pfmc;
-			Dimensions dim = uni.calcDim(mkids);
+			Dimensions dim = uni.calcDim(dims);
 			res.setDim(dim);
 			return res;
 		}
@@ -285,11 +285,14 @@ public class MatrixNodeFactory extends NodeFactory {
 		}
 		else if(pfmc instanceof NaryOperatorI)
 		{
-			//if(arguments.length!=1) throw new ParseException("Operator "+op.getName()+" must have one elements, it has "+arguments.length);
+			Dimensions dims[] = new Dimensions[children.length];
+			for(int i=0;i<children.length;++i)
+				dims[i]=((MatrixNodeI) children[i]).getDim();
 			NaryOperatorI uni = (NaryOperatorI) pfmc;
-			Dimensions dim = uni.calcDim(children);
+			Dimensions dim = uni.calcDim(dims);
 			res.setDim(dim);
 			return res;
+
 		}
 		else
 		{

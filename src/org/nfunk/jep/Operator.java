@@ -43,7 +43,7 @@ import org.nfunk.jep.function.*;
  * if(myOp == Operator.OP_ADD) System.out.println("Addition: "+myOp.toString());
  * </pre>
  * Secondly they can be accessed through the 
- * {@link org.lsmp.djep.OperatorSet org.lsmp.djep.OperatorSet}.
+ * {@link org.lsmp.djep.xjep.OperatorSet org.lsmp.djep.xjep.OperatorSet}.
  * This provides a way to overide operators to provide generic properties.
  * For example the normal multiplication over the reals is commutative
  * but it is not commutative for matricies. Generic methods are provided

@@ -24,9 +24,9 @@ import org.nfunk.jep.function.PostfixMathCommandI;
  * Node out = cv.process(in);
  * </pre>
  * Commands to be executed must implement
- * {@link org.lsmp.djep.CommandVisitorI} and {@link  org.nfunk.jep.function.PostfixMathCommandI}.
- * See {@link org.lsmp.djep.functions.Eval} for an example of this. 
- * See {@link org.nfunk.jep.ParserVisitor} for details on the VisitorPattern.
+ * {@link org.lsmp.djep.xjep.CommandVisitorI CommandVisitorI} and {@link  org.nfunk.jep.function.PostfixMathCommandI PostfixMathCommandI}.
+ * See {@link org.lsmp.djep.xjep.Eval Eval} for an example of this. 
+ * See {@link org.nfunk.jep.ParserVisitor ParserVisitor} for details on the VisitorPattern.
  * @author R Morris
  * Created on 19-Jun-2003
  */

@@ -31,9 +31,9 @@ public class TensorFun extends PostfixMathCommand
 		numberOfParameters = -1;
 	}
 
-	public Dimensions calcDim(MatrixNodeI node[]) throws ParseException
+	public Dimensions calcDim(Dimensions dims[]) throws ParseException
 	{
-		return Dimensions.valueOf(node.length,node[0].getDim());
+		return Dimensions.valueOf(dims.length,dims[0]);
 	}
 	
 	public MatrixValueI calcValue(MatrixValueI res,

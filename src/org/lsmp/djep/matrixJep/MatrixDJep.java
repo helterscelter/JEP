@@ -12,8 +12,11 @@ import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.xjep.*;
+import org.lsmp.djep.matrixJep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
 /**
+ * An extension of JEP which allows advanced vector and matrix handeling and differentation.
+ *
  * @author Rich Morris
  * Created on 19-Dec-2003
  */
@@ -36,7 +39,7 @@ public class MatrixDJep extends DJep {
 		Operator.OP_DOT.setPFMC(new Dot());
 		Operator.OP_CROSS.setPFMC(new ExteriorProduct());
 		Operator.OP_ASSIGN.setPFMC(new Assignment());
-		
+
 		pv.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
 		{	public void append(Node node,PrintVisitor pv) throws ParseException
 			{	pv.append("[");

@@ -6,6 +6,7 @@
  * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 package org.lsmp.djep.matrixJep;
+import org.lsmp.djep.matrixJep.function.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.xjep.*;
 //import org.nfunk.jep.*;	// Want to make sure we never use standard JEP operators
@@ -26,7 +27,7 @@ public class MatrixOperatorSet extends OperatorSet {
 	public static final Operator M_DOT = new Operator(".",new Dot(),Operator.BINARY+Operator.LEFT);
 
 	//public static final Operator LIST = new Operator("LIST",new MList(),Operator.NARY);
-	public static final Operator TENSOR = new Operator("TENSOR",new TensorFun(),Operator.NARY);
+	public static final Operator TENSOR = new Operator("TENSOR",new MTensorFun(),Operator.NARY);
 	
 	/** place holder for DOT operation, can be overwritten. */
 	protected Operator DOT;

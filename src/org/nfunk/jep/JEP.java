@@ -448,7 +448,7 @@ public class JEP {
 	 * (e.g. Complex), NaN is returned. If an error occurs during evaluation,
 	 * NaN is returned and hasError() will return true.
 	 *
-	 * @see getComplexValue()
+	 * @see #getComplexValue()
 	 */
 	public double getValue() {
 		Object value = getValueAsObject();

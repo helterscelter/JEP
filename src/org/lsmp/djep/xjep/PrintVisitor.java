@@ -288,7 +288,6 @@ private Object visitList(ASTFunNode node)
   }
 /**
  * Is full bracket mode on?
- * @return
  */
 public boolean isFullBrackets() {
 	return fullBrackets;

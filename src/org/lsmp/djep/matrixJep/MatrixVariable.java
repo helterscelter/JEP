@@ -15,7 +15,7 @@ import org.lsmp.djep.djep.*;
 /**
  * Holds all info about a variable.
  * Has a name, an equation, a dimension (or sent of dimensions if matrix or tensor)
- * and also a set of {@see PartialDerivatives}.
+ * and also a set of {@link MatrixPartialDerivative MatrixPartialDerivative}.
  * The derivatives are stored in a hashtable index by
  * the sorted names of derivatives.
  * i.e. d^2f/dxdy, and d^2f/dydx will both be indexed by {"x","y"}.

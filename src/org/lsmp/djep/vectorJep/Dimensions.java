@@ -142,7 +142,6 @@ public class Dimensions
 
 	/** apparently your should always override hashcode when you
 	 * operride equals (Effective Java, Bloch).
-	 * @return
 	 */
 	public int hashcode()
 	{

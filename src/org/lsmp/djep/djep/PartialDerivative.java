@@ -22,7 +22,7 @@ public class PartialDerivative extends Variable {
 	private Node eqn;
 	/**
 	 * Protected constructor, should only be constructed
-	 * through the findDerivative method in {@see VariableInfo}.
+	 * through the findDerivative method in {@link DVariable DVariable}.
 	**/ 
 	protected PartialDerivative(DVariable var, String derivnames[],Node deriv)
 	{
