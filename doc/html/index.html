@@ -21,6 +21,7 @@
 <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
 <li><a href="grammar.html">Grammar</a></li>
 <li><a href="cust_func.html">Custom Functions</a></li>
+<li><a href="newfeatures-2.3.html">New Features</a></li>
 <li><a href="faq.html">FAQ</a></li>
     <li><a href="version.html">Version History</a></li>
 </ul>
@@ -36,11 +37,13 @@
 <li><a href="djep/version.html">Version History</a></li>
 </ul>
 </div><!-- #EndLibraryItem --><!-- #EndEditable -->
-<div id="centercontent"> <!-- #BeginEditable "Text" --> 
+<div id="centercontent">
+<!-- #BeginEditable "Text" --> 
   <h1><a name="top"></a>Usage</h1>
   <ul>
     <li><a href="#basicusage">Basic usage</a></li>
     <li><a href="#evaluatingexpressions">Evaluating expressions</a></li>
+    <li><a href="#errorhandling">Error handling</a></li>
     <li><a href="#implicitmul">Implicit multiplication</a></li>
     <li><a href="#allowingundeclared">Allowing undeclared variables</a></li>
     <li><a href="#obtainingalist">Obtaining a list of variables</a></li>
@@ -55,7 +58,7 @@
   <p>Using the JEP package of classes in your project is simple. The following 
     steps will get you started quickly.</p>
   <ol>
-    <li>Download the JEP package from the <a href="../download.htm">download section</a></li>
+    <li>Download the JEP package</li>
     <li>Unpack the archive</li>
     <li>Move the jep-x.xx.jar file to a directory of your choice (optional)</li>
     <li>IMPORTANT: For the Java compiler to be able to find the JEP classes when 
@@ -63,7 +66,9 @@
       to add the location of the .jar file to your CLASSPATH environment variable 
       (if you don't know how, <a href="http://java.sun.com/j2se/1.4/docs/tooldocs/windows/classpath.html" target="_blank">read 
       this</a>). Your CLASSPATH variable should contain something like C:\java\packages\jep-x.xx.jar, 
-      depending on where you place the jar file.</li>
+      depending on where you place the jar file. Alternatively you may need to 
+      set the location of the jar archive in your Java IDE so that the compiler 
+      finds the library.</li>
     <li>In your program, create a new parser object with 
       <pre>org.nfunk.jep.JEP myParser = new org.nfunk.jep.<a href="../javadoc/org/nfunk/jep/JEP.html" target="_blank">JEP</a>();</pre>
     </li>
@@ -109,6 +114,19 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
   <p>The first two methods call <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
     internally, and perform the necessary conversions into either a <code>double</code> 
     value, or a <code>Complex</code> object.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><h3><a name="errorhandling"></a>Error handling</h3>
+  <p>Errors can occur both while parsing an expression and while evaluating an 
+    expression. The <a href="../javadoc/org/nfunk/jep/JEP.html#hasError()" target="_blank">hasError()</a> 
+    method reports whether an error has occured during the most recent action 
+    (either parsing or evaluation). If the result is <code>true</code>, you can 
+    then use <a href="../javadoc/org/nfunk/jep/JEP.html#getErrorInfo()" target="_blank">getErrorInfo()</a> 
+    to obtain further information on the errors that have occured.</p>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top" border="0"></a></td>
@@ -293,13 +311,11 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
 </tr>
 <tr>
  <td bgcolor="#CCCCCC"><img src="img/spacer.gif" width="1" height="1"></td></tr></table>
- <br><br><!-- #EndLibraryItem --><!-- #EndEditable --> 
-  <br/>
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable -->
 <br/>
 <br/>
-<div id="footer">
-&copy; 2004 Nathan Funk and Richard Morris
-</div>
+<br/>
+  <div id="footer"> &copy; 2004 Singular Systems</div>
 </div>
 </body>
 <!-- #EndTemplate --></html>
