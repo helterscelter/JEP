@@ -1,28 +1,41 @@
-Version 2.20
-- Finish CVS setup
-- make sure applets are run under a 1.1 VMs
-- test "-target 1.1" option for compiling 
-- complete applying new code convention to complex class
-- prepare examples using new options
-- update HTML documentation
+-- Mamala -----------------------------------------------------------
+ - use <apply></apply> instead (content MathML?)
 
 
-Upcoming Versions
-- add documentation to most imporant classes
-- update Parser.jjt and JEP for smooth configuration optioning
-- optimize evaluation
-- look at 330 design patterns and see whether some might be useful
-- figure out way to distribute documentation with each version
-- test error output (e.g. i == 2 -> type conflict)
-- handle type conflicts in advance
-- JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
-- Package applets in separate jar? Use "Download Extensions" to refer to main jep jar instead of packing them together? Or create separate jar for purposes of having on web-site
-- look at digital signing of jars
-- protect jars/applets from running on other domains.
+== v2.23 todos ======================================================
+ - support for Number type
+ - update javadoc on website
+ - add download of documentation for old versions
+ - figure out way to distribute documentation with each version
+
+== Further todos ====================================================
+ - Use Map symbol table, and let user replace it
+ - extend build.xml to automatically generate commercial package
+ - allow dumpvisitor to show values of function nodes and variables
+ - add list of reference companies that use JEP to web site
+ - add exp function
+ - add JUnit testing
+ - think about adding a "static double getValue(String expr) throw Exception"
+ - add support for delimited identifiers (suggestion from Ralph Harnden)
+ - new example applet, show gray-scale image with function evaluated at
+ - check out caligula
+ - complete applying new code convention to complex class
+http://www.home.foni.net/~wkurz/caligula/caligula.htm
+ - add documentation to most imporant classes
+ - update Parser.jjt and JEP for smooth configuration optioning
+ - optimize evaluation
+ - look at 330 design patterns and see whether some might be useful
+ - test error output (e.g. i == 2 -> type conflict)
+ - handle type conflicts in advance
+ - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
+ - look at digital signing of jars
+ - protect jars/applets from running on other domains.
 http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
-- compare features with the french guy's site, and plan to match important capabilities
-- set up different e-mail address
+ - compare features with the french guy's site, and plan to match important capabilities
 
-Other:
-- Set up appointment with MacLean
 
+
+
+== NumberFactory ====================================================
+ - Creates Double objects from strings by default
+ - Can be replaced with other Factory to create BigInt or BigDecimal for example
