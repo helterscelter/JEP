@@ -1,19 +1,40 @@
+== Release Check List ===============================================
+ - Run all tests
+ - use "ant dist"
+ - Update download page
+ - Update license
+ - Download package and test
+ - add jep-x.xx-withexamples.jar to website folder
+ - Update documentation with new features
+ - Run spell check on changed pages
+ - Test web site in multiple browsers
+ - Upload new distribution file(s)
+ - Upload license pdf
+ - Upload web site
+ - Add message on SourceForge list
+ - Update version number+ feature list from JARS, share*it,...
+ - Add CVS tag for version (e.g. v223)
+
 == TODO for version 2.3.0 ===========================================
-- check for undocumented functions
-- dot product?
-- ensure EvaluatorVisitor reports multiple errors for one evaluation
-   (compare Rich's code to version 1.12)
-- finalize docs
-- update version history(s)
+- update CVS
+- update web site version history (link to doc?)
 - upload new documentation + example files to web site
+- test downloading
+- tag CVS
+- create commercial package
 - send license to Preet
 
-Optional
+Ignored/Optional
+- dot product?
 - benchmark evaluation performance against 2.24?
 - automatisize testing in ant script?
 - add more JUnit tests
 
 Complete
+x finalize docs
+x multiple jars? multiple zips?
+x move new features
+x check for undoc'd functions
 x added 1.2 compatibility checking
 x replace @license_info@ with GPL info using replace task and loadfile
    also @version@ @date@ @license@ @copyright@
@@ -34,11 +55,17 @@ x document hasError() better with examples
  - add Double -> Number?
 
 == Phone call with Rich =============================================
- - THANK YOU!
- - logging changes into CHANGES.txt
- - compatibility 1.2?
+Notes
+ - agreed to change everything to GPL
+ - move towards strongly typed approach
+   enable before evaluation complex
+ - changing SymbolTable to Map?
+ - use GroupJep/rationals for arbitrary precision math?
 
 == Further todos ====================================================
+ - move applicable examples to jepexamples
+ - ensure EvaluatorVisitor reports multiple errors for one evaluation
+   (use list of errors rather than throwing exceptions)
  - change Functions and Operators documentation. That table just has too
    much empty space
  - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
@@ -93,26 +120,4 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - Add message on SourceForge list
  - Update version number+ feature list from JARS, share*it,...
  - Add CVS tag for version (e.g. v223)
-
-== v2.23 todos ======================================================
- x support for Number type
- x update javadoc on website
- x figure out way to distribute documentation with each version
- x update Main page
- x add doc for loading custom NumberFactory
- x change version in license
- x Run all tests
- x Update download page
- x Update license
- x Update documentation with new features
- x Test web site in multiple browsers
- x Run spell check on changed pages
- x use "ant dist"
- x upload distribution
- x upload license pdf
- x upload new website
- x Download package and test
- x Add message on SourceForge list
- x Update version number+ feature list from JARS, share*it,...
- x Add CVS tag for version (e.g. v223)
 
