@@ -59,6 +59,7 @@ public class DifferentationVisitor extends DeepCopyVisitor implements DiffVisito
 	addDiffRule(new MultiplyDiffRule("*"));
 	addDiffRule(new DivideDiffRule("/"));
 	addDiffRule(new PowerDiffRule("^"));
+	addDiffRule(new PassThroughDiffRule("UMinus",globalDJep.getOperatorSet().getUMinus().getPFMC()));
   }
   
   
