@@ -40,6 +40,7 @@
  - protect jars/applets from running on other domains.
 http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - compare features with the french guy's site, and plan to match important capabilities
+ - add applet for displaying expression trees
 
 -- Mamala -----------------------------------------------------------
  - use <apply></apply> instead (content MathML?)
