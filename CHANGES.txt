@@ -1,0 +1,26 @@
+
+== org.nfunk.* ======================================================
+2.3.0 release
+Oct  1 - removed org.lsmp.* from compile in build.xml
+       - commented out addToErrorList("No expression entered"); from
+         Start() in Parser.jjt
+       - added getTraverse() method
+       - changed @since version names in org.nfunk.* according to:
+          2.3.0   ->  2.3.0 alpha
+          2.3.1   ->  2.3.0 beta 1
+          2.3.2   ->  2.3.0 beta 2
+          2.3.0.1 ->  2.3.0 alpha
+
+2.3.0 beta 2
+?      - NumberFactory has been changed to create the number from a String
+         representation (in order to allow creation of arbitrary precision
+         numbers without the limitations of double)
+
+
+
+== org.lsmp.* =======================================================
+
+
+
+
+
