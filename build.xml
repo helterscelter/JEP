@@ -26,12 +26,13 @@ javadoc/
 
 <project name="JEP" default="compile" basedir=".">
 	
-	<!-- set global properties for this build -->
+	<!-- set global properties for this build 
+	<property name="build.compiler" value="jvc"/>-->
 	<property name="src" value="src"/>
 	<property name="build"   value="build"/>
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
-	<property name="version" value="2.20"/>
+	<property name="version" value="2.21"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
@@ -77,7 +78,7 @@ javadoc/
 <!-- COMPILE -->
 	<target name="compile" depends="javacc">
 		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}" destdir="${build}"/>
+		<javac srcdir="${src}" destdir="${build}" target="1.1"/>
 	</target>
 
 
