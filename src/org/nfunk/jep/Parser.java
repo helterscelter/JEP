@@ -1041,8 +1041,7 @@ GRAMMAR START
       throw new ParseException();
     }
                 try {
-                        Double temp = new Double(t.image);
-                        value = jep.getNumberFactory().createNumber(temp.doubleValue());
+                        value = jep.getNumberFactory().createNumber(t.image);
                 } catch (Exception e) {
                         value = null;
                         addToErrorList("Can't parse \"" + t.image + "\"");
