@@ -113,4 +113,11 @@ public class SimpleNode implements Node {
 			}
 		}
 	}
+	
+	/**
+	 * Returns the id of the node (for simpler identification).
+	 */
+	public int getId() {
+		return id;
+	}
 }
