@@ -64,15 +64,15 @@ public class Add extends PostfixMathCommand
 	}
 
 	public Object add(Object param1, Object param2) throws ParseException {
-		if (param1 instanceof Double) {
-			if (param2 instanceof Double) {
-				return add((Double)param1, (Double)param2);
+		if (param1 instanceof Number) {
+			if (param2 instanceof Number) {
+				return add((Number)param1, (Number)param2);
 			} else if (param2 instanceof Complex) {
-				return add((Complex)param2, (Double)param1);
+				return add((Complex)param2, (Number)param1);
 			}
 		} else if (param1 instanceof Complex) {
-			if (param2 instanceof Double) {
-				return add((Complex)param1, (Double)param2);
+			if (param2 instanceof Number) {
+				return add((Complex)param1, (Number)param2);
 			} else if (param2 instanceof Complex) {
 				return add((Complex)param1, (Complex)param2);
 			}
@@ -83,7 +83,7 @@ public class Add extends PostfixMathCommand
 		throw new ParseException("Invalid parameter type");
 	}
 	
-	public Double add(Double d1, Double d2) {
+	public Double add(Number d1, Number d2) {
 		return new Double(d1.doubleValue()+d2.doubleValue());
 	}
 	
@@ -91,7 +91,7 @@ public class Add extends PostfixMathCommand
 		return new Complex(c1.re() + c2.re(), c1.im() + c2.im());
 	}
 	
-	public Complex add(Complex c, Double d) {
+	public Complex add(Complex c, Number d) {
 		return new Complex(c.re() + d.doubleValue(), c.im());
 	}	
 }

@@ -51,9 +51,9 @@ public class Abs extends PostfixMathCommand
 	public Object abs(Object param)
 		throws ParseException
 	{
-		if (param instanceof Double)
+		if (param instanceof Number)
 		{
-			return new Double(Math.abs(((Double)param).doubleValue()));
+			return new Double(Math.abs(((Number)param).doubleValue()));
 		}
 		else if (param instanceof Complex)
 		{
