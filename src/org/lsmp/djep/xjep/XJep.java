@@ -8,7 +8,7 @@
 package org.lsmp.djep.xjep;
 
 import org.nfunk.jep.*;
-
+import org.lsmp.djep.xjep.function.*;
 import java.util.*;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -119,6 +119,12 @@ public class XJep extends JEP {
 		} 
 		else super.addStandardFunctions();
 		addFunction("eval",new Eval());
+		addFunction("Sum",new Sum());
+		addFunction("Product",new Product());
+		addFunction("Min",new Min());
+		addFunction("Max",new Max());
+		addFunction("MinArg",new MinArg());
+		addFunction("MaxArg",new MaxArg());
 	}
 
 	public void addStandardConstants()
