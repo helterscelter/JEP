@@ -479,16 +479,17 @@ public class DJepTest extends TestCase {
 		System.out.println(j.evaluate(n));
 		Node n2 = j.parse("y");
 		System.out.println(j.evaluate(n2));
-		valueTest("x == x+5",1);
-		valueTest("x == 0/0",1);
-		valueTest("x == x",1);
-		valueTest("x == 0 * x",1);
+		valueTest("x == x+5",0);
+		valueTest("x == 0/0",0);
+		valueTest("x == x",0);
+		valueTest("x == 0 * x",0);
 		valueTest("x == 5",0);
-		valueTest("x == y",1);
-		valueTest("y == y",1);
+		valueTest("x == y",0);
+		valueTest("y == y",0);
 		System.out.println("Set x to Double(5)");
 		j.setVarValue("x",new Double(5));
 		valueTest("x == x+5",0);
+		valueTest("x == x",1);
 	}
 
 	public void testAssign2()
@@ -512,6 +513,13 @@ public class DJepTest extends TestCase {
 		j.parseExpression("sqrt(-1)^2");
 		val = j.getValue();
 		assertEquals("sqrt(-1)^2",-1.0,val,0.0);
+	}
+	public void testUndecVar() throws ParseException {
+		j.setAllowUndeclared(true);
+		//MRpEval rpe = new MRpEval(j);
+		Node node1 = j.parse("zap * pow * gosh");
+		Node node3 = j.preprocess(node1);
+		//rpe.compile(node3);
 	}
 	
 	public void testSum()

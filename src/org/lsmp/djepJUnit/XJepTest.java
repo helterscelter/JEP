@@ -5,6 +5,7 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import org.lsmp.djep.xjep.*;
 import java.text.NumberFormat;
+import java.util.Vector;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -30,8 +31,6 @@ public class XJepTest extends TestCase {
 		// Create an instance of this class and analyse the file
 
 		TestSuite suite= new TestSuite(XJepTest.class);
-//		DJepTest jt = new DJepTest("DJepTest");
-//		jt.setUp();
 		suite.run(new TestResult());
 	}	
 
@@ -76,7 +75,7 @@ public class XJepTest extends TestCase {
 		Node node = j.parse(expr);
 		Object res = j.evaluate(node);
 		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Sucess value of <"+expr+"> is "+res);
+		System.out.println("Success value of <"+expr+"> is "+res);
 	}
 	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
 	{
@@ -84,7 +83,7 @@ public class XJepTest extends TestCase {
 		Object res = j.evaluate(node);
 		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
 			expected.equals((Complex) res,tol));
-		System.out.println("Sucess value of <"+expr+"> is "+res);
+		System.out.println("Success value of <"+expr+"> is "+res);
 	}
 
 	public Object calcValue(String expr)
@@ -110,7 +109,7 @@ public class XJepTest extends TestCase {
 		if(!res2.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+res2+"\"");
 		assertEquals("<"+expr+">",res2,res);
-		System.out.println("Sucess: Value of \""+expr+"\" is \""+res+"\"");
+		System.out.println("Success: Value of \""+expr+"\" is \""+res+"\"");
 			
 //		System.out.print("Full Brackets:\t");
 //		j.pv.setFullBrackets(true);
@@ -129,7 +128,7 @@ public class XJepTest extends TestCase {
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
 		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Sucess: Value of \""+expr+"\" is \""+res+"\"");
+		System.out.println("Success: Value of \""+expr+"\" is \""+res+"\"");
 			
 //		System.out.print("Full Brackets:\t");
 //		j.pv.setFullBrackets(true);
@@ -515,6 +514,37 @@ public class XJepTest extends TestCase {
 		valueTestInt("binom(10,1)",10);
 		valueTestInt("binom(10,5)",252);
 	}
+	
+	public void testVarInEqn() throws Exception
+	{
+		Node n1 = j.parse("a+b+c+d");
+		Vector v = j.getVarsInEquation(n1,new Vector());
+		assertTrue("Does not contain a",v.contains(j.getSymbolTable().getVar("a")));
+		assertTrue("Does not contain b",v.contains(j.getSymbolTable().getVar("b")));
+		assertTrue("Does not contain c",v.contains(j.getSymbolTable().getVar("c")));
+		assertTrue("Does not contain d",v.contains(j.getSymbolTable().getVar("d")));
+
+		j.preprocess(j.parse("x=a+b t"));
+		j.preprocess(j.parse("y=c+d t"));
+		j.preprocess(j.parse("f=x*y"));
+		j.preprocess(j.parse("g=x+y"));
+		Node n2 = j.preprocess(j.parse("f+g"));
+
+		Vector v2 = j.recursiveGetVarsInEquation(n2,new Vector());
+		Vector v3 = new Vector();
+		v3.add(j.getVar("a"));
+		v3.add(j.getVar("b"));
+		v3.add(j.getVar("t"));
+		v3.add(j.getVar("x"));
+		v3.add(j.getVar("c"));
+		v3.add(j.getVar("d"));
+		v3.add(j.getVar("y"));
+		v3.add(j.getVar("f"));
+		v3.add(j.getVar("g"));
+
+		System.out.println(v2.toString());
+		assertEquals("Bad element seq",v3,v2);
+	}
 	public void testBad() throws Exception
 	{
 		if(SHOW_BAD)
@@ -522,7 +552,7 @@ public class XJepTest extends TestCase {
 			valueTest("recurse = recurse+1",null);
 			simplifyTest("1&&(1||x)","1");
 			simplifyTest("diff(sgn(x),x)","0");	// sgn not implemented
-			simplifyTest("diff(re(x+i y),x)","1"); // not smart enought to work out re(i) = 1
+			simplifyTest("diff(re(x+i y),x)","1"); // not smart enough to work out re(i) = 1
 			simplifyTest("diff(re(x+i y),y)","0");
 			simplifyTest("diff(im(x+i y),x)","0");
 			simplifyTest("diff(im(x+i y),y)","1");
