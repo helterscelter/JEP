@@ -4,6 +4,7 @@ import junit.framework.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import org.lsmp.djep.xjep.*;
+import org.lsmp.djep.xjep.rewriteRules.*;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -450,6 +451,99 @@ public class XJepTest extends TestCase {
 		node = j.continueParsing();
 		assertNull("empty string ",node);
 	}
+	
+	public void testRewrite()  throws ParseException,Exception
+	{
+		RewriteVisitor rwv = new RewriteVisitor();
+		ExpandBrackets eb = new ExpandBrackets(j);
+		ExpandPower ep = new ExpandPower(j);
+
+		Node n1 = j.parse("(a+b)*(c+d)");
+		Node n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{eb},false);
+		myAssertEquals("expand((a+b)*(c+d))",j.toString(n2),"a*c+a*d+b*c+b*d");
+
+		n1 = j.parse("(a+b)*(a+b)");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{eb},false);
+		myAssertEquals("expand((a+b)*(a+b))",j.toString(n2),"a*a+a*b+b*a+b*b");
+
+		n1 = j.parse("(a-b)*(a-b)");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{eb},true);
+		myAssertEquals("expand((a+b)*(a+b))",j.toString(n2),"a*a-a*b-(b*a-b*b)");
+
+		n1 = j.parse("(x+7.6)*(x+5.8832)*(x-55.12)");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{eb},false);
+		Node n3 = rwv.rewrite(n1,j,new RewriteRuleI[]{eb},true);
+		j.println(n2);
+		j.println(n3);
+		
+		n1 = j.parse("(a+b)^0");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a+b)^0",j.toString(n2),"1.0");
+
+		n1 = j.parse("(a-b)^0");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a-b)^0",j.toString(n2),"1.0");
+
+		n1 = j.parse("(a+b)^1");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a+b)^1",j.toString(n2),"a+b");
+
+		n1 = j.parse("(a-b)^1");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a-b)^1",j.toString(n2),"a-b");
+
+		n1 = j.parse("(a+b)^2");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a+b)^2",j.toString(n2),"a^2.0+2.0*a*b+b^2.0");
+
+		n1 = j.parse("(a-b)^2");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a-b)^2",j.toString(n2),"a^2.0-(2.0*a*b-b^2.0)");
+
+		n1 = j.parse("(a+b)^3");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a+b)^3",j.toString(n2),"a^3.0+3.0*a^2.0*b+3.0*a*b^2.0+b^3.0");
+
+		n1 = j.parse("(a-b)^3");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a-b)^3",j.toString(n2),"a^3.0-(3.0*a^2.0*b-(3.0*a*b^2.0-b^3.0))");
+
+		n1 = j.parse("(a+b)^4");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a+b)^4",j.toString(n2),"a^4.0+4.0*a^3.0*b+6.0*a^2.0*b^2.0+4.0*a*b^3.0+b^4.0");
+
+		n1 = j.parse("(a-b)^4");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a-b)^4",j.toString(n2),"a^4.0-(4.0*a^3.0*b-(6.0*a^2.0*b^2.0-(4.0*a*b^3.0-b^4.0)))");
+		
+		n1 = j.parse("(a+b)^5");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a+b)^5",j.toString(n2),"a^5.0+5.0*a^4.0*b+10.0*a^3.0*b^2.0+10.0*a^2.0*b^3.0+5.0*a*b^4.0+b^5.0");
+
+		n1 = j.parse("(a-b)^5");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},false);
+		myAssertEquals("(a-b)^5",j.toString(n2),"a^5.0-(5.0*a^4.0*b-(10.0*a^3.0*b^2.0-(10.0*a^2.0*b^3.0-(5.0*a*b^4.0-b^5.0))))");
+
+		n1 = j.parse("(a+1)^5");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},true);
+		myAssertEquals("(a+1)^5",j.toString(n2),"a^5.0+5.0*a^4.0+10.0*a^3.0+10.0*a^2.0+1.0+5.0*a");
+
+		n1 = j.parse("(a-1)^5");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},true);
+		myAssertEquals("(a-1)^5",j.toString(n2),"a^5.0-(5.0*a^4.0-(10.0*a^3.0-(10.0*a^2.0-(5.0*a-1.0))))");
+
+		n1 = j.parse("(a+2)^5");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep},true);
+		myAssertEquals("(a+1)^5",j.toString(n2),"a^5.0+10.0*a^4.0+40.0*a^3.0+80.0*a^2.0+32.0+80.0*a");
+
+		j.getPrintVisitor().setMaxLen(80);
+		n1=j.parse("(xx^2+yy^2+zz^2+ww^2)^8");
+		n2 = rwv.rewrite(n1,j,new RewriteRuleI[]{ep,eb},true);
+
+		j.getPrintVisitor().setMaxLen(80);
+		j.println(n2);		
+	}
+
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)
