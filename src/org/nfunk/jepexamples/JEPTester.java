@@ -127,13 +127,21 @@ public class JEPTester {
 
 		} while (line.length()==0 || line.trim().charAt(0)=='#');
 			
-		// parse and evaluate the expression
+		// parse the expression
 		myParser.parseExpression(line);
-		value = myParser.getComplexValue();
-
-		// did an error occur while parsing / evaluating?
-		if ((errorStr = myParser.getErrorInfo()) != null) {
+		// did an error occur while parsing?
+		errorStr = myParser.getErrorInfo();
+		if (errorStr != null) {
 			println("Error while parsing line " + lineCount + ": " + errorStr);
+			return null;
+		}
+		
+		// evaluate the expression
+		value = myParser.getComplexValue();
+		// did an error occur while evaluating?
+		errorStr = myParser.getErrorInfo();
+		if ((value == null) || (errorStr != null)) {
+			println("Error while evaluating line " + lineCount + ": " + errorStr);
 			return null;
 		}
 			
