@@ -1,173 +1,73 @@
-/*****************************************************************************
-
-@header@
-@date@
-@copyright@
-@license@
-
-*****************************************************************************/
-
-/**
- * Console - JEP Example Applet
- * Copyright (c) 2000 Nathan Funk
+/* @author rich
+ * Created on 21-Mar-2005
  *
- * @author Nathan Funk 
+ * See LICENSE.txt for license information.
  */
-
 package org.lsmp.djepExamples;
 
-import org.lsmp.djep.jama.JamaUtil;
-import org.lsmp.djep.vectorJep.VectorJep;
-import org.nfunk.jep.*;
+import org.nfunk.jep.Node;
+import org.lsmp.djep.vectorJep.*;
 import java.io.*;
-//import org.nfunk.sovler.*;
 
 /**
-* This class implements a simple command line utility for evaluating
-* mathematical expressions.
-*
-*   Usage: java org.nfunk.jepexamples.Console [expression]
-*
-* If an argument is passed, it is interpreted as an expression
-* and evaluated. Otherwise, a prompt is printed, and the user can enter
-* expressions to be evaluated. To exit from the command prompt a 'q' must
-* be entered.
-*/
-class VectorConsole {
-	
-	/** The prompt string */
-	private String prompt;
-	
-	/** The input reader */
-	private BufferedReader br;
-	
-	/** where to give a dump of tree after parsing. **/
-	boolean dumpTree = false;
-	/** whether to print symbol table after each line. **/
-	boolean dumpSymbols=false;
+ * @author Rich Morris
+ * Created on 21-Mar-2005
+ */
+public class VectorConsole extends Console
+{
 
-	VectorJep j = new VectorJep();
-	
-	/** Constructor */
-	public VectorConsole() {
-		prompt = "JEP > ";
-		br = new BufferedReader(new InputStreamReader(System.in));
-
-	}
-
-	/** Creates a new Console object and calls run() */
-	public static void main(String args[]) throws IOException {
-		VectorConsole c = new VectorConsole();
+	public static void main(String[] args) 
+	{
+		Console c = new VectorConsole();
 		c.run(args);
 	}
-	
-	/** The input loop */
-	public void run(String args[]) throws IOException {
-		String command="";
+
+	public String getPrompt()
+	{
+		return "VectorJep > ";
+	}
+
+	public void initialise()
+	{
+		j = new VectorJep();
 		j.addStandardConstants();
 		j.addStandardFunctions();
 		j.addComplex();
-		//j.setTraverse(true);
 		j.setAllowAssignment(true);
 		j.setAllowUndeclared(true);
-		JamaUtil.addStandardFunctions(j);
-		String temp="";
-		for(int i=0;i<args.length;++i)
-		{
-			if(args[i].equals("--dumpTree"))
-				dumpTree = true;
-			else if(args[i].equals("--dumpSymbols"))
-				dumpSymbols = true;
-			else
-				temp += " " + args[i];
-		} 
-		if(temp.length()!=0)
-		{
-			j.parseExpression(temp);
-			if (j.hasError())
-				System.out.println(j.getErrorInfo());
-			else
-				System.out.println(j.getValueAsObject());
-		}
-		else
-		{
-			// no arguments - interactive mode
-				
-			System.out.println("JEP - Enter q to quit");
-			System.out.println("setEleMult: sets element by element mode for multiplication");	
-			System.out.println("setMatrixMult: sets matrix multiplication");	
-
-			while ((command = getCommand()) != null) 
-			{
-				j.parseExpression(command);
-				
-				if (j.hasError()) {
-					System.out.println(j.getErrorInfo());
-				} 
-				else 
-				{
-					if(dumpTree)
-						((SimpleNode) j.getTopNode()).dump("");
-
-					// expression is OK, get the value
-					Object value = j.getValueAsObject();
-					
-					// did error occur during evaluation?
-					if (j.hasError()) {
-						System.out.println(j.getErrorInfo());
-					}
-					else
-					{
-						if(dumpSymbols)
-							System.out.print(j.getSymbolTable().toString());
-						System.out.println(value);
-					}
-
-/*
-					System.out.println(
-						(LinearVisitor.isLinear(j.getTopNode())) ?
-						"Linear" : "Not Linear");
-					System.out.println(
-						(ConstantVisitor.isConstant(j.getTopNode())) ?
-						"Constant" : "Not Constant");
-*/
-				}
-					
-			}
-		}
-		
+		j.setImplicitMul(true);
 	}
-	
-	/**
-	 * Get a command from the input.
-	 * @return null if an error occures, or if the user enters a terminating
-	 *  command
-	 */
-	private String getCommand() throws IOException {
-		String s;
-		
-		System.out.print(prompt);
-		if (br == null)
-			return null;
 
-		if ( (s = br.readLine()) == null)
-			return null;
-
-		if (s.equals("q")
-			|| s.equals("quit")
-			|| s.equals("exit"))
-			return null;
-
-		if(s.startsWith("setEleMult"))
-		{
-			j.setElementMultiply(true);
-			return getCommand();
-		}
-		if(s.startsWith("setMatrixMult"))
-		{
-			j.setElementMultiply(false);
-			return getCommand();
-		}
-		return s;
+	public void printHelp()
+	{
+		super.printHelp();
+		println("Dot product: [1,2,3].[4,5,6]");
+		println("Cross product: [1,2,3]^^[4,5,6]");
+		println("Matrix Multiplication: [[1,2],[3,4]]*[[1,2],[3,4]]");
+		println("setEleMult: sets element by element mode for multiplication");	
+		println("setMatrixMult: sets matrix multiplication");	
 	}
+
+	public void printIntroText()
+	{
+		println("VectorJep: matrix and vector calculations in Jep");
+		println("eg. [1,2,3].[4,5,6] [[1,2],[3,4]]*[1,0]");
+		printStdHelp();
+	}
+
+	public boolean testSpecialCommands(String command)
+	{
+		if(command.equals("setEleMult"))
+		{
+			((VectorJep)j).setElementMultiply(true);
+			return false;
+		}
+		if(command.equals("setMatrixMult"))
+		{
+			((VectorJep)j).setElementMultiply(true);
+			return false;
+		}
+		return true;
+	}
+
 }
