@@ -13,8 +13,14 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 
 /**
- * A sum function Sum(x^2,x,1,10) finds the sum of x^2 with x running from 1 to 10.
- * Sum(x^2,x,1,10,2) calculates the 1^2+3^2+5^2+7^2+9^2 i.e. in steps of 2.
+ * Base class for functions like Sum(x^2,x,1,10) which finds the sum of x^2 with x running from 1 to 10.
+ * The first argument should be an equation, the second argument is a variable name,
+ * the third argument is the min value, the forth is the max value and the 
+ * fifth argument (if presant, default 1) is the increment to use.
+ * Sub classes should implement the 
+ * <pre>public abstract Object evaluate(Object elements[]) throws ParseException;</pre>
+ * method, which is passed an array of the value 
+
  * @author Rich Morris
  * Created on 10-Sept-2004
  */
