@@ -128,11 +128,11 @@
 <!--======================================================================-->
 <!-- JAVADOC -->
 	<target name="javadoc" depends="init">
-		<delete dir="doc/html/javadoc"/>
-		<mkdir dir="doc/html/javadoc"/>
+		<delete dir="doc/javadoc"/>
+		<mkdir dir="doc/javadoc"/>
 		<javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
 				sourcepath="src"
-				destdir="doc/html/javadoc"
+				destdir="doc/javadoc"
 				windowtitle="JEP API"
 				breakiterator="yes"
 				source="1.4">
