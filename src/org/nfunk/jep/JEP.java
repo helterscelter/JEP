@@ -204,7 +204,7 @@ public class JEP {
 		
 		// rjm additions
 		funTab.put("if", new If());
-		funTab.put("Str", new Str());
+		funTab.put("str", new Str());
 	}
 
 	/**
