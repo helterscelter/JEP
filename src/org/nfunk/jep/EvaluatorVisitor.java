@@ -141,7 +141,15 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * with the node is used to evaluate the function.
 	 */
 	public Object visit(ASTFunNode node, Object data) {
+		if (node == null) return null;
+		
 		data = node.childrenAccept(this, data);
+		
+		if (node.getPFMC() == null) {
+			addToErrorList("No function class associated with "
+							+ node.getName());
+			return data;
+		}
 		
 		try {
 			node.getPFMC().run(stack);
