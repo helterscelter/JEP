@@ -1,4 +1,5 @@
 == Todo before v2.24 ================================================
+ - fix "ln(e) = 0" with getValue()
  - add more JUnit tests
  - change %dp0 to %dps0 in scripts
  - automatisize testing in ant script
