@@ -1,5 +1,3 @@
--- Mamala -----------------------------------------------------------
- - use <apply></apply> instead (content MathML?)
 
 
 == v2.23 todos ======================================================
@@ -7,6 +5,7 @@
  - update javadoc on website
  - add download of documentation for old versions
  - figure out way to distribute documentation with each version
+ - automaticize web site uploading/cvs
 
 == Further todos ====================================================
  - Use Map symbol table, and let user replace it
@@ -33,6 +32,8 @@ http://www.home.foni.net/~wkurz/caligula/caligula.htm
 http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - compare features with the french guy's site, and plan to match important capabilities
 
+-- Mamala -----------------------------------------------------------
+ - use <apply></apply> instead (content MathML?)
 
 
 
