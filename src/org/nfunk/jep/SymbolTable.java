@@ -133,6 +133,15 @@ public class SymbolTable extends Hashtable
 		obeservable.notifyObservers(var);
 		return var;
 	}
+
+	protected Variable createVariable(String name)
+	{
+		Variable var = vf.createVariable(name);
+		obeservable.stSetChanged();
+		obeservable.notifyObservers(var);
+		return var;
+	}
+
 	/** Creates a variable with given value.
 	 * Returns null if variable already exists.
 	 */
@@ -183,7 +192,7 @@ public class SymbolTable extends Hashtable
 		Variable var = (Variable) super.get(name);
 		if(var != null)	return var; 
 
-		var = createVariable(name,null);
+		var = createVariable(name);
 		super.put(name,var);
 		return var;
 	}

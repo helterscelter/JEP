@@ -35,4 +35,10 @@ public interface MatrixVariableI {
 	public abstract void setValidValue(boolean b);
 	/** The equation represented by this variable. */
 	public abstract Node getEquation();
+	/** Whether this variable has an equation. */
+	public abstract boolean hasEquation();
+	/** The name of variable */
+	public abstract String getName();
+	/** Is it constant? */
+	public abstract boolean isConstant();
 }

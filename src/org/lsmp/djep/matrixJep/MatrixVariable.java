@@ -50,12 +50,13 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 	MatrixVariable(String name,Object value) 
 	{ 
 		super(name);
-		if(value instanceof MatrixValueI)
+		if(value == null)
+			this.mvalue = Scaler.getInstance(new Double(0.0));
+		else if(value instanceof MatrixValueI)
 			this.mvalue = (MatrixValueI) value;
 		else
-		{
 			this.mvalue = Scaler.getInstance(value);
-		}
+		
 		this.dims = mvalue.getDim();
 		setValidValue(true);
 	}
