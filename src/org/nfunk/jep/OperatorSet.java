@@ -25,12 +25,12 @@ import org.nfunk.jep.Operator;
 public class OperatorSet {
 		
 	/** everyone can read but not write these operators **/
-	protected Operator OP_GT     =  new Operator(">",new Comparative(1));
-	protected Operator OP_LT     =  new Operator("<",new Comparative(0));
-	protected Operator OP_EQ     =  new Operator("==",new Comparative(5));
-	protected Operator OP_LE     =  new Operator("<=",new Comparative(2));
-	protected Operator OP_GE     =  new Operator(">=",new Comparative(3));
-	protected Operator OP_NE     =  new Operator("!=",new Comparative(4));
+	protected Operator OP_GT     =  new Operator(">",new Comparative(Comparative.GT));
+	protected Operator OP_LT     =  new Operator("<",new Comparative(Comparative.LT));
+	protected Operator OP_EQ     =  new Operator("==",new Comparative(Comparative.EQ));
+	protected Operator OP_LE     =  new Operator("<=",new Comparative(Comparative.LE));
+	protected Operator OP_GE     =  new Operator(">=",new Comparative(Comparative.GE));
+	protected Operator OP_NE     =  new Operator("!=",new Comparative(Comparative.NE));
 
 	protected Operator OP_AND    =  new Operator("&&",new Logical(0));
 	protected Operator OP_OR     =  new Operator("||",new Logical(1));
