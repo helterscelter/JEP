@@ -1,11 +1,11 @@
 /*****************************************************************************
 
-@header@
-@date@
-@copyright@
-@license@
+ @header@
+ @date@
+ @copyright@
+ @license@
 
-*****************************************************************************/
+ *****************************************************************************/
 
 package org.nfunk.jep.function;
 
@@ -13,13 +13,12 @@ import java.util.*;
 import org.nfunk.jep.*;
 
 /**
- * This class serves mainly as an example of a function that accepts any
- * number of parameters. Note that the numberOfParameters is initialized to 
- * -1.
+ * This class serves mainly as an example of a function that accepts any number
+ * of parameters. Note that the numberOfParameters is initialized to -1.
  */
-public class Sum extends PostfixMathCommand
-{
+public class Sum extends PostfixMathCommand {
 	private Add addFun = new Add();
+
 	/**
 	 * Constructor.
 	 */
@@ -27,40 +26,33 @@ public class Sum extends PostfixMathCommand
 		// Use a variable number of arguments
 		numberOfParameters = -1;
 	}
-	
+
 	/**
-	 * Calculates the result of summing up all parameters, which are assumed
-	 * to be of the Double type.
+	 * Calculates the result of summing up all parameters, which are assumed to
+	 * be of the Double type.
 	 */
 	public void run(Stack stack) throws ParseException {
-		
-  		// Check if stack is null
-  		if (null == stack) {
-			throw new ParseException("Stack argument null");
+		checkStack(stack);// check the stack
+
+		if (curNumberOfParameters < 1) throw new ParseException("No arguments for Sum");
+
+		// initialize the result to the first argument
+		Object sum = stack.pop();
+		Object param;
+		int i = 1;
+        
+		// repeat summation for each one of the current parameters
+		while (i < curNumberOfParameters) {
+			// get the parameter from the stack
+			param = stack.pop();
+			
+			// add it to the sum (order is important for String arguments)
+			sum = addFun.add(param, sum);
+			
+			i++;
 		}
-        
-        Object param = stack.pop();
-        Number result;
-		if (param instanceof Number)
-			result = (Number) param;
-		else 
-			throw new ParseException("Invalid parameter type");
-        
-        // repeat summation for each one of the current parameters
-        for(int i=1;i < curNumberOfParameters;++i)
-        {
-        	// get the parameter from the stack
-            param = stack.pop();
-            if (param instanceof Number)   {
-                // calculate the result
-                result = addFun.add((Number) param,result);
-            } else {
-                throw new ParseException("Invalid parameter type");
-            }
-                
-            i++;
-        }
-        // push the result on the inStack
-        stack.push(result);
+
+		// push the result on the inStack
+		stack.push(sum);
 	}
 }
