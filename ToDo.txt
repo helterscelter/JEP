@@ -1,24 +1,27 @@
 == TODO for version 2.3.0 ===========================================
-- replace all <applet> tags with <object> in examples, and site
+- document hasError() better with examples
+- ensure EvaluatorVisitor reports multiple errors for one evaluation
+   (compare Rich's code to version 1.12)
 - check for undocumented functions
 - dot product?
 - finalize docs
+- fix link to javadoc
 - update version history
 - upload new documentation+example files to web site
-- ensure EvaluatorVisitor reports multiple errors for one evaluation
-   (compare Rich's code to version 1.12)
-- document hasError() better with examples
-- fix double "no expression entered" when running Evaluator
-- state clearly that NumberFactory has been changed to create the
-   number from a String representation (in order to allow creation 
-   of arbitrary precision numbers without the limitations of double)
-- fix "ln(e) = 0" with getValue()
-- add more JUnit tests
-- automatisize testing in ant script
+
+Optional
 - benchmark evaluation performance against 2.24?
+- automatisize testing in ant script?
+- add more JUnit tests
+
+Complete
 x replace @license_info@ with GPL info using replace task and loadfile
    also @version@ @date@ @license@ @copyright@
 x change getValue() and getComplexValue()
+x fix ln(e) = 0 with getValue() (nothing to fix?)
+x rename comments from 2.3.0 to 2.3.0 alpha
+                       2.3.1 to 2.3.0 beta1
+                       2.3.2 to 2.3.0 beta2
 
 
 == Web site todo ====================================================
