@@ -9,6 +9,9 @@
 package org.lsmp.djepExamples;
 import org.nfunk.jep.*;
 import org.lsmp.djep.matrixJep.*;
+import org.lsmp.djep.mrpe.MRpCommandList;
+import org.lsmp.djep.mrpe.MRpEval;
+import org.lsmp.djep.mrpe.MRpRes;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.rpe.*;
 /**
@@ -62,7 +65,7 @@ public class MRpExample {
 
 			MRpEval rpe = new MRpEval(j);
 			MRpCommandList list = rpe.compile(simp);
-			RpObj res = rpe.evaluate(list);
+			MRpRes res = rpe.evaluate(list);
 
 			j.print(node);
 			

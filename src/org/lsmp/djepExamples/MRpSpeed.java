@@ -9,8 +9,9 @@
 package org.lsmp.djepExamples;
 import org.nfunk.jep.*;
 import org.lsmp.djep.matrixJep.*;
+import org.lsmp.djep.mrpe.MRpCommandList;
+import org.lsmp.djep.mrpe.MRpEval;
 import org.lsmp.djep.vectorJep.*;
-import org.lsmp.djep.rpe.*;
 /**
  * Compares the speed of matrix operations
  * using both VectorJep or MatrixJep.

@@ -14,7 +14,7 @@ import org.lsmp.djep.sjep.PolynomialCreator;
  * @author Rich Morris
  * Created on 22-Mar-2005
  */
-public class SJepConsole extends XJepConsole
+public class SJepConsole extends DJepConsole
 {
 	PolynomialCreator pc = null;
 	
@@ -44,11 +44,15 @@ public class SJepConsole extends XJepConsole
 	{
 		XJep xj = (XJep) j;
 
-		Node simp = pc.simplify(node);
-		print("Simplified:\t"); 
+		Node pre = xj.preprocess(node);
+		Node proc = xj.simplify(pre);
+		print("Old simp:\t"); 
+		println(xj.toString(proc));
+		Node simp = pc.simplify(proc);
+		print("New simp:\t"); 
 		println(xj.toString(simp));
 
-		Node expand = pc.expand(node);
+		Node expand = pc.expand(proc);
 		print("Expanded:\t"); 
 		println(xj.toString(expand));
 

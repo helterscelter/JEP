@@ -4,8 +4,10 @@ import junit.framework.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import org.lsmp.djep.matrixJep.*;
+import org.lsmp.djep.mrpe.MRpCommandList;
+import org.lsmp.djep.mrpe.MRpEval;
+import org.lsmp.djep.mrpe.MRpRes;
 import org.lsmp.djep.vectorJep.values.*;
-import org.lsmp.djep.rpe.*;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -22,7 +24,7 @@ import org.lsmp.djep.rpe.*;
  * Created on 19-Nov-2003
  */
 public class MRpTest extends TestCase {
-	MatrixJep j;
+	MatrixJep mj;
 	public static final boolean SHOW_BAD=false;
 	
 	public MRpTest(String name) {
@@ -46,15 +48,15 @@ public class MRpTest extends TestCase {
 	String vecStrs[] = new String[10];
 
 	protected void setUp() {
-		j = new MatrixJep();
-		j.addStandardConstants();
-		j.addStandardFunctions();
-		j.addComplex();
+		mj = new MatrixJep();
+		mj.addStandardConstants();
+		mj.addStandardFunctions();
+		mj.addComplex();
 		//j.setTraverse(true);
-		j.setAllowAssignment(true);
-		j.setAllowUndeclared(true);
-		j.setImplicitMul(true);
-		j.addStandardDiffRules();
+		mj.setAllowAssignment(true);
+		mj.setAllowUndeclared(true);
+		mj.setImplicitMul(true);
+		mj.addStandardDiffRules();
 
 		for(int i=2;i<=9;++i)
 			for(int j=2;j<=9;++j)
@@ -109,30 +111,30 @@ public class MRpTest extends TestCase {
 	}
 	public void valueTest(String expr,Object expected) throws ParseException
 	{
-		Node node = j.parse(expr);
-		Node matEqn = j.preprocess(node);
-		Object res = j.evaluate(matEqn);
-		if(j.hasError())
-			fail("Evaluation Failure: "+expr+j.getErrorInfo());
+		Node node = mj.parse(expr);
+		Node matEqn = mj.preprocess(node);
+		Object res = mj.evaluate(matEqn);
+		if(mj.hasError())
+			fail("Evaluation Failure: "+expr+mj.getErrorInfo());
 		assertEquals("<"+expr+">",expected,res);
 		System.out.println("Sucess value of <"+expr+"> is "+res);
 	}
 
 	public void valueTest(String expr,String expected) throws ParseException
 	{
-		Node node = j.parse(expr);
-		Node matEqn = j.preprocess(node);
-		Object res = j.evaluate(matEqn);
-		if(j.hasError())
-			fail("Evaluation Failure: "+expr+j.getErrorInfo());
+		Node node = mj.parse(expr);
+		Node matEqn = mj.preprocess(node);
+		Object res = mj.evaluate(matEqn);
+		if(mj.hasError())
+			fail("Evaluation Failure: "+expr+mj.getErrorInfo());
 		assertEquals("<"+expr+">",expected,res.toString());
 		System.out.println("Sucess value of <"+expr+"> is "+res.toString());
 	}
 
 	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
 	{
-		Node node = j.preprocess(j.parse(expr));
-		Object res = j.evaluate(node);
+		Node node = mj.preprocess(mj.parse(expr));
+		Object res = mj.evaluate(node);
 		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
 			expected.equals((Complex) res,tol));
 		System.out.println("Sucess value of <"+expr+"> is "+res);
@@ -140,23 +142,23 @@ public class MRpTest extends TestCase {
 
 	public Object calcValue(String expr) throws ParseException
 	{
-		Node node = j.parse(expr);
-		Node matEqn = j.preprocess(node);
-		Object res = j.evaluate(matEqn);
+		Node node = mj.parse(expr);
+		Node matEqn = mj.preprocess(node);
+		Object res = mj.evaluate(matEqn);
 		return res;
 	}
 	
 	public void simplifyTest(String expr,String expected) throws ParseException
 	{
-		Node node = j.parse(expr);
-		Node matEqn = j.preprocess(node);
-		Node simp = j.simplify(matEqn);
-		String res = j.toString(simp);
+		Node node = mj.parse(expr);
+		Node matEqn = mj.preprocess(node);
+		Node simp = mj.simplify(matEqn);
+		String res = mj.toString(simp);
 		
-		Node node2 = j.parse(expected);
-		Node matEqn2 = j.preprocess(node2);
-		Node simp2 = j.simplify(matEqn2);
-		String res2 = j.toString(simp2);
+		Node node2 = mj.parse(expected);
+		Node matEqn2 = mj.preprocess(node2);
+		Node simp2 = mj.simplify(matEqn2);
+		String res2 = mj.toString(simp2);
 
 
 		if(!res2.equals(res))		
@@ -173,9 +175,9 @@ public class MRpTest extends TestCase {
 
 	public void simplifyTestString(String expr,String expected) throws ParseException
 	{
-		Node node = j.parse(expr);
-		Node matEqn = j.preprocess(node);
-		String res = j.toString(matEqn);
+		Node node = mj.parse(expr);
+		Node matEqn = mj.preprocess(node);
+		String res = mj.toString(matEqn);
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
@@ -193,19 +195,19 @@ public class MRpTest extends TestCase {
 	{
 		for(int i=0;i<eqns.length;++i)	{
 			System.out.println("eqns "+eqns[i]);
-			Node node = j.simplify(j.preprocess(j.parse(eqns[i])));
-			j.evaluate(node);
+			Node node = mj.simplify(mj.preprocess(mj.parse(eqns[i])));
+			mj.evaluate(node);
 		}
-		Node node3 = j.simplify(j.preprocess(j.parse(eqn2)));
-		MRpEval rpe = new MRpEval(j);
+		Node node3 = mj.simplify(mj.preprocess(mj.parse(eqn2)));
+		MRpEval rpe = new MRpEval(mj);
 		MRpCommandList list = rpe.compile(node3);
-		RpObj rpRes = rpe.evaluate(list);
+		MRpRes rpRes = rpe.evaluate(list);
 		MatrixValueI mat = rpRes.toVecMat();
 
-		Object matRes = j.evaluateRaw(node3);
+		Object matRes = mj.evaluateRaw(node3);
 //		System.out.println("rpRes: "+rpRes.getClass().getName()+" = "+rpRes.toString());
-		if(j.hasError())
-			fail("Evaluation Failure: "+eqn2+j.getErrorInfo());
+		if(mj.hasError())
+			fail("Evaluation Failure: "+eqn2+mj.getErrorInfo());
 		myAssertEquals("<"+eqn2+">",rpRes.toString(),matRes.toString());
 
 		if(!mat.equals(matRes))
@@ -234,17 +236,17 @@ public class MRpTest extends TestCase {
 	{
 		Node nodes[] = new Node[eqns.length];
 		MatrixValueI rpMats[] = new MatrixValueI[eqns.length];
-		MRpEval rpe = new MRpEval(j);
+		MRpEval rpe = new MRpEval(mj);
 		for(int i=0;i<eqns.length;++i)	{
 			System.out.println("eqns "+eqns[i]);
-			nodes[i] = j.simplify(j.preprocess(j.parse(eqns[i])));
+			nodes[i] = mj.simplify(mj.preprocess(mj.parse(eqns[i])));
 			MRpCommandList list = rpe.compile(nodes[i]);
-			RpObj rpRes = rpe.evaluate(list);
+			MRpRes rpRes = rpe.evaluate(list);
 			rpMats[i] = rpRes.toVecMat();
 			System.out.println("<"+eqns[i]+"> "+rpRes.toString());
 		}
 		for(int i=0;i<eqns.length;++i)	{
-			Object matRes = j.evaluateRaw(nodes[i]);
+			Object matRes = mj.evaluateRaw(nodes[i]);
 			if(!rpMats[i].equals(matRes))
 					fail("Expected <"+matRes+"> found <"+rpMats[i]+">");
 		}		
@@ -495,10 +497,10 @@ public class MRpTest extends TestCase {
 	}
 	
 	public void testUndecVar() throws ParseException {
-		j.setAllowUndeclared(true);
-		MRpEval rpe = new MRpEval(j);
-		Node node1 = j.parse("zap * gosh");
-		Node node3 = j.preprocess(node1);
+		mj.setAllowUndeclared(true);
+		MRpEval rpe = new MRpEval(mj);
+		Node node1 = mj.parse("zap * gosh");
+		Node node3 = mj.preprocess(node1);
 		rpe.compile(node3);
 	}
 
