@@ -53,7 +53,7 @@ public class CommandEvaluator {
 				}
 				case CommandElement.VAR: {
 					// Variable
-					stack.push(symTab.get(command.getVarName()));					
+					stack.push(symTab.getValue(command.getVarName()));					
 					break;
 				}
 				default: {
