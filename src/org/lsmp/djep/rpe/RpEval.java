@@ -385,10 +385,6 @@ public final class RpEval implements ParserVisitor {
 			else
 				stack[sp++] = 0.0;
 		}
-		/* (non-Javadoc)
-		 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-		 */
-
 	}
 	
 	/**

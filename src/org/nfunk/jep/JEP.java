@@ -144,6 +144,7 @@ public class JEP {
 		this.implicitMul = j.implicitMul;
 		this.ev = j.ev;
 		this.funTab = j.funTab;
+		this.opSet = j.opSet;
 		this.numberFactory = j.numberFactory;
 		this.parser = j.parser;
 		this.symTab = j.symTab;
