@@ -489,11 +489,15 @@ public class JEP {
 	 * @return The top node of an tree representing the parsed expression.
 	 * @throws ParseException
 	 * @since 2.3.0 alpha
+	 * @version 2.3.0 beta - will raise exception if errorList non empty
 	 */
 	public Node parse(String expression) throws ParseException
 	{
 		java.io.StringReader sr = new java.io.StringReader(expression);
+		errorList.removeAllElements();
 		Node node = parser.parseStream(sr, this);
+		if(this.hasError())
+			throw new ParseException(getErrorInfo());
 		return node;
 	}
 
