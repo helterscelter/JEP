@@ -8,10 +8,8 @@
 </head>
 
 <body>
-<div id="centercontent">
-<br/>
 <!-- #BeginEditable "Sub%20Menu" -->{Sub Menu}<!-- #EndEditable -->
-<br/>
+<div id="centercontent">
 <!-- #BeginEditable "Text" -->{Text}<!-- #EndEditable -->
 <br/>
 <br/>

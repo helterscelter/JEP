@@ -8,7 +8,7 @@
 <li><a href="../faq.html">FAQ</a></li>
 <li><a href="../log.html">Log</a></li>
 </ul>
-<br/>
+<hr/>
 <ul>
 <li><a href="../djep/index.html">DJEP</a></li>
 <li><a href="../djep/XJep.html">XJep</a></li>
@@ -18,4 +18,3 @@
 <li><a href="../djep/version.html">Version History</a></li>
 </ul>
 </div>
-<br/>
