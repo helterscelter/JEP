@@ -28,9 +28,9 @@ package  org.nfunk.jep.type;
  * recommended to use the netlib package.
  *
  * @author Nathan Funk
- * @version 2.3.0.1 now extends Number, has add and sub methods.
- * @version 2.3.0.2 now overrides equals and hashCode.
-/* @version 2.3.0.3 does not implement Number anymore, as caused too many problems.
+ * @version 2.3.0 alpha now extends Number, has add and sub methods.
+ * @version 2.3.0 beta 1 now overrides equals and hashCode.
+/* @version 2.3.0 beta 2 does not implement Number anymore, as caused too many problems.
  */
 
 public class Complex
