@@ -46,17 +46,6 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
   public PrintVisitor()
   {
-/*	this.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
-	{	public void append(Node node,PrintVisitor pv) throws ParseException
-		{	pv.append("[");
-			for(int i=0;i<node.jjtGetNumChildren();++i)
-			{
-				if(i>0) pv.append(",");
-				node.jjtGetChild(i).jjtAccept(pv, null);
-			}
-			pv.append("]");
-		}});
-*/
   }
 
   
@@ -372,8 +361,14 @@ private Object visitFun(ASTFunNode node) throws ParseException
   }
 
   private FieldPosition fp = new FieldPosition(NumberFormat.FRACTION_FIELD);
-  public Object visit(ASTConstant node, Object data) {
-	Object val = node.getValue();
+
+  /** Appends a formatted versions of val to the string buffer.
+   * 
+   * @param val The value to format
+   * @param sb  The StingBuffer to append to
+   */
+  public void formatValue(Object val,StringBuffer sb)
+  {
 	if(format != null)
 	{
 		if(val instanceof Number)
@@ -390,6 +385,18 @@ private Object visitFun(ASTFunNode node) throws ParseException
 	}
 	else
 		sb.append(val);
+  }
+
+  /** Returns a formated version of the value. */
+  public String formatValue(Object val)
+  {
+  	StringBuffer sb2 = new StringBuffer();
+  	formatValue(val,sb2);
+  	return sb2.toString();
+  }
+  public Object visit(ASTConstant node, Object data) {
+	Object val = node.getValue();
+	formatValue(val,sb);
 	return data;
   }
 	/**
