@@ -19,7 +19,7 @@ public interface NumberFactory {
 	
 	/**
 	 * Creates a number object and initializes its value.
-	 * @param value The initial value of the number.
+	 * @param value The initial value of the number as a string.
 	 */
-	public Object createNumber(double value);
+	public Object createNumber(String value);
 }

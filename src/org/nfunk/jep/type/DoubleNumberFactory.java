@@ -21,7 +21,7 @@ public class DoubleNumberFactory implements NumberFactory {
 	 *
 	 * @param value The initialization value for the returned object.
 	 */
-	public Object createNumber(double value) {
+	public Object createNumber(String value) {
 		return new Double(value);
 	}
 }
