@@ -1,6 +1,6 @@
 BODY  {
 	BACKGROUND-COLOR : #fff;
-	COLOR : #013;
+	COLOR : #000;
 	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
 	FONT-SIZE : 10pt;
 }
@@ -49,7 +49,7 @@ H3  {
 	COLOR : #369;
 	FONT-FAMILY : Arial, Helvetica, sans-serif;
 	FONT-SIZE : 12pt;
-; margin-bottom: 0px; padding-bottom: 0px
+; margin-bottom: 5px; padding-bottom: 0px
 }
 
 OL  {
@@ -76,6 +76,8 @@ pre {  font-size: 10pt}
 	top:12px;
 	left:12px;
 	width:120px;
+	border:1px solid #999;
+	/*border-right:1px solid #999;*/
 }
 
 #navcontainer ul {
@@ -97,7 +99,6 @@ pre {  font-size: 10pt}
 	color:#000;
 	background:#fff;
 	text-decoration:none;
-	border-right:1px solid #999;
 }
 
 #navcontainer ul li a:hover {
@@ -115,3 +116,9 @@ pre {  font-size: 10pt}
 }
 
 
+/*-- centercontent ----------------------------------------------*/
+										
+#footer {
+	border-top:1px solid #999;
+	color:#333;
+}
