@@ -117,8 +117,9 @@
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
 		
-		<!-- Create a temp dir and copy all source+doc for archiving -->
+		<!-- Create a temp dir and copy all jar+source+doc -->
 		<mkdir dir="${disttemp}"/>
+		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}"/>
 		<copy todir="${disttemp}">
 		      <fileset dir="."
 			       includes="src/org/nfunk/jep/**,
@@ -129,41 +130,24 @@
 					 LICENSE.txt"/>
 		</copy>
 
-		<!-- documentation zip file -->
-		<delete file="${dist}/jep-${version}-doc.zip"/>
-		<zip zipfile="${dist}/jep-${version}-doc.zip"
-		     basedir="${disttemp}/doc"
-		     >
-		</zip>
-
-		<!-- documentation tar.gz file -->
-		<delete file="${dist}/jep-${version}-doc.tar.gz"/>
-		<tar tarfile="${dist}/jep-${version}-doc.tar"
-		     basedir="${disttemp}/doc"
-		     >
-		</tar>
-		<gzip zipfile="${dist}/jep-${version}-doc.tar.gz"
-		      src="${dist}/jep-${version}-doc.tar"/>
-
-		<!-- source zip file -->
-		<delete file="${dist}/jep-${version}-src.zip"/>
-		<zip zipfile="${dist}/jep-${version}-src.zip"
+		<!-- zip file -->
+		<delete file="${dist}/jep-${version}.zip"/>
+		<zip zipfile="${dist}/jep-${version}.zip"
 		     basedir="${disttemp}"
 		     >
 		</zip>
 
-		<!-- source tar.gz file -->
-		<delete file="${dist}/jep-${version}-src.tar.gz"/>
-		<tar tarfile="${dist}/jep-${version}-src.tar"
+		<!-- tar.gz file -->
+		<delete file="${dist}/jep-${version}.tar.gz"/>
+		<tar tarfile="${dist}/jep-${version}.tar"
 		     basedir="${disttemp}"
 		     >
 		</tar>
-		<gzip zipfile="${dist}/jep-${version}-src.tar.gz"
-		      src="${dist}/jep-${version}-src.tar"/>
+		<gzip zipfile="${dist}/jep-${version}.tar.gz"
+		      src="${dist}/jep-${version}.tar"/>
 
 		<!-- clean up temporary files -->
-		<delete file="${dist}/jep-${version}-doc.tar"/>
-		<delete file="${dist}/jep-${version}-src.tar"/>
+		<delete file="${dist}/jep-${version}.tar"/>
 		<delete dir="${disttemp}" />
 	</target>
 
