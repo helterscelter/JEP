@@ -74,7 +74,7 @@ public class JEPTester {
 	 */
 	public void run(String fileName) {
 		BufferedReader reader;
-		Complex c1, c2;
+		Object v1, v2;
 		boolean hasError = false;
 
 		// Load the input file
@@ -92,72 +92,106 @@ public class JEPTester {
 		println("Evaluating and comparing expressions...");
 		while (true) {
 			// get values of a pair of two lines
-			c1 = parseNextLine(reader);
-			c2 = parseNextLine(reader);
-
-			if (c1==null || c2==null) break;
-			
-			// TODO: add comparison method that handles all types (Strings...)
-			if (!c1.equals(c2,1e-15)) {
+			try {
+				v1 = parseNextLine(reader); //returns null when end of file is reached
+				v2 = parseNextLine(reader);
+			} catch (Exception e) {
+				println(e.getMessage());
 				hasError = true;
-				print("Line: " + lineCount + ": ");
-				if (c1.im() == 0)
-					print("" + c1.re() + " != ");
-				else
-					print("" + c1 + " != ");
+				break;
+			}
 
-				if (c2.im() == 0)
-					println("" + c2.re());
-				else
-					println("" + c2);
+			// v1 or v2 is null when end of file is reached
+			if (v1 == null || v2 == null) {
+				println("Reached end of file.");
+				break;
+			}
+
+			// compare the results
+			try {			
+				if (!equal(v1, v2)) {
+					hasError = true;
+					print("Line: " + lineCount + ": ");
+					println(v1.toString() + " != " + v2.toString());
+				}
+			} catch (Exception e) {
+				hasError = true;
+				println(e.getMessage());
 			}
 		}
 		
-		if (!hasError) {
-			print("\n" + lineCount + " lines processed. No errors were found.\n\n");
+		// Closing remarks
+		print("\n" + lineCount + " lines processed. ");
+		if (hasError) {
+			print("Errors were found.\n\n");
+		} else {
+			print("No errors were found.\n\n");
 		}
 	}
 	
 	/**
 	 * Parses a single line from the reader, and returns the
 	 * evaluation of that line.
+	 * @return evaluated line. Returns null when the end of the file
+	 *         is reached.
+	 * @throws Exception when IOException occurs, parsing fails, or when
+	 *         evaluation fails
 	 */
-	private Complex parseNextLine(BufferedReader reader) {
-		Complex value;
+	private Object parseNextLine(BufferedReader reader) throws Exception {
+		Object value;
 		String line, errorStr;
 		
 		// cycle till a valid line is found
 		do {
-			try {
-				line = reader.readLine();
-				lineCount++;
-			} catch (Exception e) {
-				return null;
-			}
+			line = reader.readLine(); // returns null on end of file
+			lineCount++;
+			if (line == null) return null;
+			//println("reader returned null on readLine()");
+		} while (line.length() == 0 || line.trim().charAt(0) == '#');
 
-			if (line==null) return null;
-
-		} while (line.length()==0 || line.trim().charAt(0)=='#');
-			
 		// parse the expression
 		myParser.parseExpression(line);
 		// did an error occur while parsing?
-		errorStr = myParser.getErrorInfo();
-		if (errorStr != null) {
-			println("Error while parsing line " + lineCount + ": " + errorStr);
-			return null;
+		if (myParser.hasError()) {
+			errorStr = myParser.getErrorInfo();
+			throw new Exception("Error while parsing line " + lineCount + ": " + errorStr);
 		}
 		
 		// evaluate the expression
-		value = myParser.getComplexValue();
+		value = myParser.getValueAsObject();
 		// did an error occur while evaluating?
-		errorStr = myParser.getErrorInfo();
-		if ((value == null) || (errorStr != null)) {
-			println("Error while evaluating line " + lineCount + ": " + errorStr);
-			return null;
+		if (value == null || myParser.hasError()) {
+			errorStr = myParser.getErrorInfo();
+			throw new Exception("Error while evaluating line " + lineCount + ": " + errorStr);
 		}
 			
 		return value;
+	}
+
+	/**
+	 * Compares o1 and o2. Copied from Comparative.java.
+	 * @return true if o1 and o2 are equal. false otherwise.
+	 */
+	private boolean equal(Object param1, Object param2) throws Exception
+	{
+		double tolerance = 1e-15;
+		if ((param1 instanceof Complex) && (param2 instanceof Complex)) {
+			return ((Complex)param1).equals((Complex)param2, tolerance);
+		}
+		if ((param1 instanceof Complex) && (param2 instanceof Number)) {
+			return ((Complex)param1).equals(new Complex((Number) param2), tolerance);
+		}
+		if ((param2 instanceof Complex) && (param1 instanceof Number)) {
+			return ((Complex)param2).equals(new Complex((Number) param1), tolerance);
+		}
+		if ((param1 instanceof Number) && (param2 instanceof Number)) {
+			return Math.abs(((Number)param1).doubleValue()-((Number)param1).doubleValue())
+					< tolerance;
+		}
+		// test any other types here
+		return param1.equals(param2);
+		
+//		throw new Exception("Unable to compare the values of this type");
 	}
 	
 	/**
