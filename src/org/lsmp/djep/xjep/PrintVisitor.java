@@ -30,6 +30,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
 {
   /** All brackets are printed. Removes all ambiguity. */
   public static final int FULL_BRACKET = 1;
+  private int maxLen = -1;
   protected StringBuffer sb;
   /** The current mode for printing. */
 //  protected boolean fullBrackets=false;
@@ -60,7 +61,27 @@ public class PrintVisitor extends ErrorCatchingVisitor
   {
 	sb = new StringBuffer();
 	acceptCatchingErrors(node,null);
-	out.print(sb);
+	if(maxLen == -1)
+		out.print(sb);
+	else
+	{
+		while(true)	{
+			if(sb.length() < maxLen) {
+				out.print(sb);
+				return;
+			}
+			int pos = maxLen-2;
+			for(int i=maxLen-2;i>=0;--i) {
+				char c = sb.charAt(i);
+				if(c == '+' || c == '-' || c == '*' || c == '/'){
+					pos = i; break;
+				}
+			}
+			//out.println("<"+sb.substring(0,pos+10)+">");
+			out.println(sb.substring(0,pos+1));
+			sb.delete(0,pos+1);
+		}
+	}
   }
 
   /** Prints on System.out. */
@@ -70,9 +91,8 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
   public void println(Node node,PrintStream out)
   {
-	sb = new StringBuffer();
-	acceptCatchingErrors(node,null);
-	out.println(sb);
+	print(node,out);
+	out.println("");
   }
 
   /** Prints on System.out. */
@@ -310,6 +330,23 @@ private Object visitFun(ASTFunNode node) throws ParseException
 		else
 			this.mode ^= mode;
 	}
+
+/**
+ * @return the maximum length printed per line
+ */
+public int getMaxLen() {
+	return maxLen;
+}
+
+/**
+ * Sets the maximium length printed per line.
+ * If the value is not -1 then the string will be broken into chunks
+ * each of which is less than the max lenght.
+ * @param i the maximum length
+ */
+public void setMaxLen(int i) {
+	maxLen = i;
+}
 
 }
 

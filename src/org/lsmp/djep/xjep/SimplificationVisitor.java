@@ -46,7 +46,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 	Node res = (Node) node.jjtAccept(this,null);
 	return res;
   }
-
+	/** First create a new node and then simplify it. */
 	public Node simplifyBuiltOperatorNode(Operator op,Node lhs,Node rhs) throws ParseException
 	{
 		ASTFunNode res = nf.buildOperatorNode(op,lhs,rhs);
@@ -201,7 +201,6 @@ public class SimplificationVisitor extends DoNothingVisitor
    * x + (-2) -> x - 2 for any negative number -2
    * 2 +/- ( 3 +/- x ) ->  (2 +/- 3 ) +/- x and similar
    * </pre>
-   * @param dimKids an array of the simplified children of this node
    */
   
   public Node simplifyAdd(Node lhs,Node rhs) throws ParseException
@@ -409,6 +408,21 @@ public class SimplificationVisitor extends DoNothingVisitor
 			return nf.buildConstantNode(tu.getONE());
 		if(tu.isOne(child2))	// x^1 -> x
 			return child1;
+			
+		if(tu.isConstant(child2) && tu.getOperator(child1) == opSet.getPower())
+		{
+			if(tu.isConstant(child1.jjtGetChild(1)))
+			{
+				/* (x^3)^4 -> x^(3*4) */
+				return nf.buildOperatorNode(
+					opSet.getPower(),
+					child1.jjtGetChild(0),
+					nf.buildConstantNode(
+						opSet.getMultiply(),
+						child1.jjtGetChild(1),
+						child2));
+			}
+		}
 		return null;	
 //		return nf.buildOperatorNode(((ASTOpNode) node).getOperator(),child1,child2);
 //		return tu.buildPower(child1,child2);

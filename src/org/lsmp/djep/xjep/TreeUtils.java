@@ -93,6 +93,22 @@ public class TreeUtils {
 	{
 		return ((Double) getValue(node)).doubleValue();
 	}
+	/**
+	 * Returns the long value represented by node
+	 * @throws IllegalArgumentException if given something which is not an ASTConstant with a Double value
+	 */
+	public long longValue(Node node) throws IllegalArgumentException
+	{
+		return ((Number) getValue(node)).longValue();
+	}
+	/**
+	 * Returns the int value represented by node
+	 * @throws IllegalArgumentException if given something which is not an ASTConstant with a Double value
+	 */
+	public int intValue(Node node) throws IllegalArgumentException
+	{
+		return ((Number) getValue(node)).intValue();
+	}
 
 	/**
 	 * Returns the Complex value represented by node
@@ -120,6 +136,21 @@ public class TreeUtils {
 			 && ( ((ASTConstant) node).getValue() instanceof Double );
 	}
 	
+	/**
+	 * returns true if node is a ASTConstant with Double value representing an integer.
+	 */
+	public boolean isInteger(Node node)
+	{
+			if(isReal(node))
+			{
+				Number val = (Number) ((ASTConstant) node).getValue();
+				double x = val.doubleValue();
+				double xInt = Math.rint(x);
+				return x == xInt;
+			}
+			else return false;
+	}
+
 	/**
 	 * returns true if node is a ASTConstant with value Double(0) or Complex(0,0) 
 	 */
@@ -269,7 +300,7 @@ public class TreeUtils {
 	}
 
 	/**
-	 * returns true if node is an ASTOpNode of the specific type.
+	 * returns the operator for a node or null if it is not an operator node.
 	 */
 	public Operator getOperator(Node node)
 	{
