@@ -352,8 +352,8 @@ public class JEP {
 		
 		if (value==null) {
 			return 0;
-		} else if (value instanceof Double) {
-			return ((Double)value).doubleValue();
+		} else if (value instanceof Number) {
+			return ((Number)value).doubleValue();
 		} else if (value instanceof Complex) {
 			return ((Complex)value).re();
 		} else {
@@ -372,8 +372,8 @@ public class JEP {
 		
 		if (value == null) {
 			return null;
-		} else if (value instanceof Double) {
-			return new Complex(((Double)value).doubleValue(), 0);
+		} else if (value instanceof Number) {
+			return new Complex(((Number)value).doubleValue(), 0);
 		} else if (value instanceof Complex) {
 			return (Complex)value;
 		} else {
