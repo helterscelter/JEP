@@ -9,7 +9,8 @@ set JEP_HOME=%~dp0
 set JEP_HOME=%JEP_HOME%\..
 echo JEP_HOME = %JEP_HOME%
 set CLASSPATH=%JEP_HOME%\build\
-call java.exe org.nfunk.jepexamples.Console
+REM call java.exe org.nfunk.jepexamples.Console
+call jview org.nfunk.jepexamples.Console
 @endlocal
 goto mainEnd
 
