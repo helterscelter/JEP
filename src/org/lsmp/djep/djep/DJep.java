@@ -20,11 +20,13 @@ public class DJep extends XJep implements DJepI {
 	public DSymbolTable getVarTab() { return (DSymbolTable) this.getSymbolTable(); } 
 	public VariableFactoryI vf = new PartialVariableFactory();
 //	public DSymbolTable varTab = new DSymbolTable(vf); 
+	public DPrintVisitor dpv = new DPrintVisitor();
 	public DJep()
 	{
 		this.symTab = new DSymbolTable(vf); 
 		this.ev = new DEvaluatorVisitor();
 		this.opSet.getAssign().setPFMC(new XAssign());
+		this.pv = dpv;
 	}
 	public Node differentiate(Node node,String name) throws ParseException
 	{

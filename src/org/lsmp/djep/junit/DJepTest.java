@@ -398,10 +398,10 @@ public class DJepTest extends TestCase {
 	public void testAssignDiff() throws ParseException
 	{
 		simplifyTestString("y=x^5","y=x^5.0");
-		simplifyTestString("z=diff(y,x)","z=dy/dx");
+		simplifyTestString("z=diff(y,x)","z=5.0*x^4.0");
 		Node n1 = ((DSymbolTable) j.getSymbolTable()).getPartialDeriv("y",new String[]{"x"}).getEquation();
 		myAssertEquals("dy/dx","5.0*x^4.0",j.toString(n1));
-		simplifyTestString("w=diff(z,x)","w=dz/dx");
+		simplifyTestString("w=diff(z,x)","w=20.0*x^3.0");
 		Node n2 = ((DSymbolTable) j.getSymbolTable()).getPartialDeriv("y",new String[]{"x","x"}).getEquation();
 		myAssertEquals("d^2y/dxdx","20.0*x^3.0",j.toString(n2));
 		valueTest("x=2",2);

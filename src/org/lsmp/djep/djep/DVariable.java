@@ -23,7 +23,7 @@ import org.lsmp.djep.xjep.*;
  * @author Rich Morris
  * Created on 26-Oct-2003
  */
-public class DVariable extends Variable 
+public class DVariable extends Variable implements DVariableI 
 {
 	protected Hashtable derivatives = new Hashtable();
 	private Node equation;

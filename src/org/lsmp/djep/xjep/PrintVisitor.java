@@ -28,7 +28,7 @@ import java.util.Hashtable;
  */
 public class PrintVisitor extends ErrorCatchingVisitor
 {
-  private StringBuffer sb;
+  protected StringBuffer sb;
   private boolean fullBrackets=false;
   private Hashtable specialRules = new Hashtable();
   
@@ -126,12 +126,24 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
 /***************** visitor methods ********************************/
 
+/** 
+ * If subclassed to extend to implement a different visitor
+ * this method should be overwritten to ensure the correct 
+ * accept method is called.
+ * This method simply calls the jjtAccept(this,data) of node.
+ */
+
+protected Object nodeAccept(Node node, Object data) throws ParseException
+{
+	return node.jjtAccept(this,data);
+}
+
 /** print the node with no brackets. */
 private void printNoBrackets(Node node)
 {
 	try
 	{
-		node.jjtAccept(this,null);
+		nodeAccept(node,null);
 	}
 	catch (ParseException e) { addToErrorList(e.getMessage()); }
 }
@@ -253,7 +265,7 @@ private Object visitFun(ASTFunNode node)
 		for(int i=0;i<node.jjtGetNumChildren();++i)
 		{
 			if(i>0) sb.append(",");
-			node.jjtGetChild(i).jjtAccept(this, null);
+			nodeAccept(node.jjtGetChild(i), null);
 		}
 		sb.append(")");
 	}
@@ -269,7 +281,7 @@ private Object visitList(ASTFunNode node)
 		for(int i=0;i<node.jjtGetNumChildren();++i)
 		{
 			if(i>0) sb.append(",");
-			node.jjtGetChild(i).jjtAccept(this, null);
+			nodeAccept(node.jjtGetChild(i),null);
 		}
 		sb.append("]");
 	}

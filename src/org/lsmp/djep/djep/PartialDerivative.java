@@ -14,7 +14,7 @@ import org.nfunk.jep.*;
  * @author Rich Morris
  * Created on 29-Oct-2003
  */
-public class PartialDerivative extends Variable {
+public class PartialDerivative extends Variable implements DVariableI {
 
 	private DVariable root;
 	private String dnames[] = null;
@@ -33,13 +33,19 @@ public class PartialDerivative extends Variable {
 		printString = DVariable.makeDerivString(root.getName(),derivnames);
 	}
 	
+	/** Does this variable has an associated equation? **/
+	public boolean hasEquation() { return eqn != null; }
+	/** return the equation */
 	public Node getEquation() { return eqn; }
 	public String getName() { return printString; }
 	
+	/**
+	 * Every partial derivative has a root variable
+	 * for instance the root variable of dy/dx is y.
+	 * This method returns than variable.
+	 */
 	public DVariable getRoot() { return root; }
 	public String[] getDnames() { return dnames; }
-	/** Does this variable has an associated equation? **/
-	public boolean hasEquation() { return eqn != null; }
 
 	public String toString()
 	{
