@@ -381,25 +381,23 @@ public class JEP {
 
 
 	/**
-	 * Evaluates and returns the value of the expression. If the value is
-	 * complex, the real component of the complex number is returned. To
-	 * get the complex value, use getComplexValue().
-	 * @return The calculated value of the expression. If the value is
-	 * complex, the real component is returned. If an error occurs during
-	 * evaluation, 0 is returned.
+	 * Evaluates and returns the value of the expression as a double number.
+	 *
+	 * @return The calculated value of the expression as a double number.
+	 * If the type of the value does not implement the Number interface
+	 * (e.g. Complex), NaN is returned. If an error occurs during evaluation,
+	 * NaN is returned and hasError() will return true.
+	 *
+	 * @see getComplexValue()
 	 */
 	public double getValue() {
 		Object value = getValueAsObject();
 		
-		if (value==null) {
-			return 0;
-		} else if (value instanceof Number) {
+		if (value != null && value instanceof Number) {
 			return ((Number)value).doubleValue();
-		} else if (value instanceof Complex) {
-			return ((Complex)value).re();
-		} else {
-			return 0;
 		}
+		
+		return Double.NaN;
 	}
 
 
@@ -441,6 +439,7 @@ public class JEP {
 				result = ev.getValue(topNode,errorList,symTab);
 			} catch (Exception e) {
 				if (debug) System.out.println(e);
+				errorList.addElement("Error during evaluation");
 				return null;
 			}
 			
