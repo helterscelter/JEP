@@ -29,40 +29,41 @@ import java.util.*;
 import org.nfunk.jep.*;
 
 /**
-A collection of utility methods for function classes.
-<p>
-It includes a numberOfParameters member, that is
-checked when parsing the expression. This member should be 
-initialized to an appropriate value for all classes 
-extending this class. If an arbitrary number of parameters should
-be allowed, initialize this member to -1.
-*/
+ * Function classes extend this class. It includes a numberOfParameters member,
+ * that is checked when parsing the expression. This member should be
+ * initialized to an appropriate value for all classes extending this class.
+ * If an arbitrary number of parameters should be allowed, initialize this
+ * member to -1.
+ */
 public class PostfixMathCommand
 {
-	/** number of parameters a the function can take. Initialize
-	    this value to -1 if any number of parameters should be
-	    allowed */
+	/**
+	 * Number of parameters a the function can take. Initialize this value to
+	 * -1 if any number of parameters should be allowed
+	 */
 	protected int numberOfParameters;
-
+	
+	/**
+	 * Creates a new PostfixMathCommand class.
+	 */
 	public PostfixMathCommand() {
 		numberOfParameters = 0;	
 	}
 
-	/** Check whether the stack is not null, throw a ParseException
-	    if it is. (used in previous versions to check whether the
-	    number of arguments on the stack was equal to the number of
-	    parameters for the funciton) */
-	protected void checkStack(Stack inStack) throws ParseException
-	{
+	/**
+	 * Check whether the stack is not null, throw a ParseException if it is.
+	 */
+	protected void checkStack(Stack inStack) throws ParseException {
 		/* Check if stack is null */
-		if (null == inStack)
-		{
+		if (null == inStack) {
 			throw new ParseException("Stack argument null");
 		}
 	}
 
-	public int getNumberOfParameters()
-	{
+	/**
+	 * Return the number of parameters
+	 */
+	public int getNumberOfParameters() {
 		return numberOfParameters;
 	}
 }
