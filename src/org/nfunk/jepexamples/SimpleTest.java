@@ -7,9 +7,9 @@ import org.nfunk.jep.*;
  * print out one line: "1+2 = 3.0"
  */
 public class SimpleTest {
-		public static void main(String args[]) {
-				JEP myParser = new JEP();
-				myParser.parseExpression("1+2");
-				System.out.println("1+2 = " + myParser.getValue());
-		}	
+	public static void main(String args[]) {
+		JEP myParser = new JEP();
+		myParser.parseExpression("1+2");
+		System.out.println("1+2 = " + myParser.getValue());
+	}
 }
