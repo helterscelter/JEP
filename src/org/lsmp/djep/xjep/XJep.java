@@ -244,4 +244,58 @@ public class XJep extends JEP {
 		parser.restart(reader, this);
 	}
 
+	/**
+	 * Finds all the variables in an equation.
+	 * 
+	 * @param n the top node of the expression
+	 * @param v a vector to store the list of variables 
+	 * @return v
+	 */
+	public Vector getVarsInEquation(Node n,Vector v) {
+		if(n instanceof ASTVarNode) {
+			Variable var = ((ASTVarNode) n).getVar();
+			if(!v.contains(var)) v.add(var);
+		}
+		else if(n instanceof ASTFunNode) {
+			for(int i=0;i<n.jjtGetNumChildren();++i)
+				getVarsInEquation(n.jjtGetChild(i),v);
+		}
+		return v;
+	}
+	
+	/**
+	 * Finds all the variables in an equation and if any of those 
+	 * variables are defined by equations find the variables 
+	 * in those equations as well.
+	 * The result is an ordered sequence, evaluating each
+	 * variable in turn will correctly allow the final equation to be evaluated.
+	 * <p>
+	 * For example if the equation is <code>a+b</code> and 
+	 * <code>a=c+d</code>, <code>b=c+e</code> then the
+	 * result will be the sequence <code>(c,d,a,e,b)</code>
+	 * 
+	 * @param n top node
+	 * @param v vector for storing results, new variables will be added on the end.
+	 * @return v, the ordered sequence of variables
+	 * @throws ParseException if equation is recursive i.e. <code>x=y; y=x+1;</code>
+	 */
+	public Vector recursiveGetVarsInEquation(Node n,Vector v) throws ParseException {
+		if(n instanceof ASTVarNode) {
+			XVariable var = (XVariable) (((ASTVarNode) n).getVar());
+			if(!v.contains(var))
+			{
+				if(var.hasEquation())
+					recursiveGetVarsInEquation(var.getEquation(),v);
+				if(v.contains(var))
+					throw new ParseException("Recursive definition for "+var.getName());
+				v.add(var);
+			}
+		}
+		else if(n instanceof ASTFunNode) {
+			for(int i=0;i<n.jjtGetNumChildren();++i)
+				recursiveGetVarsInEquation(n.jjtGetChild(i),v);
+		}
+		return v;
+	}
+	
 }
