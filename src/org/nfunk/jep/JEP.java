@@ -364,29 +364,6 @@ public class JEP {
 		allowAssignment = value;
 	}
 
-	
-	/**
-	 * parses an expression. 
-	 * Returns a object of type Node, does not catch errors.
-	 * Added by RJM Oct 03.
-	 * @param expression represeded as a string.
-	 * @return The top node of an tree representing the parsed expression.
-	 * @throws ParseException
-	 */
-	public Node parse(String expression) throws ParseException
-	{
-		java.io.StringReader sr = new java.io.StringReader(expression);
-		Node node = parser.parseStream(sr,this);
-		return node;
-	}
-
-//	public Node parse(String expression,SymbolTable symTab) throws ParseException
-//	{
-//		java.io.StringReader sr = new java.io.StringReader(expression);
-//		Node node = parser.parseStream(sr,this,symTab);
-//		return node;
-//	}
-
 	/**
 	 * Parses the expression. If there are errors in the expression,
 	 * they are added to the <code>errorList</code> member.
@@ -439,6 +416,38 @@ public class JEP {
 		}
 	}
 
+	/**
+	 * parses an expression. 
+	 * Returns a object of type Node, does not catch errors.
+	 * Does not set the topNode variable of the JEP instance.
+	 * This method should generally be used with the {@link #evaluate evaluate}
+	 * method rather than getValueAsObject.
+	 * Added by RJM Oct 03.
+	 * @param expression represeded as a string.
+	 * @return The top node of an tree representing the parsed expression.
+	 * @throws ParseException
+	 */
+	public Node parse(String expression) throws ParseException
+	{
+		java.io.StringReader sr = new java.io.StringReader(expression);
+		Node node = parser.parseStream(sr,this);
+		return node;
+	}
+
+	/**
+	 * Evaluate an expression. This method evaluates the argument
+	 * rather than the topNode of the JEP instance.
+	 * It should be used in conjunction with {@link #parse parse}
+	 * rather than {@link #parseExpression parseExpression}.
+	 * Added by RJM Feb 04.
+	 * @param node the top node of the tree representing the expression.
+	 * @return The value of the expression
+	 * @throws Exception if for some reason the expression could not be evaluated
+	 */
+	public Object evaluate(Node node) throws Exception
+	{
+		return ev.getValue(node,new Vector(),this.symTab);
+	}
 
 	/**
 	 * Evaluates and returns the value of the expression as a double number.
