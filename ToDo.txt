@@ -1,29 +1,11 @@
-== Release Check List ===============================================
-x Update documentation with new features
-- Run spell check on changed pages
-x Run all tests
-x use "ant dist"
-x Update download page
-x Upload new documentation
-x Update license
-x Upload new distribution file(s)
-x Download package and test
-x add jep-x.xx-withexamples.jar to website folder
-x Test web site in multiple browsers
-x Upload web site
-x Add message on SourceForge list
-- Update version number+ feature list from JARS, share*it,...
-x check PayPal payment
-- Add CVS tag for version (e.g. v231)
+== TODO for version 2.3.1 ===============================================
+- Run spell check on docs
+- fix link problem to JavaDoc in documentation
 
 == TODO for version 2.3.0 ===========================================
 - update CVS
 - update web site version history (link to doc?)
 - upload new documentation + example files to web site
-- test downloading
-- tag CVS
-- create commercial package
-- send license to Preet
 
 Ignored/Optional
 - dot product?
@@ -32,6 +14,10 @@ Ignored/Optional
 - add more JUnit tests
 
 Complete
+x test downloading
+x create commercial package
+x tag CVS
+x send license to Preet
 x finalize docs
 x multiple jars? multiple zips?
 x move new features
