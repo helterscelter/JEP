@@ -9,6 +9,8 @@ package org.lsmp.djep.sjep;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 /**
+ * Represents a variable.
+ * 
  * @author Rich Morris
  * Created on 14-Dec-2004
  */

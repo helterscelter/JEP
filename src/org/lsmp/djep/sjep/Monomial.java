@@ -15,13 +15,13 @@ import org.nfunk.jep.*;
  */
 public class Monomial extends AbstractPNode {
 
-	Constant coeff;
+	PConstant coeff;
 	PNodeI   vars[];
 	PNodeI	 powers[];
 	/**
 	 * 
 	 */
-	Monomial(PolynomialCreator pc,Constant coeff,PNodeI vars[],PNodeI powers[]) {
+	Monomial(PolynomialCreator pc,PConstant coeff,PNodeI vars[],PNodeI powers[]) {
 		super(pc);
 		if(vars.length != powers.length)
 			throw new IllegalArgumentException("Monomial.valueOf length of vars and powers must be equal. they are "+vars.length+" "+powers.length);
@@ -30,21 +30,21 @@ public class Monomial extends AbstractPNode {
 		this.powers = powers;
 	}
 
-	Monomial(PolynomialCreator pc,Constant coeff,PNodeI var) {
+	Monomial(PolynomialCreator pc,PConstant coeff,PNodeI var) {
 		super(pc);
 		this.coeff = coeff;
 		this.vars = new PNodeI[]{var};
 		this.powers = new PNodeI[]{pc.oneConstant};
 	}
 
-	Monomial(PolynomialCreator pc,Constant coeff,PNodeI var,PNodeI power) {
+	Monomial(PolynomialCreator pc,PConstant coeff,PNodeI var,PNodeI power) {
 		super(pc);
 		this.coeff = coeff;
 		this.vars = new PNodeI[]{var};
 		this.powers = new PNodeI[]{power};
 	}
 
-	PNodeI valueOf(Constant coefficient,PNodeI terms[],PNodeI pows[])
+	PNodeI valueOf(PConstant coefficient,PNodeI terms[],PNodeI pows[])
 	{
 		if(coefficient.isZero()) return pc.zeroConstant;
 		if(terms.length ==0) return coefficient;
@@ -64,8 +64,8 @@ public class Monomial extends AbstractPNode {
 	
 	public PNodeI mul(PNodeI node) throws ParseException
 	{
-		if(node instanceof Constant)
-			return this.valueOf((Constant) coeff.mul(node),vars,powers);
+		if(node instanceof PConstant)
+			return this.valueOf((PConstant) coeff.mul(node),vars,powers);
 
 		if(node instanceof Monomial)
 			return mul((Monomial) node);
@@ -77,8 +77,8 @@ public class Monomial extends AbstractPNode {
 
 	public PNodeI div(PNodeI node) throws ParseException
 	{
-		if(node instanceof Constant)
-			return this.valueOf((Constant) coeff.div(node),vars,powers);
+		if(node instanceof PConstant)
+			return this.valueOf((PConstant) coeff.div(node),vars,powers);
 
 		if(node instanceof Monomial)
 			return div((Monomial) node);
@@ -108,10 +108,10 @@ public class Monomial extends AbstractPNode {
 	
 	PNodeI power(PNodeI pow) throws ParseException
 	{
-		if(pow instanceof Constant)
+		if(pow instanceof PConstant)
 		{
 			MutiableMonomial mm = this.toMutiableMonomial();
-			mm.power((Constant) pow);
+			mm.power((PConstant) pow);
 			return mm.toPNode();			
 		}
 		return super.pow(pow);
@@ -119,7 +119,7 @@ public class Monomial extends AbstractPNode {
 
 	public PNodeI negate() throws ParseException
 	{
-		return new Monomial(pc,(Constant) coeff.negate(),vars,powers);
+		return new Monomial(pc,(PConstant) coeff.negate(),vars,powers);
 	}
 	
 	public PNodeI invert() throws ParseException
@@ -127,7 +127,7 @@ public class Monomial extends AbstractPNode {
 		PNodeI newPows[] = new PNodeI[vars.length];
 		for(int i=0;i<vars.length;++i)
 			newPows[i] = powers[i].negate();
-		return new Monomial(pc,(Constant) coeff.invert(),vars,newPows);
+		return new Monomial(pc,(PConstant) coeff.invert(),vars,newPows);
 	}
 	
 	public PNodeI add(PNodeI node) throws ParseException
@@ -137,7 +137,7 @@ public class Monomial extends AbstractPNode {
 			Monomial mon = (Monomial) node;
 			if(this.equalsIgnoreConstant(mon))
 			{
-				return valueOf((Constant)coeff.add(mon.coeff),
+				return valueOf((PConstant)coeff.add(mon.coeff),
 					vars,powers);
 			}
 		}
@@ -151,16 +151,16 @@ public class Monomial extends AbstractPNode {
 			Monomial mon = (Monomial) node;
 			if(this.equalsIgnoreConstant(mon))
 			{
-				return valueOf((Constant)coeff.sub(mon.coeff),
+				return valueOf((PConstant)coeff.sub(mon.coeff),
 					vars,powers);
 			}
 		}
 		return super.sub(node);
 	}
 	
-	public PNodeI addConstant(Constant c) throws ParseException
+	PNodeI addConstant(PConstant c) throws ParseException
 	{
-		return valueOf((Constant) coeff.add(c),vars,powers);
+		return valueOf((PConstant) coeff.add(c),vars,powers);
 	}
 	//////////////////// Comparison functions
 	
@@ -171,7 +171,7 @@ public class Monomial extends AbstractPNode {
 		return equalsIgnoreConstant((Monomial) node);
 	}
 	
-	public boolean equalsIgnoreConstant(Monomial mon)
+	boolean equalsIgnoreConstant(Monomial mon)
 	{
 		if(vars.length != mon.vars.length) return false;
 		for(int i=0;i<vars.length;++i)
@@ -182,7 +182,7 @@ public class Monomial extends AbstractPNode {
 		return true;
 	}
 
-	public boolean equalsIgnoreConstant(PNodeI node)
+	boolean equalsIgnoreConstant(PNodeI node)
 	{
 		if(node instanceof Monomial)
 			return equalsIgnoreConstant((Monomial) node);
@@ -205,7 +205,7 @@ public class Monomial extends AbstractPNode {
 
 	public int compareTo(PNodeI node)
 	{
-		if(node instanceof Constant) return 1;
+		if(node instanceof PConstant) return 1;
 		if(node instanceof Monomial)
 		{
 			Monomial mon = (Monomial) node;
@@ -229,14 +229,14 @@ public class Monomial extends AbstractPNode {
 	}
 	
 	private boolean negativePower(PNodeI pow) {
-		return( pow instanceof Constant
-		 && ((Constant) pow).isNegative()); 
+		return( pow instanceof PConstant
+		 && ((PConstant) pow).isNegative()); 
 
 	}
 	private void printPower(StringBuffer sb,PNodeI pow)
 	{
 		if(pow.isOne()) return;
-		if(pow instanceof Constant 
+		if(pow instanceof PConstant 
 			|| pow instanceof PVariable 
 			|| pow instanceof PFunction)
 		{	
@@ -354,7 +354,7 @@ public class Monomial extends AbstractPNode {
 			if(negativePower(powers[i]))
 			{
 				PNodeI pow = powers[i].negate();
-				if(powers[i] instanceof Constant && ((Constant) powers[i]).isMinusOne())
+				if(powers[i] instanceof PConstant && ((PConstant) powers[i]).isMinusOne())
 					divisors[pos++]=vars[i].toNode();
 				else
 					divisors[pos++] = pc.nf.buildOperatorNode(pc.os.getPower(),
@@ -368,7 +368,7 @@ public class Monomial extends AbstractPNode {
 		return pc.nf.buildOperatorNode(pc.os.getDivide(),top,bottom);
 	}
 	
-	public boolean negativeCoefficient()
+	boolean negativeCoefficient()
 	{
 		return coeff.isNegative();
 	}
@@ -378,9 +378,9 @@ public class Monomial extends AbstractPNode {
 		MutiablePolynomial mp = new MutiablePolynomial(pc,new PNodeI[]{this.coeff});
 		for(int i=0;i<vars.length;++i)
 		{
-			if(powers[i] instanceof Constant)
+			if(powers[i] instanceof PConstant)
 			{
-				Constant pow = (Constant) powers[i];
+				PConstant pow = (PConstant) powers[i];
 				if(pow.isZero()) {}
 				else if(pow.isOne())
 					mp.expandMul(vars[i].expand());

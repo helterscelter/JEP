@@ -8,6 +8,9 @@
 package org.lsmp.djep.sjep;
 import org.nfunk.jep.*;
 /**
+ * Represents a polynomial.
+ * i.e. a sum of terms which are typically Monomials.
+ * 
  * @author Rich Morris
  * Created on 14-Dec-2004
  */
@@ -77,9 +80,9 @@ public class Polynomial extends AbstractPNode {
 	
 	public PNodeI mul(PNodeI node)  throws ParseException
 	{
-		if(node instanceof Constant)
+		if(node instanceof PConstant)
 		{
-			Constant c = (Constant) node;
+			PConstant c = (PConstant) node;
 			if(c.isZero()) return pc.zeroConstant;
 			if(c.isOne()) return this;
 			//if(c.isInfinity()) return pc.infConstant;
@@ -94,9 +97,9 @@ public class Polynomial extends AbstractPNode {
 	
 	public PNodeI div(PNodeI node)  throws ParseException
 	{
-		if(node instanceof Constant)
+		if(node instanceof PConstant)
 		{
-			Constant c = (Constant) node;
+			PConstant c = (PConstant) node;
 			if(c.isZero()) return pc.infConstant;
 			if(c.isOne()) return this;
 			PNodeI newTerms[] = new PNodeI[terms.length];
@@ -145,8 +148,8 @@ public class Polynomial extends AbstractPNode {
 	
 	private boolean isNegative(PNodeI node)
 	{
-		if(node instanceof Constant)
-			return ((Constant) node).isNegative();
+		if(node instanceof PConstant)
+			return ((PConstant) node).isNegative();
 		if(node instanceof Monomial)
 			return ((Monomial) node).negativeCoefficient();
 		return false;

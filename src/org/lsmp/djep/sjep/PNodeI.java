@@ -8,6 +8,9 @@
 package org.lsmp.djep.sjep;
 import org.nfunk.jep.*;
 /**
+ * An element in a polynomial representation of an expression.
+ * Provides the main routines for creating, comparing and manipulating polynomials.
+ * 
  * @author Rich Morris
  * Created on 17-Dec-2004
  */
@@ -28,7 +31,9 @@ public interface PNodeI {
 	public PNodeI invert() throws ParseException;
 	/** True is nodes represent the same parse trees */
 	public boolean equals(PNodeI node);
-	/** Returns positive if this node comes after the argument. */
+	/** True is nodes represent the same parse trees */
+	public boolean equals(Object o);
+	/** Compares this expression to argument. Uses a total ordering of expressions. Returns positive if this node comes after the argument. */
 	public int compareTo(PNodeI fun);
 	/** Converts the node to standard Jep format. */
 	public Node toNode() throws ParseException;

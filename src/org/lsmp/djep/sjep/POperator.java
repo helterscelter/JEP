@@ -11,6 +11,8 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 
 /**
+ * Represents an operator.
+ * 
  * @author Rich Morris
  * Created on 16-Dec-2004
  */

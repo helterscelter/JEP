@@ -10,6 +10,8 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 import org.lsmp.djep.xjep.*;
 /**
+ * Represents a function.
+ * 
  * @author Rich Morris
  * Created on 15-Dec-2004
  */

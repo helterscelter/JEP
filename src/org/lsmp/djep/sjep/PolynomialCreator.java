@@ -12,20 +12,65 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import org.nfunk.jep.function.*;
 /**
+ * Main entry point for simplification routines.
+ *
+ *<p>
+Uses a complete reworking of the ways equations are represented.
+A tree structure is built from Polynomials, Monomials, PVariable etc.
+An equation like 
+<pre>1+2 x^2+3 x y+4 x sin(y)</pre>
+is represented as
+<pre>
+Polynomial([
+  Monomial(2.0,[PVariable(x)],[2])]),
+  Monomial(3.0,[x,y],[1,1]),
+  Monomial(4.0,[x,Function(sin,arg)],[1,1])
+])
+</pre>
+</p>
+
+<p>
+A total ordering of all expressions is used. 
+As the representation is constructed the total ordering of terms is maintained. 
+This helps ensure that polynomials are always in their simplest form
+and also allows comparison of equations.
+</p>
+<p>   
+The following sequence illustrates current ordering. 
+This ordering may change without warning.
+<ul>
+<li>-1 numbers sorted by values
+<li>0
+<li>1 numbers before monomials
+<li>a^-2 powers in increasing order
+<li>a^-1
+<li>a
+<li>a^2
+<li>a^3
+<li>a^x numeric powers before symbolic powers
+<li>a b single variable monomials before multiple variables
+<li>a^2 b
+<li>b variables sorted alphabetically
+<li>cos(a) monomials before functions
+<li>sin(a) function names sorted alphabetically
+<li>a+b functions before polynomials
+<li>a+b+c
+<li>
+</ul>
  * @author Rich Morris
  * Created on 14-Dec-2004
  */
 public class PolynomialCreator extends DoNothingVisitor {
 	private XJep jep;
 	Object zero,one,minusOne,infinity,nan,two;
-	Constant zeroConstant,oneConstant,minusOneConstant,infConstant,nanConstant,twoConstant;
+	PConstant zeroConstant,oneConstant,minusOneConstant,infConstant,nanConstant,twoConstant;
 	Monomial zeroMonomial,unitMonomial,infMonomial,nanMonomial;
 	Polynomial zeroPolynomial,unitPolynomial,infPolynomial,nanPolynomial;
 	NumberFactory numf;
 	OperatorSet os;
 	NodeFactory nf;
 	//boolean expand=false;
-	
+	private PolynomialCreator() {}
 	public PolynomialCreator(XJep j)
 	{
 		jep = j;
@@ -45,24 +90,47 @@ public class PolynomialCreator extends DoNothingVisitor {
 			nan = new Double(Double.NaN);
 		}
 			
-		zeroConstant = new Constant(this,zero);
-		oneConstant = new Constant(this,one);
-		twoConstant = new Constant(this,two);
-		minusOneConstant = new Constant(this,minusOne);
-		infConstant = new Constant(this,infinity);
-		nanConstant = new Constant(this,nan);
+		zeroConstant = new PConstant(this,zero);
+		oneConstant = new PConstant(this,one);
+		twoConstant = new PConstant(this,two);
+		minusOneConstant = new PConstant(this,minusOne);
+		infConstant = new PConstant(this,infinity);
+		nanConstant = new PConstant(this,nan);
 	}
 
+	/**
+	 * Converts an expression into the polynomial representation. 
+	 * @param node top node of expression
+	 * @return top node of polynomial form of expression
+	 * @throws ParseException if expression cannot be converted.
+	 */
 	public PNodeI createPoly(Node node) throws ParseException
 	{
 		return (PNodeI) node.jjtAccept(this,null);
 	}
 
+	/**
+	 * Simplifies an expression.
+	 * 
+	 * @param node top node to expression to be simplified.
+	 * @return a simplified expression
+	 * @throws ParseException
+	 */
 	public Node simplify(Node node) throws ParseException
 	{
 		PNodeI poly = createPoly(node);
 		return poly.toNode();
 	}
+	/**
+	 * Expands an expression.
+	 * Will always expand brackets for multiplication and simple powers.  
+	 * For instance
+	 * <code>(1+x)^3 -> 1+3x+3x^2+x^3</code>
+	 * 
+	 * @param node top node to expression to be simplified.
+	 * @return a simplified expression
+	 * @throws ParseException
+	 */
 
 	public Node expand(Node node) throws ParseException
 	{
@@ -71,9 +139,49 @@ public class PolynomialCreator extends DoNothingVisitor {
 		return expand.toNode();
 	}
 
+	/**
+	 * Compares two nodes.
+	 * Uses a total ordering of expressions.
+	 * Expands equations before comparison.
+	 * 
+	 * @param node1
+	 * @param node2
+	 * @return -1 if node1<node2, 0 if node1==node2, +1 if node1>node2
+	 * @throws ParseException
+	 */
+	public int compare(Node node1,Node node2) throws ParseException
+	{
+		PNodeI poly1 = createPoly(node1);
+		PNodeI exp1 = poly1.expand();
+		PNodeI poly2 = createPoly(node2);
+		PNodeI exp2 = poly2.expand();
+		return exp1.compareTo(exp2);
+	}
+
+	/**
+	 * Compares two nodes.
+	 * Uses a total ordering of expressions.
+	 * May give some false negatives is simplification cannot reduce
+	 * two equal expressions to the same canonical form.
+	 * Expands equations before comparison.
+	 * 
+	 * @param node1
+	 * @param node2
+	 * @return true if two nodes represents same expression.
+	 * @throws ParseException
+	 */
+	public boolean equals(Node node1,Node node2) throws ParseException
+	{
+		PNodeI poly1 = createPoly(node1);
+		PNodeI exp1 = poly1.expand();
+		PNodeI poly2 = createPoly(node2);
+		PNodeI exp2 = poly2.expand();
+		return exp1.equals(exp2);
+	}
+
 	public Object visit(ASTConstant node, Object data) throws ParseException {
 
-		return new Constant(this,node.getValue());
+		return new PConstant(this,node.getValue());
 	}
 
 	public Object visit(ASTVarNode node, Object data) throws ParseException {
@@ -129,7 +237,7 @@ public class PolynomialCreator extends DoNothingVisitor {
 		
 		boolean allConst = true;
 		for(int i=0;i<args.length;++i)
-			if(!(args[i] instanceof Constant)) { allConst = false; break; }
+			if(!(args[i] instanceof PConstant)) { allConst = false; break; }
 
 		if(allConst)
 		{
@@ -148,7 +256,7 @@ public class PolynomialCreator extends DoNothingVisitor {
 			} catch(Exception e) {
 				throw new ParseException(e.getMessage());
 			}
-			return new Constant(this,val);
+			return new PConstant(this,val);
 		}
 		
 		if(op != null)

@@ -28,9 +28,9 @@ public class MutiablePolynomial
 
 	public void add(PNodeI term) throws ParseException
 	{
-		if(term instanceof Constant)
+		if(term instanceof PConstant)
 			for(int i=0;i<terms.length;++i)
-				if(terms[i] instanceof Constant) {
+				if(terms[i] instanceof PConstant) {
 					terms[i] = terms[i].add(term);
 					return;
 				}				
@@ -116,14 +116,14 @@ public class MutiablePolynomial
 	{
 		int numZeros=0;
 		int numConst=0;
-		Constant c = pc.zeroConstant;
+		PConstant c = pc.zeroConstant;
 		for(int i=0;i<terms.length;++i)
 		{
 			if(terms[i].isZero()) ++numZeros;
-			else if(terms[i] instanceof Constant)
+			else if(terms[i] instanceof PConstant)
 			{
 				++numConst;
-				c = (Constant) c.add(terms[i]);
+				c = (PConstant) c.add(terms[i]);
 			}
 		}
 		if(numZeros == 0 && numConst == 0 )
@@ -138,7 +138,7 @@ public class MutiablePolynomial
 		for(int i=0;i<terms.length;++i)
 		{
 			if(terms[i].isZero()) {} // 1^x --> 1
-			else if(terms[i] instanceof Constant) {}
+			else if(terms[i] instanceof PConstant) {}
 			else {
 				newTerms[pos] = terms[i];
 				++pos;

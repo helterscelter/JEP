@@ -9,37 +9,39 @@ package org.lsmp.djep.sjep;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 /**
+ * Represents a constant.
+ * 
  * @author Rich Morris
  * Created on 14-Dec-2004
  */
-public class Constant extends AbstractPNode {
+public class PConstant extends AbstractPNode {
 
 	Object value;
 	
 	/**
 	 * 
 	 */
-	public Constant(PolynomialCreator pc,Object o) {
+	public PConstant(PolynomialCreator pc,Object o) {
 		super(pc);
 		value = o;
 	}
 
 	public PNodeI negate() throws ParseException
 	{
-		return new Constant(pc,pc.neg(value));
+		return new PConstant(pc,pc.neg(value));
 	}
 	public PNodeI add(PNodeI c) throws ParseException {
 		if(this.isZero()) return c;
-		if(c instanceof Constant)
-			return new Constant(pc,pc.add(value,((Constant) c).value));
+		if(c instanceof PConstant)
+			return new PConstant(pc,pc.add(value,((PConstant) c).value));
 		
 		return super.add(c);
 	}
 	
 	public PNodeI sub(PNodeI c) throws ParseException {
 		if(this.isZero()) return c.negate();
-		if(c instanceof Constant)
-			return new Constant(pc,pc.sub(value,((Constant) c).value));
+		if(c instanceof PConstant)
+			return new PConstant(pc,pc.sub(value,((PConstant) c).value));
 		return super.sub(c);
 	}
 
@@ -49,8 +51,8 @@ public class Constant extends AbstractPNode {
 		if(c.isZero()) return pc.zeroConstant;
 		if(c.isOne()) return this;
 		
-		if(c instanceof Constant)
-			return new Constant(pc,pc.mul(value,((Constant) c).value));
+		if(c instanceof PConstant)
+			return new PConstant(pc,pc.mul(value,((PConstant) c).value));
 
 		return super.mul(c);
 	}
@@ -64,15 +66,15 @@ public class Constant extends AbstractPNode {
 		if(c.isZero()) return pc.infConstant;
 		if(c.isOne()) return this;
 		
-		if(c instanceof Constant)
-			return new Constant(pc,pc.div(value,((Constant) c).value));
+		if(c instanceof PConstant)
+			return new PConstant(pc,pc.div(value,((PConstant) c).value));
 		
 		return super.div(c);
 	}
 
 	public PNodeI invert() throws ParseException
 	{
-		return new Constant(pc,pc.div(pc.one,value));
+		return new PConstant(pc,pc.div(pc.one,value));
 	}
 
 	public PNodeI pow(PNodeI c) throws ParseException {
@@ -83,8 +85,8 @@ public class Constant extends AbstractPNode {
 		if(this.isOne()) return pc.oneConstant;
 		if(c.isZero()) return pc.oneConstant;
 		 
-		if(c instanceof Constant)
-			return new Constant(pc,pc.raise(value,((Constant) c).value));
+		if(c instanceof PConstant)
+			return new PConstant(pc,pc.raise(value,((PConstant) c).value));
 	
 		return super.pow(c);
 	}
@@ -145,7 +147,7 @@ public class Constant extends AbstractPNode {
 		return pc.nf.buildConstantNode(value);
 	}
 
-	public int compareTo(Constant c)
+	public int compareTo(PConstant c)
 	{
 			return ((Comparable) value).compareTo(c.value);
 	}
@@ -153,8 +155,8 @@ public class Constant extends AbstractPNode {
 
 	public boolean equals(PNodeI node)
 	{
-		if(node instanceof Constant)
-			return value.equals(((Constant)node).value);
+		if(node instanceof PConstant)
+			return value.equals(((PConstant)node).value);
 		return false;
 	}
 

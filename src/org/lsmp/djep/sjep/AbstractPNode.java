@@ -53,7 +53,7 @@ public abstract class AbstractPNode implements PNodeI
 		if(node instanceof Polynomial)
 			return node.negate().add(this);
 		
-		if(node instanceof Constant)
+		if(node instanceof PConstant)
 			return this.add(node.negate());
 			
 		return new Polynomial(pc,new PNodeI[]{this,
@@ -74,18 +74,18 @@ public abstract class AbstractPNode implements PNodeI
 		if(this.equals(node))
 			return new Monomial(pc,pc.oneConstant,this,pc.twoConstant);
 
-		if(node instanceof Constant)
-			return new Monomial(pc,(Constant) node,this);
+		if(node instanceof PConstant)
+			return new Monomial(pc,(PConstant) node,this);
 		
 		if(node instanceof Monomial)
 			return ((Monomial) node).mul(this);
 		
 
-		if(this instanceof Constant)
+		if(this instanceof PConstant)
 		{
 //			if(node instanceof Polynomial)
 //				return ((Polynomial) node).mul((Constant) this);
-			return new Monomial(pc,(Constant) this,node);
+			return new Monomial(pc,(PConstant) this,node);
 		}
 			
 		if(this.compareTo(node) < 0)
@@ -112,11 +112,11 @@ public abstract class AbstractPNode implements PNodeI
 		if(node instanceof Monomial)
 			return ((Monomial) node).invert().mul(this);
 
-		if(this instanceof Constant)
-			return new Monomial(pc,(Constant) this,node,pc.minusOneConstant);
+		if(this instanceof PConstant)
+			return new Monomial(pc,(PConstant) this,node,pc.minusOneConstant);
 		
-		if(node instanceof Constant)
-			return new Monomial(pc,(Constant) node.invert(),this);
+		if(node instanceof PConstant)
+			return new Monomial(pc,(PConstant) node.invert(),this);
 			
 		return new Monomial(pc,
 			pc.oneConstant,
@@ -145,15 +145,15 @@ public abstract class AbstractPNode implements PNodeI
 	this > arg ---> 1
 	*/
 	public int compareTo(PNodeI node)	{
-		if(this instanceof Constant)
+		if(this instanceof PConstant)
 		{
-			if(node instanceof Constant)
-				return ((Constant) this).compareTo((Constant) node);
+			if(node instanceof PConstant)
+				return ((PConstant) this).compareTo((PConstant) node);
 			return -1;
 		}
 		if(this instanceof PVariable)
 		{
-			if(node instanceof Constant) return 1;
+			if(node instanceof PConstant) return 1;
 			if(node instanceof PVariable)
 				return ((PVariable) this).compareTo((PVariable) node);
 			if( node instanceof PFunction 
@@ -162,7 +162,7 @@ public abstract class AbstractPNode implements PNodeI
 		}
 		if(this instanceof POperator)
 		{
-			if( node instanceof Constant
+			if( node instanceof PConstant
 			 || node instanceof PVariable) return 1;
 			if( node instanceof POperator)
 				return ((POperator) this).compareTo((POperator) node);
@@ -171,7 +171,7 @@ public abstract class AbstractPNode implements PNodeI
 		}
 		if(this instanceof PFunction)
 		{
-			if( node instanceof Constant
+			if( node instanceof PConstant
 			 || node instanceof PVariable
 			 || node instanceof PFunction) return 1;
 			if( node instanceof PFunction)

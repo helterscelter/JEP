@@ -16,14 +16,14 @@ import org.nfunk.jep.*;
 public class MutiableMonomial
 {
 	PolynomialCreator pc;
-	Constant coeff;
+	PConstant coeff;
 	int length;
 	PNodeI terms[];
 	PNodeI powers[];
 	/**
 	 * Note arrays parsed may be modified.
 	 */
-	public MutiableMonomial(PolynomialCreator pc,Constant coeff,PNodeI nodes[],PNodeI pows[])
+	public MutiableMonomial(PolynomialCreator pc,PConstant coeff,PNodeI nodes[],PNodeI pows[])
 	{
 		this.pc = pc;
 		this.coeff = coeff;
@@ -32,14 +32,14 @@ public class MutiableMonomial
 		powers = pows;
 	}
 
-	public void mul(Constant c) throws ParseException
+	public void mul(PConstant c) throws ParseException
 	{
-		coeff = (Constant) coeff.mul(c);
+		coeff = (PConstant) coeff.mul(c);
 	}
 	
-	public void div(Constant c) throws ParseException
+	public void div(PConstant c) throws ParseException
 	{
-		coeff = (Constant) coeff.div(c);
+		coeff = (PConstant) coeff.div(c);
 	}
 
 	public void mul(PNodeI term,PNodeI power) throws ParseException
@@ -76,9 +76,9 @@ public class MutiableMonomial
 		powers = newPowers;
 	}
 	
-	void power(Constant c) throws ParseException
+	void power(PConstant c) throws ParseException
 	{
-		coeff = (Constant) c.pow(c);
+		coeff = (PConstant) c.pow(c);
 		for(int i=0;i<length;++i)
 			powers[i] = powers[i].mul(c);
 	}
@@ -92,7 +92,7 @@ public class MutiableMonomial
 		{
 			if(powers[i].isZero()) ++numZeros;
 			else if(terms[i].isOne()) ++numOnes;
-			else if(terms[i] instanceof Constant && powers[i] instanceof Constant)
+			else if(terms[i] instanceof PConstant && powers[i] instanceof PConstant)
 				++numConst;
 		}
 		if(numZeros == 0 && numOnes ==0 && numConst == 0)
@@ -106,9 +106,9 @@ public class MutiableMonomial
 		{
 			if(powers[i].isZero()) {} // x^0 --> 1
 			else if(terms[i].isOne()) {} // 1^x --> 1
-			else if(terms[i] instanceof Constant && powers[i] instanceof Constant)
+			else if(terms[i] instanceof PConstant && powers[i] instanceof PConstant)
 			{
-				coeff = (Constant) coeff.mul(terms[i].pow(powers[i]));
+				coeff = (PConstant) coeff.mul(terms[i].pow(powers[i]));
 			}
 			else {
 				newTerms[pos] = terms[i];
