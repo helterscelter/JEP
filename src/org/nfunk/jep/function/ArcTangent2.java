@@ -13,6 +13,10 @@ import java.lang.Math;
 import java.util.*;
 import org.nfunk.jep.*;
 
+/**
+ * atan2(y, x) Returns the angle whose tangent is y/x. 
+ * @author nathan
+ */
 public class ArcTangent2 extends PostfixMathCommand
 {
 	public ArcTangent2()
@@ -29,9 +33,9 @@ public class ArcTangent2 extends PostfixMathCommand
 		
 		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
-			double x = ((Number)param1).doubleValue();
-			double y = ((Number)param2).doubleValue();
-			inStack.push(new Double(Math.atan2(x, y)));//push the result on the inStack
+			double y = ((Number)param1).doubleValue();
+			double x = ((Number)param2).doubleValue();
+			inStack.push(new Double(Math.atan2(y, x)));//push the result on the inStack
 		}
 		else
 			throw new ParseException("Invalid parameter type");
