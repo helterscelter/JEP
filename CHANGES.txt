@@ -1,5 +1,4 @@
-=====================================================================
-== org.nfunk.* ======================================================
+Nov  6 njf - Merged JEPTester and JEPTest into JEPTest, now in the JUnit framework
 
 Nov  1 njf - changed documentation to frames
            - added new FAQ item
@@ -55,9 +54,3 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
 
 Many previous changes not included here. See the documentation for details.
 
-=====================================================================
-== org.lsmp.* =======================================================
-
--- 1.0.0 (Oct 3rd, 2004) --------------------------------------------
-
-Many previous changes not included here. See the documentation for details.
