@@ -43,8 +43,6 @@
 	<taskdef name="javacc"
 	classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
 
-	
-
 <!--======================================================================-->
 <!-- INIT -->
 	<target name="init">
@@ -52,14 +50,41 @@
 		<tstamp/>
 
 		<!-- Ensure JavaCC is present -->
-		<available property="javacc.present"
-			classname="COM.sun.labs.javacc.Main"
-			classpath="${javacchome}/JavaCC.zip" />
+		<!-- TODO get this working -->
+		<!--			classpath="${javacchome}/JavaCC.zip"
+		<available property="javacc.2.present"
+				classname="COM.sun.labs.javacc.Main">
+  <classpath>
+    <pathelement location="${javacchome}/JavaCC.zip"/>
+  </classpath>
+  </available>
+
+		<available property="javacc.3.present"
+			classname="org.javacc.parser.Main"
+			classpath="${javacchome}/javacc.jar" />
+		<condition property="javacc.present">
+				<or>
+						<istrue value="javacc.2.present"/>
+						<istrue value="javacc.3.present"/>
+				</or>
+		</condition>
+		<condition property="javacc.not.present">
+				<not>
+						<istrue value="javacc.present"/>
+				</not>
+		</condition>
+		<antcall target="print.javacc.not.present"/>-->
+</target>
+<!--
+	<target name="print.javacc.not.present" if="javacc.not.present">
+			<echo message="JavaCC 2 or 3 is not present. Parser.jjt will not be processed!"/>
 	</target>
+	-->
 
 <!--======================================================================-->
 <!-- JJTREE -->
-	<target name="jjtree" depends="init" if="javacc.present">
+<target name="jjtree" depends="init"><!-- if="javacc.present">
+		<echo message="javacc.present is true"/>-->
 		<jjtree
 			target="${src}/org/nfunk/jep/Parser.jjt"
 			javacchome="${javacchome}"
@@ -68,7 +93,8 @@
 
 <!--======================================================================-->
 <!-- JAVACC -->
-	<target name="javacc" depends="jjtree" if="javacc.present">
+<target name="javacc" depends="jjtree"><!--if="javacc.present">
+		<echo message="javacc.present is true"/>-->
 		<javacc
 			target="${src}/org/nfunk/jep/Parser.jj"
 			javacchome="${javacchome}"
