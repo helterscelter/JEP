@@ -7,49 +7,18 @@
 <link rel="stylesheet" type="text/css" href="../main.css" title="style1">
 </head>
 
-<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<br>
-<div align=center> 
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr> 
-      <td bgcolor="#000033"><img src="../img/spacer.gif" width="1" height="3" alt=""></td>
-    </tr>
-    <tr> 
-      <td align="center"><table width="590" border="0" cellspacing="0" cellpadding="0">
-    <tr> 
-      <td><!-- #BeginEditable "Sub%20Menu" -->{Sub Menu}<!-- #EndEditable --></td>
-    </tr>
-  </table></td>
-    </tr>
-    <tr> 
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1" alt=""></td>
-    </tr>
-	</table>
-	
-  <br>
-  <table width="590" border="0" cellspacing="0" cellpadding="0">
-    <tr> 
-      <td><!-- #BeginEditable "Text" -->{Text}<!-- #EndEditable --></td>
-    </tr>
-    <tr> 
-      <td><br>
-        <br>
-        <br>
-      </td>
-    </tr>
-	</table>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr bgcolor="#000033"> 
-      <td bgcolor="#000033"><img src="../img/spacer.gif" width="1" height="3" alt=""></td>
-    </tr>
-	</table>
-  <table width="590" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td align="left"><font size="-2" color="#999999"><b>::</b></font></td>
-      <td align="right"> <font size="-2" color="#999999">&copy; 2000 Nathan Funk</font></td>
-    </tr>
-  </table>
-  <p class="menu">&nbsp;</p>
+<body>
+<div id="centercontent">
+<br/>
+<!-- #BeginEditable "Sub%20Menu" -->{Sub Menu}<!-- #EndEditable -->
+<br/>
+<!-- #BeginEditable "Text" -->{Text}<!-- #EndEditable -->
+<br/>
+<br/>
+<br/>
+<div id="footer">
+<b>::</b> &copy; 2004 Nathan Funk and Richard Morris
+</div>
 </div>
 </body>
 </html>
