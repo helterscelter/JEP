@@ -60,9 +60,9 @@ public class XJepConsole extends Console
 		int maxPrec = -1;
 		for(int i=0;i<ops.length;++i)
 			if(((XOperator) ops[i]).getPrecedence()>maxPrec) maxPrec=((XOperator) ops[i]).getPrecedence();
-		for(int j=-1;j<=maxPrec;++j)
+		for(int jj=-1;jj<=maxPrec;++jj)
 			for(int i=0;i<ops.length;++i)
-				if(((XOperator) ops[i]).getPrecedence()==j)
+				if(((XOperator) ops[i]).getPrecedence()==jj)
 					println(((XOperator) ops[i]).toFullString());
 	}
 

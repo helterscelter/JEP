@@ -3,8 +3,6 @@ package org.lsmp.djepJUnit;
 import junit.framework.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
-import org.lsmp.djep.matrixJep.*;
-import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.rpe.*;
 
 /* @author rich

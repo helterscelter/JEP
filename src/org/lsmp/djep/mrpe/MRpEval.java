@@ -91,7 +91,7 @@ import java.util.*;
  * For instance a 2 by 2 matrix is an instance of Mat22Obj whose elements
  * are represented by the fields a,b,c,d. This eliminates bound checking on arrays.
  * </li>
- * <li>Each possible vector and matrix operation has been hand coded, and theres
+ * <li>Each possible vector and matrix operation has been hand coded, and there are
  * a lot of methods (27 just for matrix multiplication!).</li>
  * <li>The values of variables are kept on local arrays for fast access. 
  * These values are kept in sync with the main Jep Variables by using
@@ -320,7 +320,8 @@ public final class MRpEval implements ParserVisitor {
 	/**
 	 * Sets value of rpe variable.
 	 * 
-	 * @param ref the reference number for the variable (found using {@link #getVarRef})
+	 * @param ref the reference number for the variable 
+	 * (found using {@link #getVarRef(org.lsmp.djep.matrixJep.MatrixVariableI)})
 	 * @param val
 	 * @throws ParseException
 	 */
@@ -331,9 +332,11 @@ public final class MRpEval implements ParserVisitor {
 		store.setVarValue(ref,val);
 	}
 	/**
-	 * Sets value of rpe variable. Only applys to scaler (double variables).
+	 * Sets value of rpe variable. 
+	 * Only applies to scaler (double variables).
 	 * 
-	 * @param ref the reference number for the variable (found using {@link #getVarRef})
+	 * @param ref the reference number for the variable
+	 * (found using {@link #getVarRef(org.lsmp.djep.matrixJep.MatrixVariableI)})
 	 * @param val the value
 	 */
 	public final void setVarValue(int ref,double val)
