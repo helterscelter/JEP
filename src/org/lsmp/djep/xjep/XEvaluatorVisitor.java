@@ -57,6 +57,7 @@ public class XEvaluatorVisitor extends EvaluatorVisitor {
 			Node equation = ((XVariable) var).getEquation();
 			if(equation==null)
 				throw new ParseException("Cannot find value of "+var.getName()+" no equation.");
+			// TODO causes stack overflow if recursive eqn with undefined value is used: recurse = recurse+1
 			equation.jjtAccept(this,data);
 			var.setValue(stack.peek());
 		}
