@@ -528,6 +528,20 @@ have a line like
 Which sets the operator of the current node to the coresponding Operator in the OperatorSet.
 </p>
 
+<h3>XOperator and XOperatorSet</h3>
+<p>
+If the xjep package or one of its decendants: djep and matrixJep, then
+there is an enhanced operator class XOperator. As well as all the properties
+of Operator this class allows the precedence of the operator to be set as well as certain flags
+which specify properties of the operator such as its accociativity.
+These properties are mainly used for printing and simplification of expresions
+and do not affect the parsing of the input.
+</p>
+<p>There is an associated XOperatorSet which redefines  the operators to include this additional information.
+If your adding an operator in xjep then you should modify or subclass XOperatorSet.
+An example of this is MatrixOperatorSet in the matrixJep package.
+</p>
+
 <!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
