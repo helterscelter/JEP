@@ -17,11 +17,6 @@ import org.lsmp.djep.vectorJep.values.*;
  */
 public class VectorEvaluator extends EvaluatorVisitor {
 
-	protected Object nodeAccept(Node node, Object data) throws ParseException
-	{
-		return node.jjtAccept(this,data);
-	}
-
 	/**
 	 * Visit a function node. The values of the child nodes
 	 * are first pushed onto the stack. Then the function class associated

@@ -6,6 +6,7 @@
 package org.lsmp.djepExamples;
 
 import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.xjep.PrintVisitor;
 
@@ -49,7 +50,7 @@ public class DJepConsole extends XJepConsole
 		return "DJep > ";
 	}
 
-	public void processEquation(Node node) throws Exception
+	public void processEquation(Node node) throws ParseException
 	{
 		DJep j = (DJep) this.j;
 		if(verbose) {

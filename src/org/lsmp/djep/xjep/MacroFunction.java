@@ -101,7 +101,7 @@ public class MacroFunction extends PostfixMathCommand
 		}
 		try
 		{
-			Object res = ev.getValue(topNode,null,mySymTab);
+			Object res = ev.getValue(topNode,mySymTab);
 			stack.push(res);
 		}
 		catch(Exception e1) { throw new ParseException("MacroFunction eval: "+e1.getMessage()); }

@@ -6,6 +6,7 @@
 package org.lsmp.djepExamples;
 
 import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 import org.lsmp.djep.xjep.XJep;
 import org.lsmp.djep.sjep.PolynomialCreator;
 
@@ -39,7 +40,7 @@ public class SJepConsole extends XJepConsole
 		println("SJep: advanced simplification/expansion");
 	}
 
-	public void processEquation(Node node) throws Exception
+	public void processEquation(Node node) throws ParseException
 	{
 		XJep xj = (XJep) j;
 

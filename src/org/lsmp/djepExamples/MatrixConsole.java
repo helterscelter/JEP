@@ -6,6 +6,7 @@
 package org.lsmp.djepExamples;
 
 import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 import org.lsmp.djep.matrixJep.*;
 /**
  * @author Rich Morris
@@ -51,7 +52,7 @@ public class MatrixConsole extends DJepConsole
 		super.printStdHelp();
 	}
 
-	public void processEquation(Node node) throws Exception
+	public void processEquation(Node node) throws ParseException
 	{
 		MatrixJep mj = (MatrixJep) j;
 		

@@ -34,13 +34,13 @@ public class EvaluatorVisitor implements ParserVisitor {
 	protected Stack stack;
 
 	/** The current error list */
-	protected Vector errorList;
+	//protected Vector errorList;
 
 	/** The symbol table for variable lookup */
 	protected SymbolTable symTab;
 
 	/** Flag for errors during evaluation */
-	protected boolean errorFlag;
+	//protected boolean errorFlag;
 
 	/** Debug flag */
 	protected static final boolean debug = false;
@@ -50,7 +50,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 	
 	/** Constructor. Initialise the stack member */
 	public EvaluatorVisitor() {
-		errorList = null;
+		//errorList = null;
 		symTab = null;
 		stack = new Stack();
 	}
@@ -58,11 +58,11 @@ public class EvaluatorVisitor implements ParserVisitor {
 	/**
 	 * Adds an error message to the list of errors
 	 */
-	protected void addToErrorList(String errorStr) {
+	/*protected void addToErrorList(String errorStr) {
 		if (errorList != null) {
 			errorList.addElement(errorStr);
 		}
-	}
+	}*/
 
 	/**
 	 * Returns the value of the expression as an object. The expression
@@ -79,46 +79,45 @@ public class EvaluatorVisitor implements ParserVisitor {
 	 * <p>
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
+	 * @throws ParseException if some problem with evaluation.
 	 */
-	public Object getValue(
-		Node topNode,
-		Vector errorList_in,
-		SymbolTable symTab_in)
-		throws Exception {
+	public Object getValue(Node topNode,SymbolTable symTab_in)
+		throws ParseException {
 
 		// check if arguments are ok
 		if (topNode == null) {
-			throw new IllegalArgumentException("topNode parameter is null");
+			throw new ParseException("topNode parameter is null");
 		}
 
 		// set member vars
-		errorList = errorList_in;
+		//errorList = errorList_in;
 		symTab = symTab_in;
-		errorFlag = false;
+		//errorFlag = false;
 		stack.removeAllElements();
 		// rjm addition ensure stack is correct before beginning.
 		// njf changed from clear() to removeAllElements for 1.1 compatibility
 
 		// evaluate by letting the top node accept the visitor
-		try {
-			nodeAccept(topNode, null);
+		topNode.jjtAccept(this,null);
+		/*
 		} catch (ParseException e) {
 			this.addToErrorList("Error: "+e.getMessage());
 			return null;
 		}
-
 		if(errorFlag) return null;
+		*/
+		
 		// something is wrong if not exactly one item remains on the stack
 		// or if the error flag has been set
 		if (stack.size() != 1) {
-			throw new Exception("Stack corrupted");
+			throw new ParseException("Stack corrupted");
 		}
 
 		// return the value of the expression
 		return stack.pop();
 	}
 
-	/**
+	/*
 	 * The following methods was used to facilitate 
 	 * using visitors which implemented a interface
 	 * which sub-classed ParserVisitor.
@@ -131,11 +130,11 @@ public class EvaluatorVisitor implements ParserVisitor {
 	 * We no longer need this as we use ParseVisitor everywhere,
 	 * but kept for future reference.
 	 * 
-	*/
-	protected Object nodeAccept(Node node, Object data) throws ParseException
+	private Object nodeAccept(Node node, Object data) throws ParseException
 	{
 		return node.jjtAccept(this,data);
 	}
+	*/
 
 	/**
 	 * This method should never be called when evaluation a normal
@@ -143,7 +142,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 	 */
 	public Object visit(SimpleNode node, Object data) throws ParseException {
 		throw new ParseException(
-			"No visit method for " + node.getClass().toString());
+			"No visit method for " + node.getClass().getName());
 	}
 
 	/**

@@ -99,7 +99,7 @@ public class XJepConsole extends Console
 		return true;
 	}
 
-	public void processEquation(Node node) throws Exception
+	public void processEquation(Node node) throws ParseException
 	{
 		XJep xj = (XJep) j;
 		Node processed = xj.preprocess(node);

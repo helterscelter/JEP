@@ -6,6 +6,7 @@
 package org.lsmp.djepExamples;
 
 import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 import org.lsmp.djep.groupJep.*;
 import org.lsmp.djep.groupJep.groups.*;
 import org.lsmp.djep.groupJep.interfaces.*;
@@ -61,7 +62,7 @@ public class GroupConsole extends Console
 	{
 		println("Current Group: "+((GroupJep) j).getGroup().toString());
 	}
-	public void processEquation(Node node) throws Exception
+	public void processEquation(Node node) throws ParseException
 	{
 		Object value = j.evaluate(node);
 		if(value instanceof HasComplexValueI)

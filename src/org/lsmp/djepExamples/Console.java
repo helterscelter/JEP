@@ -203,9 +203,9 @@ public class Console extends Applet implements KeyListener {
 	 * Typically evaluates the node and prints the value.
 	 * 
 	 * @param node Node representing expression
-	 * @throws Exception if a Parse or evaluation error
+	 * @throws ParseException if a Parse or evaluation error
 	 */ 
-	public void processEquation(Node node) throws Exception
+	public void processEquation(Node node) throws ParseException
 	{
 		Object res = j.evaluate(node);
 		println(res);
@@ -228,7 +228,7 @@ public class Console extends Applet implements KeyListener {
 		}
 		catch(IOException e)
 		{
-			println("IOError exiting");
+			println("IOError exiting"); return null;
 		}
 		return s;
 	}

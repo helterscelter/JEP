@@ -55,9 +55,9 @@ public class VectorJep extends JEP {
 	/** Evaluate a node. If the result is a scaler it
 	 * will be unwrapped, i.e. it will return a Double and not a Scaler.
 	 */
-	public Object evaluate(Node node) throws Exception
+	public Object evaluate(Node node) throws ParseException
 	{
-		Object res = ev.getValue(node,new Vector(),this.getSymbolTable());
+		Object res = ev.getValue(node,this.getSymbolTable());
 		if(res instanceof Scaler)
 			return ((Scaler) res).getEle(0);
 		return res;
@@ -66,7 +66,7 @@ public class VectorJep extends JEP {
 	/** Evaluate a node. Does not unwrap scalers. */
 	public Object evaluateRaw(Node node) throws Exception
 	{
-		Object res = ev.getValue(node,new Vector(),this.getSymbolTable());
+		Object res = ev.getValue(node,this.getSymbolTable());
 		return res;
 	}
 

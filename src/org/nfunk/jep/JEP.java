@@ -515,12 +515,13 @@ public class JEP {
 	 * rather than {@link #parseExpression parseExpression}.
 	 * @param node the top node of the tree representing the expression.
 	 * @return The value of the expression
-	 * @throws Exception if for some reason the expression could not be evaluated
+	 * @throws ParseException if for some reason the expression could not be evaluated
+     * @throws RuntimeException could potentially be thrown.
 	 * @since 2.3.0 alpha
 	 */
-	public Object evaluate(Node node) throws Exception
+	public Object evaluate(Node node) throws ParseException
 	{
-		return ev.getValue(node, new Vector(), this.symTab);
+		return ev.getValue(node, this.symTab);
 	}
 
 	/**
@@ -583,33 +584,28 @@ public class JEP {
 	public Object getValueAsObject() {
 		Object result;
 		
-		if (topNode != null && !hasError()) {
+		if (topNode == null || hasError()) return null;
 			// evaluate the expression
-			try {
-				result = ev.getValue(topNode,errorList,symTab);
-			}
-			catch(ParseException e)
-			{
-				if (debug) System.out.println(e);
-				errorList.addElement("Error during evaluation: "+e.getMessage());
-				return null;
-			}
-			catch (Exception e) {
-				if (debug) System.out.println(e);
-				errorList.addElement("Error during evaluation: "+e.getClass().getName()+": "+e.getMessage());
-				return null;
-			}
-			
-			return result;
-		} else {
+		try {
+			result = ev.getValue(topNode,symTab);
+		}
+		catch(ParseException e)	{
+			if (debug) System.out.println(e);
+			errorList.addElement("Error during evaluation: "+e.getMessage());
 			return null;
 		}
+		catch(RuntimeException e) {
+			if (debug) System.out.println(e);
+			errorList.addElement(e.getClass().getName()+": "+e.getMessage());
+			return null;
+		}
+		return result;
 	}
 
 	/**
-	 * Returns true if an error occured during the most recent
+	 * Returns true if an error occurred during the most recent
 	 * action (parsing or evaluation).
-	 * @return Returns <code>true</code> if an error occured during the most
+	 * @return Returns <code>true</code> if an error occurred during the most
 	 * recent action (parsing or evaluation).
 	 */
 	public boolean hasError() {
@@ -617,10 +613,10 @@ public class JEP {
 	}
 
 	/**
-	 * Reports information on the errors that occured during the most recent
+	 * Reports information on the errors that occurred during the most recent
 	 * action.
 	 * @return A string containing information on the errors, each separated
-	 * by a newline character; null if no error has occured
+	 * by a newline character; null if no error has occurred
 	 */
 	public String getErrorInfo() {
 		if (hasError()) {
@@ -630,11 +626,9 @@ public class JEP {
 			for (int i=0; i<errorList.size(); i++) {
 				str += errorList.elementAt(i) + "\n";
 			}
-			
 			return str;
-		} else {
-			return null;
 		}
+		return null;
 	}
 
 	/**
@@ -696,7 +690,7 @@ public class JEP {
 
 /*
 	/**
-	* Returns the position (vertical) at which the last error occured.
+	* Returns the position (vertical) at which the last error occurred.
 	/
 	public int getErrorColumn() {
 		if (hasError && parseException != null)
@@ -706,7 +700,7 @@ public class JEP {
 	}
 
 	/**
-	* Returns the line in which the last error occured.
+	* Returns the line in which the last error occurred.
 	/
 	public int getErrorLine() {
 		if (hasError && parseException != null)

@@ -2705,11 +2705,10 @@ public final class MRpEval implements ParserVisitor {
 		throw new ParseException("RpeEval: Simple node encountered");
 	}
 
-	public final Object visit(ASTConstant node, Object data) throws ParseException {
-		Object obj = node.getValue();
+	final void addConstant(Object obj) throws ParseException {
 		double val;
-		if(obj instanceof Double)
-			val = ((Double) node.getValue()).doubleValue();
+		if(obj instanceof Number)
+			val = ((Number) obj).doubleValue();
 		else
 			throw new ParseException("RpeEval: only constants of double type allowed");
 		
@@ -2719,7 +2718,7 @@ public final class MRpEval implements ParserVisitor {
 			if(val == constVals[i])
 			{
 				curCommandList.addCommand(CONST,i);
-				return null;
+				return;
 			}
 		}
 		// create a new const
@@ -2728,11 +2727,19 @@ public final class MRpEval implements ParserVisitor {
 		newConst[constVals.length] = val;
 		curCommandList.addCommand(CONST,(short) constVals.length);
 		constVals = newConst;
+	}
+
+	public final Object visit(ASTConstant node, Object data) throws ParseException {
+		addConstant(node.getValue());
 		return null;
 	}
 
 	public final Object visit(ASTVarNode node, Object data) throws ParseException {
 		MatrixVariableI var = (MatrixVariableI) node.getVar();
+		if(var.isConstant()) {
+			addConstant(var.getMValue());
+			return null;
+		}
 		Dimensions dims = var.getDimensions();
 		// find appropriate table
 		ObjStore store = getStoreByDim(dims);

@@ -149,11 +149,6 @@ public class XJep extends JEP {
 	{
 		return copier.deepCopy(node,this);
 	}
-	/** Evaluates a node. */
-	public Object evaluate(Node node) throws Exception
-	{
-		return ev.getValue(node,new Vector(),this.symTab);
-	}
 	/** Returns a simplification of an expression tree. */
 	public Node simplify(Node node) throws ParseException
 	{

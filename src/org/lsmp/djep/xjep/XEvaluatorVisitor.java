@@ -24,17 +24,10 @@ import org.nfunk.jep.*;
  * Some changes implemented by rjm. Nov 03.
  * Added hook to SpecialEvaluationI.
  * Clears stack before evaluation.
- * Simplifies error handeling by making visit methods throw ParseException.
+ * Simplifies error handling by making visit methods throw ParseException.
  * Changed visit(ASTVarNode node) so messages not calculated every time. 
  */
 public class XEvaluatorVisitor extends EvaluatorVisitor {
-
-	/** Constructor. Initialize the stack member */
-	public XEvaluatorVisitor() {
-//		errorList = null;
-//		symTab = null;
-//		stack = new Stack();
-	}
 
 	/**
 	 * Visit a variable node. The value of the variable is obtained from the
@@ -47,10 +40,9 @@ public class XEvaluatorVisitor extends EvaluatorVisitor {
 			String message = "Could not evaluate " + node.getName() + ": ";
 			throw new ParseException(message + " variable not set");
 		}
-		
-		if(var.hasValidValue())
-		{
-			stack.push(var.getValue());
+		Object val = null;
+		if(var.hasValidValue()) {
+			val = var.getValue();
 		} 
 		else if(var instanceof XVariable)
 		{
@@ -59,11 +51,16 @@ public class XEvaluatorVisitor extends EvaluatorVisitor {
 				throw new ParseException("Cannot find value of "+var.getName()+" no equation.");
 			// TODO causes stack overflow if recursive eqn with undefined value is used: recurse = recurse+1
 			equation.jjtAccept(this,data);
-			var.setValue(stack.peek());
+			val = stack.peek();
 		}
 		else
 		{
 			throw new ParseException("Could not evaluate " + node.getName() + ": value not set");
+		}
+
+		if (trapNullValues && val == null) {
+			String message = "Could not evaluate " + node.getName() + ": null value";
+			throw new ParseException(message);
 		}
 
 		return data;
