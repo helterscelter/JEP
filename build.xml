@@ -11,7 +11,7 @@
   - This build file ensures compatibility with Java 1.2 by using the
     bootclasspath option for cross-compilation when compiling. For this
     a Java 1.2 JDK needs to be available on the system. The location
-    is set in the JDK1.2HOME environment variable (e.g. C:\jdk1.2.2).
+    is set in the JDK1_2HOME environment variable (e.g. C:\jdk1.2.2).
     If you want to compile without ensuring 1.2 compatibility, you can
     remove the "target" and "bootclasspath" options from the javac target.
 =============================================================================
@@ -25,7 +25,7 @@
 	<!-- library locations -->
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
-	<property name="jdk1.2home" value="${env.JDK1.2HOME}"/>
+	<property name="jdk1.2home" value="${env.JDK1_2HOME}"/>
 	<!-- set global properties for this build -->
 	<property name="src"     value="src"/>
 	<property name="bin"     value="bin"/>
