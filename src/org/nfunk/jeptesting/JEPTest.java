@@ -79,6 +79,7 @@ public class JEPTest extends TestCase {
 	public void testWithFile(String fileName) {
 		BufferedReader reader;
 		Complex c1, c2;
+		int compareCount = 0;
 
 		// Load the input file
 		try {
@@ -94,6 +95,9 @@ public class JEPTest extends TestCase {
 		// cycle through the expressions in pairs of two
 		println("Evaluating and comparing expressions...");
 		while (true) {
+			compareCount++;
+
+			// parse the two lines compared
 			c1 = parseNextLine(reader);
 			c2 = parseNextLine(reader);
 
@@ -121,6 +125,7 @@ public class JEPTest extends TestCase {
 			// JUnit assertion
 			Assert.assertTrue(errorMsg, c1.equals(c2, 1e-15));
 		}
+		println("Done. " + compareCount*2 + " expressions compared.");
 	}
 	
 	/**
