@@ -128,13 +128,14 @@
 <!--======================================================================-->
 <!-- JAVADOC -->
 	<target name="javadoc" depends="init">
-		<delete dir="doc/javadoc"/>
-		<mkdir dir="doc/javadoc"/>
+		<delete dir="doc/html/javadoc"/>
+		<mkdir dir="doc/html/javadoc"/>
 		<javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
 				sourcepath="src"
-				destdir="doc/javadoc"
+				destdir="doc/html/javadoc"
 				windowtitle="JEP API"
-				breakiterator="yes">
+				breakiterator="yes"
+				source="1.4">
 			<bottom><![CDATA[<A HREF=\"http://www.singularsys.com/jep\" TARGET=\"_blank\">http://www.singularsys.com/jep</A> Copyright &#169; 2004 Singular Systems]]></bottom>
 		</javadoc>
 	</target>
