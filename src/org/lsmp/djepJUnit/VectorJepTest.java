@@ -202,6 +202,18 @@ public class VectorJepTest extends TestCase {
 		valueTest("ele(x,[2,1])","3.0");          // Value: 2.0
 		valueTest("ele(x,[2,2])","4.0");          // Value: 2.0
 	}
+	
+	public void testLength() throws ParseException,Exception
+	{
+		valueTest("len(5)","1");
+		valueTest("len([1,2,3])","3");
+		valueTest("len([[1,2,3],[4,5,6]])","6");
+		valueTest("size(5)","1");
+		valueTest("size([1,2,3])","3");
+		valueTest("size([[1,2,3],[4,5,6]])","[2,3]");
+		valueTest("size([[[1,2],[3,4],[5,6]],[[7,8],[9,10],[11,12]]])","[2,3,2]");
+
+	}
 	public void testBad() throws Exception
 	{
 		if(SHOW_BAD)

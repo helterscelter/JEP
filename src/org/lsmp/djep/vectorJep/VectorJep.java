@@ -34,6 +34,8 @@ public class VectorJep extends JEP {
 	{
 		super.addStandardFunctions();
 		super.addFunction("ele",new Ele());
+		super.addFunction("len",new Length());
+		super.addFunction("size",new Size());
 	}
 
 

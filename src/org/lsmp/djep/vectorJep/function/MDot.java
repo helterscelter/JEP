@@ -82,7 +82,7 @@ public class MDot extends MMultiply implements BinaryOperatorI
 	public Object dot(MVector lhs, MVector rhs) throws ParseException
 	{
 		if(!lhs.getDim().equals(rhs.getDim())) throw new ParseException("Dot: Miss match in sizes ("+lhs.getDim()+","+rhs.getDim()+")");
-		Scaler res = new Scaler();
+		Scaler res = (Scaler) Scaler.getInstance(new Double(0.0));
 		calcValue(res,lhs,rhs);
 		return res.getEle(0);
 	}

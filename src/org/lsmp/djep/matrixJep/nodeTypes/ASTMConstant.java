@@ -22,7 +22,7 @@ public class ASTMConstant extends ASTConstant implements MatrixNodeI
 	public ASTMConstant(int i)
 	{
 		super(i);
-		scalerval = new Scaler();
+		scalerval = (Scaler) Scaler.getInstance(new Double(0.0));
 	}
 	public Dimensions getDim() {
 		return Dimensions.ONE;

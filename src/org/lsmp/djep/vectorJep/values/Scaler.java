@@ -18,6 +18,13 @@ import org.lsmp.djep.vectorJep.*;
 public class Scaler extends Number implements MatrixValueI {
 
 	Object value = new Double(0.0);
+	Scaler() {}
+	Scaler(Object o) {
+		value = o;
+	}
+	public static MatrixValueI getInstance(Object o) {
+		return new Scaler(o);
+	}
 	public Dimensions getDim() {return Dimensions.ONE; }
 	public int getNumEles() { return 1;	}
 	public void setEle(int i, Object value) {if(value!=null) this.value = value;}

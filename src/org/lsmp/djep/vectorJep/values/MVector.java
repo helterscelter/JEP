@@ -29,7 +29,21 @@ public class MVector extends Number implements MatrixValueI
 		data = new Object[size];
 		dim = Dimensions.valueOf(size);
 	}
-	
+	/** Creates a vector of a given size. */
+	public static MatrixValueI getInstance(int size)
+	{
+		return new MVector(size);
+	}
+	/** Creates a vector from an array of elements. */
+	public static MatrixValueI getInstance(Object[] eles)
+	{
+		if(eles.length == 1)
+			return Scaler.getInstance(eles[0]);
+		MVector res = new MVector(eles.length);
+		for(int i=0;i<eles.length;++i)
+			res.setEle(i,eles[i]);
+		return res;
+	}
 	/**
 	 * Construct a Vector from a set of elements.
 	 * @param vecs

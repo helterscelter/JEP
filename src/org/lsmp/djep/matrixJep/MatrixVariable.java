@@ -52,7 +52,7 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 	{ 
 		super(name);
 		this.dims = Dimensions.ONE;
-		this.mvalue = new Scaler();
+		this.mvalue = Scaler.getInstance(new Double(0.0));
 		setValidValue(false);
 	}
 
@@ -63,8 +63,7 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 			this.mvalue = (MatrixValueI) value;
 		else
 		{
-			this.mvalue = new Scaler();
-			this.mvalue.setEle(0,value);
+			this.mvalue = Scaler.getInstance(value);
 		}
 		this.dims = mvalue.getDim();
 		setValidValue(true);
