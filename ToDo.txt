@@ -5,6 +5,7 @@
  - automatisize testing in ant script
  - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
  - replace @license_info@ with GPL info using replace task and loadfile
+   also @version@ @date@ @license@ @copyright@
  - new commercial license (like UCalc??)
    check with campus legal services
  x change getValue() and getComplexValue()
