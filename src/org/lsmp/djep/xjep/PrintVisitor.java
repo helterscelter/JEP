@@ -36,7 +36,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
   public PrintVisitor()
   {
-	this.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
+/*	this.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
 	{	public void append(Node node,PrintVisitor pv) throws ParseException
 		{	pv.append("[");
 			for(int i=0;i<node.jjtGetNumChildren();++i)
@@ -46,6 +46,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
 			}
 			pv.append("]");
 		}});
+*/
   }
 
   
@@ -144,7 +145,7 @@ private Object visitUnary(ASTFunNode node, Object data) throws ParseException
 	// now print the node
 	sb.append(node.getOperator().getSymbol());
 	// now the rhs
-	if(TreeUtils.isOperator(rhs))
+	if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
 		printBrackets(rhs);	// -(-3) -(1+2) or !(-3)
 	else
 		printNoBrackets(rhs);
@@ -169,25 +170,36 @@ public Object visit(ASTFunNode node, Object data) throws ParseException
 		((PrintRulesI) specialRules.get(node.getOperator())).append(node,this);
 		return null;
 	}
+	if(node.getPFMC() instanceof org.nfunk.jep.function.List)
+	{	
+		append("[");
+			for(int i=0;i<node.jjtGetNumChildren();++i)
+			{
+				if(i>0) append(",");
+				node.jjtGetChild(i).jjtAccept(this, null);
+			}
+			append("]");
+		return null;
+	}
 		
-	if(node.getOperator().isUnary())
+	if(((XOperator) node.getOperator()).isUnary())
 		return visitUnary(node,data);
-	if(node.getOperator().isBinary())
+	if(((XOperator) node.getOperator()).isBinary())
 	{
 		Node lhs = node.jjtGetChild(0);
 		Node rhs = node.jjtGetChild(1);
-		Operator top = node.getOperator();
+		XOperator top = (XOperator) node.getOperator();
 	
 		if(fullBrackets)
 		{
 			printBrackets(lhs);
 		}
-		else if(TreeUtils.isOperator(lhs))
+		else if(lhs instanceof ASTFunNode && ((ASTFunNode) lhs).isOperator())
 		{
-			Operator lhsop = ((ASTFunNode) lhs).getOperator();
+			XOperator lhsop = (XOperator) ((ASTFunNode) lhs).getOperator();
 			if(top.getPrecedence() == lhsop.getPrecedence())
 			{
-				if(top.getBinding() == Operator.LEFT	// (1-2)-3 -> 1-2-3
+				if(top.getBinding() == XOperator.LEFT	// (1-2)-3 -> 1-2-3
 					|| top.isAssociative() )
 						printNoBrackets(lhs);
 				else
@@ -209,12 +221,12 @@ public Object visit(ASTFunNode node, Object data) throws ParseException
 		{
 			printBrackets(rhs);
 		}
-		else if(TreeUtils.isOperator(rhs))
+		else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
 		{
-			Operator rhsop = ((ASTFunNode) rhs).getOperator();
+			XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
 			if(top.getPrecedence() == rhsop.getPrecedence())
 			{
-				if(top.getBinding() == Operator.RIGHT	// 1=(2=3) -> 1=2=3
+				if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
 					|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
 						printNoBrackets(rhs);
 				else

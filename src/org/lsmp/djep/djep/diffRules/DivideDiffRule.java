@@ -36,7 +36,7 @@ import org.lsmp.djep.xjep.*;
   	
 	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJep djep) throws ParseException
 	{
-	  OperatorSet op = djep.getOperatorSet();
+	  XOperatorSet op = (XOperatorSet) djep.getOperatorSet();
 	  NodeFactory nf = djep.getNodeFactory();
 	  
 	  int nchild = node.jjtGetNumChildren();

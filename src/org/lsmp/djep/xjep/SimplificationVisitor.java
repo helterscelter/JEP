@@ -8,7 +8,6 @@ import org.nfunk.jep.*;
  * To use
  * <pre>
  * JEP j = ...; Node in = ...;
- * TreeUtils tu = new TreeUtils(j);
  * SimplificationVisitor sv = new SimplificationVisitor(tu);
  * Node out = sv.simplify(in);
  * </pre>
@@ -28,6 +27,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 {
   private NodeFactory nf;
   private OperatorSet opSet;
+  private TreeUtils tu;
   
   public SimplificationVisitor()
   {
@@ -38,6 +38,8 @@ public class SimplificationVisitor extends DoNothingVisitor
   {
 	nf = xjep.getNodeFactory();
 	opSet = xjep.getOperatorSet();
+	tu = xjep.getTreeUtils();
+	
 	if (node == null) 
 		throw new IllegalArgumentException(
 			"topNode parameter is null");
@@ -59,31 +61,31 @@ public class SimplificationVisitor extends DoNothingVisitor
  	 * @return null if no rewrite happens or top node or top node of new tree.
  	 * @throws ParseException
  	 */
-	public Node simplifyTripple(Operator op,Node lhs,Node rhs) throws ParseException
+	public Node simplifyTripple(XOperator op,Node lhs,Node rhs) throws ParseException
 	{
 		
-		Operator rootOp;
-		if(op.isComposite()) rootOp = op.getRootOp();
+		XOperator rootOp;
+		if(op.isComposite()) rootOp = (XOperator) op.getRootOp();
 		else				 rootOp = op;
 
-		if(op.isCommutative() && TreeUtils.isConstant(rhs))
+		if(op.isCommutative() && tu.isConstant(rhs))
 		{
 			return simplifyBuiltOperatorNode(op,rhs,lhs);
 		}			
-		if(TreeUtils.isConstant(lhs) && TreeUtils.isBinaryOperator(rhs))
+		if(tu.isConstant(lhs) && tu.isBinaryOperator(rhs))
 		{
 			Node rhsChild1 = rhs.jjtGetChild(0);
 			Node rhsChild2 = rhs.jjtGetChild(1);
-			Operator rhsOp = ((ASTFunNode) rhs).getOperator();
-			Operator rhsRoot;
-			if(rhsOp.isComposite())	rhsRoot = rhsOp.getRootOp();
+			XOperator rhsOp = (XOperator) ((ASTFunNode) rhs).getOperator();
+			XOperator rhsRoot;
+			if(rhsOp.isComposite())	rhsRoot = (XOperator) rhsOp.getRootOp();
 			else					rhsRoot = rhsOp;
 	
-			if(TreeUtils.isConstant(rhsChild1))	
+			if(tu.isConstant(rhsChild1))	
 			{
-				Operator op2 = rootOp;
+				XOperator op2 = (XOperator) rootOp;
 				if(op == rhsOp) op2 = rootOp;
-				else			op2 = rootOp.getBinaryInverseOp();
+				else			op2 = (XOperator) rootOp.getBinaryInverseOp();
 
 				//	2 + ~( 3 + ~x ) -> (2+~3) + ~~x
 				if(rootOp == rhsRoot && rootOp.isAssociative()) 
@@ -103,7 +105,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 			}
 
 
-			if(TreeUtils.isConstant(rhsChild2))	
+			if(tu.isConstant(rhsChild2))	
 			{
 				// 2 + ~( x + ~3 ) -> (2 + ~~3) + ~x
 
@@ -128,16 +130,16 @@ public class SimplificationVisitor extends DoNothingVisitor
 			}
 		}
 
-		if(TreeUtils.isBinaryOperator(lhs) && TreeUtils.isConstant(rhs))
+		if(tu.isBinaryOperator(lhs) && tu.isConstant(rhs))
 		{
 			Node lhsChild1 = lhs.jjtGetChild(0);
 			Node lhsChild2 = lhs.jjtGetChild(1);
-			Operator lhsOp = ((ASTFunNode) lhs).getOperator();
-			Operator lhsRoot;
-			if(lhsOp.isComposite())	lhsRoot = lhsOp.getRootOp();
-			else					lhsRoot = lhsOp;
+			XOperator lhsOp = (XOperator) ((ASTFunNode) lhs).getOperator();
+			XOperator lhsRoot;
+			if(lhsOp.isComposite())	lhsRoot = (XOperator) lhsOp.getRootOp();
+			else					lhsRoot = (XOperator) lhsOp;
 	
-			if(TreeUtils.isConstant(lhsChild1))	
+			if(tu.isConstant(lhsChild1))	
 			{
 				// (2 + ~x) + ~3    ->   (2 + ~3) + ~x
 				if(rootOp == lhsRoot && rootOp.isAssociative() && rootOp.isCommutative())
@@ -159,7 +161,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 			}
 
 
-			if(TreeUtils.isConstant(lhsChild2))	
+			if(tu.isConstant(lhsChild2))	
 			{
 				// (x + ~2) + !3 -> x + (~2 + !3) -> x + ~(2+~!3)
 				// (x*2)*3 -> x*(2*3), (x/2)*3 -> x/(2/3)
@@ -204,33 +206,33 @@ public class SimplificationVisitor extends DoNothingVisitor
   
   public Node simplifyAdd(Node lhs,Node rhs) throws ParseException
   {
-	if(TreeUtils.isInfinity(lhs))
+	if(tu.isInfinity(lhs))
 	{	// Inf + Inf -> NaN TODO not correct for signed infinity 
-		if(TreeUtils.isInfinity(rhs))
-			return nf.buildConstantNode(Double.NaN);
+		if(tu.isInfinity(rhs))
+			return nf.buildConstantNode(tu.getNAN());
 		else	// Inf + x -> Inf
-			return nf.buildConstantNode(Double.POSITIVE_INFINITY);
+			return nf.buildConstantNode(tu.getPositiveInfinity());
 	}
-	if(TreeUtils.isInfinity(rhs)) // x + Inf -> Inf
-		return nf.buildConstantNode(Double.POSITIVE_INFINITY);
+	if(tu.isInfinity(rhs)) // x + Inf -> Inf
+		return nf.buildConstantNode(tu.getPositiveInfinity());
 	  
-	if(TreeUtils.isZero(lhs))	// 0+x -> x
+	if(tu.isZero(lhs))	// 0+x -> x
 		return rhs;
-	if(TreeUtils.isZero(rhs))	// x + 0 -> x
+	if(tu.isZero(rhs))	// x + 0 -> x
 		return lhs;
 
-	if(TreeUtils.isNegative(lhs)) // -3 + x -> x - 3
+	if(tu.isNegative(lhs)) // -3 + x -> x - 3
 	{
 		Node newnode = nf.buildOperatorNode(opSet.getSubtract(),
 			rhs,
-			nf.buildConstantNode(-TreeUtils.doubleValue(lhs)));
+			nf.buildConstantNode(opSet.getUMinus(),lhs));
 		return newnode;
 	}
-	if(TreeUtils.isNegative(rhs)) // x + -3 -> x - 3
+	if(tu.isNegative(rhs)) // x + -3 -> x - 3
 	{
 		Node newnode = nf.buildOperatorNode(opSet.getSubtract(),
 			lhs,
-			nf.buildConstantNode(-TreeUtils.doubleValue(rhs)));
+			nf.buildConstantNode(opSet.getUMinus(),rhs));
 		return newnode;
 	}
 	return null;
@@ -253,25 +255,25 @@ public class SimplificationVisitor extends DoNothingVisitor
   
   public Node simplifySubtract(Node lhs,Node rhs) throws ParseException
   {
-	if(TreeUtils.isInfinity(lhs))
+	if(tu.isInfinity(lhs))
 	{	// Inf + Inf -> NaN TODO not correct for signed infinity 
-		if(TreeUtils.isInfinity(rhs))
-			return nf.buildConstantNode(Double.NaN);
+		if(tu.isInfinity(rhs))
+			return nf.buildConstantNode(tu.getNAN());
 		else	// Inf + x -> Inf
-			return nf.buildConstantNode(Double.POSITIVE_INFINITY);
+			return nf.buildConstantNode(tu.getPositiveInfinity());
 	}
-	if(TreeUtils.isInfinity(rhs)) // x + Inf -> Inf
-		return nf.buildConstantNode(Double.POSITIVE_INFINITY);
+	if(tu.isInfinity(rhs)) // x + Inf -> Inf
+		return nf.buildConstantNode(tu.getPositiveInfinity());
 
-	if(TreeUtils.isZero(rhs))	// x - 0 -> x
+	if(tu.isZero(rhs))	// x - 0 -> x
 		return lhs;
 	// TODO implement 0 - x -> -(x)
 	
-	if(TreeUtils.isNegative(rhs)) // x - (-2) -> x + 2
+	if(tu.isNegative(rhs)) // x - (-2) -> x + 2
 	{
 		Node newnode = simplifyBuiltOperatorNode(opSet.getAdd(),
 			lhs,
-			nf.buildConstantNode(-TreeUtils.doubleValue(rhs)));
+			nf.buildConstantNode(opSet.getUMinus(),rhs));
 		return newnode;
 	}
 	return null;
@@ -296,37 +298,37 @@ public class SimplificationVisitor extends DoNothingVisitor
   
   public Node simplifyMultiply(Node child1,Node child2) throws ParseException
   {
-	if(TreeUtils.isZero(child1))
+	if(tu.isZero(child1))
 	{	// 0*Inf -> NaN 
-		if(TreeUtils.isInfinity(child2))
-			return nf.buildConstantNode(Double.NaN);
+		if(tu.isInfinity(child2))
+			return nf.buildConstantNode(tu.getNAN());
 		else // 0*x -> 0
-			return nf.buildConstantNode(TreeUtils.ZERO);
+			return nf.buildConstantNode(tu.getZERO());
 	}
-	if(TreeUtils.isZero(child2))
+	if(tu.isZero(child2))
 	{ // Inf*0 -> NaN
-		if(TreeUtils.isInfinity(child1))
-			return nf.buildConstantNode(Double.NaN);
+		if(tu.isInfinity(child1))
+			return nf.buildConstantNode(tu.getNAN());
 		else // 0 * x -> 0
-			return nf.buildConstantNode(TreeUtils.ZERO);
+			return nf.buildConstantNode(tu.getZERO());
 	}
-	if(TreeUtils.isInfinity(child1)) // Inf * x -> Inf
-			return nf.buildConstantNode(Double.POSITIVE_INFINITY);
-	if(TreeUtils.isInfinity(child2)) // x * Inf -> Inf
-			return nf.buildConstantNode(Double.POSITIVE_INFINITY);
+	if(tu.isInfinity(child1)) // Inf * x -> Inf
+			return nf.buildConstantNode(tu.getPositiveInfinity());
+	if(tu.isInfinity(child2)) // x * Inf -> Inf
+			return nf.buildConstantNode(tu.getPositiveInfinity());
 	  			  
-	if(TreeUtils.isOne(child1))	// 1*x -> x
+	if(tu.isOne(child1))	// 1*x -> x
 			  return child2;
-	if(TreeUtils.isOne(child2))	// x*1 -> x
+	if(tu.isOne(child2))	// x*1 -> x
 			  return child1;
 	
-	if(TreeUtils.isMinusOne(child1))	// -1*x -> -x
+	if(tu.isMinusOne(child1))	// -1*x -> -x
 	{
 		Node newnode = nf.buildOperatorNode(opSet.getUMinus(),child2);
 		return newnode;
 	}
 
-	if(TreeUtils.isMinusOne(child2))	// x*-1 -> -x
+	if(tu.isMinusOne(child2))	// x*-1 -> -x
 	{
 		Node newnode = nf.buildOperatorNode(opSet.getUMinus(),child1);
 		return newnode;
@@ -357,27 +359,27 @@ public class SimplificationVisitor extends DoNothingVisitor
 	 */
 	public Node simplifyDivide(Node child1,Node child2) throws ParseException
 	{
-	  if(TreeUtils.isZero(child2))
+	  if(tu.isZero(child2))
 	  {
-		if(TreeUtils.isZero(child1))	// 0/0 -> NaN
-			return nf.buildConstantNode(Double.NaN);
+		if(tu.isZero(child1))	// 0/0 -> NaN
+			return nf.buildConstantNode(tu.getNAN());
 		else	// x/0 -> Inf
-			return nf.buildConstantNode(Double.POSITIVE_INFINITY);
+			return nf.buildConstantNode(tu.getPositiveInfinity());
 	  }
 		  
-	  if(TreeUtils.isZero(child1))
+	  if(tu.isZero(child1))
 	  {		// 0/x -> 0
 		return child1;
 	  }
-	  //if(TreeUtils.isOne(child1))	// 1/x -> 1/x
+	  //if(tu.isOne(child1))	// 1/x -> 1/x
 	  //		  return child2;
-	  if(TreeUtils.isOne(child2))	// x/1 -> x
+	  if(tu.isOne(child2))	// x/1 -> x
 			  return child1;
 			
-	  if(TreeUtils.isInfinity(child1)) // Inf / x -> Inf
-			  return nf.buildConstantNode(Double.POSITIVE_INFINITY);
-	  if(TreeUtils.isInfinity(child2)) // x / Inf -> 0
-			  return nf.buildConstantNode(TreeUtils.ZERO);
+	  if(tu.isInfinity(child1)) // Inf / x -> Inf
+			  return nf.buildConstantNode(tu.getPositiveInfinity());
+	  if(tu.isInfinity(child2)) // x / Inf -> 0
+			  return nf.buildConstantNode(tu.getZERO());
   	  return null;
 //	  return nf.buildOperatorNode(((ASTOpNode) node).getOperator(),child1,child2);
 //	  return opSet.buildDivideNode(child1,child2);
@@ -394,18 +396,18 @@ public class SimplificationVisitor extends DoNothingVisitor
 	 */
 	public Node simplifyPower(Node child1,Node child2) throws ParseException
 	{
-		if(TreeUtils.isZero(child1))
+		if(tu.isZero(child1))
 		{
-			if(TreeUtils.isZero(child2))	// 0^0 -> NaN
-				return nf.buildConstantNode(Double.NaN);
+			if(tu.isZero(child2))	// 0^0 -> NaN
+				return nf.buildConstantNode(tu.getNAN());
 			else	// 0^x -> 0
-				return nf.buildConstantNode(TreeUtils.ZERO);
+				return nf.buildConstantNode(tu.getZERO());
 		}
-		if(TreeUtils.isZero(child2))	// x^0 -> 1
-			return nf.buildConstantNode(TreeUtils.ONE);
-		if(TreeUtils.isOne(child1))	// 1^x -> 1
-			return nf.buildConstantNode(TreeUtils.ONE);
-		if(TreeUtils.isOne(child2))	// x^1 -> x
+		if(tu.isZero(child2))	// x^0 -> 1
+			return nf.buildConstantNode(tu.getONE());
+		if(tu.isOne(child1))	// 1^x -> 1
+			return nf.buildConstantNode(tu.getONE());
+		if(tu.isOne(child2))	// x^1 -> x
 			return child1;
 		return null;	
 //		return nf.buildOperatorNode(((ASTOpNode) node).getOperator(),child1,child2);
@@ -417,21 +419,21 @@ public class SimplificationVisitor extends DoNothingVisitor
 	public Node simplifyOp(ASTFunNode node,Node children[]) throws ParseException
 	{
 		boolean allConst=true;
-		Operator op=node.getOperator();
+		XOperator op= (XOperator) node.getOperator();
 		int nchild=children.length;
 		for(int i=0;i<nchild;++i)
 		{
-			if(!TreeUtils.isConstant(children[i]))
+			if(!tu.isConstant(children[i]))
 				allConst=false;
-			if(TreeUtils.isNaN(children[i]))
-				return nf.buildConstantNode(Double.NaN);
+			if(tu.isNaN(children[i]))
+				return nf.buildConstantNode(tu.getNAN());
 		}	
 		if(allConst)
 			return nf.buildConstantNode(op,children);
 		
 		if(nchild==1)
 		{
-			if(TreeUtils.isUnaryOperator(children[0]) && op == TreeUtils.getOperator(children[0]))
+			if(tu.isUnaryOperator(children[0]) && op == tu.getOperator(children[0]))
 			{
 				if(op.isSelfInverse()) return children[0].jjtGetChild(0);
 			}
@@ -439,15 +441,15 @@ public class SimplificationVisitor extends DoNothingVisitor
 		if(nchild==2)
 		{
 			Node res=null;
-			if(opSet.isAdd(op)) res = simplifyAdd(children[0],children[1]);
-			if(opSet.isSubtract(op)) res = simplifySubtract(children[0],children[1]);
-			if(opSet.isMultiply(op)) res = simplifyMultiply(children[0],children[1]);
-			if(opSet.isDivide(op)) res = simplifyDivide(children[0],children[1]);
-			if(opSet.isPower(op)) res = simplifyPower(children[0],children[1]);
+			if(opSet.getAdd() == op) res = simplifyAdd(children[0],children[1]);
+			if(opSet.getSubtract() == op) res = simplifySubtract(children[0],children[1]);
+			if(opSet.getMultiply() == op) res = simplifyMultiply(children[0],children[1]);
+			if(opSet.getDivide() == op) res = simplifyDivide(children[0],children[1]);
+			if(opSet.getPower() == op) res = simplifyPower(children[0],children[1]);
 			if(res!=null)
 			{
-				if(TreeUtils.isConstant(res)) return res;
-				if(TreeUtils.isOperator(res))
+				if(tu.isConstant(res)) return res;
+				if(tu.isOperator(res))
 				{
 					Node res2 = simplifyOp((ASTFunNode) res,TreeUtils.getChildrenAsArray(res));
 					return res2;
@@ -457,8 +459,8 @@ public class SimplificationVisitor extends DoNothingVisitor
 			res = this.simplifyTripple(op,children[0],children[1]);
 			if(res!=null)
 			{
-				if(TreeUtils.isConstant(res)) return res;
-				if(TreeUtils.isOperator(res))
+				if(tu.isConstant(res)) return res;
+				if(tu.isOperator(res))
 				{
 					Node res2 = simplifyOp((ASTFunNode) res,TreeUtils.getChildrenAsArray(res));
 					return res2;
@@ -475,7 +477,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 
 		if(node.isOperator())
 		{
-			Operator op=node.getOperator();
+			XOperator op= (XOperator) node.getOperator();
 			if( (op.isBinary() && nchild !=2)
 			 || (op.isUnary() && nchild !=1))
 			 throw new ParseException("Wrong number of children for "+nchild+" for operator "+op.getName());
@@ -495,13 +497,13 @@ public class SimplificationVisitor extends DoNothingVisitor
 			boolean allConst=true;
 			for(int i=0;i<nchild;++i)
 			{
-				if(!TreeUtils.isConstant(children[i]))
+				if(!tu.isConstant(children[i]))
 					allConst=false;
-				if(TreeUtils.isNaN(children[i]))
-					return nf.buildConstantNode(Double.NaN);
+				if(tu.isNaN(children[i]))
+					return nf.buildConstantNode(tu.getNAN());
 			}	
 			if(allConst)
-				return nf.buildConstantNode(node,children);
+				return nf.buildConstantNode(node.getPFMC(),children);
 		
 			return TreeUtils.copyChildrenIfNeeded(node,children);
 		}

@@ -17,23 +17,13 @@ import java.util.*;
  */
 public class Eval extends PostfixMathCommand implements CommandVisitorI
 {
-	private String name;
-//	private String macroExpresion;
-	private XJep xjep;
-	
-	public String getName() { return name; }
-//	public Node getTopNode() { return topNode; }
-
-	
 	/**
 	 * Create a function that evaluates the lhs with values given on rhs.
 	 * e.g. eval(f,x,1,y,2) sets variable x to 1, y to 2 and evaluates f.
 	 */
-	public Eval(String inName,XJep jep) throws IllegalArgumentException,ParseException
+	public Eval()
 	{
 		super();
-		name = inName;
-		this.xjep = jep;
 		numberOfParameters = -1;
 	}
 	//TODO probably broken

@@ -21,13 +21,13 @@ import java.util.*;
  */
 public class MMultiply extends Multiply implements BinaryOperatorI {
 	
-	protected Add add;
-	protected Subtract sub;
+	protected Add add = new Add();
+	protected Subtract sub = new Subtract();
 	
 	public MMultiply()
 	{
-		add = (Add) Operator.OP_ADD.getPFMC();
-		sub = (Subtract) Operator.OP_SUBTRACT.getPFMC();
+		//add = (Add) Operator.OP_ADD.getPFMC();
+		//sub = (Subtract) Operator.OP_SUBTRACT.getPFMC();
 		numberOfParameters = 2;
 	}
 

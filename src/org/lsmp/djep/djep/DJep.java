@@ -20,8 +20,10 @@ public class DJep extends XJep {
 	public DJep()
 	{
 		this.pv = new DPrintVisitor();
-		this.vf = new DVariableFactory();
-		this.symTab = new DSymbolTable(vf);
+//		this.vf = ;
+		this.symTab = new DSymbolTable(new DVariableFactory());
+
+		addFunction("diff",new Diff());
 	}
 	public Node differentiate(Node node,String name) throws ParseException
 	{

@@ -10,10 +10,8 @@ package org.lsmp.djep.djep.diffRules;
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DiffRulesI;
 import org.lsmp.djep.xjep.*;
-import org.nfunk.jep.ASTConstant;
-import org.nfunk.jep.ASTFunNode;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.ParseException;
+import org.nfunk.jep.*;
+
 
 /**
 	* Diffrentiates a power with respect to var.
@@ -40,13 +38,15 @@ import org.nfunk.jep.ParseException;
   {
 	OperatorSet op = djep.getOperatorSet();
 	NodeFactory nf = djep.getNodeFactory();
-
+	TreeUtils tu = djep.getTreeUtils();
+	FunctionTable funTab = djep.getFunctionTable();
+	
 	int nchild = node.jjtGetNumChildren();
 	if(nchild!=2) 
 		throw new ParseException("Too many children "+nchild+" for "+node+"\n");
 	//	x^y -> 	n*(pow(x,y-1)) x' + ln(y) pow(x,y) y'
 
-	if(TreeUtils.isConstant(children[1]))
+	if(tu.isConstant(children[1]))
 	{
 	   ASTConstant c = (ASTConstant) children[1];
 	   Object value = c.getValue();
@@ -63,7 +63,7 @@ import org.nfunk.jep.ParseException;
 		   nf.buildOperatorNode(op.getMultiply(),
 			nf.buildOperatorNode(op.getPower(),
 			   djep.deepCopy(children[0]),
-		   djep.getNodeFactory().buildConstantNode( ((Double) value).doubleValue()-1.0)),
+		   nf.buildConstantNode( tu.getNumber(((Double) value).doubleValue()-1.0))),
 			 dchildren[0]));
 	   }
 	   else
@@ -75,7 +75,7 @@ import org.nfunk.jep.ParseException;
 				   djep.deepCopy(children[0]),
 				   nf.buildOperatorNode(op.getSubtract(),
 				 	djep.deepCopy(children[1]),
-				 	nf.buildConstantNode(TreeUtils.ONE))),
+				 	nf.buildConstantNode(tu.getONE()))),
 			 dchildren[0]));
 	   }
    }
@@ -89,15 +89,15 @@ import org.nfunk.jep.ParseException;
 						djep.deepCopy(children[0]), // y
 						nf.buildOperatorNode(op.getSubtract(), // z-1
 							djep.deepCopy(children[1]), // z
-							djep.getNodeFactory().buildConstantNode(TreeUtils.ONE) ))),
+							djep.getNodeFactory().buildConstantNode(tu.getONE()) ))),
 				dchildren[0]), // diff(y,x)
 			nf.buildOperatorNode(op.getMultiply(), //  + y^z * ln(z) * diff(z,x)
 				nf.buildOperatorNode(op.getMultiply(), 
 					nf.buildOperatorNode(op.getPower(), // y^z
 						djep.deepCopy(children[0]), 
 						djep.deepCopy(children[1])),
-					djep.getNodeFactory().buildFunctionNode("ln",op.getLn(), // ln(z)
-						djep.deepCopy(children[1]))),
+					djep.getNodeFactory().buildFunctionNode("ln",funTab.get("ln"), // ln(z)
+						new Node[]{djep.deepCopy(children[1])})),
 				dchildren[1]));
 				// TODO will NaturalLog always have the name "ln"
    }

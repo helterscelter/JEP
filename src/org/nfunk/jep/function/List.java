@@ -12,6 +12,12 @@ package org.nfunk.jep.function;
 import java.util.*;
 import org.nfunk.jep.*;
 
+/** The list function.
+ * Returns a Vector comprising all the children.
+ * 
+ * @author Rich Morris
+ * Created on 29-Feb-2004
+ */
 public class List extends PostfixMathCommand
 {
 	public List()

@@ -22,10 +22,10 @@ import org.lsmp.djep.xjep.*;
  * @author Rich Morris
  * Created on 27-Nov-2003
  */
-public class MTensorFun extends TensorFun 
+public class MList extends VList 
 	implements PrintVisitor.PrintRulesI,NaryOperatorI
 {
-	public MTensorFun()
+	public MList()
 	{
 		numberOfParameters = -1;
 	}

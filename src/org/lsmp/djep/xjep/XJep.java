@@ -20,8 +20,6 @@ import java.io.PrintStream;
 public class XJep extends JEP {
 	/** Creates new nodes */
 	protected NodeFactory nf = null;
-	/** Collects operators **/
-	protected OperatorSet opSet = null;
 	/** A few utility functions. */
 	protected TreeUtils tu = null;
 	protected DeepCopyVisitor copier = null;
@@ -29,27 +27,28 @@ public class XJep extends JEP {
 	protected SimplificationVisitor simpv = null;
 	protected CommandVisitor commandv = null;
 	protected PrintVisitor pv = null;
-	protected VariableFactory vf = new XVariableFactory();
+	private VariableFactory vf = new XVariableFactory();
 
 	public XJep()
 	{
+		this.symTab = new XSymbolTable(vf); 
+
 		/** Creates new nodes */
 		nf = new NodeFactory();
 		/** Collects operators **/
-		opSet = new OperatorSet(this.getFunctionTable());
+		opSet = new XOperatorSet();
 		/** A few utility functions. */
-		tu = TreeUtils.getInstance();
+		tu = new TreeUtils();
+		
 		copier = new DeepCopyVisitor();
 		subv = new SubstitutionVisitor();
 		ev = new XEvaluatorVisitor();
 		simpv = new SimplificationVisitor();
 		commandv = new CommandVisitor();
 		pv = new PrintVisitor();
-		this.symTab = new XSymbolTable(vf); 
-		
-		this.opSet.getAssign().setPFMC(new XAssign());
 	}
 
+	/** Copy constructions, reuses all the componants of argument. */
 	protected XJep(XJep j)
 	{
 		super((JEP) j);
@@ -64,6 +63,25 @@ public class XJep extends JEP {
 		this.tu=j.tu;
 	}
 
+	private JEP ingrediant = null;
+	public XJep(JEP j)
+	{
+		ingrediant=j;
+		/** Creates new nodes */
+		nf = new NodeFactory();
+		this.symTab = new XSymbolTable(vf); 
+		this.funTab = j.getFunctionTable();
+		/** Collects operators **/
+		opSet = new XOperatorSet(j.getOperatorSet());
+		/** A few utility functions. */
+		tu = new TreeUtils();
+		copier = new DeepCopyVisitor();
+		subv = new SubstitutionVisitor();
+		ev = new XEvaluatorVisitor();
+		simpv = new SimplificationVisitor();
+		commandv = new CommandVisitor();
+		pv = new PrintVisitor();
+	}
 	public XJep newInstance()
 	{
 		XJep newJep = new XJep(this);
@@ -75,7 +93,33 @@ public class XJep extends JEP {
 		newJep.symTab = st;
 		return newJep;
 	}
-	
+	public void addStandardFunctions()
+	{
+		if(ingrediant!=null)
+		{
+			ingrediant.addStandardFunctions();
+		} 
+		else super.addStandardFunctions();
+		addFunction("eval",new Eval());
+	}
+
+	public void addStandardConstants()
+	{
+		if(ingrediant!=null)
+		{
+			ingrediant.addStandardConstants();
+			for(Enumeration enum=ingrediant.getSymbolTable().elements();enum.hasMoreElements();)
+			{
+				Variable var = (Variable) enum.nextElement();
+				if(var.isConstant())
+					this.symTab.addConstant(var.getName(),var.getValue());
+				//else
+				//	this.symTab.addVariable(var.getName(),var.getValue());
+			}
+		} 
+		else super.addStandardConstants();
+	}
+
 	/** Returns a deep copy of an expression tree. */
 	public Node deepCopy(Node node) throws ParseException
 	{
@@ -118,7 +162,6 @@ public class XJep extends JEP {
 	public String toString(Node node) { return pv.toString(node); }
 		
 	public NodeFactory getNodeFactory() {return nf;}
-	public OperatorSet getOperatorSet() {return opSet;}
 	public TreeUtils getTreeUtils() { return tu; }
 //	public SimplificationVisitor getSimpV() { return simpv; }
 	public PrintVisitor getPrintVisitor() {	return pv;	}

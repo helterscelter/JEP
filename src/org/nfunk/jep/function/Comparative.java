@@ -17,7 +17,13 @@ public class Comparative extends PostfixMathCommand
 {
 	int id;
 	double tolerance;
-	
+	public static final int LT = 0;
+	public static final int GT = 1;
+	public static final int LE = 2;
+	public static final int GE = 3;
+	public static final int NE = 4;
+	public static final int EQ = 5;
+
 	public Comparative(int id_in)
 	{
 		id = id_in;
@@ -41,22 +47,22 @@ public class Comparative extends PostfixMathCommand
 			
 			switch (id)
 			{
-				case 0:
+				case LT:
 					r = (x<y) ? 1 : 0;
 					break;
-				case 1:
+				case GT:
 					r = (x>y) ? 1 : 0;
 					break;
-				case 2:
+				case LE:
 					r = (x<=y) ? 1 : 0;
 					break;
-				case 3:
+				case GE:
 					r = (x>=y) ? 1 : 0;
 					break;
-				case 4:
+				case NE:
 					r = (x!=y) ? 1 : 0;
 					break;
-				case 5:
+				case EQ:
 					r = (x==y) ? 1 : 0;
 					break;
 				default:
@@ -70,10 +76,10 @@ public class Comparative extends PostfixMathCommand
 			
 			switch (id)
 			{
-				case 4:
+				case NE:
 					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 0 : 1;
 					break;
-				case 5:
+				case EQ:
 					r = ((Complex)param1).equals((Complex)param2,tolerance) ? 1 : 0;
 					break;
 				default:
@@ -87,10 +93,10 @@ public class Comparative extends PostfixMathCommand
 			
 			switch (id)
 			{
-				case 4:
+				case NE:
 					r = ((String)param1).equals((String)param2) ? 0 : 1;
 					break;
-				case 5:
+				case EQ:
 					r = ((String)param1).equals((String)param2) ? 1 : 0;
 					break;
 				default:

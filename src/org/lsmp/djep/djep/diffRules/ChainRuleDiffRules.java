@@ -11,8 +11,7 @@ import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DiffRulesI;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.ASTFunNode;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.ParseException;
+import org.nfunk.jep.*;
 import org.nfunk.jep.function.PostfixMathCommandI;
 
 
@@ -49,8 +48,9 @@ public abstract class ChainRuleDiffRules implements DiffRulesI
 	 */
 	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJep djep) throws ParseException
 	{
-		OperatorSet opSet=djep.getOperatorSet();
+		XOperatorSet opSet= (XOperatorSet) djep.getOperatorSet();
 		NodeFactory nf=djep.getNodeFactory();
+		FunctionTable funTab = djep.getFunctionTable();
 		
 		int nRules = rules.length;
 		if(nRules != children.length)
@@ -102,7 +102,7 @@ public abstract class ChainRuleDiffRules implements DiffRulesI
 				df_dg[i] = djep.substitute(df_dg[i],names,children);
 				products[i] = nf.buildOperatorNode(opSet.getMultiply(),df_dg[i],dchildren[i]); 
 			}
-			return nf.buildFunctionNode("sum",opSet.getSum(),products);
+			return nf.buildFunctionNode("sum",funTab.get("sum"),products);
 		}
 	}
 

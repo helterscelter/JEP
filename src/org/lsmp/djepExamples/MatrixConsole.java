@@ -17,7 +17,6 @@ JEP - Java Math Expression Parser 2.24
 package org.lsmp.djepExamples;
 import org.nfunk.jep.*;
 import org.lsmp.djep.matrixJep.MatrixJep;
-import org.lsmp.djep.matrixJep.nodeTypes.*;
 import java.io.*;
 
 /**
@@ -84,7 +83,7 @@ public class MatrixConsole {
 		{
 			System.out.print("fun:\t\t"); 
 			j.println(node);
-			MatrixNodeI matEqn = j.dec.preprocess(node,j);
+			Node matEqn = j.preprocess(node);
 			j.println(matEqn);
 			Object res = j.evaluate(matEqn);
 			System.out.println("Res: "+res);
@@ -171,7 +170,7 @@ public class MatrixConsole {
 			j.getDifferentationVisitor().printDiffRules();
 
 			System.out.println("Operators:");
-			Operator.printOperators();
+			j.getOperatorSet().printOperators();
 
 //			System.out.println("dJEPdx - Enter q to quit, rules to print the differentation rules,\ndiff(x^2,x) to differentiate,\neval(x^y,x,2,y,3) to evaluate");	
 			System.out.print(prompt);

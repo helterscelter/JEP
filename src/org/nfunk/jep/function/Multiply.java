@@ -32,8 +32,9 @@ public class Multiply extends PostfixMathCommand
         	// get the parameter from the stack
             param = stack.pop();
             
-            // multiply it with the product
-            product = mul(product, param);
+            // multiply it with the product, order is important
+            // if matricies are used
+            product = mul(param,product);
                 
             i++;
         }

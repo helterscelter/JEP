@@ -77,6 +77,7 @@ import org.nfunk.jep.type.*;
 public class Parser implements ParserI {
 	private JEP     jep;
 	private SymbolTable symTab;
+	private OperatorSet opSet;
 	
 	public Node parseStream(java.io.Reader stream, JEP jep_in)
 							throws ParseException {
@@ -84,6 +85,7 @@ public class Parser implements ParserI {
 		
 		jep = jep_in;
 		symTab = jep.getSymbolTable();
+		opSet = jep.getOperatorSet();
 		// Parse the expression, and return the 
 		return Start().jjtGetChild(0);
 	}
@@ -296,7 +298,7 @@ void AssignExpression() : {} // rjm addition
 			if (!jep.getAllowAssignment()) throw new ParseException(
         	"Syntax Error (assignment not enabled)");
 			
-			jjtThis.setOperator(Operator.OP_ASSIGN);
+			jjtThis.setOperator(opSet.getAssign());
 		}
 	  )
 	  #FunNode(2)
@@ -309,7 +311,7 @@ void OrExpression() :
 	(
 	  ( <OR> AndExpression()
 		{
-			jjtThis.setOperator(Operator.OP_OR);
+			jjtThis.setOperator(opSet.getOr());
 		}
 	  ) #FunNode(2)
 	)*
@@ -324,7 +326,7 @@ void AndExpression() :
 	(
 	  ( <AND> EqualExpression()
 		{
-			jjtThis.setOperator(Operator.OP_AND);
+			jjtThis.setOperator(opSet.getAnd());
 		}
 	  ) #FunNode(2)
 	)*
@@ -340,13 +342,13 @@ void EqualExpression() :
 	(
 	  ( <NE> RelationalExpression()
 	    {
-	    jjtThis.setOperator(Operator.OP_NE);
+	    jjtThis.setOperator(opSet.getNE());
 	    }
 	  ) #FunNode(2)
 	|
 	  ( <EQ> RelationalExpression()
 	    {
-	      jjtThis.setOperator(Operator.OP_EQ);
+	      jjtThis.setOperator(opSet.getEQ());
 	    }
 	  ) #FunNode(2)
 	)*
@@ -362,25 +364,25 @@ void RelationalExpression() :
   (
     ( <LT> AdditiveExpression()
       {
-	    jjtThis.setOperator(Operator.OP_LT);
+	    jjtThis.setOperator(opSet.getLT());
       }
 	) #FunNode(2)
 	|
     ( <GT> AdditiveExpression()
       {
-        jjtThis.setOperator(Operator.OP_GT);
+        jjtThis.setOperator(opSet.getGT());
       }
     ) #FunNode(2)
     |
     ( <LE> AdditiveExpression()
       {
-	    jjtThis.setOperator(Operator.OP_LE);
+	    jjtThis.setOperator(opSet.getLE());
       }
 	) #FunNode(2)
 	|
     ( <GE> AdditiveExpression()
       {
-        jjtThis.setOperator(Operator.OP_GE);
+        jjtThis.setOperator(opSet.getGE());
       }
     ) #FunNode(2)
   )*
@@ -395,13 +397,13 @@ void AdditiveExpression() :
   (
     ( <PLUS> MultiplicativeExpression()
       {
-        jjtThis.setOperator(Operator.OP_ADD);
+        jjtThis.setOperator(opSet.getAdd());
       }
     ) #FunNode(2)
     |
     ( <MINUS> MultiplicativeExpression()
       {
-        jjtThis.setOperator(Operator.OP_SUBTRACT);
+        jjtThis.setOperator(opSet.getSubtract());
       }
     ) #FunNode(2)
   )*
@@ -420,37 +422,37 @@ void MultiplicativeExpression() :
         if (!jep.implicitMul) throw new ParseException(
         	"Syntax Error (implicit multiplication not enabled)");
         	
-        jjtThis.setOperator(Operator.OP_MULTIPLY);
+        jjtThis.setOperator(opSet.getMultiply());
       }
     ) #FunNode(2)
     |
     ( <MUL> UnaryExpression()
       {
-        jjtThis.setOperator(Operator.OP_MULTIPLY);
+        jjtThis.setOperator(opSet.getMultiply());
       }
     ) #FunNode(2)
     |
     ( <DOT> UnaryExpression()
       {
-        jjtThis.setOperator(Operator.OP_DOT);
+        jjtThis.setOperator(opSet.getDot());
       }
     ) #FunNode(2)
     |
     ( <CROSS> UnaryExpression()
       {
-        jjtThis.setOperator(Operator.OP_CROSS);
+        jjtThis.setOperator(opSet.getCross());
       }
     ) #FunNode(2)
 	|
     ( <DIV> UnaryExpression()
       {
-        jjtThis.setOperator(Operator.OP_DIVIDE);
+        jjtThis.setOperator(opSet.getDivide());
       }
     ) #FunNode(2)
     |
     ( <MOD> UnaryExpression()
       {
-        jjtThis.setOperator(Operator.OP_MOD);
+        jjtThis.setOperator(opSet.getMod());
       }
     ) #FunNode(2)
   )*
@@ -465,13 +467,13 @@ void UnaryExpression() :
 |
   ( <MINUS> UnaryExpression()
     {
-	  jjtThis.setOperator(Operator.OP_UMINUS);
+	  jjtThis.setOperator(opSet.getUMinus());
     }
   ) #FunNode(1)
 |
   ( <NOT> UnaryExpression()
     {
-	  jjtThis.setOperator(Operator.OP_NOT);
+	  jjtThis.setOperator(opSet.getNot());
     }
   ) #FunNode(1)
 |
@@ -487,7 +489,7 @@ void PowerExpression() :
   [
   ( <POWER> UnaryExpression()
     {
-      jjtThis.setOperator(Operator.OP_POWER);
+      jjtThis.setOperator(opSet.getPower());
     }
   ) #FunNode(2)
   ]
@@ -516,7 +518,7 @@ void UnaryExpressionNotPlusMinus() :
 
 void ListExpression() #FunNode:
 {
-	jjtThis.setOperator(Operator.OP_LIST);
+	jjtThis.setOperator(opSet.getList());
 }
 {
 	( <LSQ> Expression() ( <COMMA> Expression() )* <RSQ> ) 

@@ -66,6 +66,9 @@ public class JEP {
 	/** Number factory */
 	protected NumberFactory numberFactory;
 
+	/** OperatorSet */
+	protected OperatorSet opSet;
+	
 	/**
 	 * Creates a new JEP instance with the default settings.
 	 * <p>
@@ -81,6 +84,7 @@ public class JEP {
 		allowAssignment  = false;
 		implicitMul = false;
 		numberFactory = new DoubleNumberFactory();
+		opSet = new OperatorSet();
 		initSymTab();
 		initFunTab();
 		errorList = new Vector();
@@ -128,7 +132,6 @@ public class JEP {
 	 * of the default componants. Sub classes can call this 
 	 * protected constructor and set the individual components
 	 * themselves.
-	 * @param use_defaults
 	 */
 	protected JEP(JEP j)
 	{
@@ -600,6 +603,13 @@ public class JEP {
 	 */
 	public NumberFactory getNumberFactory() {
 		return numberFactory;
+	}
+
+	/**
+	 * Returns the operator set.
+	 */
+	public OperatorSet getOperatorSet() {
+		return opSet;
 	}
 //------------------------------------------------------------------------
 // Old code

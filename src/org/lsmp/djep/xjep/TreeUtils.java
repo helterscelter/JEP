@@ -22,37 +22,42 @@ import org.nfunk.jep.type.*;
  * @author rich
  */
 public class TreeUtils {
-	private static TreeUtils INSTANCE = new TreeUtils();
-	
-	private static final DoubleNumberFactory dnf = new DoubleNumberFactory();
-	/** Real zero */
-	public static final Double ZERO = (Double) dnf.createNumber("0.0");
+	/** Real zero. Note that this is a Double, if a different number
+	 * format is needed then this class should be subclassed.
+	 */
+	protected static Double ZERO = new Double(0.0);
 	/** Real One */
-	public static final Double ONE = (Double) dnf.createNumber("1.0");
+	protected static Double ONE = new Double(1.0);
 	/** Real Minus One */
-	public static final Double MINUSONE = (Double) dnf.createNumber("-1.0");
+	protected static Double MINUSONE = new Double(-1.0);
 	/** Complex Zero **/
-	public static final Complex CZERO = new Complex(0.0,0.0);
+	protected static Complex CZERO = new Complex(0.0,0.0);
 	/** Complex One **/
-	public static final Complex CONE = new Complex(1.0,0.0);
+	protected static Complex CONE = new Complex(1.0,0.0);
 	/** Complex i **/
-	public static final Complex CI = new Complex(0.0,1.0);
+	protected static Complex CI = new Complex(0.0,1.0);
 	/** Complex Minus One **/
-	public static final Complex CMINUSONE = new Complex(-1.0,0.0);
+	protected static Complex CMINUSONE = new Complex(-1.0,0.0);
 	/** Complex Minus i **/
-	public static final Complex CMINUSI = new Complex(0.0,-1.0);
-
+	protected static Complex CMINUSI = new Complex(0.0,-1.0);
+	/** Real NaN */
+	protected static Double NAN = new Double(Double.NaN);
+	/** Real positive infinity */
+	protected static Double PosInf = new Double(Double.POSITIVE_INFINITY);
+	/** Real NaN */
+	protected static Double NegInf = new Double(Double.NEGATIVE_INFINITY);
+	
 	/**
 	 * default constructor is private class can never in insantated.
 	 */
-	protected TreeUtils() {}
-	public static TreeUtils getInstance() { return INSTANCE; }
+	public TreeUtils() {}
+	//public static TreeUtils getInstance() { return INSTANCE; }
 	
 	/**
 	 * Returns the value represented by node
 	 * @throws IllegalArgumentException if given something which is not an ASTConstant
 	 */
-	static public String getName(Node node) throws IllegalArgumentException
+	public String getName(Node node) throws IllegalArgumentException
 	{
 		if(isVariable(node))
 			return ((ASTVarNode) node).getName();
@@ -74,7 +79,7 @@ public class TreeUtils {
 	 * Returns the value represented by node
 	 * @throws IllegalArgumentException if given something which is not an ASTConstant
 	 */
-	static public Object getValue(Node node) throws IllegalArgumentException
+	public Object getValue(Node node) throws IllegalArgumentException
 	{
 		if(!isConstant(node)) throw new IllegalArgumentException("Tried to find the value of a non constant node");
 		return ((ASTConstant) node).getValue();
@@ -84,7 +89,7 @@ public class TreeUtils {
 	 * Returns the double value represented by node
 	 * @throws IllegalArgumentException if given something which is not an ASTConstant with a Double value
 	 */
-	static public double doubleValue(Node node) throws IllegalArgumentException
+	public double doubleValue(Node node) throws IllegalArgumentException
 	{
 		return ((Double) getValue(node)).doubleValue();
 	}
@@ -93,7 +98,7 @@ public class TreeUtils {
 	 * Returns the Complex value represented by node
 	 * @throws IllegalArgumentException if given something which is not an ASTConstant with a Complex value
 	 */
-	static public Complex complexValue(Node node) throws IllegalArgumentException
+	public Complex complexValue(Node node) throws IllegalArgumentException
 	{
 		return ((Complex) getValue(node));
 	}
@@ -101,7 +106,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is a ASTConstant 
 	 */
-	static public boolean isConstant(Node node)
+	public boolean isConstant(Node node)
 	{
 		return (node instanceof ASTConstant);
 	}
@@ -109,7 +114,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is a ASTConstant with Double value 
 	 */
-	static public boolean isReal(Node node)
+	public boolean isReal(Node node)
 	{
 			return (node instanceof ASTConstant)
 			 && ( ((ASTConstant) node).getValue() instanceof Number );
@@ -118,7 +123,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is a ASTConstant with value Double(0) or Complex(0,0) 
 	 */
-	static public boolean isZero(Node node)
+	public boolean isZero(Node node)
 	{
 		   return ( isReal(node)
 					&& ( ((ASTConstant) node).getValue().equals(ZERO)) )
@@ -131,7 +136,7 @@ public class TreeUtils {
 	 * @param tol	tolerence for testing for zero
 	 */
 	
-	static public boolean isZero(Node node,double tol)
+	public boolean isZero(Node node,double tol)
 	{
 		   return ( isReal(node)
 					&&
@@ -144,7 +149,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is a ASTConstant with value Double(1) or Complex(1,0) 
 	 */
-	static public boolean isOne(Node node)
+	public boolean isOne(Node node)
 	{
 		return ( isReal(node)
 				 && ( ((ASTConstant) node).getValue().equals(ONE)) )
@@ -155,7 +160,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is a ASTConstant with value Double(-1) or Complex(-1,0) 
 	 */
-	static public boolean isMinusOne(Node node)
+	public boolean isMinusOne(Node node)
 	{
 		return ( isReal(node)
 				 && ( ((ASTConstant) node).getValue().equals(MINUSONE)) )
@@ -167,7 +172,7 @@ public class TreeUtils {
 	 * TODO do propper treatment of signed infinity 
 	 */
 
-	static public boolean isInfinity(Node node)
+	public boolean isInfinity(Node node)
 	{
 		if(isReal(node))
 		{
@@ -186,7 +191,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is a ASTConstant with a NaN component 
 	 */
-	static public boolean isNaN(Node node)
+	public boolean isNaN(Node node)
 	{
 		if(isReal(node))
 		{
@@ -205,7 +210,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTConstant with a negative Double value 
 	 */
-	static public boolean isNegative(Node node)
+	public boolean isNegative(Node node)
 	{
 			return isReal(node)
 					 && ( ((Double) ((ASTConstant) node).getValue()).doubleValue() < 0.0 );
@@ -214,7 +219,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTConstant with a positive Double value 
 	 */
-	static public boolean isPositive(Node node)
+	public boolean isPositive(Node node)
 	{
 			return isReal(node)
 					 && ( ((Double) ((ASTConstant) node).getValue()).doubleValue() > 0.0 );
@@ -223,7 +228,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTConstant of type Complex
 	 */
-	static public boolean isComplex(Node node)
+	 public boolean isComplex(Node node)
 	 {
 			return isConstant(node)
 				 && ( ((ASTConstant) node).getValue() instanceof Complex );
@@ -232,7 +237,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTVarNode
 	 */
-	static public boolean isVariable(Node node)
+	public boolean isVariable(Node node)
 	{
 	   return (node instanceof ASTVarNode);
 	}
@@ -240,25 +245,25 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTOpNode
 	 */
-	static public boolean isOperator(Node node)
+	public boolean isOperator(Node node)
 	{
 	   return (node instanceof ASTFunNode) && ((ASTFunNode) node).isOperator();
 	}
 
-	static public boolean isBinaryOperator(Node node)
+	public boolean isBinaryOperator(Node node)
 	{
 	   if(isOperator(node))
 	   {
-	   		return ((ASTFunNode) node).getOperator().isBinary();
+	   		return ((XOperator) ((ASTFunNode) node).getOperator()).isBinary();
 	   }
 	   return false;
 	}
 
-	static public boolean isUnaryOperator(Node node)
+	public boolean isUnaryOperator(Node node)
 	{
 	   if(isOperator(node))
 	   {
-			return ((ASTFunNode) node).getOperator().isUnary();
+			return ((XOperator) ((ASTFunNode) node).getOperator()).isUnary();
 	   }
 	   return false;
 	}
@@ -266,7 +271,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTOpNode of the specific type.
 	 */
-	static public Operator getOperator(Node node)
+	public Operator getOperator(Node node)
 	{
 	   if(isOperator(node))
 	   	return ((ASTFunNode) node).getOperator();
@@ -276,7 +281,7 @@ public class TreeUtils {
 	/**
 	 * returns true if node is an ASTFunNode
 	 */
-	static public boolean isFunction(Node node)
+	public boolean isFunction(Node node)
 	{
 	   return (node instanceof ASTFunNode);
 	}
@@ -307,4 +312,17 @@ public class TreeUtils {
 			children[i]=node.jjtGetChild(i);
 		return children;
 	}
+
+	public Object getCI() {	return CI;	}
+	public Object getCMINUSI() {return CMINUSI;	}
+	public Object getCMINUSONE() {return CMINUSONE;	}
+	public Object getCONE() {return CONE;	}
+	public Object getCZERO() {return CZERO;	}
+	public Object getMINUSONE() {return MINUSONE;	}
+	public Object getONE() {return ONE;	}
+	public Object getZERO() {return ZERO;	}
+	public Object getNAN() { return NAN; }
+	public Object getPositiveInfinity() { return PosInf; }
+	public Object getNegativeInfinity() { return NegInf; }
+	public Object getNumber(double val) { return new Double(val); }
 }

@@ -14,15 +14,15 @@ import org.lsmp.djep.xjep.*;
  * Examples using vectors and matricies
  */
 public class VectorPrint {
-	static VectorJep j;
-	static PrintVisitor pv;
+	static XJep j;
+//	static PrintVisitor pv;
 	
 	public static void main(String args[])	{
-		j = new VectorJep();
-		pv = new PrintVisitor();
+		j = new XJep(new VectorJep());
 
 		j.addStandardConstants();
 		j.addStandardFunctions();
+		//j.addFunction("ele",new Ele());
 		j.addComplex();
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
@@ -52,7 +52,7 @@ public class VectorPrint {
 		try	{
 			Node node = j.parse(str);
 			Object value = j.evaluate(node);
-			pv.print(node);
+			j.print(node);
 			System.out.println("\tvalue " + value.toString());
 		}
 		catch(ParseException e) { System.out.println("Parse error "+e.getMessage()); }		

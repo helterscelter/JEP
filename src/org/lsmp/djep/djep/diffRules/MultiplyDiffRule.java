@@ -7,9 +7,7 @@
  */
 package org.lsmp.djep.djep.diffRules;
 
-import org.nfunk.jep.ASTFunNode;
-import org.nfunk.jep.Node;
-import org.nfunk.jep.ParseException;
+import org.nfunk.jep.*;
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DiffRulesI;
 import org.lsmp.djep.xjep.*;

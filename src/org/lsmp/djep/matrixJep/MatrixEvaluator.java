@@ -10,6 +10,7 @@ import org.nfunk.jep.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.vectorJep.values.*;
+import org.lsmp.djep.vectorJep.Dimensions;
 import org.nfunk.jep.function.*;
 import java.util.Stack;
 
@@ -64,11 +65,6 @@ public class MatrixEvaluator implements ParserVisitor
 			MatrixSpecialEvaluationI se = (MatrixSpecialEvaluationI) pfmc;
 			return se.evaluate(mnode,this,mjep);
 		}
-//		else if (pfmc instanceof SpecialEvaluationI) {
-//			((SpecialEvaluationI) node.getPFMC()).evaluate(
-//				node,data,this,stack,mjep.getSymbolTable());
-//			mnode.getMValue().setEle(0,stack.peek());
-//		}
 		else if(pfmc instanceof BinaryOperatorI)
 		{
 			BinaryOperatorI bin = (BinaryOperatorI) node.getOperator().getPFMC();
@@ -79,9 +75,8 @@ public class MatrixEvaluator implements ParserVisitor
 		else if(pfmc instanceof UnaryOperatorI)
 		{
 			UnaryOperatorI uni = (UnaryOperatorI) node.getOperator().getPFMC();
-			return uni.calcValue(
-				mnode.getMValue(),
-				(MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data));
+			MatrixValueI val = (MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data);
+			return uni.calcValue(mnode.getMValue(),val);
 		}
 		else if(pfmc instanceof NaryOperatorI)
 		{
@@ -91,11 +86,21 @@ public class MatrixEvaluator implements ParserVisitor
 				results[i] = (MatrixValueI) node.jjtGetChild(i).jjtAccept(this,data);
 			return uni.calcValue(mnode.getMValue(),results);
 		}
-		// not a clever op use old style call	
+		else if (pfmc instanceof SpecialEvaluationI) {
+			throw new IllegalArgumentException("Encountered an instance of SpecialEvaluationI");
+//			((SpecialEvaluationI) node.getPFMC()).evaluate(
+//				node,data,this,stack,mjep.getSymbolTable());
+//			mnode.getMValue().setEle(0,stack.peek());
+		}
+
+		// not a clever op use old style call
+		// assumes 
 		int num = node.jjtGetNumChildren();
 		for(int i=0;i<num;++i)
 		{
 			MatrixValueI vec = (MatrixValueI) node.jjtGetChild(i).jjtAccept(this,data);
+			if(!vec.getDim().equals(Dimensions.ONE))
+				throw new ParseException("Arguments of "+node.getName()+" must be scalers");			
 			stack.push(vec.getEle(0));
 		}
 		pfmc.setCurNumberOfParameters(num);

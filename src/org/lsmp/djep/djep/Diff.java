@@ -46,7 +46,7 @@ import org.nfunk.jep.function.*;
   {
 	  Node lhs = children[0];
 	  Node rhs = children[1];
-	  if(!TreeUtils.isVariable(rhs) )
+	  if(!xjep.getTreeUtils().isVariable(rhs) )
 	  {
 	  	throw new ParseException("Format should be diff(f,x) where x is a variables and 1,2 are constants");	
 	  }

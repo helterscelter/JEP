@@ -16,13 +16,13 @@ import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
 
 /**
- * The Dot operator. 
+ * The MDot operator. 
  * @author Rich Morris
  * Created on 23-Feb-2004
  */
-public class Dot extends MMultiply implements BinaryOperatorI
+public class MDot extends MMultiply implements BinaryOperatorI
 {
-	public Dot() {
+	public MDot() {
 		numberOfParameters = 2;
 	}
 	public Dimensions calcDim(Dimensions l,Dimensions r) {

@@ -22,4 +22,7 @@ public interface NumberFactory {
 	 * @param value The initial value of the number as a string.
 	 */
 	public Object createNumber(String value);
+	///** Creates a number with given double value. */
+	//public Object createNumber(double value);
+	//public Object createNumber(Double value);
 }

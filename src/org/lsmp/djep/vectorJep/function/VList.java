@@ -13,18 +13,17 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
-import org.nfunk.jep.function.*;
 
 /**
- * A enhanced version of list, allows matricies and tensors.
+ * A enhanced version of List, allows matricies and tensors.
  * 
  * @author Rich Morris
  * Created on 27-Nov-2003
  */
-public class TensorFun extends PostfixMathCommand 
+public class VList extends org.nfunk.jep.function.List 
 	implements NaryOperatorI
 {
-	public TensorFun()
+	public VList()
 	{
 		numberOfParameters = -1;
 	}

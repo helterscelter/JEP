@@ -91,12 +91,12 @@ public class VectorJepTest extends TestCase {
 	
 	public void testOperators()  throws Exception
 	{
-		if(!Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_ADD))
-			fail("* should be distrib over +");
-		if(Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_DIVIDE))
-			fail("* should not be distrib over /");
-		if(Operator.OP_MULTIPLY.getPrecedence() > Operator.OP_ADD.getPrecedence())
-			fail("* should have a lower precedence than +");
+//		if(!Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_ADD))
+//			fail("* should be distrib over +");
+//		if(Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_DIVIDE))
+//			fail("* should not be distrib over /");
+//		if(Operator.OP_MULTIPLY.getPrecedence() > Operator.OP_ADD.getPrecedence())
+//			fail("* should have a lower precedence than +");
 
 		valueTest("T=1",1);
 		valueTest("F=0",0);

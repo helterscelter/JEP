@@ -24,15 +24,15 @@ import org.nfunk.jep.function.*;
  */
 public class ExteriorProduct extends PostfixMathCommand implements BinaryOperatorI
 {
-	private Subtract sub;
-	private Add add;
-	private Multiply mul;
+	private Subtract sub = new Subtract();
+	//private Add add = new Add(); 
+	private Multiply mul = new Multiply();
 	
 	public ExteriorProduct()
 	{
-		add = (Add) Operator.OP_ADD.getPFMC();
-		sub = (Subtract) Operator.OP_SUBTRACT.getPFMC();
-		mul = (Multiply) Operator.OP_MULTIPLY.getPFMC();
+		//add = (Add) Operator.OP_ADD.getPFMC();
+		//sub = (Subtract) Operator.OP_SUBTRACT.getPFMC();
+		//mul = (Multiply) Operator.OP_MULTIPLY.getPFMC();
 		numberOfParameters = 2;
 	}
 

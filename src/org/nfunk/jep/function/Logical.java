@@ -15,7 +15,8 @@ import org.nfunk.jep.*;
 public class Logical extends PostfixMathCommand
 {
 	int id;
-	
+	public static final int AND = 0;
+	public static final int OR = 1;
 	public Logical(int id_in)
 	{
 		id = id_in;
@@ -29,6 +30,7 @@ public class Logical extends PostfixMathCommand
 		
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
+		
 		
 		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{

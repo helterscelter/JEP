@@ -31,11 +31,11 @@ import java.util.*;
 public class MacroFunction extends PostfixMathCommand
 {
 	private String name;
-	private String macroExpression;
 	private Node topNode;
 	private EvaluatorVisitor ev = new EvaluatorVisitor();
-	private XJep localJep;
+//	private XJep localJep;
 	private XSymbolTable mySymTab;
+	private Variable vars[];
 	
 	public String getName() { return name; }
 	public Node getTopNode() { return topNode; }
@@ -56,11 +56,26 @@ public class MacroFunction extends PostfixMathCommand
 
 		XSymbolTable jepSymTab = (XSymbolTable) jep.getSymbolTable();
 		mySymTab = (XSymbolTable) jepSymTab.newInstance(); 
-		//new SymbolTable();
 		mySymTab.copyConstants(jepSymTab);
-		localJep = jep.newInstance(mySymTab);
-		macroExpression = expression;
+		XJep localJep = jep.newInstance(mySymTab);
 		numberOfParameters = nargs;
+
+		if(numberOfParameters == 0) {}
+		else if(numberOfParameters == 1)
+			vars = new Variable[]{mySymTab.addVariable("x",null)};
+		else if(numberOfParameters == 2)
+		{
+			vars = new Variable[]{
+					mySymTab.addVariable("x",null),
+					mySymTab.addVariable("y",null)};
+		}
+		else
+		{
+			vars = new Variable[numberOfParameters];
+			for(int i=numberOfParameters-1;i>0;)
+				vars[i] = mySymTab.addVariable("x"+String.valueOf(i),null);
+		}
+
 		topNode = localJep.parse(expression);
 	}
 	
@@ -73,16 +88,16 @@ public class MacroFunction extends PostfixMathCommand
 
 		if(numberOfParameters == 0) {}
 		else if(numberOfParameters == 1)
-			mySymTab.makeVarIfNeeded("x",stack.pop());
+			vars[0].setValue(stack.pop());
 		else if(numberOfParameters == 2)
 		{
-			mySymTab.makeVarIfNeeded("y",stack.pop());
-			mySymTab.makeVarIfNeeded("x",stack.pop());
+			vars[1].setValue(stack.pop());
+			vars[0].setValue(stack.pop());
 		}
 		else
 		{
 			for(int i=numberOfParameters-1;i>0;)
-				mySymTab.makeVarIfNeeded("x"+String.valueOf(i),stack.pop());
+				vars[i].setValue(stack.pop());
 		}
 		try
 		{

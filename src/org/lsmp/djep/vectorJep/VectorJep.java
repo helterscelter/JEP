@@ -23,14 +23,16 @@ public class VectorJep extends JEP {
 	public VectorJep() {
 		super();
 		
-		Operator.OP_ADD.setPFMC(new MAdd());
+/*		Operator.OP_ADD.setPFMC(new MAdd());
 		Operator.OP_SUBTRACT.setPFMC(new MSubtract());
 		Operator.OP_MULTIPLY.setPFMC(new MMultiply());
 		Operator.OP_POWER.setPFMC(new MPower());
 		Operator.OP_UMINUS.setPFMC(new MUMinus());
-		Operator.OP_DOT.setPFMC(new Dot());
+		Operator.OP_DOT.setPFMC(new MDot());
 		Operator.OP_CROSS.setPFMC(new ExteriorProduct());
-		Operator.OP_LIST.setPFMC(new TensorFun());
+		Operator.OP_LIST.setPFMC(new VList());
+*/
+		opSet = new VOperatorSet();
 	}
 
 	public void addStandardFunctions()

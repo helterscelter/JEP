@@ -9,6 +9,7 @@ package org.lsmp.djep.matrixJep;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 import org.lsmp.djep.djep.*;
+import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.function.*;
@@ -33,6 +34,7 @@ public class MatrixPreprocessor implements ParserVisitor
 {
 	private MatrixJep mjep;
 	private MatrixNodeFactory nf;
+	private MatrixOperatorSet opSet;
 	private DSymbolTable vt;
 
 	public MatrixPreprocessor() {}
@@ -49,6 +51,7 @@ public class MatrixPreprocessor implements ParserVisitor
 		this.mjep=mdjep;
 		this.nf=(MatrixNodeFactory) mdjep.getNodeFactory();
 		this.vt=(DSymbolTable) mdjep.getSymbolTable();
+		this.opSet=(MatrixOperatorSet) mdjep.getOperatorSet();
 		return (MatrixNodeI) node.jjtAccept(this,null);
 	}
 	
@@ -62,7 +65,7 @@ public class MatrixPreprocessor implements ParserVisitor
 		for(int i=0;i<nchild;++i)
 		{
 //		  System.out.println("vcaa "+i+" "+node.jjtGetChild(i));
-		  Node no = (Node) node.jjtGetChild(i).jjtAccept(this,data);
+		  MatrixNodeI no = (MatrixNodeI) node.jjtGetChild(i).jjtAccept(this,data);
 //		  System.out.println("vcaa "+i+" "+node.jjtGetChild(i)+" done "+no);
 		  children[i] = (MatrixNodeI) no;
 		}
@@ -75,12 +78,12 @@ public class MatrixPreprocessor implements ParserVisitor
 	public Object visit(ASTStart node, Object data)	{ return null;	}
 
 	/** constants **/
-	public Object visit(ASTConstant node, Object data)
+	public Object visit(ASTConstant node, Object data) throws ParseException
 	{
 		return nf.buildConstantNode(node.getValue());
 	}
 	/** multidimensions differentiable variables */
-	public Object visit(ASTVarNode node, Object data)
+	public Object visit(ASTVarNode node, Object data) throws ParseException
 	{
 		return nf.buildVariableNode(vt.getVar(node.getName()));
 	}
@@ -89,11 +92,9 @@ public class MatrixPreprocessor implements ParserVisitor
 	public Object visit(ASTFunNode node, Object data) throws ParseException
 	{
 		if(node.isOperator()) return visitOp(node,data);
-		if(node.getPFMC() instanceof Diff)
-		{
-			return visitDiff(node,data);
-		}
-		
+		if(node.getPFMC() instanceof Diff) return visitDiff(node,data);
+		if(node.getPFMC() instanceof CommandVisitorI)
+				throw new IllegalArgumentException("MatrixPreprocessor: encounterd and instance of CommandVisitorI  for function "+node.getName());
 		MatrixNodeI children[] = visitChildrenAsArray(node,data);
 		ASTMFunNode res = (ASTMFunNode) nf.buildFunctionNode(node,children);
 		return res;
@@ -132,7 +133,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			}
 			else
 			{
-				Operator op = Operator.OP_CROSS;
+				Operator op = opSet.getCross();
 				PostfixMathCommandI pfmc2 = op.getPFMC();
 				BinaryOperatorI bin = (BinaryOperatorI) pfmc2;
 				Dimensions dim = bin.calcDim(lhsDim,rhsDim);
@@ -148,7 +149,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			{
 				if(children[i] instanceof ASTMFunNode)
 				{
-					if(((ASTMFunNode) children[i]).getOperator() != MatrixOperatorSet.TENSOR)
+					if(((ASTMFunNode) children[i]).getOperator() != opSet.getMTensorFun())
 					{
 						flag=false; break;
 					}
@@ -161,7 +162,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			{
 				ASTMFunNode opNode1 = (ASTMFunNode) children[0];
 				Dimensions dim = Dimensions.valueOf(children.length,opNode1.getDim());
-				ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(MatrixOperatorSet.TENSOR);
+				ASTMFunNode res = (ASTMFunNode) nf.buildUnfinishedOperatorNode(opSet.getMTensorFun());
 				int k=0;
 				res.setDim(dim);
 				res.jjtOpen();
@@ -182,7 +183,7 @@ public class MatrixPreprocessor implements ParserVisitor
 			{
 				MatrixNodeI node1 = (MatrixNodeI) children[0];
 				Dimensions dim = Dimensions.valueOf(children.length,node1.getDim());
-				ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(MatrixOperatorSet.TENSOR,children,dim);
+				ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(opSet.getMTensorFun(),children,dim);
 				return res;
 			}
 		}

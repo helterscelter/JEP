@@ -10,7 +10,6 @@ package org.lsmp.djep.matrixJep;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.djep.diffRules.*;
 import org.nfunk.jep.*;
-import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.matrixJep.function.*;
@@ -23,26 +22,28 @@ import org.lsmp.djep.matrixJep.nodeTypes.*;
  */
 public class MatrixJep extends DJep {
 
-	public MatrixPreprocessor dec = new MatrixPreprocessor();
-	public MatrixVariableFactory mvf = new MatrixVariableFactory();
-	public MatrixEvaluator mev = new MatrixEvaluator();
+	protected MatrixPreprocessor dec = new MatrixPreprocessor();
+	protected MatrixVariableFactory mvf = new MatrixVariableFactory();
+	protected MatrixEvaluator mev = new MatrixEvaluator();
 	
 	public MatrixJep() {
 		super();
 		nf = new MatrixNodeFactory();
-		super.symTab = new DSymbolTable(mvf);
+		symTab = new DSymbolTable(mvf);
+		opSet = new MatrixOperatorSet();
 		
-		Operator.OP_ADD.setPFMC(new MAdd());
+/*		Operator.OP_ADD.setPFMC(new MAdd());
 		Operator.OP_SUBTRACT.setPFMC(new MSubtract());
 		Operator.OP_MULTIPLY.setPFMC(new MMultiply());
 		Operator.OP_POWER.setPFMC(new MPower());
 		Operator.OP_UMINUS.setPFMC(new MUMinus());
-		Operator.OP_DOT.setPFMC(new Dot());
+		Operator.OP_DOT.setPFMC(new MDot());
 		Operator.OP_CROSS.setPFMC(new ExteriorProduct());
 		Operator.OP_ASSIGN.setPFMC(new Assignment());
-
-		pv.addSpecialRule(MatrixOperatorSet.TENSOR,(PrintVisitor.PrintRulesI) MatrixOperatorSet.TENSOR.getPFMC());
-		dv.addDiffRule(new PassThroughDiffRule("TENSOR",MatrixOperatorSet.TENSOR.getPFMC()));
+*/
+		Operator tens = ((MatrixOperatorSet) opSet).getMTensorFun();
+		pv.addSpecialRule(tens,(PrintVisitor.PrintRulesI) tens.getPFMC());
+		dv.addDiffRule(new PassThroughDiffRule(tens.getName(),tens.getPFMC()));
 	}
 
 	public void addStandardFunctions()
@@ -62,12 +63,45 @@ public class MatrixJep extends DJep {
 		Object res = mev.evaluate((MatrixNodeI) node,this);
 		if(res instanceof Scaler)
 			return ((Scaler) res).getEle(0);
-		else return res;
+		else 
+			return res;
+	}
+
+	public Object evaluateRaw(Node node) throws ParseException
+	{
+		Object res = mev.evaluate((MatrixNodeI) node,this);
+		return res;
+	}
+
+	/** Preprocesses an equation to allow the diff and eval operators to be used. */
+	public Node preprocess(Node node) throws ParseException
+	{
+		return dec.preprocess(node,this);
 	}
 
 	public MatrixJep(DJep j) {
 		super(j);
 		nf = new MatrixNodeFactory();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.nfunk.jep.JEP#getValueAsObject()
+	 */
+	public Object getValueAsObject() {
+		try
+		{
+			Object res = mev.evaluate((MatrixNodeI) getTopNode(),this);
+			if(res instanceof Scaler)
+				return ((Scaler) res).getEle(0);
+			else 
+				return res;
+		}
+		catch(Exception e)
+		{
+			this.errorList.addElement("Error during evaluation:");
+			this.errorList.addElement(e.getMessage());
+			return null;
+		}
 	}
 
 }

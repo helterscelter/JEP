@@ -20,8 +20,7 @@ import java.io.PrintStream;
  * To use do
  * <pre>
  * JEP j = ...; Node in = ...;
- * TreeUtils tu = new TreeUtils(j);
- * DifferentationVisitor dv = new DifferentationVisitor(tu);
+ * DifferentationVisitor dv = new DifferentationVisitor(jep);
  * dv.addStandardDiffRules();
  * Node out = dv.differentiate(in,"x");
  * </pre>
@@ -46,6 +45,7 @@ public class DifferentationVisitor extends DeepCopyVisitor
 	private DJep localDJep;
 	private DJep globalDJep;
 	private NodeFactory nf;
+	private TreeUtils tu;
 //	private OperatorSet opSet;
   /**
    * Construction with a given set of tree utilities 
@@ -61,6 +61,7 @@ public class DifferentationVisitor extends DeepCopyVisitor
 	addDiffRule(new DivideDiffRule("/"));
 	addDiffRule(new PowerDiffRule("^"));
 	addDiffRule(new PassThroughDiffRule("UMinus",globalDJep.getOperatorSet().getUMinus().getPFMC()));
+
   }
   
   
@@ -120,7 +121,8 @@ public class DifferentationVisitor extends DeepCopyVisitor
 		addDiffRule(new MacroDiffRules(globalDJep,"ln","1/x"));
 		addDiffRule(new MacroDiffRules(globalDJep,"log",	// -> (1/ln(10)) /x = log(e) / x but don't know if e exists
 			globalDJep.getNodeFactory().buildOperatorNode(globalDJep.getOperatorSet().getDivide(),
-				globalDJep.getNodeFactory().buildConstantNode(1/Math.log(10.0)),
+				globalDJep.getNodeFactory().buildConstantNode(
+					globalDJep.getTreeUtils().getNumber(1/Math.log(10.0))),
 				globalDJep.getNodeFactory().buildVariableNode(globalDJep.getSymbolTable().makeVarIfNeeded("x")))));
 		// TODO problems here with using a global variable (x) in an essentially local context
 		addDiffRule(new MacroDiffRules(globalDJep,"abs","abs(x)/x"));
@@ -142,12 +144,8 @@ public class DifferentationVisitor extends DeepCopyVisitor
 		addDiffRule(new PassThroughDiffRule("\"!=\"",new Comparative(4)));
 		addDiffRule(new PassThroughDiffRule("\"==\"",new Comparative(5)));
 */		
-		Diff diff = new Diff();
-		globalDJep.addFunction("diff",diff);
 //		addDiffRule(new DiffDiffRule(this,"diff"));
 		// TODO do we want to add eval here?
-		Eval eval = new Eval("eval",globalDJep);
-		globalDJep.addFunction("eval",eval);
 //		addDiffRule(new EvalDiffRule(this,"eval",eval));
 		
 		//addDiffRule(new PassThroughDiffRule("\"&&\""));
@@ -225,6 +223,7 @@ public class DifferentationVisitor extends DeepCopyVisitor
 	{
 	  this.localDJep = djep;
 	  this.nf=djep.getNodeFactory();
+	  this.tu=djep.getTreeUtils();
 	  //this.opSet=djep.getOperatorSet();
 	  
 	  if (node == null)
@@ -278,14 +277,14 @@ public class DifferentationVisitor extends DeepCopyVisitor
 	   {
 		DVariable difvar = (DVariable) var;
 		if(varName.equals(var.getName()))
-			return nf.buildConstantNode(NodeFactory.ONE);
+			return nf.buildConstantNode(tu.getONE());
 		else if(difvar.hasEquation())
 		{
 			PartialDerivative deriv = difvar.findDerivative((String) data,localDJep);
 			return nf.buildVariableNode(deriv);
 		}
 		else
-			return nf.buildConstantNode(NodeFactory.ZERO);
+			return nf.buildConstantNode(tu.getZERO());
 	   }
 	   if(var instanceof PartialDerivative)
 	   {
@@ -301,8 +300,8 @@ public class DifferentationVisitor extends DeepCopyVisitor
 	  * Differentiates a constant.
 	  * @return 0 direvatives of constants are always zero.
 	  */
-	 public Object visit(ASTConstant node, Object data) {
-		return nf.buildConstantNode(NodeFactory.ZERO);
+	 public Object visit(ASTConstant node, Object data) throws ParseException {
+		return nf.buildConstantNode(tu.getZERO());
 	 }
 }
 

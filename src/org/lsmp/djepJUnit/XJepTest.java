@@ -148,11 +148,12 @@ public class XJepTest extends TestCase {
 	
 	public void testOperators() throws Exception
 	{
-		if(!Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_ADD))
+		OperatorSet opSet = j.getOperatorSet();
+		if(!((XOperator) opSet.getMultiply()).isDistributiveOver(opSet.getAdd()))
 			fail("* should be distrib over +");
-		if(Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_DIVIDE))
+		if(((XOperator) opSet.getMultiply()).isDistributiveOver(opSet.getDivide()))
 			fail("* should not be distrib over /");
-		if(Operator.OP_MULTIPLY.getPrecedence() > Operator.OP_ADD.getPrecedence())
+		if(((XOperator) opSet.getMultiply()).getPrecedence() > ((XOperator) opSet.getAdd()).getPrecedence())
 			fail("* should have a lower precedence than +");
 
 		valueTest("T=1",1);

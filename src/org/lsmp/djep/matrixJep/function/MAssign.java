@@ -22,9 +22,9 @@ import org.lsmp.djep.vectorJep.values.*;
  * @author Rich Morris
  * Created on 23-Feb-2004
  */
-public class Assignment extends Assign implements MatrixSpecialEvaluationI
+public class MAssign extends Assign implements MatrixSpecialEvaluationI
 {
-	public Assignment()
+	public MAssign()
 	{
 		numberOfParameters = 2;
 	}

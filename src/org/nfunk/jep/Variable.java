@@ -24,7 +24,7 @@ public class Variable {
 	private Object value;
 	private boolean isConstant=false;
 	private boolean validValue=false;
-	private static final Double ZERO = new Double(0.0);
+//	private static final Double ZERO = new Double(0.0);
 
 	/** Constructors are protected. Variables should only
 	 * be created through the associated {@link VariableFactory}
@@ -33,7 +33,7 @@ public class Variable {
 	protected Variable(String name)
 	{
 		this.name = name;
-		this.value= ZERO;
+		this.value= null;
 		validValue=false;
 	}
 	/** Constructors are protected. Variables should only
