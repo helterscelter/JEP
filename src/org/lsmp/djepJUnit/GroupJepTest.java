@@ -97,6 +97,15 @@ public class GroupJepTest extends TestCase {
 		valueToStringTest("(1/2)-(1/3)","1/6");
 	}
 	
+	/** Tests rationals */
+	public void testQuartonians() throws Exception
+	{
+		j = new GroupJep(new Quartonians());
+		j.addStandardConstants();
+		System.out.println(j.getGroup().toString());
+		valueToStringTest("i*j","0.0+0.0 i +0.0 j +-1.0 k");
+	}
+
 	/** Tests integers mod 5 */
 	public void testZn() throws Exception
 	{

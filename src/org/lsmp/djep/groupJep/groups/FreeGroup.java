@@ -24,7 +24,7 @@ public class FreeGroup extends Group implements RingI {
 	protected FreeGroupElement unitPoly;
 	protected FreeGroupElement tPoly;    // t
 	protected String symbol;
-	protected Number rootVal=new Complex(Double.NaN);
+	protected Complex rootVal=new Complex(Double.NaN);
 
 	/**
 	 * Create the ring K(t) where t is a solution of the monic polynomial p.
@@ -111,12 +111,12 @@ public class FreeGroup extends Group implements RingI {
 
 
 	/** Sets the value used to aproximate the root as a complex number. */
-	public void setRootVal(Number complex) {
+	public void setRootVal(Complex complex) {
 		rootVal = complex;
 	}
 
 	/** Returns an aproximation to the value of the root as a complex number. */
-	public Number getRootVal() {
+	public Complex getRootVal() {
 		return rootVal;
 	}
 
