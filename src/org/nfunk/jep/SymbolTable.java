@@ -10,7 +10,7 @@ package org.nfunk.jep;
 import java.util.*;
 
 /** A Hashtable which holds a list of all variables.
- * Hevily changed from Jep-2.24 which was just a Hashtable which stored
+ * Heavily changed from Jep-2.24 which was just a Hashtable which stored
  * the values of each variable. Here the Hashtable contains
  * elements of type {@link Variable Variable} which contain
  * information about that variable.
@@ -26,7 +26,7 @@ import java.util.*;
  * <li>{@link #makeVarIfNeeded(String)} if necessary creates a variable. Does not change the value.
  * </ul>
  * <p>
- * Variables which do not have a value set are deamed to be invalid.
+ * Variables which do not have a value set are deemed to be invalid.
  * When Variables need to be constructed then methods in the {@link VariableFactory}
  * should be called, which allows different types of variables to be used.
  * 
@@ -114,10 +114,8 @@ public class SymbolTable extends Hashtable
 	{
 		Variable var = (Variable) super.get(name);
 		if(var != null)
-		{
 			return var.setValue(val);
-		} 
-		else return false;
+		return false;
 	}
 
 	/**
@@ -142,11 +140,9 @@ public class SymbolTable extends Hashtable
 	{
 		Variable var = (Variable) super.get(name);
 		if(var != null)	return null;
-		else
-		{
-			var = createVariable(name,val);
-			super.put(name,var);
-		}
+		
+		var = createVariable(name,val);
+		super.put(name,var);
 		var.setValidValue(true);
 		return var;
 	}
@@ -162,7 +158,7 @@ public class SymbolTable extends Hashtable
 	}
 
 	/** Create a variable with the given name and value.
-	 * It siliently does nothing if the value cannot be set.
+	 * It silently does nothing if the value cannot be set.
 	 * @return the Variable.
 	 */
 	public Variable makeVarIfNeeded(String name,Object val)
@@ -173,12 +169,9 @@ public class SymbolTable extends Hashtable
 			var.setValue(val);
 			return var; 
 		}
-		else
-		{
-			var = createVariable(name,val);
-			super.put(name,var);
-			return var;
-		}
+		var = createVariable(name,val);
+		super.put(name,var);
+		return var;
 	}
 
 	/** If necessary create a variable with the given name.
@@ -237,7 +230,7 @@ public class SymbolTable extends Hashtable
 		public SymbolTable getSymbolTable() {
 			return SymbolTable.this;
 		}
-	};
+	}
 	protected StObservable obeservable = new StObservable();
 	/**
 	 * Adds an observer which will be notified when a new variable is created.
@@ -250,7 +243,7 @@ public class SymbolTable extends Hashtable
 	 * the Variable.addObserver method should be used.
 	 * 
 	 * @param arg the observer
-	 * @see Variable.addObserver(Observer)
+	 * @see Variable#addObserver(Observer)
 	 */	
 	public synchronized void addObserver(Observer arg)	{
 		obeservable.addObserver(arg);
