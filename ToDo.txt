@@ -20,10 +20,11 @@
  x upload new website
  x Download package and test
  x Add message on SourceForge list
- - Update version number+ feature list from JARS, share*it,...
+ x Update version number+ feature list from JARS, share*it,...
  x Add CVS tag for version (e.g. v223)
 
 == Further todos ====================================================
+ - return N/A when result is a complex number.
  - automaticize web site uploading/cvs
  - clean up javadoc so warnings are avoided during javadoc generation
  - add max(), min(), avg() methods
