@@ -56,6 +56,9 @@ public class EvaluatorVisitor implements ParserVisitor
 	/** The current error list */
 	private Vector errorList;
 	
+	/** The symbol table for variable lookup */
+	private SymbolTable symTab;
+	
 	/** Flag for errors during evaluation */
 	private boolean errorFlag;
 	
@@ -96,8 +99,10 @@ public class EvaluatorVisitor implements ParserVisitor
 	 * @return The value of the expression as an object.
 	 */
 	public Object getValue(Node topNode,
-						   Vector errorList_in) throws Exception {
+						   Vector errorList_in,
+						   SymbolTable symTab_in) throws Exception {
 		errorList = errorList_in;
+		symTab = symTab_in;
 		
 		if (topNode == null) {
 			throw new Exception(
@@ -145,12 +150,14 @@ public class EvaluatorVisitor implements ParserVisitor
 		
 		data = node.childrenAccept(this, data);
 		
+		// check if the function class is set
 		if (node.getPFMC() == null) {
 			addToErrorList("No function class associated with "
 							+ node.getName());
 			return data;
 		}
 		
+		// try to run the function
 		try {
 			node.getPFMC().run(stack);
 		} catch (ParseException e) {
@@ -162,11 +169,25 @@ public class EvaluatorVisitor implements ParserVisitor
 	}
 
 	/**
-	 * Visit a variable node. The value of the variable is pushed onto the
-	 * stack.
+	 * Visit a variable node. The value of the variable is obtained from the
+	 * symbol table (symTab) and pushed onto the stack.
 	 */
 	public Object visit(ASTVarNode node, Object data) {
-		stack.push(node.getValue());
+
+		String message = "Could not evaluate " + node.getName() + ": ";
+
+		if (symTab == null) {
+			message += "the symbol table is null";
+			addToErrorList(message);
+		} else if (!symTab.containsKey(node.getName())) {
+			message += "the variable was not found in the symbol table";
+			addToErrorList(message);
+		} else {
+			// all is fine
+			// push the value on the stack
+			stack.push(symTab.get(node.getName()));
+		}
+
 		return data;
 	}
 

@@ -783,12 +783,10 @@ GRAMMAR START
           jjtc001 = false;
                 if (jep.symTab.containsKey(identString)) {
                         jjtn001.setName(identString);
-                        jjtn001.setSymbolTable(jep.symTab);
                 } else {
                         if (jep.allowUndeclared) {
                                 jep.symTab.put(identString,new Double(0));
                                 jjtn001.setName(identString);
-                                jjtn001.setSymbolTable(jep.symTab);
                         } else {
                                 addToErrorList("Unrecognized symbol \"" + identString +"\"");
                         }
@@ -1071,6 +1069,12 @@ GRAMMAR START
     return false;
   }
 
+  final private boolean jj_3R_39() {
+    if (jj_scan_token(26)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
   final private boolean jj_3R_34() {
     if (jj_scan_token(INTEGER_LITERAL)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
@@ -1085,12 +1089,6 @@ GRAMMAR START
     if (jj_3R_35()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_39() {
-    if (jj_scan_token(26)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
 
@@ -1171,14 +1169,14 @@ GRAMMAR START
     return false;
   }
 
-  final private boolean jj_3R_29() {
-    if (jj_3R_32()) return true;
+  final private boolean jj_3R_19() {
+    if (jj_3R_23()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
 
-  final private boolean jj_3R_19() {
-    if (jj_3R_23()) return true;
+  final private boolean jj_3R_29() {
+    if (jj_3R_32()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
@@ -1206,20 +1204,26 @@ GRAMMAR START
     return false;
   }
 
-  final private boolean jj_3R_28() {
-    if (jj_3R_31()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
   final private boolean jj_3R_15() {
     if (jj_3R_19()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
 
+  final private boolean jj_3R_28() {
+    if (jj_3R_31()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
   final private boolean jj_3R_33() {
     if (jj_3R_36()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_22() {
+    if (jj_scan_token(28)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
@@ -1240,12 +1244,6 @@ GRAMMAR START
 
   final private boolean jj_3R_27() {
     if (jj_scan_token(STRING_LITERAL)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_22() {
-    if (jj_scan_token(28)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }

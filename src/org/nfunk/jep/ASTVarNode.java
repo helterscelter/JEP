@@ -34,7 +34,6 @@ import java.util.*;
  */
 public class ASTVarNode extends SimpleNode {
 	
-	private SymbolTable symTab;
 	private String varName;
 	
 	public ASTVarNode(int id) {
@@ -46,50 +45,28 @@ public class ASTVarNode extends SimpleNode {
 		super(p, id);
 	}
 	
-	
-	/** Accept the visitor. **/
+	/**
+	 * Accept the visitor.
+	 */
 	public Object jjtAccept(ParserVisitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
 
-	public void setSymbolTable(SymbolTable symTab_in)
-	{
-		symTab = symTab_in;
-	}
-	
+	/**
+	 * Sets the name of the variable.
+	 */
 	public void setName(String varName_in)
 	{
 		varName = varName_in;
 	}
 	
+	/**
+	 * Returns the name of the variable.
+	 */
 	public String getName()
 	{
 		return varName;
 	}
-
-	public Object getValue()
-	{
-		// TODO: extend with exception throwing?
-		if (symTab!=null && symTab.containsKey(varName))
-			return symTab.get(varName);
-		
-		return null;
-	}
-
-	/**
-	* Looks for the value of the variable in the symbolTable. If it
-	* is found, the Object of the value is returned, otherwise an
-	* exception is thrown.
-	*
-	public void evaluate(Stack stack) throws ParseException
-	{
-		if (symTab!=null && symTab.containsKey(varName))
-			stack.push(symTab.get(varName));
-		else
-			throw new ParseException("Variable \"" + varName +
-			"\" was not found in the symbol table.");
-	}
-*/
 
 	/**
 	* Creates a string containing the variable's name and value
@@ -98,13 +75,6 @@ public class ASTVarNode extends SimpleNode {
 	{
 		String temp = "Variable: \"" + getName() + "\"";
 		
-		try
-		{
-			temp += " = " + symTab.get(varName);
-		}
-		catch (Exception e)
-		{
-		}
 		return temp;
 	}
 }

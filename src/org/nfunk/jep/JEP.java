@@ -395,8 +395,8 @@ public class JEP {
 		if (topNode != null && !hasError()) {
 			// evaluate the expression
 			try {
-				result =
-					EvaluatorVisitor.getInstance().getValue(topNode,errorList);
+				result = EvaluatorVisitor.getInstance().
+							getValue(topNode,errorList,symTab);
 			} catch (Exception e) {
 				if (debug) System.out.println(e);
 				return null;
@@ -480,37 +480,6 @@ public class JEP {
 			return parseException.getLine();
 		else
 			return 0;
-	}
-*/
-
-	/**
-	* Evaluates and returns the value of the expression as an object.
-	* This method is useful when the type of the value is unknown, or
-	* not important.
-	* @return The calculated value of the expression if no errors occur.
-	* Returns null otherwise.
-	*/
-/*	public Object getValueAsObject() {
-		//ensure the stack is empty
-		stack.clear();
-		
-		if (!hasError && topNode != null)
-		{
-			try {
-				// evaluate the expression
-				topNode.evaluate(stack);
-				return stack.pop();
-			}
-			catch (Exception e)
-			{
-				hasError = true;
-				if (e instanceof ParseException) parseException = (ParseException)e;
-				return null;
-			}
-		}
-		
-		// something went wrong
-		return null;
 	}
 */
 

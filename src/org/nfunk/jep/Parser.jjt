@@ -406,12 +406,10 @@ void Variable() :
 	{
 		if (jep.symTab.containsKey(identString)) {
 			jjtThis.setName(identString);
-			jjtThis.setSymbolTable(jep.symTab);
 		} else {
 			if (jep.allowUndeclared) {
 				jep.symTab.put(identString,new Double(0));
 				jjtThis.setName(identString);
-				jjtThis.setSymbolTable(jep.symTab);
 			} else {
 				addToErrorList("Unrecognized symbol \"" + identString +"\"");
 			}

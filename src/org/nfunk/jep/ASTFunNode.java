@@ -69,12 +69,7 @@ public class ASTFunNode extends SimpleNode {
 	 * Returns a string containing the function name.
 	 */
 	public String toString() {
-		try {
-			return "Function \"" + name + "\" = "
-			       + EvaluatorVisitor.getInstance().getValue(this,null);
-		} catch (Exception e) {
-			return "Function: \"" + name + "\" error while getting value";
-		}
+		return "Function \"" + name + "\"";
 	}
 
 	/**
