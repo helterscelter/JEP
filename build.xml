@@ -15,12 +15,12 @@ CRLF conversion
 separate build.xml for subprojects?
 
 /
- src/   (contains org... with source files)
- build/ (contains org... with class files)
- dist/  (zip, tar.gz)
-   lib/ (jar)
+src/   (contains org... with source files)
+build/ (contains org... with class files)
+dist/  (zip, tar.gz)
+lib/ (jar)
  doc/
-   javadoc/
+javadoc/
  bin/ (scripts for starting things)
 -->
 
@@ -137,7 +137,7 @@ separate build.xml for subprojects?
 <!-- EOLUNIX -->
 	<target name="eolunix">
 		<fixcrlf srcdir="${src}"
-			eol="lf" eof="remove"
-		/>
+			eol="lf" eof="remove"/>
 	</target>
 </project>
+
