@@ -117,7 +117,7 @@
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
 		
-		<!-- Create a temp dir and copy all jar+source+doc -->
+		<!-- Create a temp dir and copy all jar+class+source+doc files -->
 		<mkdir dir="${disttemp}"/>
 		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}"/>
 		<copy todir="${disttemp}">
@@ -126,9 +126,11 @@
 					 src/org/nfunk/jepexamples/**,
 					 doc/**,
 					 bin/**,
+					 build/**,
 					 build.xml,
 					 compile.bat,
-					 LICENSE.txt"/>
+					 LICENSE.txt,
+					 README.txt"/>
 		</copy>
 
 		<!-- zip file -->
