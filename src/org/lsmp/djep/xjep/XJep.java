@@ -72,38 +72,45 @@ public class XJep extends JEP implements XJepI {
 		return newJep;
 	}
 	
+	/** Returns a deep copy of an expression tree. */
 	public Node deepCopy(Node node) throws ParseException
 	{
 		return copier.deepCopy(node,this);
 	}
+	/** Evaluates a node. */
 	public Object evaluate(Node node) throws Exception
 	{
 		return ev.getValue(node,new Vector(),this.symTab);
 	}
+	/** Returns a simplification of an expression tree. */
 	public Node simplify(Node node) throws ParseException
 	{
 		return simpv.simplify(node,this);
 	}
+	/** Preprocesses an equation to allow the diff and eval operators to be used. */
 	public Node preprocess(Node node) throws ParseException
 	{
 		return commandv.process(node,this);
 	}
+	/** Substitute all occurences of a named variable with an expression tree. */ 
 	public Node substitute(Node orig,String name,Node replacement) throws ParseException
 	{
 		return subv.substitute(orig,name,replacement,this);
 	}
+	/** Substitute all occurences of a set of named variable with a set of expression tree. */ 
 	public Node substitute(Node orig,String names[],Node replacements[]) throws ParseException
 	{
 		return subv.substitute(orig,names,replacements,this);
 	}
-	/**
-	 * Prints a node on System.out.
-	 * See PrintVisitor for other methods
-	 */
+	/** Prints the expresion tree on standard output. */
 	public void print(Node node) { pv.print(node); }
+	/** Prints the expresion tree on given stream. */
 	public void print(Node node,PrintStream out) { pv.print(node,out); }
+	/** Prints the expresion tree on standard output with newline at end. */
 	public void println(Node node) { pv.println(node); }
+	/** Prints the expresion tree on given stream with newline at end. */
 	public void println(Node node,PrintStream out) { pv.println(node,out); }
+	/** Returns a string representation of a expresion tree. */
 	public String toString(Node node) { return pv.toString(node); }
 		
 	public NodeFactory getNodeFactory() {return nf;}

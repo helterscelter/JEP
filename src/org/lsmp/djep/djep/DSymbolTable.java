@@ -11,6 +11,10 @@ import org.nfunk.jep.*;
 import org.lsmp.djep.xjep.*;
 import java.util.*;
 /**
+ * A SymbolTable which works with partial derivatives of variables.
+ * Closely linked with 
+ * {@link PartialVariableFactory PartialVariableFactory}
+ *   
  * @author Rich Morris
  * Created on 23-Nov-2003
  */

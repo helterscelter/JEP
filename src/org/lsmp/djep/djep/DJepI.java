@@ -12,6 +12,8 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 
 /**
+ * This interface specifies method needed to include differentation
+ * for the main JEP class. This interface allow multiple inheritance.
  * @author Rich Morris
  * Created on 16-Nov-2003
  */

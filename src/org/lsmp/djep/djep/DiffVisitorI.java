@@ -13,6 +13,11 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 
 /**
+ * An interface which defines the action of a DifferationVisitor.
+ * Not currently of much functionality, might be useful
+ * if the need to subclass DifferentationVisitor arises.
+ * TODO remove this class.
+ *
  * @author Rich Morris
  * Created on 16-Nov-2003
  */

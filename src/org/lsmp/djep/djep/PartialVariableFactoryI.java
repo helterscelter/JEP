@@ -10,6 +10,7 @@ package org.lsmp.djep.djep;
 import org.nfunk.jep.VariableFactoryI;
 import org.nfunk.jep.*;
 /**
+ * An interface specifying the method needed to create a a PartialDerivative.
  * @author Rich Morris
  * Created on 19-Dec-2003
  */

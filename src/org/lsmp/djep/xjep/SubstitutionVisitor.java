@@ -8,6 +8,18 @@
 package org.lsmp.djep.xjep;
 import org.nfunk.jep.*;
 /**
+ * Allows substution of a given variable with an expresion tree.
+ * Substitution is best done using the 
+ * {@link XJepI#substitute XJepI.sumstitute} method. 
+ * For example
+ * <pre>
+ * XJepI xjep = ...;
+ * Node node = xjep.parse("x^2+x");
+ * Node sub = xjep.parse("sin(y)");
+ * Node res = xjep.substitute(node,"x",sub,xjep);
+ * </pre>
+ * Will give the expresion "(sin(y))^2+sin(y)".
+ * 
  * @author Rich Morris
  * Created on 16-Nov-2003
  */
@@ -19,7 +31,8 @@ public class SubstitutionVisitor extends DoNothingVisitor {
 	public SubstitutionVisitor() {}
 
 	/**
-	 * Substitutes all occurences of variable var with replacement
+	 * Substitutes all occurences of variable var with replacement.
+	 * Does not do a DeepCopy.
 	 * @param orig	the expresion we wish to perform the substitution on
 	 * @param name	the name of the variable
 	 * @param replacement	the expression var is substituted for
@@ -35,6 +48,15 @@ public class SubstitutionVisitor extends DoNothingVisitor {
 		return res;
 	}
 
+	/**
+	 * Substitutes all occurences of a set of variable var with a set of replacements.
+	 * Does not do a DeepCopy.
+	 * @param orig	the expresion we wish to perform the substitution on
+	 * @param names	the names of the variable
+	 * @param replacements	the expression var is substituted for
+	 * @return the tree with variable replace (does not do a DeepCopy)
+	 * @throws ParseException
+	 */
 	public Node substitute(Node orig,String names[],Node replacements[],XJepI xjep) throws ParseException
 	{
 		this.names = names;

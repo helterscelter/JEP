@@ -10,6 +10,7 @@ package org.lsmp.djep.djep;
 import org.nfunk.jep.Variable;
 import org.nfunk.jep.*;
 /**
+ * A VariableFactory which can work with PartialDerivatives.
  * @author Rich Morris
  * Created on 19-Dec-2003
  */

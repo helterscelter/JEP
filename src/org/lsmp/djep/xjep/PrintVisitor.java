@@ -91,11 +91,34 @@ public class PrintVisitor extends ErrorCatchingVisitor
   /** Add a string to buffer. */
   public void append(String s) { sb.append(s); }
   
+	/**
+	 * This interface specifies the method needed to implement a special print rule.
+	 * A special rule must implement the append method, which should
+	 * call pv.append to add data to the output. For example
+	 * <pre>
+	 * 	pv.addSpecialRule(Operator.OP_LIST,new PrintVisitor.PrintRulesI()
+	 *	{
+	 *  	public void append(Node node,PrintVisitor pv) throws ParseException
+	 *		{
+	 *			pv.append("[");
+	 *			for(int i=0;i<node.jjtGetNumChildren();++i)
+	 *			{
+	 *				if(i>0) pv.append(",");
+	 *				node.jjtGetChild(i).jjtAccept(pv, null);
+	 *			}
+	 *			pv.append("]");
+	 *		}});
+ 	 * </pre>
+	 * @author Rich Morris
+	 * Created on 21-Feb-2004
+	 */
   public interface PrintRulesI
   {
+  	/** The method called to append data for the rule. **/
   	public void append(Node node,PrintVisitor pv) throws ParseException;
   }
-  /** this allows a special print rule to be added for a given operator. */
+  /** Adds a special print rule to be added for a given operator. 
+   * TODO Allow special rules for other functions. */
   public void addSpecialRule(Operator op,PrintRulesI rules)
   {
   	specialRules.put(op,rules);
@@ -103,6 +126,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
 /***************** visitor methods ********************************/
 
+/** print the node with no brackets. */
 private void printNoBrackets(Node node)
 {
 	try
@@ -112,6 +136,7 @@ private void printNoBrackets(Node node)
 	catch (ParseException e) { addToErrorList(e.getMessage()); }
 }
 
+/** print a node suronded by brackets. */
 private void printBrackets(Node node)
 {
 	sb.append("(");
@@ -119,7 +144,8 @@ private void printBrackets(Node node)
 	sb.append(")");
 }
 
-public Object visitUnary(ASTFunNode node, Object data)
+/** print a unary operator. */
+private Object visitUnary(ASTFunNode node, Object data)
 {
 	Node rhs = node.jjtGetChild(0);
 
@@ -136,7 +162,7 @@ public Object visitUnary(ASTFunNode node, Object data)
 
 public Object visit(ASTFunNode node, Object data)
 {
-	if(!node.isOperator()) return visitFun(node,data);
+	if(!node.isOperator()) return visitFun(node);
 	try
 	{
 	if(node instanceof PrintRulesI)
@@ -218,7 +244,7 @@ public Object visit(ASTFunNode node, Object data)
 	return null;
 }
     
-public Object visitFun(ASTFunNode node,Object data)
+private Object visitFun(ASTFunNode node)
 {
 	try
 	{
@@ -235,7 +261,7 @@ public Object visitFun(ASTFunNode node,Object data)
 	return null;
 }
 
-public Object visitList(ASTFunNode node)
+private Object visitList(ASTFunNode node)
 {
 	try
 	{

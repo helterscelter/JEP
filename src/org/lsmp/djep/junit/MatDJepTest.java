@@ -14,6 +14,8 @@ import org.lsmp.djep.matrixJep.nodeTypes.*;
  */
 
 /**
+ * JUnit test for full MatrixJep
+ * 
  * @author Rich Morris
  * Created on 19-Nov-2003
  */
@@ -337,6 +339,8 @@ public class MatDJepTest extends TestCase {
 		simplifyTest("diff((x+x^2)*(x+x^3),x)","(1+2*x)*(x+x^3)+(x+x^2)*(1+3*x^2)");
 		simplifyTest("diff((x+x^2)/(x+x^3),x)","((1+2*x)*(x+x^3)-(x+x^2)*(1+3*x^2))/((x+x^3)*(x+x^3))");
 		simplifyTest("diff(sin(x),x)","cos(x)");
+		simplifyTest("diff(-(x-5)^3,x)","-(3.0*(x-5.0)^2.0)");
+		
 
 		simplifyTest("diff((x+1)^2,x)","2+2*x");
 		simplifyTest("diff((x+y)^2,x)","2*(x+y)");
