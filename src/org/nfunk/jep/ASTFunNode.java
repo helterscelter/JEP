@@ -63,9 +63,13 @@ public class ASTFunNode extends SimpleNode {
 	 * in the Operators class
 	 */
 	public void setOperator(int opID_in) {
-		opID = opID_in;
-		name = Operators.name[opID];
-		pfmc = Operators.pfmc[opID];
+		if (Operators.isValidID(opID_in)) {
+			opID = opID_in;
+			name = Operators.name[opID];
+			pfmc = Operators.pfmc[opID];
+		} else {
+			
+		}
 	}
 
 	/**
