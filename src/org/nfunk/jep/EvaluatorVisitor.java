@@ -62,9 +62,13 @@ public class EvaluatorVisitor implements ParserVisitor
 	/** Flag for errors during evaluation */
 	private boolean errorFlag;
 	
+	/** Debug flag */
+	private boolean debug;
+	
 	
 	/** Constructor. Initialize the stack member */
 	public EvaluatorVisitor() {
+		debug = false;
 		errorList = null;
 		stack = new Stack();
 	}
@@ -148,8 +152,16 @@ public class EvaluatorVisitor implements ParserVisitor
 	public Object visit(ASTFunNode node, Object data) {
 		if (node == null) return null;
 		
+		if (debug == true) {
+			System.out.println("Stack size before childrenAccept: " + stack.size());
+		}
+		
 		data = node.childrenAccept(this, data);
 		
+		if (debug == true) {
+			System.out.println("Stack size after childrenAccept: " + stack.size());
+		}
+
 		// check if the function class is set
 		if (node.getPFMC() == null) {
 			addToErrorList("No function class associated with "
@@ -165,6 +177,10 @@ public class EvaluatorVisitor implements ParserVisitor
 			errorFlag = true;
 		}
 		
+		if (debug == true) {
+			System.out.println("Stack size after run: " + stack.size());
+		}
+
 		return data;
 	}
 
