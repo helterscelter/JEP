@@ -21,7 +21,12 @@ public class Polynomial extends Number {
 	private Number coeffs[];
 	private int degree;
 	/**
+	 * Construct a polynomial over a ring.
+	 * In general the valueOf method should be used to construct a new polynomial.
 	 * 
+	 * @param baseRing the underlying ring of the polynomial.
+	 * @param symbol the symbol used to display the polynomial
+	 * @param coeffs an array of coeficients in the base ring coeff[0] is constant, coeff[1] is coefficient of t etc.
 	 */
 	public Polynomial(RingI baseRing,String symbol,Number coeffs[]) {
 		this.baseRing = baseRing;
@@ -50,7 +55,8 @@ public class Polynomial extends Number {
 		this.coeffs = coeffs;
 		this.degree = coeffs.length-1;
 	}
-	/** sub classes should overright this to make the correct type. */
+	/** Factory method to create a polynomial with the given coefficients.
+	 * Sub classes should overwrite this method to costruct objects of the correct type. */
 	protected Polynomial valueOf(Number lcoeffs[])
 	{
 		Polynomial p = new Polynomial(baseRing,symbol,lcoeffs);
@@ -163,6 +169,10 @@ public class Polynomial extends Number {
 	
 	public int getDegree() { return degree; }
 	public String getSymbol() { return symbol; }
+	/** Returns the coefficients of polynomial.
+	 * TODO use defensive copying
+	 * @return
+	 */
 	public Number[] getCoeffs() { return coeffs; }
 	public Number getCoeff(int i) { return coeffs[i]; }
 	public RingI getBaseRing() { return baseRing; }

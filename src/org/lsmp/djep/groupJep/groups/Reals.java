@@ -70,4 +70,9 @@ public class Reals extends Group implements FieldI,OrderedSetI,HasPowerI {
 	public int compare(Number a,Number b)	{
 		return ((Double) a).compareTo((Double) b);
 	}
+	
+	public String toString() {
+		return "Reals (represented as Doubles)";
+	}
+
 }

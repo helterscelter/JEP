@@ -27,10 +27,32 @@ public class Quartonians extends Group implements RingI {
 		public int intValue() {return (int) x;}
 		public long longValue() {return (long) x;}
 		// TODO pretty print so 0 + 0 i + 0 j + 1 k printed as k
-		public String toString() {return ""+x+"+"+y+" i +"+z+" j +"+w+" k";
-	//		StringBuffer sb = new StringBuffer();
-	//		if(x!=0.0) sb.append(x);
+		public String toString() {//return ""+x+"+"+y+" i +"+z+" j +"+w+" k";
+			StringBuffer sb = new StringBuffer();
+			boolean flag=false;
+			if(x!=0.0) { sb.append(x); flag = true; }
+			if(y!=0.0) { 
+				if(flag && y>0.0) sb.append("+");
+				sb.append(y);
+				sb.append("i");
+				flag=true;
+			}
 			
+			if(z!=0.0) { 
+				if(flag && z>0.0) sb.append("+");
+				sb.append(z);
+				sb.append("j");
+				flag=true;
+			}
+			if(w!=0.0) { 
+				if(flag && w>0.0) sb.append("+");
+				sb.append(w);
+				sb.append("k");
+				flag=true;
+			}
+			if(!flag)
+				sb.append("0");
+			return sb.toString();
 		}
 	}
 	private Quartonian ZERO = new Quartonian(0,0,0,0);
