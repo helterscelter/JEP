@@ -1,21 +1,18 @@
-/*
- * ThreadTest
- *
- * 
- * User: matthew.baird
- * Date: Jun 22, 2002
- * Time: 12:35:19 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package org.nfunk.jepexamples;
 
+/**
+ * This class tests the thread safety of the JEP package. 1000 threads
+ * are started, and each one invokes the evaluate method. The evaluate method
+ * creates 10 JEP instances.
+ * <p>
+ * Thanks to Matthew Baird and Daniel Teng for this code.
+ */
 public class ThreadTest {
 	
 	static long time = 0;
 	
 	/**
-	 * Start 1000 threads
+	 * Start 1000 threads.
 	 */
 	public static void main(String[] args) {
 		ThreadTest test = new ThreadTest();

@@ -1,14 +1,12 @@
-/*
- * Created by IntelliJ IDEA.
- * User: matthew.baird
- * Date: Jun 22, 2002
- * Time: 12:50:07 PM
- * To change template for new class use
- * Code Style | Class Templates options (Tools | IDE Options).
- */
 package org.nfunk.jepexamples;
 
 
+/**
+ * The ThreadTestThread waits for 1 second before calling the evaluate method
+ * of the ThreadTest instance.
+ * <p>
+ * Thanks to Matthew Baird and Daniel Teng for this code.
+ */
 public class ThreadTestThread extends Thread
 {
     ThreadTest test;
