@@ -14,14 +14,14 @@
  x Update documentation with new features
  x Test web site in multiple browsers
  x Run spell check on changed pages
- - use "ant dist"
- - upload distribution
- - upload license pdf
- - upload new website
- - Download package and test
- - Add message on SourceForge list
+ x use "ant dist"
+ x upload distribution
+ x upload license pdf
+ x upload new website
+ x Download package and test
+ x Add message on SourceForge list
  - Update version number+ feature list from JARS, share*it,...
- - Add CVS tag for version (e.g. v223)
+ x Add CVS tag for version (e.g. v223)
 
 == Further todos ====================================================
  - automaticize web site uploading/cvs
