@@ -75,18 +75,21 @@
           <li><a href="#usingstrings">Using Strings</a></li>
           <li><a href="#customtypes">Custom types</a></li>
           <li><a href="#manipulating">Manipulating expressions</a></li>
-          <li><a href="#usingcustomnumberclasses">Using custion number classes</a></li>
+          <li><a href="#usingcustomnumberclasses">Using custom number classes</a></li>
         </ul>
         <h3><a name="basicusage"></a>Basic usage</h3>
         <p>Using the JEP package of classes in your project is simple. The following 
           steps will get you started quickly.</p>
         <ol>
-          <li>Download the Java archive JAR file from the download section</li>
+          <li>Download the JEP package from the <a href="../download.htm">download 
+            section</a></li>
+          <li>Unpack the archive</li>
+          <li>Move the jep-x.xx.jar file to a directory of your choice (optional)</li>
           <li>IMPORTANT: For the Java compiler to be able to find the JEP classes 
             when compiling your program, it needs to know their location. So you 
-            will need to add the location of the jar file to your CLASSPATH environment 
-            variable (if you don't know how, <a href="http://java.sun.com/j2se/1.3/docs/tooldocs/win32/classpath.html" target="_blank">read 
-            this</a>). Your CLASSPATH variable should contain something like C:\java\packages\jep-version#.jar, 
+            will need to add the location of the .jar file to your CLASSPATH environment 
+            variable (if you don't know how, <a href="http://java.sun.com/j2se/1.4/docs/tooldocs/windows/classpath.html" target="_blank">read 
+            this</a>). Your CLASSPATH variable should contain something like C:\java\packages\jep-x.xx.jar, 
             depending on where you place the jar file.</li>
           <li>In your program, create a new parser object with 
             <pre>org.nfunk.jep.JEP myParser = new org.nfunk.jep.<a href="javadoc/org/nfunk/jep/JEP.html" target="_blank">JEP</a>();</pre>
@@ -319,9 +322,9 @@ result = myParser.<a href="javadoc/org/nfunk/jep/JEP.html#getValue()" target="_b
           the <a href="javadoc/org/nfunk/jep/type/NumberFactory.html" target="_blank">NumberFactory</a> 
           interface. It includes one method called <a href="javadoc/org/nfunk/jep/type/NumberFactory.html#createNumber(double)" target="_blank">createNumber(double 
           value)</a>, which should return an object initialized to the value of 
-          the parameter. You can specify your custom number factory in the JEP 
-          constructor <code>JEP(boolean traverse_in, boolean allowUndeclared_in, 
-          boolean implicitMul_in, NumberFactory numberFactory_in)</code>.</p>
+          the parameter. You can load your custom number factory with the JEP 
+          constructor <code>JEP(boolean traverse_in, Boolean allowUndeclared_in, 
+          Boolean implicitMul_in, NumberFactory numberFactory_in)</code>.</p>
         <p>The custom number objects need to be handled by custom functions which 
           you can create by following the instructions on the <a href="doc_cust_func.htm">Custom 
           Functions</a> page. </p>
