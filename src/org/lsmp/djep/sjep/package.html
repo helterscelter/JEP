@@ -1,0 +1,41 @@
+<body>
+An advanced simplification algorithm.
+Uses a complete reworking of the ways equations are represented.
+An equation like 
+<pre>1+2 x^2+3 x y+4 x sin(y)</pre>
+is represented as
+<pre>
+polynomial(
+  [monomial(2.0,[varPower(x,2)]),
+  monomial(3.0,[x,y]),
+  monomial(4.0,[x,function(sin,arg)])]
+)
+</pre>
+
+<h2>Comparision</h2>
+The compareTo method implement a total ordering of all expressions.
+The following rules are used to determin the order, 
+
+this < arg ---> -1
+this > arg ---> 1
+a value less than 0 if this string is lexicographically less than the string argument
+a value less than 0 if this Integer is numerically less than the argument Integer
+<ul>
+<li>-1
+<li>0
+<li>1
+<li>a^-2
+<li>a^-1
+<li>a
+<li>a^2
+<li>a^3
+<li>a^x
+<li>a b
+<li>a^2 b
+<li>b
+<li>cos(a)
+<li>sin(a)
+<li>a+b
+<li>a+b+c
+<li>
+</body>
