@@ -141,11 +141,12 @@ public class JEP {
 		this.allowUndeclared = j.allowUndeclared;
 		this.allowAssignment  = j.allowAssignment;
 		this.implicitMul = j.implicitMul;
-		this.ev =j.ev;
-		this.funTab=j.funTab;
-		this.numberFactory=j.numberFactory;
-		this.parser=j.parser;
-		this.symTab=j.symTab;
+		this.ev = j.ev;
+		this.funTab = j.funTab;
+		this.numberFactory = j.numberFactory;
+		this.parser = j.parser;
+		this.symTab = j.symTab;
+		this.errorList = j.errorList;
 	}
 
 	/**
