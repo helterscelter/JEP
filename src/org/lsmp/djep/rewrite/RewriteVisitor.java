@@ -2,7 +2,6 @@
 package org.lsmp.djep.rewrite;
 //import org.lsmp.djep.matrixParser.*;
 import org.lsmp.djep.xjep.DoNothingVisitor;
-import org.lsmp.djep.xjep.NodeFactory;
 import org.lsmp.djep.xjep.TreeUtils;
 import org.lsmp.djep.xjep.XJep;
 import org.nfunk.jep.*;
@@ -17,7 +16,7 @@ import org.nfunk.jep.*;
  * </pre>
  * 
  * <p>
- * Its intended to completly rewrite this class to that simplification
+ * Its intended to completely rewrite this class to that simplification
  * rules can be specified by strings in a way similar to DiffRulesI.
  * It also would be nice to change the rules depending on the type of
  * arguments, for example matrix multiplication is not commutative.
@@ -29,9 +28,6 @@ import org.nfunk.jep.*;
 
 public class RewriteVisitor extends DoNothingVisitor
 {
-  private NodeFactory nf;
-  private OperatorSet opSet;
-  private TreeUtils tu;
   private XJep xj;
   private RewriteRuleI rules[];
   private boolean simp=false;
@@ -40,13 +36,10 @@ public class RewriteVisitor extends DoNothingVisitor
   }
 
   /** must be implemented for subclasses. **/
-  public Node rewrite(Node node,XJep xjep,RewriteRuleI rules[],boolean simplify) throws ParseException,IllegalArgumentException
+  public Node rewrite(Node node,XJep xjep,RewriteRuleI inrules[],boolean simplify) throws ParseException,IllegalArgumentException
   {
   	xj = xjep;
-	nf = xjep.getNodeFactory();
-	opSet = xjep.getOperatorSet();
-	tu = xjep.getTreeUtils();
-	this.rules = rules;
+	this.rules = inrules;
 	this.simp = simplify;
 	if(this.rules.length==0) return node;
 	

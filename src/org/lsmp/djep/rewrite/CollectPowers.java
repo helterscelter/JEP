@@ -37,7 +37,7 @@ public class CollectPowers extends AbstractRewrite {
 			{
 				if(tu.getName(children[0]).equals(tu.getName(children[1])))
 					return true;
-				else return false;
+				return false;
 			}
 
 			// x^n * x
@@ -47,7 +47,7 @@ public class CollectPowers extends AbstractRewrite {
 			{
 				if(tu.getName(children[0].jjtGetChild(0)).equals(tu.getName(children[1])))
 					return true;
-				else return false;			
+				return false;			
 			}
 			if(tu.isVariable(children[0])
 				&& tu.getOperator(children[1]) == opSet.getPower() 
@@ -55,7 +55,7 @@ public class CollectPowers extends AbstractRewrite {
 			{
 				if(tu.getName(children[0]).equals(tu.getName(children[1].jjtGetChild(0))))
 					return true;
-				else return false;			
+				return false;			
 			}
 
 		}

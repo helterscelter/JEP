@@ -57,10 +57,11 @@ public class SimplificationVisitor extends DoNothingVisitor
 		return res2;
 	}
  	/**
- 	 * Simplifies expresions like 2+(3+x) or (2+x)+3
+ 	 * Simplifies expressions like 2+(3+x) or (2+x)+3
  	 * 
- 	 * @param node
- 	 * @param dimKids
+ 	 * @param op the root operator
+ 	 * @param lhs the left hand side node
+ 	 * @param rhs the right hand side node
  	 * @return null if no rewrite happens or top node or top node of new tree.
  	 * @throws ParseException
  	 */
@@ -86,7 +87,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 	
 			if(tu.isConstant(rhsChild1))	
 			{
-				XOperator op2 = (XOperator) rootOp;
+				XOperator op2 = rootOp;
 				if(op == rhsOp) op2 = rootOp;
 				else			op2 = (XOperator) rootOp.getBinaryInverseOp();
 
@@ -140,7 +141,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 			XOperator lhsOp = (XOperator) ((ASTFunNode) lhs).getOperator();
 			XOperator lhsRoot;
 			if(lhsOp.isComposite())	lhsRoot = (XOperator) lhsOp.getRootOp();
-			else					lhsRoot = (XOperator) lhsOp;
+			else					lhsRoot = lhsOp;
 	
 			if(tu.isConstant(lhsChild1))	
 			{
@@ -212,8 +213,8 @@ public class SimplificationVisitor extends DoNothingVisitor
 	{	// Inf + Inf -> NaN TODO not correct for signed infinity 
 		if(tu.isInfinity(rhs))
 			return nf.buildConstantNode(tu.getNAN());
-		else	// Inf + x -> Inf
-			return nf.buildConstantNode(tu.getPositiveInfinity());
+		// Inf + x -> Inf
+		return nf.buildConstantNode(tu.getPositiveInfinity());
 	}
 	if(tu.isInfinity(rhs)) // x + Inf -> Inf
 		return nf.buildConstantNode(tu.getPositiveInfinity());
@@ -252,7 +253,8 @@ public class SimplificationVisitor extends DoNothingVisitor
    * x + (-2) -> x - 2 for any negative number -2
    * 2 +/- ( 3 +/- x ) ->  (2 +/- 3 ) +/- x and similar
    * </pre>
-   * @param dimKids an array of the simplified children of this node
+   * @param lhs the left hand side
+   * @param rhs the right hand side
    */
   
   public Node simplifySubtract(Node lhs,Node rhs) throws ParseException
@@ -261,8 +263,8 @@ public class SimplificationVisitor extends DoNothingVisitor
 	{	// Inf + Inf -> NaN TODO not correct for signed infinity 
 		if(tu.isInfinity(rhs))
 			return nf.buildConstantNode(tu.getNAN());
-		else	// Inf + x -> Inf
-			return nf.buildConstantNode(tu.getPositiveInfinity());
+		// Inf + x -> Inf
+		return nf.buildConstantNode(tu.getPositiveInfinity());
 	}
 	if(tu.isInfinity(rhs)) // x + Inf -> Inf
 		return nf.buildConstantNode(tu.getPositiveInfinity());
@@ -328,15 +330,15 @@ public class SimplificationVisitor extends DoNothingVisitor
 	{	// 0*Inf -> NaN 
 		if(tu.isInfinity(child2))
 			return nf.buildConstantNode(tu.getNAN());
-		else // 0*x -> 0
-			return nf.buildConstantNode(tu.getZERO());
+		// 0*x -> 0
+		return nf.buildConstantNode(tu.getZERO());
 	}
 	if(tu.isZero(child2))
 	{ // Inf*0 -> NaN
 		if(tu.isInfinity(child1))
 			return nf.buildConstantNode(tu.getNAN());
-		else // 0 * x -> 0
-			return nf.buildConstantNode(tu.getZERO());
+		// 0 * x -> 0
+		return nf.buildConstantNode(tu.getZERO());
 	}
 	if(tu.isInfinity(child1)) // Inf * x -> Inf
 			return nf.buildConstantNode(tu.getPositiveInfinity());
@@ -389,8 +391,8 @@ public class SimplificationVisitor extends DoNothingVisitor
 	  {
 		if(tu.isZero(child1))	// 0/0 -> NaN
 			return nf.buildConstantNode(tu.getNAN());
-		else	// x/0 -> Inf
-			return nf.buildConstantNode(tu.getPositiveInfinity());
+		// x/0 -> Inf
+		return nf.buildConstantNode(tu.getPositiveInfinity());
 	  }
 		  
 	  if(tu.isZero(child1))
@@ -426,8 +428,8 @@ public class SimplificationVisitor extends DoNothingVisitor
 		{
 			if(tu.isZero(child2))	// 0^0 -> NaN
 				return nf.buildConstantNode(tu.getNAN());
-			else	// 0^x -> 0
-				return nf.buildConstantNode(tu.getZERO());
+			// 0^x -> 0
+			return nf.buildConstantNode(tu.getZERO());
 		}
 		if(tu.isZero(child2))	// x^0 -> 1
 			return nf.buildConstantNode(tu.getONE());
@@ -455,7 +457,7 @@ public class SimplificationVisitor extends DoNothingVisitor
 //		return tu.buildPower(child1,child2);
 	}
 
-	/** simplifies operators, does not decend into children */
+	/** simplifies operators, does not descend into children */
 
 	public Node simplifyOp(ASTFunNode node,Node children[]) throws ParseException
 	{
@@ -536,22 +538,21 @@ public class SimplificationVisitor extends DoNothingVisitor
 				throw new ParseException("null res from simp op");
 			return res;
 		}		
-		else
-		{
-			Node children[] = acceptChildrenAsArray(node,data);
-
-			boolean allConst=true;
-			for(int i=0;i<nchild;++i)
-			{
-				if(!tu.isConstant(children[i]))
-					allConst=false;
-				if(tu.isNaN(children[i]))
-					return nf.buildConstantNode(tu.getNAN());
-			}	
-			if(allConst)
-				return nf.buildConstantNode(node.getPFMC(),children);
 		
-			return TreeUtils.copyChildrenIfNeeded(node,children);
-		}
+		Node children[] = acceptChildrenAsArray(node,data);
+
+		boolean allConst=true;
+		for(int i=0;i<nchild;++i)
+		{
+			if(!tu.isConstant(children[i]))
+				allConst=false;
+			if(tu.isNaN(children[i]))
+				return nf.buildConstantNode(tu.getNAN());
+		}	
+		if(allConst)
+			return nf.buildConstantNode(node.getPFMC(),children);
+	
+		return TreeUtils.copyChildrenIfNeeded(node,children);
+		
 	}
 }

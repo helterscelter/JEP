@@ -15,7 +15,7 @@ import org.lsmp.djep.xjep.*;
 
 /**
  * This class is used to create nodes of specified types.
- * It can be subclassed to change the nature of how nodes
+ * It can be sub-classed to change the nature of how nodes
  * are constructed. Generally there are two methods for creating
  * nodes, methods which take an existing node and methods which
  * take the components.
@@ -64,7 +64,7 @@ public class MatrixNodeFactory extends NodeFactory {
 	}
 
 	/** Calculates the dimension of node using the dimensions
-	 * of the children. Does not recurese down the tree.
+	 * of the children. Does not recurse down the tree.
 	 */
 	public Dimensions calcDim(String name,PostfixMathCommandI pfmc,Node arguments[])
 		throws ParseException
@@ -100,7 +100,7 @@ public class MatrixNodeFactory extends NodeFactory {
 		else
 		{
 			return Dimensions.ONE;
-	//		System.out.println("Warning: assuming 1 for dimensons of "+node.getName());
+	//		System.out.println("Warning: assuming 1 for dimensions of "+node.getName());
 		}
 	}
 
@@ -115,7 +115,7 @@ public class MatrixNodeFactory extends NodeFactory {
 	/**
 	 * Builds a function with n arguments
 	 * @param node the properties (name and pfmc) of this node will be copied.
-	 * @param arguments the arguments to the function.
+	 * @param children the arguments to the function.
 	 * @return top Node of expression 
 	 * 
 	 * @since 2.3.3 if possible use dimension of existing node. (Needed when deep copying MList functions)
@@ -156,8 +156,7 @@ public class MatrixNodeFactory extends NodeFactory {
 	
 	/**
 	 * Builds a operator node with n arguments
-	 * @param name of function.
-	 * @param pfmc PostfixMathCommand for function.
+	 * @param op the operator for this node
 	 * @param arguments the arguments to the function.
 	 * @return top Node of expression 
 	 */

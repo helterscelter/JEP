@@ -26,12 +26,12 @@ public class POperator extends AbstractPNode {
 	public boolean equals(PNodeI node)
 	{
 		if(!(node instanceof POperator)) return false;
-		POperator op = (POperator) node;
-		if(!this.op.equals(op)) return false;
-		if(args.length != op.args.length)
+		POperator nodeOp = (POperator) node;
+		if(!this.op.equals(nodeOp)) return false;
+		if(args.length != nodeOp.args.length)
 			return false;
 		for(int i=0;i<args.length;++i)
-			if(!args[i].equals(op.args[i])) return false;
+			if(!args[i].equals(nodeOp.args[i])) return false;
 		return true;
 	}
 

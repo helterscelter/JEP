@@ -89,7 +89,7 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				stack.push(val);
 				return; 
 			}
-			else throw new ParseException("Bad second argument to ele, expecting a double "+param2.toString());
+			throw new ParseException("Bad second argument to ele, expecting a double "+param2.toString());
 		}
 		else if(param1 instanceof Matrix)
 		{

@@ -39,8 +39,7 @@ public abstract class AbstractPNode implements PNodeI
 
 		if(this.compareTo(node) < 0)
 			return new Polynomial(pc,new PNodeI[]{this,node}); // x+y
-		else
-			return new Polynomial(pc,new PNodeI[]{node,this}); // x+y
+		return new Polynomial(pc,new PNodeI[]{node,this}); // x+y
 	}
 
 	public PNodeI sub(PNodeI node) throws ParseException
@@ -94,11 +93,11 @@ public abstract class AbstractPNode implements PNodeI
 				pc.oneConstant,
 				new PNodeI[]{this,node},
 				new PNodeI[]{pc.oneConstant,pc.oneConstant});
-		else
-			return new Monomial(pc,
-				pc.oneConstant,
-				new PNodeI[]{node,this},
-				new PNodeI[]{pc.oneConstant,pc.oneConstant});
+		
+		return new Monomial(pc,
+			pc.oneConstant,
+			new PNodeI[]{node,this},
+			new PNodeI[]{pc.oneConstant,pc.oneConstant});
 	}
 
 	public PNodeI div(PNodeI node) throws ParseException

@@ -14,17 +14,18 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 
 /**
-   * Diffrentiates a addition with respect to var.
+   * Differentiates a addition with respect to var.
    * diff(y+z,x) -> diff(y,x)+diff(z,x)
    */
 public class AdditionDiffRule implements DiffRulesI
 {
   private String name;
 
-  private AdditionDiffRule() {}
+  /** private default constructor, a name must always be specified. */
+  private AdditionDiffRule() { /* nothing happening */ 	}
+  
   public AdditionDiffRule(String inName)
   {	  
-	//dv = inDv;
 	name = inName;
   }
 

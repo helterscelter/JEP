@@ -43,11 +43,11 @@ public class DJep extends XJep {
 	}
 	/**
 	 * Differentiate an equation with respect to a variable.
-	 * @param node top node of the expresion tree to differentiate.
+	 * @param node top node of the expression tree to differentiate.
 	 * @param name differentiate with respect to this variable.
 	 * @return the top node of a new parse tree representing the derivative.
 	 * @throws ParseException if for some reason equation cannot be differentiated,
-	 * ususaly if it has not been taught how to differentiate a particular function.
+	 * usually if it has not been taught how to differentiate a particular function.
 	 */
 	public Node differentiate(Node node,String name) throws ParseException
 	{
@@ -55,7 +55,7 @@ public class DJep extends XJep {
 	}
 	protected DJep(DJep j)
 	{
-		super((XJep) j);
+		super(j);
 		this.dv=j.dv;
 	}
 

@@ -44,14 +44,14 @@ public class Monomial extends AbstractPNode {
 		this.powers = new PNodeI[]{power};
 	}
 
-	PNodeI valueOf(Constant coeff,PNodeI terms[],PNodeI pows[]) throws ParseException
+	PNodeI valueOf(Constant coefficient,PNodeI terms[],PNodeI pows[])
 	{
-		if(coeff.isZero()) return pc.zeroConstant;
-		if(terms.length ==0) return coeff;
-		return new Monomial(pc,coeff,terms,pows);
+		if(coefficient.isZero()) return pc.zeroConstant;
+		if(terms.length ==0) return coefficient;
+		return new Monomial(pc,coefficient,terms,pows);
 	}
 
-	MutiableMonomial toMutiableMonomial() throws ParseException
+	MutiableMonomial toMutiableMonomial()
 	{
 		PNodeI newTerms[] = new PNodeI[vars.length];
 		PNodeI newPows[] = new PNodeI[vars.length];

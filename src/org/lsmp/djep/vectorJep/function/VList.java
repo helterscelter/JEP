@@ -15,9 +15,9 @@ import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
 
 /**
- * A enhanced version of List, allows matricies and tensors.
+ * A enhanced version of List, allows matrices and tensors.
  * During evaluation this function converts lists of values into the appropriate 
- * @link org.lsmp.djep.vectorJep.values.MatrixValueI MatrixValueI
+ * @see org.lsmp.djep.vectorJep.values.MatrixValueI MatrixValueI
  * type.
  * 
  * @author Rich Morris
@@ -31,7 +31,7 @@ public class VList extends org.nfunk.jep.function.List
 		numberOfParameters = -1;
 	}
 
-	/** Calculates the dimension of this node with given dimesions of children. */
+	/** Calculates the dimension of this node with given dimensions of children. */
 	public Dimensions calcDim(Dimensions dims[]) throws ParseException
 	{
 		return Dimensions.valueOf(dims.length,dims[0]);

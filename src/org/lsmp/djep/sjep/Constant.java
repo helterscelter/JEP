@@ -59,7 +59,7 @@ public class Constant extends AbstractPNode {
 		if(this.isZero()) {
 			if(c.isZero())
 				return pc.nanConstant;
-			else return pc.zeroConstant; 
+			return pc.zeroConstant; 
 		}
 		if(c.isZero()) return pc.infConstant;
 		if(c.isOne()) return this;
@@ -78,7 +78,7 @@ public class Constant extends AbstractPNode {
 	public PNodeI pow(PNodeI c) throws ParseException {
 		if(this.isZero()){
 			if(c.isZero()) return pc.nanConstant;
-			else return pc.zeroConstant;
+			return pc.zeroConstant;
 		}
 		if(this.isOne()) return pc.oneConstant;
 		if(c.isZero()) return pc.oneConstant;
@@ -147,7 +147,7 @@ public class Constant extends AbstractPNode {
 
 	public int compareTo(Constant c)
 	{
-			return ((Comparable) value).compareTo((Comparable) c.value);
+			return ((Comparable) value).compareTo(c.value);
 	}
 
 
@@ -155,8 +155,7 @@ public class Constant extends AbstractPNode {
 	{
 		if(node instanceof Constant)
 			return value.equals(((Constant)node).value);
-		else
-			return false;
+		return false;
 	}
 
 	public PNodeI expand()	{ return this;	}

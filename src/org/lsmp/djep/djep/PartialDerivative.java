@@ -51,10 +51,10 @@ public class PartialDerivative extends XVariable  implements Observer {
 		return printString;
 	}
 	
-	public PartialDerivative findDerivative(String name,DJep jep)
+	public PartialDerivative findDerivative(String dname,DJep jep)
 		throws ParseException
 	{
-		return root.findDerivative(this,name,jep);
+		return root.findDerivative(this,dname,jep);
 	}
 	
 	

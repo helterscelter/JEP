@@ -15,13 +15,13 @@ import org.nfunk.jep.function.*;
 
 
 /**
-   * The diff(f,x) opperator.
+   * The diff(f,x) operator.
    */
   public class Diff extends PostfixMathCommand implements CommandVisitorI,SpecialEvaluationI
   {
 	  public Diff() {
 		  super();
-		  numberOfParameters = 2;
+		  super.numberOfParameters = 2;
 	  }
 	
   /**

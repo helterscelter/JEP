@@ -1,6 +1,6 @@
 /*
  * Created on 16-Jun-2003 by Rich webmaster@pfaf.org
- * www.comp.leeds.ac.uk/pfaf/lsmp
+ * www.singsurf.org
  *
  * This code is covered by a Creative Commons
  * Attribution, Non Commercial, Share Alike license
@@ -23,7 +23,7 @@ import org.nfunk.jep.type.*;
  */
 public class TreeUtils {
 	/** Real zero. Note that this is a Double, if a different number
-	 * format is needed then this class should be subclassed.
+	 * format is needed then this class should be sub-classed.
 	 */
 	protected static Double ZERO = new Double(0.0);
 	/** Real One */
@@ -149,7 +149,7 @@ public class TreeUtils {
 				double xInt = Math.rint(x);
 				return x == xInt;
 			}
-			else return false;
+			return false;
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class TreeUtils {
 
 	/**
 	 * returns true if node is a ASTConstant with value Double(0) or Complex(0,0)
-	 * @param tol	tolerence for testing for zero
+	 * @param tol	tolerance for testing for zero
 	 */
 	
 	public boolean isZero(Node node,double tol)
@@ -201,7 +201,7 @@ public class TreeUtils {
 	}
 	/** 
 	 * returns true if node is a ASTConstant with a Infinite component
-	 * TODO do propper treatment of signed infinity 
+	 * TODO do proper treatment of signed infinity 
 	 */
 
 	public boolean isInfinity(Node node)
@@ -307,7 +307,7 @@ public class TreeUtils {
 	{
 	   if(isOperator(node))
 	   	return ((ASTFunNode) node).getOperator();
-	   else return null;
+	   return null;
 	}
 
 	/**

@@ -16,7 +16,7 @@ import java.util.Enumeration;
 import java.io.PrintStream;
 
 /**
- * A class for perfoming differentation of an expression.
+ * A class for performing differentation of an expression.
  * To use do
  * <pre>
  * JEP j = ...; Node in = ...;
@@ -49,7 +49,6 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 //	private OperatorSet opSet;
   /**
    * Construction with a given set of tree utilities 
-   * @param tu
    */
   public DifferentiationVisitor(DJep jep)
   {
@@ -72,8 +71,8 @@ public class DifferentiationVisitor extends DeepCopyVisitor
    * <pre>
    * sin,cos,tan,asin,acos,atan,sinh,cosh,tanh,asinh,acosh,atanh
    * sqrt,log,ln,abs,angle
-   * sum,im,re are handled seperatly.
-   * rand and mod currently unhandled
+   * sum,im,re are handled separately.
+   * rand and mod currently un-handled
    * 
    * Also adds rules for functions not in JEP function list:
    * 	sec,cosec,cot,exp,pow,sgn 
@@ -184,7 +183,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
   public void printDiffRules() { printDiffRules(System.out); }
   
   /**
-   * Prints all the differentation rules for all functions on specifed stream.
+   * Prints all the differentation rules for all functions on specified stream.
    */
   public void printDiffRules(PrintStream out)
   {
@@ -192,7 +191,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 	for(Enumeration enume = globalDJep.getFunctionTable().keys(); enume.hasMoreElements();)
 	{
 		String key = (String) enume.nextElement();
-		PostfixMathCommandI value = (PostfixMathCommandI) globalDJep.getFunctionTable().get(key);
+		PostfixMathCommandI value = globalDJep.getFunctionTable().get(key);
 		DiffRulesI rule = (DiffRulesI) diffRules.get(key);
 		if(rule==null)
 			out.print(key+" No diff rules specified ("+value.getNumberOfParameters()+" arguments).");
@@ -214,10 +213,10 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 
 	/**
 	 * Differentiates an expression tree wrt a variable var.
-	 * @param node the top node of the expresion tree
+	 * @param node the top node of the expression tree
 	 * @param var the variable to differentiate wrt
 	 * @return the top node of the differentiated expression 
-	 * @throws ParseException if some error occured while trying to differentiate, for instance of no rule supplied for given function.
+	 * @throws ParseException if some error occurred while trying to differentiate, for instance of no rule supplied for given function.
 	 * @throws IllegalArgumentException
 	 */
 	public Node differentiate(Node node,String var,DJep djep) throws ParseException,IllegalArgumentException
@@ -268,8 +267,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 	  * Differentiates a variable. 
 	  * May want to alter behaviour when using multi equation as diff(f,x)
 	  * might not be zero.
-	  * @return 1 if the variable has the same name as data
-	  * @return 0 if the variable has a different name.
+	  * @return 1 if the variable has the same name as data, 0 if the variable has a different name.
 	  */
 	 public Object visit(ASTVarNode node, Object data) throws ParseException {
 	   String varName = (String) data;
@@ -299,7 +297,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 
 	 /**
 	  * Differentiates a constant.
-	  * @return 0 direvatives of constants are always zero.
+	  * @return 0 derivatives of constants are always zero.
 	  */
 	 public Object visit(ASTConstant node, Object data) throws ParseException {
 		return nf.buildConstantNode(tu.getZERO());

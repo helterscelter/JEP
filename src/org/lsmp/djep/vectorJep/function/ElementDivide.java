@@ -12,7 +12,7 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
 
 /**
- * Multiplies any number of Vectors or Matricies element by element.
+ * Multiplies any number of Vectors or Matrices element by element.
  * TODO could be much more efficient when called through run.
  * 
  * @author Rich Morris
@@ -23,7 +23,7 @@ public class ElementDivide extends Divide implements BinaryOperatorI {
 	public Dimensions calcDim(Dimensions ldim,Dimensions rdim)
 	{
 		if(ldim.equals(rdim)) return ldim;
-		else return null;
+		return null;
 	}
 
 	/**

@@ -153,8 +153,7 @@ public class PolynomialCreator extends DoNothingVisitor {
 		
 		if(op != null)
 			return new POperator(this,op,args);
-		else
-			return new PFunction(this,node.getName(),node.getPFMC(),args);
+		return new PFunction(this,node.getName(),node.getPFMC(),args);
 		
 		//throw new ParseException("Polynomial: Sorry don't know how to convert "+node.getName());
 	}

@@ -34,13 +34,12 @@ public class MatrixPreprocessor implements ParserVisitor
 {
 	private MatrixJep mjep;
 	private MatrixNodeFactory nf;
-	private MatrixOperatorSet opSet;
 	private DSymbolTable vt;
 
 	public MatrixPreprocessor() {}
 
 	/**
-	 * Main entry point: preprocess a node. 
+	 * Main entry point: pre-process a node. 
 	 * @param node	Top node of tree. 
 	 * @param mdjep	Reference to MatrixJep instance
 	 * @return	A new tree with all preprocessing carried out.
@@ -51,7 +50,6 @@ public class MatrixPreprocessor implements ParserVisitor
 		this.mjep=mdjep;
 		this.nf=(MatrixNodeFactory) mdjep.getNodeFactory();
 		this.vt=(DSymbolTable) mdjep.getSymbolTable();
-		this.opSet=(MatrixOperatorSet) mdjep.getOperatorSet();
 		return (MatrixNodeI) node.jjtAccept(this,null);
 	}
 	
@@ -64,10 +62,8 @@ public class MatrixPreprocessor implements ParserVisitor
 		MatrixNodeI children[] = new MatrixNodeI[nchild];
 		for(int i=0;i<nchild;++i)
 		{
-//		  System.out.println("vcaa "+i+" "+node.jjtGetChild(i));
 		  MatrixNodeI no = (MatrixNodeI) node.jjtGetChild(i).jjtAccept(this,data);
-//		  System.out.println("vcaa "+i+" "+node.jjtGetChild(i)+" done "+no);
-		  children[i] = (MatrixNodeI) no;
+		  children[i] = no;
 		}
 		return children;
 	}
@@ -82,7 +78,7 @@ public class MatrixPreprocessor implements ParserVisitor
 	{
 		return nf.buildConstantNode(node.getValue());
 	}
-	/** multidimensions differentiable variables */
+	/** multi-dimensional differentiable variables */
 	public Object visit(ASTVarNode node, Object data) throws ParseException
 	{
 		return nf.buildVariableNode(vt.getVar(node.getName()));
@@ -99,7 +95,7 @@ public class MatrixPreprocessor implements ParserVisitor
 		}
 		if(node.isOperator()) return visitOp(node,data);
 		if(node.getPFMC() instanceof CommandVisitorI)
-				throw new IllegalArgumentException("MatrixPreprocessor: encounterd and instance of CommandVisitorI  for function "+node.getName());
+				throw new IllegalArgumentException("MatrixPreprocessor: encountered and instance of CommandVisitorI  for function "+node.getName());
 
 		MatrixNodeI children[] = visitChildrenAsArray(node,data);
 		ASTMFunNode res = (ASTMFunNode) nf.buildFunctionNode(node,children);
@@ -130,7 +126,7 @@ public class MatrixPreprocessor implements ParserVisitor
 		{
 			Dimensions dims[] = new Dimensions[children.length];
 			for(int i=0;i<children.length;++i)
-				dims[i]=((MatrixNodeI) children[i]).getDim();
+				dims[i]=children[i].getDim();
 			NaryOperatorI uni = (NaryOperatorI) pfmc;
 			Dimensions dim = uni.calcDim(dims);
 			return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,dim);

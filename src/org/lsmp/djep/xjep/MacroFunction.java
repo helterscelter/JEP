@@ -19,7 +19,7 @@ import java.util.*;
  * Node node = j.parse("zap(10)");
  * System.out.println(j.evaluate(node)); // print 45
  * </pre>
- * The names of the variables used inside the fuction depends on the number of arguments:
+ * The names of the variables used inside the function depends on the number of arguments:
  * <ul>
  * <li>One argument variable must be x: <tt>new MacroFunction("sec",1,"1/cos(x)",j)</tt></li>
  * <li>Two arguments variables must be x or y: <tt>new MacroFunction("myPower",2,"x^y",j)</tt></li>
@@ -47,7 +47,7 @@ public class MacroFunction extends PostfixMathCommand
 	 * @param inName name of function
 	 * @param nargs number of arguments
 	 * @param expression a string representing the expression.
-	 * @param inTu a reference to the TreeUtils object.
+	 * @param jep a reference to main XJep object.
 	 */
 	public MacroFunction(String inName,int nargs,String expression,XJep jep) throws IllegalArgumentException,ParseException
 	{

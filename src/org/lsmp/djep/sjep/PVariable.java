@@ -18,7 +18,7 @@ public class PVariable extends AbstractPNode {
 	/**
 	 * 
 	 */
-	public PVariable(PolynomialCreator pc,XVariable var) throws ParseException {
+	public PVariable(PolynomialCreator pc,XVariable var) {
 		super(pc);
 		this.variable = var;
 	}

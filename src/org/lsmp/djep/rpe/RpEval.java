@@ -58,17 +58,15 @@ import java.util.*;
 public final class RpEval implements ParserVisitor {
 
 	/** The mjep reference **/
-	private JEP jep;
 	private OperatorSet opSet;
 	private ScalerStore scalerStore = new ScalerStore();
 	/** Contains the constant values **/
 	private double constVals[] = new double[0];
 
-	/** Tempoary holder for command list used during compilation */
+	/** Temporary holder for command list used during compilation */
 	private RpCommandList curCommandList;
 
 	public RpEval(JEP jep) {
-		this.jep = jep;
 		this.opSet = jep.getOperatorSet();
 	}
 
@@ -133,8 +131,8 @@ public final class RpEval implements ParserVisitor {
 	private static final short COT = 20;
 	
 	// 2 argument functions
-	private static final short ANGLE = 21;
-	private static final short MODULUS = 22;
+//	private static final short ANGLE = 21;
+//	private static final short MODULUS = 22;
 
 
 	/** Hashtable for function name lookup **/
@@ -206,10 +204,7 @@ public final class RpEval implements ParserVisitor {
 				var.addObserver(this);
 				return size;
 			}
-			else
-			{
-				return ((Integer) index).intValue();
-			}
+			return ((Integer) index).intValue();
 		}
 		final public void update(Observable obs, Object arg1) 
 		{
@@ -249,8 +244,8 @@ public final class RpEval implements ParserVisitor {
 	}
 
 	private final class ScalerStore extends ObjStore {
-		private double stack[]=new double[0];
-		private double vars[]= new double[0];
+		double stack[]=new double[0];
+		double vars[]= new double[0];
 		final void alloc() { 
 			stack = new double[stackMax];
 			}
@@ -433,7 +428,7 @@ public final class RpEval implements ParserVisitor {
 
 	public final Object visit(ASTVarNode node, Object data) throws ParseException 
 	{
-		Variable var = (Variable) node.getVar();
+		Variable var = node.getVar();
 		// find appropriate table
 		short vRef = (short) scalerStore.addVar(var);
 		scalerStore.incStack();
@@ -482,7 +477,7 @@ public final class RpEval implements ParserVisitor {
 			{
 				Node rightnode = node.jjtGetChild(1);
 				rightnode.jjtAccept(this,null);
-				Variable var = (Variable) ((ASTVarNode)node.jjtGetChild(0)).getVar();
+				Variable var = ((ASTVarNode)node.jjtGetChild(0)).getVar();
 				short vRef = (short) scalerStore.addVar(var);
 				scalerStore.decStack();
 				curCommandList.addCommand(ASSIGN,vRef);
@@ -550,20 +545,19 @@ public final class RpEval implements ParserVisitor {
 			}
 			throw new ParseException("RpeEval: Sorry unsupported operator/function: "+ node.getName());
 		}
-		else	// other functions
+		// other functions
+		
+		Short val = (Short) functionHash.get(node.getName());
+		if(val == null)
+			throw new ParseException("RpeEval: Sorry unsupported operator/function: "+ node.getName());
+		if(node.getPFMC().getNumberOfParameters() == 1 && nChild == 1)
 		{
-			Short val = (Short) functionHash.get(node.getName());
-			if(val == null)
-				throw new ParseException("RpeEval: Sorry unsupported operator/function: "+ node.getName());
-			if(node.getPFMC().getNumberOfParameters() == 1 && nChild == 1)
-			{
-				//scalerStore.decStack();
-				curCommandList.addCommand(FUN,val.shortValue()); 
-				return null;
-			}
-			else
-				throw new ParseException("RpeEval: sorry can currently only support single argument functions");
+			//scalerStore.decStack();
+			curCommandList.addCommand(FUN,val.shortValue()); 
+			return null;
 		}
+
+		throw new ParseException("RpeEval: sorry can currently only support single argument functions");
 	}
 
 	/***************************** evaluation *****************************/

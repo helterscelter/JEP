@@ -44,22 +44,7 @@ public class MVector extends Number implements MatrixValueI
 			res.setEle(i,eles[i]);
 		return res;
 	}
-	/**
-	 * Construct a Vector from a set of elements.
-	 * @param vecs
-	 */
-/*
- 	public MVector(Object[] eles) throws ParseException
-	{
-		if(eles==null) { throw new ParseException("Tried to create an MVector with null elements"); } 
-		size = eles.length;
-		if(size==0) {  throw new ParseException("Tried to create an Mvector with zero elements"); }		
-		
-		// now check that each vector has the same size.
-		
-		data = eles;
-	}
-*/
+
 	public String toString()
 	{
 		StringBuffer sb = new StringBuffer();
@@ -104,7 +89,7 @@ public class MVector extends Number implements MatrixValueI
 
 	/**
 	 * Always override hashCode when you override equals.
-	 * Efective Java, Joshua Bloch, Sun Press
+	 * Effective Java, Joshua Bloch, Sun Press
 	 */
 	public int hashCode() {
 		int result = 17;

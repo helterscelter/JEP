@@ -16,7 +16,7 @@ import org.lsmp.djep.xjep.*;
 import org.lsmp.djep.matrixJep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
 /**
- * An extension of JEP which allows advanced vector and matrix handeling and differentation.
+ * An extension of JEP which allows advanced vector and matrix handling and differentation.
  *
  * @author Rich Morris
  * Created on 19-Dec-2003
@@ -32,7 +32,7 @@ public class MatrixJep extends DJep {
 		nf = new MatrixNodeFactory();
 		symTab = new DSymbolTable(mvf);
 		opSet = new MatrixOperatorSet();
-		this.parser.setInitialTokenManagerState(Parser.NO_DOT_IN_IDENTIFIERS);
+		this.parser.setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
 
 		Operator tens = ((MatrixOperatorSet) opSet).getMList();
 		pv.addSpecialRule(tens,(PrintVisitor.PrintRulesI) tens.getPFMC());
@@ -71,8 +71,7 @@ public class MatrixJep extends DJep {
 		Object res = mev.evaluate((MatrixNodeI) node,this);
 		if(res instanceof Scaler)
 			return ((Scaler) res).getEle(0);
-		else 
-			return res;
+		return res;
 	}
 
 	/** Evaluate a node. Does not unwrap scalers. */
@@ -82,7 +81,7 @@ public class MatrixJep extends DJep {
 		return res;
 	}
 
-	/** Preprocesses an equation to allow the diff and eval operators to be used. */
+	/** Pre-processes an equation to allow the diff and eval operators to be used. */
 	public Node preprocess(Node node) throws ParseException
 	{
 		return dec.preprocess(node,this);
@@ -97,8 +96,7 @@ public class MatrixJep extends DJep {
 			Object res = mev.evaluate((MatrixNodeI) getTopNode(),this);
 			if(res instanceof Scaler)
 				return ((Scaler) res).getEle(0);
-			else 
-				return res;
+			return res;
 		}
 		catch(Exception e)
 		{

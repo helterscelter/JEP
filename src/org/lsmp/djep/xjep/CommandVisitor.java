@@ -12,7 +12,7 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.function.PostfixMathCommandI;
 
 /**
- * Executes commands like diff and eval embeded in expression trees.
+ * Executes commands like diff and eval embedded in expression trees.
  * For example you could do 
  * <pre>eval(diff(x^3,x),x,2)</pre>
  * to differentiate x^3 and then substitute x=2 to get the value 12. 
@@ -40,12 +40,12 @@ public class CommandVisitor extends DoNothingVisitor
   }
   
   /** 
-   * Decends the tree processing all diff, eval and simplify options
+   * Descends the tree processing all diff, eval and simplify options
    */
 
-  public Node process(Node node,XJep xjep) throws ParseException
+  public Node process(Node node,XJep xj) throws ParseException
   {
-  	this.xjep=xjep;
+  	this.xjep=xj;
 	Node res = (Node) node.jjtAccept(this,null);
 	return res;
   }

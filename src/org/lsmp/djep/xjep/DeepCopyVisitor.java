@@ -21,9 +21,9 @@ public class DeepCopyVisitor extends DoNothingVisitor implements ParserVisitor {
 
 	private XJep xjep;
 	/** Creates a deepCopy of a Node **/	
-	public Node deepCopy(Node node,XJep xjep) throws ParseException
+	public Node deepCopy(Node node,XJep xj) throws ParseException
 	{
-		this.xjep = xjep;
+		this.xjep = xj;
 		Node res = (Node) node.jjtAccept(this,null);
 		return res;
 	}

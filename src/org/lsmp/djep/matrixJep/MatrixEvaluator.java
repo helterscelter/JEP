@@ -26,9 +26,9 @@ public class MatrixEvaluator implements ParserVisitor
 //	private DimensionCalculator dimCalc;
 	private Stack stack = new Stack();
 	private MatrixJep mjep;
-	public MatrixValueI evaluate(MatrixNodeI node,MatrixJep mjep) throws ParseException
+	public MatrixValueI evaluate(MatrixNodeI node,MatrixJep mj) throws ParseException
 	{
-		this.mjep=mjep;
+		this.mjep=mj;
 		return (MatrixValueI) node.jjtAccept(this,null);
 	}
 
@@ -40,20 +40,15 @@ public class MatrixEvaluator implements ParserVisitor
 	{
 		return ((ASTMConstant) node).getMValue();
 	}
-	/** multidimensions differentiable variables */
+	/** multi dimensional differentiable variables */
 	public Object visit(ASTVarNode node, Object data) throws ParseException
 	{
 		MatrixVariableI var = (MatrixVariableI) node.getVar();
 		if(var.hasValidValue())
 			return var.getMValue();
-		else
-		{
-			MatrixValueI res = (MatrixValueI) var.getEquation().jjtAccept(this,data);
-			var.setMValue(res);
-//			val.setEles(res);
-//			var.setValidValue(true);
-			return res;
-		}
+		MatrixValueI res = (MatrixValueI) var.getEquation().jjtAccept(this,data);
+		var.setMValue(res);
+		return res;
 	}
 	
 	/** other functions **/

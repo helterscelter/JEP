@@ -168,16 +168,14 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 		this(djep,inName,djep.getFunctionTable().get(inName),node1,node2);
 	}
 */	/**
-	 * Create a differention rule for function with n arguments.
+	 * Create a differentation rule for function with n arguments.
 	 * The rules must be in terms of "x1", "x2", ... "xn"
 	 * @param inName	name of function
 	 * @param inPfmc	PostfixMathCommandI for function
-	 * @param inRule	an array of strings represention differation of function wrt "x1",...
 	 * @throws ParseException
 	 */
 	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,String[] inRules) throws ParseException
 	{
-		//super(dv);
 		name = inName;
 		pfmc = inPfmc;
 		if(pfmc!=null)
@@ -200,11 +198,10 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	}
 
 	/**
-	 * Create a differention rule for function with n arguments.
+	 * Create a differentation rule for function with n arguments.
 	 * The rules must be in terms of "x1", "x2", ... "xn"
 	 * @param inName	name of function
-	 * @param inPfmc	PostfixMathCommandI for function
-	 * @param inRule	an array of strings represention differation of function wrt "x1",...
+	 * @param inRules	an array of strings representation differentation of function wrt "x1",...
 	 * @throws ParseException
 	 */
 	public MacroDiffRules(DJep djep,String inName,String[] inRules) throws ParseException
@@ -212,11 +209,11 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 		this(djep,inName,djep.getFunctionTable().get(inName),inRules);
 	}
 	/**
-	 * Create a differention rule for function with n arguments.
+	 * Create a differentation rule for function with n arguments.
 	 * The rules must be in terms of "x1", "x2", ... "xn"
 	 * @param inName	name of function
 	 * @param inPfmc	PostfixMathCommandI for function
-	 * @param inRule	an array of expression trees represention differation of function wrt "x1",...
+	 * @param inRule	an array of expression trees representation differentation of function wrt "x1",...
 	 * @throws ParseException
 	 */
 /*	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,Node[] inRules) throws ParseException
@@ -235,10 +232,10 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	}
 */	
 	/**
-	 * Create a differention rule for function with n arguments.
+	 * Create a differentation rule for function with n arguments.
 	 * The rules must be in terms of "x1", "x2", ... "xn"
 	 * @param inName	name of function
-	 * @param inRules	an array of expression trees represention differation of function wrt "x1",...
+	 * @param inRules	an array of expression trees representation differentation of function wrt "x1",...
 	 * @throws ParseException
 	 */
 /*	public MacroDiffRules(DJep djep,String inName,Node[] inRules) throws ParseException

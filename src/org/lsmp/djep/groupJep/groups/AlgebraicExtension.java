@@ -27,7 +27,7 @@ public class AlgebraicExtension extends ExtendedFreeGroup implements RingI {
 	/**
 	 * Create the ring K(t) where t is a solution of the monic polynomial p.
 	 * 
-	 * @param baseRing the Ring this is an extension of.
+	 * @param K the Ring this is an extension of.
 	 * @param poly A monic polynomial whose solution gives an algebraic number which is used to generate this group.
 	 * @throws IllegalArgumentException if the base ring of the poly is not the same.
 	 * @throws IllegalArgumentException if the polynomial is not monic.

@@ -53,10 +53,10 @@ public class XJep extends JEP {
 		pv = new PrintVisitor();
 	}
 
-	/** Copy constructions, reuses all the componants of argument. */
+	/** Copy constructions, reuses all the components of argument. */
 	protected XJep(XJep j)
 	{
-		super((JEP) j);
+		super(j);
 		this.commandv=j.commandv;
 		this.copier=j.copier;
 		this.ev=j.ev;
@@ -92,7 +92,7 @@ public class XJep extends JEP {
 		pv = new PrintVisitor();
 	}
 	/**
-	 * Creates a new instance of XJep with the same componants as this one.
+	 * Creates a new instance of XJep with the same components as this one.
 	 * Sub classes should overwrite this method to create objects of the correct type.
 	 */
 	public XJep newInstance()
@@ -101,7 +101,7 @@ public class XJep extends JEP {
 		return newJep;
 	}
 	/**
-	 * Creates a new instance of XJep with the same componants as this one and the specified symbol table.
+	 * Creates a new instance of XJep with the same components as this one and the specified symbol table.
 	 * Sub classes should overwrite this method to create objects of the correct type.
 	 */
 	public XJep newInstance(SymbolTable st)
@@ -159,30 +159,30 @@ public class XJep extends JEP {
 	{
 		return simpv.simplify(node,this);
 	}
-	/** Preprocesses an equation to allow the diff and eval operators to be used. */
+	/** Pre-processes an equation to allow the diff and eval operators to be used. */
 	public Node preprocess(Node node) throws ParseException
 	{
 		return commandv.process(node,this);
 	}
-	/** Substitute all occurences of a named variable with an expression tree. */ 
+	/** Substitute all occurrences of a named variable with an expression tree. */ 
 	public Node substitute(Node orig,String name,Node replacement) throws ParseException
 	{
 		return subv.substitute(orig,name,replacement,this);
 	}
-	/** Substitute all occurences of a set of named variable with a set of expression tree. */ 
+	/** Substitute all occurrences of a set of named variable with a set of expression tree. */ 
 	public Node substitute(Node orig,String names[],Node replacements[]) throws ParseException
 	{
 		return subv.substitute(orig,names,replacements,this);
 	}
-	/** Prints the expresion tree on standard output. */
+	/** Prints the expression tree on standard output. */
 	public void print(Node node) { pv.print(node); }
-	/** Prints the expresion tree on given stream. */
+	/** Prints the expression tree on given stream. */
 	public void print(Node node,PrintStream out) { pv.print(node,out); }
-	/** Prints the expresion tree on standard output with newline at end. */
+	/** Prints the expression tree on standard output with newline at end. */
 	public void println(Node node) { pv.println(node); }
-	/** Prints the expresion tree on given stream with newline at end. */
+	/** Prints the expression tree on given stream with newline at end. */
 	public void println(Node node,PrintStream out) { pv.println(node,out); }
-	/** Returns a string representation of a expresion tree. */
+	/** Returns a string representation of a expression tree. */
 	public String toString(Node node) { return pv.toString(node); }
 	/** Returns the node factory, used for constructing trees of Nodes. */ 
 	public NodeFactory getNodeFactory() {return nf;}
@@ -204,7 +204,7 @@ public class XJep extends JEP {
 
 	/**
 	 * Continue parsing without re-initilising the stream.
-	 * Allows renetrancy of parser so that strings like
+	 * Allows re-entrance of parser so that strings like
 	 * "x=1; y=2; z=3;" can be parsed.
 	 * When a semi colon is encountered parsing finishes leaving the rest of the string unparsed.
 	 * Parsing can be resumed from the current position by using this method.
@@ -220,7 +220,7 @@ public class XJep extends JEP {
 	 * </pre>
 	 * @return top node of equation parsed to date or null if empty equation
 	 * @throws ParseException
-	 * @see #restartParser
+	 * @see #restartParser(String)
 	 */
 	public Node continueParsing() throws ParseException {
 		return parser.continueParse();

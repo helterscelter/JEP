@@ -157,8 +157,8 @@ public class Rational extends Number implements Comparable {
 	public static Number valueOf(String s) {
 		int pos = s.indexOf('/');
 		if(pos==-1)	return new Rational(new BigInteger(s));
-		else
-			return new Rational(
+		
+		return new Rational(
 				new BigInteger(s.substring(pos-1)),
 				new BigInteger(s.substring(pos+1,-1))); 
 	}
@@ -179,8 +179,8 @@ public class Rational extends Number implements Comparable {
 	public String toString() {
 		if(denominator.equals(BigInteger.ONE))
 			return numerator.toString();
-		else
-			return numerator.toString() +"/" + denominator.toString();
+		
+		return numerator.toString() +"/" + denominator.toString();
 	}
 	
 	public int compareTo(Object arg)

@@ -7,6 +7,8 @@ package org.lsmp.djepExamples;
 
 import org.nfunk.jep.Node;
 import org.lsmp.djep.djep.*;
+import org.lsmp.djep.xjep.PrintVisitor;
+
 import java.io.*;
 
 /**
@@ -67,11 +69,11 @@ public class DJepConsole extends XJepConsole
 			
 		if(verbose) {
 			print("Full Brackets, no variable expansion:\n\t\t");
-			j.getPrintVisitor().setMode(DPrintVisitor.FULL_BRACKET,true);
+			j.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,true);
 			j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
 			println(j.toString(simp));
 			j.getPrintVisitor().setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,true);
-			j.getPrintVisitor().setMode(DPrintVisitor.FULL_BRACKET,false);
+			j.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,false);
 		}
 
 		Object val = j.evaluate(simp);

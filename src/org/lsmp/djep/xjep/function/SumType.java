@@ -97,9 +97,9 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 		return null;
 	}
 
-	/** Evaluates the node by repeatibly setting the value of the variable from min to max, and calculating the value of the first argument.
+	/** Evaluates the node by repeatably setting the value of the variable from min to max, and calculating the value of the first argument.
 	 * Sub classes generally do not need to implement this method as
-	 * @link evaluate(Object elements[])
+	 * {@link #evaluate(Object[])}
 	 * is more useful. If they do they should follow the pattern used here. 
 	 * 
 	 * @param node

@@ -13,8 +13,8 @@ import org.lsmp.djep.vectorJep.values.*;
 import java.util.*;
 
 /**
- * An extension of JEP with support for basic vectors and matricies.
- * Use this class instead of JEP if you wish to use vectors and matricies.
+ * An extension of JEP with support for basic vectors and matrices.
+ * Use this class instead of JEP if you wish to use vectors and matrices.
  *  
  * @author Rich Morris
  * Created on 19-Dec-2003
@@ -27,7 +27,7 @@ public class VectorJep extends JEP {
 		
 		opSet = new VOperatorSet();
 		this.ev = new VectorEvaluator();
-		this.parser.setInitialTokenManagerState(Parser.NO_DOT_IN_IDENTIFIERS);
+		this.parser.setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
 	}
 
 	public void addStandardFunctions()
@@ -60,8 +60,7 @@ public class VectorJep extends JEP {
 		Object res = ev.getValue(node,new Vector(),this.getSymbolTable());
 		if(res instanceof Scaler)
 			return ((Scaler) res).getEle(0);
-		else 
-			return res;
+		return res;
 	}
 
 	/** Evaluate a node. Does not unwrap scalers. */
@@ -71,7 +70,7 @@ public class VectorJep extends JEP {
 		return res;
 	}
 
-	/**	When set the multiplication of vectors and matricies will be element by element.
+	/**	When set the multiplication of vectors and matrices will be element by element.
 	 * Otherwise multiplication will be matrix multiplication (the default).
 	 */
 	public void setElementMultiply(boolean value) {

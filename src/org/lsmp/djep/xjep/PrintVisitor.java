@@ -249,15 +249,13 @@ private boolean testRight(XOperator top,Node rhs)
 			if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
 				|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
 					return false;
-			else
-					return true;				// 1-(2+3) -> 1-(2-3)
+			return true;				// 1-(2+3) -> 1-(2-3)
 		}
 		else if(top.getPrecedence() == rhsop.getPrecedence())
 		{
 			if(top.getBinding() == XOperator.LEFT && top.isAssociative() )			// 1+(2-3) -> 1+2-3)
 				return false;	// a+(b-c) -> a+b-c
-			else
-				return true;		// a-(b+c) -> a-(b+c)
+			return true;		// a-(b+c) -> a-(b+c)
 		}
 		else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
 					return false;
@@ -365,26 +363,26 @@ private Object visitFun(ASTFunNode node) throws ParseException
   /** Appends a formatted versions of val to the string buffer.
    * 
    * @param val The value to format
-   * @param sb  The StingBuffer to append to
+   * @param sb1  The StingBuffer to append to
    */
-  public void formatValue(Object val,StringBuffer sb)
+  public void formatValue(Object val,StringBuffer sb1)
   {
 	if(format != null)
 	{
 		if(val instanceof Number)
-			format.format(val,sb,fp);
+			format.format(val,sb1,fp);
 		else if(val instanceof Complex)
 		{
 			if((mode | COMPLEX_I) == COMPLEX_I)
-				sb.append(((Complex) val).toString(format,true));
+				sb1.append(((Complex) val).toString(format,true));
 			else
-				sb.append(((Complex) val).toString(format));
+				sb1.append(((Complex) val).toString(format));
 		}
 		else
-			sb.append(val);
+			sb1.append(val);
 	}
 	else
-		sb.append(val);
+		sb1.append(val);
   }
 
   /** Returns a formated version of the value. */

@@ -12,7 +12,7 @@ import org.lsmp.djep.vectorJep.function.*;
 import org.nfunk.jep.*;
 
 /**
- * An overloaded Power function compatable with MatrixJep.
+ * An overloaded Power function compatible with MatrixJep.
  * 
  * @author Rich Morris
  * Created on 14-Feb-2005
@@ -38,12 +38,9 @@ public class MPower extends VPower implements SpecialPreProcessorI
 			return (ASTMFunNode) nf.buildOperatorNode(
 					node.getOperator(),children,dim);
 		}
-		else
-		{
-			Operator op = jep.getOperatorSet().getCross();
-			BinaryOperatorI bin = (BinaryOperatorI) op.getPFMC();
-			Dimensions dim = bin.calcDim(lhsDim,rhsDim);
-			return (ASTMFunNode) nf.buildOperatorNode(op,children,dim);
-		}
+		Operator op = jep.getOperatorSet().getCross();
+		BinaryOperatorI bin = (BinaryOperatorI) op.getPFMC();
+		Dimensions dim = bin.calcDim(lhsDim,rhsDim);
+		return (ASTMFunNode) nf.buildOperatorNode(op,children,dim);
 	}
 }

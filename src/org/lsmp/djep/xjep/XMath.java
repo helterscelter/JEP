@@ -54,6 +54,6 @@ public class XMath {
 			pascal.put(pair,new Long(l+r));
 			return l+r; 
 		}
-		else return ((Long) find).longValue();
+		return ((Long) find).longValue();
 	}
 }

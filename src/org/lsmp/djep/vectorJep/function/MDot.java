@@ -27,7 +27,7 @@ public class MDot extends MMultiply implements BinaryOperatorI
 	}
 	public Dimensions calcDim(Dimensions l,Dimensions r) {
 		if(l.equals(r) && l.is1D()) return Dimensions.ONE;
-		else return null;
+		return null;
 	}
 	
 	/** calculates the value.
@@ -69,13 +69,12 @@ public class MDot extends MMultiply implements BinaryOperatorI
 		return;
 	}
 
-	/** returns param1 . param2. Defaults to scaler mult if parameters are not vectors. */
+	/** returns param1 . param2. Defaults to scaler multiplication if parameters are not vectors. */
 	public Object dot(Object param1, Object param2)	throws ParseException
 	{
 		if(param1 instanceof MVector && param2 instanceof MVector)
 			return dot((MVector) param1,(MVector) param2);
-		else
-			return super.mul(param1,param2);
+		return super.mul(param1,param2);
 	}
 	
 	/** returns lhs . rhs */

@@ -27,12 +27,10 @@ public class FreeGroup extends Group implements RingI {
 	protected Complex rootVal=new Complex(Double.NaN);
 
 	/**
-	 * Create the ring K(t) where t is a solution of the monic polynomial p.
+	 * Create the ring K(t) where t is a free variable.
 	 * 
-	 * @param baseRing the Ring this is an extension of.
-	 * @param poly A monic polynomial whose solution gives an algebraic number which is used to generate this group.
-	 * @throws IllegalArgumentException if the base ring of the poly is not the same.
-	 * @throws IllegalArgumentException if the polynomial is not monic.
+	 * @param K the Ring this is an extension of.
+	 * @param symbol the name of the free variable.
 	 */
 	public FreeGroup(RingI K,String symbol) {
 		super();
@@ -81,7 +79,7 @@ public class FreeGroup extends Group implements RingI {
 	public Number getONE() { return unitPoly; }
 	public Number getTPoly() { return tPoly; }
 	public Number getInverse(Number a)	{
-		return sub(zeroPoly,(FreeGroupElement) a);
+		return sub(zeroPoly,a);
 	}
 
 	public void addStandardConstants(JEP j)
@@ -111,7 +109,7 @@ public class FreeGroup extends Group implements RingI {
 	}
 
 
-	/** Sets the value used to aproximate the root as a complex number. */
+	/** Sets the value used to approximate the root as a complex number. */
 	public void setRootVal(Complex complex) {
 		rootVal = complex;
 	}
@@ -133,7 +131,7 @@ public class FreeGroup extends Group implements RingI {
 		return false;
 	}
 
-	/** Returns an aproximation to the value of the root as a complex number. */
+	/** Returns an approximation to the value of the root as a complex number. */
 	public Complex getRootVal() {
 		return rootVal;
 	}

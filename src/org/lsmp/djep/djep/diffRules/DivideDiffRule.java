@@ -15,18 +15,16 @@ import org.lsmp.djep.djep.DiffRulesI;
 import org.lsmp.djep.xjep.*;
 
 /**
-   * Diffrentiates a division with respect to var.
+   * Differentiates a division with respect to var.
    * diff(y/z,x) -> (diff(y,x)*z-y*diff(z,x))/(z*z)
    */
   public class DivideDiffRule implements DiffRulesI
   {
 	private String name;
-	//private DifferentationVisitor dv;
 	
 	private DivideDiffRule() {}
 	public DivideDiffRule(String inName)
 	{	  
-	  //dv = inDv;
 	  name = inName;
 	}
 
@@ -52,7 +50,7 @@ import org.lsmp.djep.xjep.*;
 			  nf.buildOperatorNode(op.getMultiply(),
 				djep.deepCopy(children[1]),
 				djep.deepCopy(children[1])));
-	  else
-		throw new ParseException("Too many children "+nchild+" for "+node+"\n");
+	  
+	  throw new ParseException("Too many children "+nchild+" for "+node+"\n");
 	}
   } /* end DivideDiffRule */

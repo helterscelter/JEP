@@ -14,10 +14,10 @@ public final class RpCommandList {
 	static final class RpCommand {
 		short command;
 		short aux1; 
-		private RpCommand(short command){
+		RpCommand(short command){
 			this.command = command; this.aux1 = -1;
 		}
-		private RpCommand(short command,short aux){
+		RpCommand(short command,short aux){
 			this.command = command; this.aux1 = aux;
 		}
 		public String toString() {

@@ -48,8 +48,6 @@ public class ExpandBrackets extends AbstractRewrite {
 	 * @see org.lsmp.djep.xjep.RewriteRuleI#apply(org.nfunk.jep.Node, org.nfunk.jep.Node[])
 	 */
 	public Node apply(ASTFunNode node, Node[] children) throws ParseException {
-		OperatorSet opSet = xj.getOperatorSet();
-		TreeUtils tu = xj.getTreeUtils();
 		
 		Operator lhsOp = tu.getOperator(children[0]); 
 		Operator rhsOp = tu.getOperator(children[1]); 

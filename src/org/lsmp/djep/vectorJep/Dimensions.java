@@ -23,10 +23,10 @@ public class Dimensions
 	public static final Dimensions TWO = new Dimensions(2);
 	public static final Dimensions THREE = new Dimensions(3);
 	
-	private Dimensions() {};	
+	private Dimensions() {}	
 	/** Sets the dimension to a single number. Implies its a Scaler or MVector. */
 	private Dimensions(int d) {	dims = new int[] {d};	}
-	/** Use this method for matricies. */
+	/** Use this method for matrices. */
 	private Dimensions(int d1,int d2) {	dims = new int[] {d1,d2}; }
 	/** Construct a dimension set from an array. */
 	private Dimensions(int d[])	
@@ -110,13 +110,13 @@ public class Dimensions
 		for(int i=0;i<dims.length;++i) res *= dims[i];
 		return res; 	
 	}
-	/** rank of dimensions 0 for numbers, 1 for vectors, 2 for matricies */
+	/** rank of dimensions 0 for numbers, 1 for vectors, 2 for matrices */
 	public int rank()
 	{
 		if(is0D()) return 0;
 		return dims.length; 
 	}
-	/** A string repsesentation.
+	/** A string representation.
 	 * Either 1,n,[m,n],[l,m,n] etc.
 	 */
 	public String toString()
@@ -141,7 +141,7 @@ public class Dimensions
 	}
 
 	/** apparently your should always override hashcode when you
-	 * operride equals (Effective Java, Bloch).
+	 * override equals (Effective Java, Bloch).
 	 */
 	public int hashcode()
 	{

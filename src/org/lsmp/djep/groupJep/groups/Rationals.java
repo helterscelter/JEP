@@ -62,12 +62,12 @@ public class Rationals extends Group implements FieldI,OrderedSetI,HasPowerI {
 
 	public boolean equals(Number a,Number b)
 	{
-		return ((Rational) a).compareTo((Rational) b) == 0;
+		return ((Rational) a).compareTo(b) == 0;
 	}
 	
 	public int compare(Number a,Number b)
 	{
-		return ((Rational) a).compareTo((Rational) b);
+		return ((Rational) a).compareTo(b);
 	}
 	
 	public Number valueOf(String s) {

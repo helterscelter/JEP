@@ -66,8 +66,7 @@ import org.nfunk.jep.*;
 		   nf.buildConstantNode( tu.getNumber(((Double) value).doubleValue()-1.0))),
 			 dchildren[0]));
 	   }
-	   else
-	   {
+	   
 		 return nf.buildOperatorNode(op.getMultiply(),
 			djep.deepCopy(children[1]),
 			nf.buildOperatorNode(op.getMultiply(),
@@ -77,9 +76,9 @@ import org.nfunk.jep.*;
 				 	djep.deepCopy(children[1]),
 				 	nf.buildConstantNode(tu.getONE()))),
 			 dchildren[0]));
-	   }
+	   
    }
-   else // z * y^(z-1) * diff(y,x) + y^z * ln(z) * diff(z,x) 
+   // z * y^(z-1) * diff(y,x) + y^z * ln(z) * diff(z,x) 
    {
 		return nf.buildOperatorNode(op.getAdd(),  
 			nf.buildOperatorNode(op.getMultiply(), // z * y^(z-1) * diff(y,x)

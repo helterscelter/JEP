@@ -11,7 +11,7 @@ import org.lsmp.djep.xjep.PrintVisitor;
 
 /**
  * An extension of PrintVisitor which will print the equations of a variable if required.
- * The behavious of this class is determined by two modes
+ * The behaviours of this class is determined by two modes
  * PRINT_PARTIAL_EQNS and PRINT_VARIABLE_EQNS.
  * When a variable or partial derivative is encountered then
  * its equation may be printed.
@@ -35,7 +35,7 @@ public class DPrintVisitor extends PrintVisitor {
 	}
 
 	/** Prints the variable or its equation.
-	 * Depends on the statr of the flags and whether the variable has an equation.
+	 * Depends on the state of the flags and whether the variable has an equation.
 	 */
 	public Object visit(ASTVarNode node, Object data) throws ParseException
 	{

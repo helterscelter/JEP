@@ -23,8 +23,8 @@ public class FreeGroupElement extends Polynomial implements HasComplexValueI {
 
 	/**
 	 * An element of a free group with one generator.
-	 * @param the free group.
-	 * @param coeffs array of coeficients for this element c0 + c1 t + ... + cn t^n 
+	 * @param K the free group.
+	 * @param coeffs array of coefficients for this element c0 + c1 t + ... + cn t^n 
 	 */
 	public FreeGroupElement(FreeGroup K, Number coeffs[]) {
 		super(K.getBaseRing(),K.getSymbol(),coeffs);
@@ -35,20 +35,20 @@ public class FreeGroupElement extends Polynomial implements HasComplexValueI {
 //		this(new AlgebraicExtension(baseRing,poly),coeffs);
 //	}
 
-	/** sub classes should overright this to make the correct type. */
+	/** sub classes should overwrite this to make the correct type. */
 	protected Polynomial valueOf(Number lcoeffs[])
 	{
 		FreeGroupElement g = new FreeGroupElement(group,lcoeffs);
 		return g;
 	}
 
-	/** Returns an aproximation to the complex number representing this algebraic number. 
+	/** Returns an approximation to the complex number representing this algebraic number. 
 	 * This only gives meaningful results if setRootValue has been called
 	 * or if it is a quadratic extension (t^2+b t+c) or if it is a simple n-th root (t^n+a).
 	 * In the last two cases the root value is calculated automatically. 
-	 * @return Complex(Nan) if I dont know how to calculate it. */
+	 * @return Complex(Nan) if currently unable to calculate it. */
 
 	public Complex getComplexValue() {
-			return calculateComplexValue((Complex) group.getRootVal());
+			return calculateComplexValue(group.getRootVal());
 	}
 }

@@ -11,7 +11,7 @@ import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.UMinus;
 /**
- * An extension of the Subtract command to allow it to add MVector's and Matrix's.
+ * Unitary minus for matrices.
  * @author Rich Morris
  * Created on 27-Jul-2003
  */
@@ -24,8 +24,7 @@ public class MUMinus extends UMinus implements UnaryOperatorI {
 
 	/** calculates the value.
 	 * @param res - results will be stored in this object
-	 * @param lhs - lhs value
-	 * @param rhs - rhs value
+	 * @param lhs - the value to be negated
 	 * @return res
 	 */
 	public MatrixValueI calcValue(MatrixValueI res,MatrixValueI lhs) throws ParseException
@@ -47,8 +46,7 @@ public class MUMinus extends UMinus implements UnaryOperatorI {
 			return umin((MVector) param1);
 		if(param1 instanceof Matrix)
 			return umin((Matrix) param1);
-		else
-			return super.umin(param1);
+		return super.umin(param1);
 	}
 	
 	/** negate a vector. */

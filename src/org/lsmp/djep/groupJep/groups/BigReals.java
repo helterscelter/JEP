@@ -87,8 +87,7 @@ public class BigReals extends Group implements FieldI,OrderedSetI {
 		BigDecimal b = (BigDecimal) num2;
 		if(scale>0)
 			return a.divide(b,scale,roundMode);
-		else
-			return a.divide(b,roundMode);
+		return a.divide(b,roundMode);
 	}
 
 	public boolean equals(Number a,Number b)	{

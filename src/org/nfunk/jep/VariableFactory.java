@@ -10,7 +10,6 @@
  * Created on 19-Dec-2003
  */
 package org.nfunk.jep;
-
 /**
  * A factory class which is used to create variables.
  * By default this class creates variables of type {@link Variable}.
@@ -25,7 +24,8 @@ public class VariableFactory
 {
 	/** Create a variable with a name and value */
 	public Variable createVariable(String name, Object value) {
-		return new Variable(name,value);
+		Variable var = new Variable(name,value);
+		return var;
 	}
 
 	/** Create a variable with a name but not value */

@@ -103,7 +103,7 @@ public class GroupJepTest extends TestCase {
 		j = new GroupJep(new Quartonians());
 		j.addStandardConstants();
 		System.out.println(j.getGroup().toString());
-		valueToStringTest("i*j","-1.0k");
+		valueToStringTest("i*j","-k");
 	}
 
 	/** Tests integers mod 5 */

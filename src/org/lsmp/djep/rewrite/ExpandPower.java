@@ -50,13 +50,7 @@ public class ExpandPower implements RewriteRuleI {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.lsmp.djep.xjep.RewriteRuleI#apply(org.nfunk.jep.Node, org.nfunk.jep.Node[])
-	 */
 	public Node apply(ASTFunNode node, Node[] children) throws ParseException {
-		OperatorSet opSet = xj.getOperatorSet();
-		TreeUtils tu = xj.getTreeUtils();
-		
 		Operator lhsOp = tu.getOperator(children[0]); 
 		int n = tu.intValue(children[1]);
 		Node sub1 = children[0].jjtGetChild(0);
@@ -67,7 +61,7 @@ public class ExpandPower implements RewriteRuleI {
 			if(n == 0) return nf.buildConstantNode(new Double(1));
 			if(n == 1) return children[0];
 			
-			Node vals[] = new Node[(int) n+1];
+			Node vals[] = new Node[n+1];
 			/* a^n */
 			vals[0] = nf.buildOperatorNode(
 				opSet.getPower(),
@@ -135,11 +129,7 @@ public class ExpandPower implements RewriteRuleI {
 							xj.deepCopy(sub2),
 							nf.buildConstantNode(new Double(i)))));
 			}
-//			for(int i=0;i<=n;++i)
-//			{
-//				System.out.print("val["+i+"] ");
-//				xj.println(vals[i]);
-//			}
+
 			Node sums[] = new Node[n+1];
 			sums[n]=vals[n];
 			for(int i=n-1;i>=0;--i)
@@ -149,7 +139,6 @@ public class ExpandPower implements RewriteRuleI {
 					vals[i],
 					sums[i+1]);
 			}
-//			xj.println(sums[0]);
 			return sums[0];
 		}
 		throw new ParseException("ExpandBrackets at least one child must be + or -");

@@ -20,7 +20,7 @@ public class MSubtract extends Subtract implements BinaryOperatorI {
 	public Dimensions calcDim(Dimensions ldim,Dimensions rdim)
 	{
 		if(ldim.equals(rdim)) return ldim;
-		else return null;
+		return null;
 	}
 
 	/** calculates the value.
@@ -60,7 +60,7 @@ public class MSubtract extends Subtract implements BinaryOperatorI {
 		return (MVector) calcValue(res,lhs,rhs);			
 	}
 
-	/** Adds two matricies. */
+	/** Adds two matrices. */
 	public Matrix sub(Matrix lhs,Matrix rhs) throws ParseException
 	{
 		if(lhs.getNumRows() != rhs.getNumRows()) throw new ParseException("Miss match in number of rows ("+lhs.getNumRows()+","+rhs.getNumRows()+") when trying to add vectors!");
@@ -69,7 +69,7 @@ public class MSubtract extends Subtract implements BinaryOperatorI {
 		return (Matrix) calcValue(res,lhs,rhs);			
 	}
 
-	/** Adds two matricies. */
+	/** Adds two matrices. */
 	public Tensor sub(Tensor lhs,Tensor rhs) throws ParseException
 	{
 		if(lhs.getNumEles() != rhs.getNumEles()) throw new ParseException("Miss match in sizes ("+lhs.getNumEles()+","+rhs.getNumEles()+") when trying to add vectors!");

@@ -11,7 +11,7 @@ import org.nfunk.jep.*;
 
 /**
  * An abstract ParserVisitor
- * which adds some useful error handeling facilities.
+ * which adds some useful error handling facilities.
  * Visitors which require these facilities should extend this class.
  * General format should be
  * <pre>  
@@ -52,7 +52,7 @@ abstract public class ErrorCatchingVisitor extends DoNothingVisitor
 	/** Returns the error messages.	 */
 	public String getErrorsMessage() {
 		if(error==null) return null;
-		else return error.getMessage();
+		return error.getMessage();
 	}
 	/** Returns the Exception or null if no error. */
 	public Exception getError() { return error; }

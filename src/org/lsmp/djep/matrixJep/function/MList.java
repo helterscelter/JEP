@@ -19,7 +19,7 @@ import org.lsmp.djep.xjep.*;
 //import org.lsmp.djep.matrixJep.nodeTypes.*;
 
 /**
- * A enhanced version of list, allows matricies and tensors.
+ * A enhanced version of list, allows matrices and tensors.
  * 
  * @author Rich Morris
  * Created on 27-Nov-2003
@@ -92,13 +92,10 @@ public class MList extends VList
 			res.jjtClose();
 			return res;
 		}
-		else
-		{
-			MatrixNodeI node1 = (MatrixNodeI) children[0];
-			Dimensions dim = Dimensions.valueOf(children.length,node1.getDim());
-			ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(listOp,children,dim);
-			return res;
-		}
+		MatrixNodeI node1 = children[0];
+		Dimensions dim = Dimensions.valueOf(children.length,node1.getDim());
+		ASTMFunNode res = (ASTMFunNode) nf.buildOperatorNode(listOp,children,dim);
+		return res;
 	}
 
 	

@@ -20,7 +20,7 @@ public class MAdd extends Add implements BinaryOperatorI {
 	public Dimensions calcDim(Dimensions ldim,Dimensions rdim)
 	{
 		if(ldim.equals(rdim)) return ldim;
-		else return null;
+		return null;
 	}
 
 	/** calculates the value.
@@ -60,7 +60,7 @@ public class MAdd extends Add implements BinaryOperatorI {
 		return (MVector) calcValue(res,lhs,rhs);			
 	}
 
-	/** Adds two matricies. */
+	/** Adds two matrices. */
 	public Matrix add(Matrix lhs,Matrix rhs) throws ParseException
 	{
 		if(lhs.getNumRows() != rhs.getNumRows()) throw new ParseException("Miss match in number of rows ("+lhs.getNumRows()+","+rhs.getNumRows()+") when trying to add vectors!");

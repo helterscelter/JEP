@@ -12,7 +12,7 @@ import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 
 /**
-   * If your really lazy, you don't even neeed to workout the derivatives
+   * If your really lazy, you don't even need to workout the derivatives
    * of a function defined by a macro yourself.
    * This class will automatically calculate the rules for you.
    */
@@ -23,7 +23,6 @@ import org.nfunk.jep.*;
 	 */
 	  public MacroFunctionDiffRules(DJep djep,MacroFunction fun)  throws ParseException
 	  {
-		  //super(dv);
 		  name = fun.getName();
 		  pfmc = fun;
 		  
@@ -34,7 +33,7 @@ import org.nfunk.jep.*;
 		  int nargs = fun.getNumberOfParameters();
 		  rules = new Node[nargs];
 		  if(nargs == 1)
-			  rules[0] = localJep.differentiate((Node) fun.getTopNode(),"x");
+			  rules[0] = localJep.differentiate(fun.getTopNode(),"x");
 		  else if(nargs == 2)
 		  {
 			  rules[0] = localJep.differentiate(fun.getTopNode(),"x");

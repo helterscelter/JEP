@@ -23,14 +23,14 @@ public class AlgebraicExtensionElement extends FreeGroupElement {
 	AlgebraicExtension ae;
 
 	/**
-	 * An element of the algrabraic extension K(t).
+	 * An element of the algebraic extension K(t).
 	 * a0 + a1 t + a(n-1) t^(n-1) 
 	 * where t is defined to be the the solution of a polynomial equation.
 	 * If the degree of the polynomial specified by coeffs is greater
 	 * than n then the polynomial will be reduced by using
 	 * the equation t^n = ..... 
-	 * @param the algebraic extension.
-	 * @param coeffs array of coeficients for this algebraic number. c0 + c1 t + ... + cn t^n 
+	 * @param K the algebraic extension.
+	 * @param coeffs array of coefficients for this algebraic number. c0 + c1 t + ... + cn t^n 
 	 */
 	public AlgebraicExtensionElement(AlgebraicExtension K, Number coeffs[])
 	{
@@ -56,7 +56,7 @@ public class AlgebraicExtensionElement extends FreeGroupElement {
 		}
 	}
 
-	/** sub classes should overright this to make the correct type. */
+	/** sub classes should overwrite this to make the correct type. */
 	protected Polynomial valueOf(Number lcoeffs[])
 	{
 		AlgebraicExtensionElement g = new AlgebraicExtensionElement(ae,lcoeffs);

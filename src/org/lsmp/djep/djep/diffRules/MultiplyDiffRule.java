@@ -56,8 +56,7 @@ import org.lsmp.djep.xjep.*;
 			nf.buildOperatorNode(op,
 			  djep.deepCopy(children[0]),
 			  dchildren[1]));
-	  else
-	  {
+	  
 	  	Node sums[] = new Node[nchild];
 	  	for(int i=0;i<nchild;++i)
 	  	{
@@ -69,7 +68,7 @@ import org.lsmp.djep.xjep.*;
 	  	}
 	  	Node res = nf.buildOperatorNode(opset.getAdd(),sums);
 	  	return res;
-	  }
+	  
 	  //throw new ParseException("Too many children "+nchild+" for "+node+"\n");
 	}
   } /* end MultiplyDiffRule */
