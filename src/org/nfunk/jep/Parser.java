@@ -823,7 +823,7 @@ GRAMMAR START
                         if (jep.funTab.containsKey(identString)) {
                                 //Set number of required arguments
                                 reqArguments =
-                                        ((PostfixMathCommand)jep.funTab.get(identString)).getNumberOfParameters();
+                                        ((PostfixMathCommandI)jep.funTab.get(identString)).getNumberOfParameters();
                                 jjtn001.setFunction(identString,
                                         (PostfixMathCommandI)jep.funTab.get(identString));
                         } else {
