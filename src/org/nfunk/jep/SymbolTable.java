@@ -284,5 +284,17 @@ public class SymbolTable extends Hashtable
 			var.addObserver(arg);
 		}
 	}
-
+	/** Remove all non constant elements */
+	public void clearNonConstants() {
+		Vector tmp = new Vector();
+		for(Enumeration en = this.elements();en.hasMoreElements();) {
+			Variable var = (Variable) en.nextElement();
+			if(var.isConstant()) tmp.add(var);
+		}
+		this.clear();
+		for(Enumeration en = tmp.elements();en.hasMoreElements();) {
+			Variable var = (Variable) en.nextElement();
+			super.put(var.getName(),var);
+		}
+	}
 }
