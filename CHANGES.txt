@@ -1,5 +1,6 @@
 == org.nfunk.* =======================================================
-
+Dec 19 njf - figured out documentation linking issues. Leaving docs as they were
+             before Nov 1 (no frames, javadoc at /doc/javadoc)
 Dec 10 rjm - nodeAccept method added to jep.EvaluationVisitor so that it
 			 can be easier for sub classes to use visitor pattern.
 			 
