@@ -182,7 +182,6 @@ public class EvaluatorVisitor implements ParserVisitor
 			return data;
 		}
 		
-		// TODO: optimize (table lookup is costly?)
 		Object temp = symTab.get(node.getName());
 		
 		if (temp == null) {
