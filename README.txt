@@ -8,13 +8,15 @@
 Package Contents
 
  
- |- README.txt        This file
- |
- |- LICENSE.txt       License
- |
  |- build.xml         Build script for the ant build tool
  |
  |- compile.bat       Simple script for basic compiling
+ |
+ |- jep-?.??.jar      JAR Java archive of the JEP API (without examples)
+ |
+ |- LICENSE.txt       License
+ |
+ |- README.txt        This file
  |
  |- bin               Startup scripts for launching examples
  |  |- Console.bat
@@ -30,4 +32,3 @@ Package Contents
  |- doc               Documentation
  |
  \- src               Source code
- 
