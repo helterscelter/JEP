@@ -10,7 +10,8 @@ set JEP_HOME=%JEP_HOME%\..
 echo JEP_HOME = %JEP_HOME%
 set CLASSPATH=%JEP_HOME%\build\;%JEP_HOME%\lib\junit.jar
 
-call jview junit.awtui.TestRunner org.nfunk.jeptesting.AllTests %1 %2 %3 %4 %5 %6 %7 %8 %9
+java junit.awtui.TestRunner org.nfunk.jeptesting.AllTests %1 %2 %3 %4 %5 %6 %7 %8 %9
+REM call jview junit.awtui.TestRunner org.nfunk.jeptesting.AllTests %1 %2 %3 %4 %5 %6 %7 %8 %9
 
 @endlocal
 goto mainEnd

@@ -11,8 +11,10 @@ set JEP_HOME=%~dp0
 set JEP_HOME=%JEP_HOME%\..
 echo JEP_HOME = %JEP_HOME%
 
-REM appletviewer.exe -J-classpath -J%JEP_HOME%\build\ "file://%JEP_HOME%\src\org\nfunk\jepexamples\Evaluator.java"
-call jview.exe /cp:a %JEP_HOME%\build\ /a "%JEP_HOME%\src\org\nfunk\jepexamples\Evaluator.java"
+cd %JEP_HOME%\src
+call appletviewer.exe "org\nfunk\jepexamples\Evaluator.java"
+REm call appletviewer.exe -J-classpath -J%JEP_HOME%\build\ "file://%JEP_HOME%\src\org\nfunk\jepexamples\Evaluator.java"
+REM call jview.exe /cp:a %JEP_HOME%\build\ /a "%JEP_HOME%\src\org\nfunk\jepexamples\Evaluator.java"
 @endlocal
 goto mainEnd
 

@@ -11,8 +11,9 @@ set JEP_HOME=%~dp0
 set JEP_HOME=%JEP_HOME%\..
 echo JEP_HOME = %JEP_HOME%
 set CLASSPATH=%JEP_HOME%\build\
-REM java org.nfunk.jepexamples.ThreadTest
-call jview org.nfunk.jepexamples.ThreadTest
+
+call java org.nfunk.jepexamples.ThreadTest
+REM call jview org.nfunk.jepexamples.ThreadTest
 @endlocal
 goto mainEnd
 
