@@ -109,22 +109,23 @@ extending.
 The coefficients of the polynomial can be found using:
 <pre>
 		Number co1[] = fge.getCoeffs();
-		for(int i=0;i<co1.length;++i)
+		for(int i=0;i&lt;co1.length;++i)
 		{
 			FreeGroupElement fge3 = (FreeGroupElement) co1[i];
 			Number co2[] = fge3.getCoeffs();
-			for(int j=0;j<co2.length;++j)
+			for(int j=0;j&lt;co2.length;++j)
 				System.out.print(co2[j]+"\t");
 			System.out.println();
 		}
 </pre>
 
-To calculate 
+To calculate
+<pre>
 		fg.setRootVal(new Complex(5.0));
 		fg2.setRootVal(new Complex(4.0));
 		System.out.println(fge2.toString());
-		myAssertEquals("(x+1)*(y-2): x=5,y=4",fge2.getComplexValue().toString(),"(12.0, 0.0)");		
-
+		Complex val = fge2.getComplexValue();		
+</pre>
 
 <h3>Algebraic Numbers</h3>
 In a similar fashion a ring can be extended by an algebraic number
@@ -197,12 +198,12 @@ The power function is defined:<br>
 public Number pow(Number a,Number b);
 </td></tr>
 <tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/OrderedSetI.html">OrderedSetI</a></td><td>
-There is a natural ordering to the set so <, <=, >, >= meaningful.<br>
+There is a natural ordering to the set so <, <=, >, >= are meaningful.<br>
 public int compare(Number a,Number b);<br>
 will return -1 if a&lt;b, 0 if a=b, +1 if a&gt;b.
 </td></tr>
-<tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/HasList.html">List operations meaninful</a></td><td>
-The list syntax [a,b,c] is meaningful.
+<tr><td><a href="../../javadoc/org/lsmp/djep/groupJep/interfaces/HasListI.html">HasListI</a></td><td>
+List operations i.e. [a,b,c] is meaningful.
 public Number list(Number eles[]);<br>
 </td></tr>
 </tbody></table>

@@ -1,0 +1,596 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --><title>Jep - adding operators to the parser</title><!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="../main.css" title="style1">
+</head>
+
+<body>
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../../javadoc/index.html" target="_blank">JavaDoc*</a></li>
+  </ul>
+  <hr/>
+  <ul>
+    <li><a href="../index.html">Usage</a></li>
+    <li><a href="../op_and_func.html">Operators &amp; Functions</a></li>
+    <li><a href="../grammar.html">Grammar</a></li>
+    <li><a href="../cust_func.html">Custom Functions</a></li>
+    <li><a href="../newfeatures-2.3.html">New Features</a></li>
+    <li><a href="../faq.html">FAQ</a></li>
+    <li><a href="../version.html">Version History</a></li>
+  </ul>
+  <hr/>
+  <ul>
+    <li><a href="index.html">DJEP</a></li>
+    <li><a href="XJep.html">XJep</a></li>
+    <li><a href="DJep.html">Differentiation</a></li>
+    <li><a href="groups.html">Groups</a></li>
+    <li><a href="VectorJep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+</div>
+
+<!-- CENTER CONTENT -------------------------------------------------- -->
+<div id="centercontent">
+<!-- #BeginEditable "Text" --> 
+        <h1><a name="top"></a>Adding operators to the parser</h1>
+        
+      <p><br>
+	To add an operator to the parser several steps are needed:
+	<ul>
+	<li>Create a new <i>token</i> with the descriptive name AT, say, and a string representing the operator.
+	<li>Modify the grammer rules to include a rule for the new operator<li>
+	<li>Create a new object implementing org.nfunk.jep.function.PostfixMathCommandI to provide methods for evaluating the operator.
+	<li>Modify or sub class org.nfunk.jep.OperatorSet to bind the operator in the parser to PostfixMathCommand
+	</ul>
+	Before atempting to add an operator you should be familiar with adding a <a href="../cust_func.html">custom function</a> to JEP.	
+	</p>
+
+	<h2>JavaCC The parser generator</h2>
+	<p>
+	Rather than writing the parser by hand in java the
+	parser is created using the <a href="https://javacc.dev.java.net/">JavaCC</a> parser/scanner generator.
+	This reads a file Parser.jjt which is written in a special language 
+	which defines the grammer and creates Parser.java and some other java files
+	which implement the parser.
+	</p>
+	<p>
+	You should read some of the documentation on <a href="https://javacc.dev.java.net/doc/docindex.html/">JavaCC</a>
+	and <a href="https://javacc.dev.java.net/doc/JJTree.html">JJTree</a> before attempting to modify the parser.
+	</p>
+	
+	<p>
+	There is a three step process used to generate the parser.
+	<ol>
+	<li>JJTree is run. This reads the file Parser.jjt and creates a file Parser.jj. 
+	The purpose of this step is to add code needed to handle Abstract Systax Trees which are
+	tree structures used represent a mathematical expression. As well as creating parser.jj it also creates
+	some other java files: Node.java which represents the basic node in the parser;
+	ASTConstant.java a node representing a constant value "0" or "1",
+	ASTVarNode.java a node representing a variable, ASTFunNode.java a node representing
+	a function or operator.
+	<li>javacc is run. This reads Parser.jj and creates Parser.java the actual code for implementing the Parser.
+	Parser.java is a very complicated file with nearly 2000 lines of code.
+	<li>Normal java comilation step which compiles Parser.java.
+	</ol>
+	This process should automatically be caried out when the project is built using
+	the ANT build.xml file. It is not sufficient to simple recompile 
+	all the java files.
+	</p>
+	<p>Only the Parser.jjt file should be modified,
+	Parser.jj, Parser.java should not be modified as they will be overwritten during the build process.
+	Furthermore ASTConstant.java, ASTFunNode.java, ASTStart.java, ASTVarNode.java,
+	JavaCharStream.java, JJTParserState.java, Node.java, SimpleNode.java, ParseException.java,
+	ParserConstants.java, ParserTokenManager.java, ParseTreeConstants.java, Token.java,
+	TokenMgrError.java should not normally be modified as these are also automatically generated.</p>
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="../img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable -->
+	
+	<h2>Creating a new TOKEN</h2>
+	<p>
+	The first step in the parsing process is breaking the input into a series of tokens. 
+	These tokens represent the lexical elements of the input, there are special
+	tokens for interger and floating point literals; quoted strings of characters;
+	and unquoted strings (identifiers) used for variable and function names.
+	</p>
+	<p>
+	Of interest here are tokens used to represent each operator. The current operator TOKENS
+	are:
+<pre>
+	/* OPERATORS */
+&lt;*&gt; TOKEN:
+{
+	&lt; ASSIGN:"="  &gt;
+|	&lt; SEMI:	";" &gt;
+|	&lt; COMMA: "," &gt;
+|	&lt; GT:   "&gt;"  &gt;
+|	&lt; LT:   "&lt;"  &gt;
+|	&lt; EQ:   "==" &gt;
+|	&lt; LE:   "&lt;=" &gt;
+|	&lt; GE:   "&gt;=" &gt;
+|	&lt; NE:   "!=" &gt;
+|	&lt; AND:  "&amp;&amp;" &gt;
+|	&lt; OR:   "||" &gt;
+|	&lt; PLUS: "+"  &gt;
+|	&lt; MINUS:"-"  &gt;
+|	&lt; MUL:  "*"  &gt;
+|	&lt; DOT:  "."  &gt;
+|	&lt; DIV:  "/"  &gt;
+|	&lt; MOD:  "%"  &gt;
+|	&lt; NOT:  "!"  &gt;
+|	&lt; POWER:"^"  &gt;
+|	&lt; CROSS:"^^"  &gt;
+|	&lt; LSQ:	"["  &gt;
+|	&lt; RSQ:	"]"	 &gt;
+|	&lt; LRND:	"("  &gt;
+|	&lt; RRND:	")"	 &gt;
+}
+</pre>
+Note that the list of tokens is separated by or symbols | .
+	<p>
+	A new TOKEN should be created for each new operator you wish to define.
+	This should be inserted in the Operators section in the Parser.jjt file.
+	If you wished to add a new @ operator with the name AT
+	then a line
+<pre>| &lt; AT: "@" &gt;</pre>	
+should be added to this list. The name of the token should be used 
+throughout the the rest of the parser.
+</p>
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="../img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable -->
+
+<h2>Modifying the grammar</h2>
+<p>
+The trickiest step is modifying the grammar of the parser. The current grammer
+can be found in the <a href="../grammar.html">Jep Grammer</a> page.
+Before examining the grammar some basic concepts should be understood.
+</p>
+<h3>Precedence</h3>
+<p>
+An important concept for mathematical parsers is the idea of precedence 
+which control the order in which operators are evaluated. For example
+PLUS "+" has a lower precedence than MUL "*" this means that 
+2+3*4 will be evaluated as 2+(3*4) = 14 rather than (2+3)*4 = 20.
+</p>
+<p>It is very important that you choose the correct precedence for your operator,
+otherwise the parser will misinterpret you input. The order of precedence in the current parser
+is
+<ol>
+<li>AssignExpression. ASSIGN: "="</li>
+<li>OrExpression. OR: "||"</li>
+<li>AndExpression. AND: "&amp;&amp;"</li>
+<li>EqualExpression. NE: "!=", EQ: "=="</li>
+<li>RelationalExpression. LT: "&lt;", LE: "&lt;=", GT: "&gt;", GE: "&gt;="</li>
+<li>AdditiveExpression. PLUS: "+", MINUS: "-"<li>
+<li>MultiplicativeExpression. MUL: "*", DIV: "/", DOT: ".", CROSS "^^", MOD: "%"</li>
+<li>UnaryExpression. PLUS: "+", MINUS: "-", NOT: "!". 
+Unary expresions only have one operand for example -5, +x, !(x==5)</li>
+<li>PowerExpression. POWER: "^"</li>
+<li>UnaryExpressionNotPlusMinus. Represents 
+brackets "(2+3)", functions "sin(x)", lists: "[1,2,3]", and variables "x".
+Each of which can be though of as the highest level of precedance being evaluated first.</li>
+</ol>
+
+<h3>Associativity</h3>
+<p>
+Another important feature of an operator is whether is left or right associative.
+Most operators like MINUS "-" are left associative this means that 1-2-3 is interpreted as (1-2)-3 == -4 rather than 1-(2-3) == 2.
+The main exception to this is asignment where x=y=z should be interpreted as x=(y=z)
+with y being set to the value of z, and then x being set to the value of (y=z) which is the value of z.
+For the most part your operator should be left associative.
+For right associative operators special considerations are needed:
+the way grammer rules are written is different and the LOOKAHEAD feature needs to be used.
+</p>
+
+<h3>The node tree</h3>
+<p>
+When and expresion like 2+3*4 is parsed the result will be a tree stucture
+representing the expresion. The result returned will be the top node of the tree.
+One of the jobs of the parser is to construct this tree.
+</p>
+<p>
+Their are three main types of node, each of implement the Node interface and are sub classes of SimpleNode. 
+<ol>
+<li>ASTConstant - represents literal numeric 1.234, 1234 and string constants "hello". Has a <tt>value</tt> field accesable with the <tt>setValue()</tt> and <tt>getValue()</tt> methods.</li>
+<li>ASTVarNode - represents variables: x. Contains a reference to a <tt>Variable</tt> object.</li>
+<li>ASTFunNode - represents operators and functions.</li>
+</ol>
+The first two are relativly straight forward, which just have fields representing the coresponding value or variable.
+</p>
+<p>
+ASTFunNode has methods:
+<ul>
+<li>getName() returns the name of the function or the symbol representing the operator.</li>
+<li>getOperator() for operators returns a reference to an instance of the Operator class. For function this returns null.</li>
+<li>getPFMC() returns the associated PostfixMathCommand for the operator or function.</li>
+<li>setFunction(String name, PostfixMathCommandI pfmc) for functions sets the name and PostfixMathCommand. This should not be used for operators.</li>
+<li>setOperator(Operator op) for operators sets the Operator</li>
+</ul>
+In addition to these an ASTFunNode has an array of children representing the arguments.
+<ul>
+<li>A function f(x,y,z) will have three children: x, y, and z.</li>
+<li>A unary operator !x has one child: x.</li>
+<li>A binary operator x+y has two children:x and y.</li>
+</ul>
+The number of children is found using <tt>jjtGetNumChildren()</tt>, and the i-th child
+is found using <tt>jjtGetChild(int i)</tt> the first argument has index 0.
+</p>
+
+<p><b>Example</b> Consider the expresion: 2+3*4. 
+This is represented as the tree structure:
+The top node is and ASTFunNode which has the + Operator and two children.
+The first child is just an ASTConstant with value 2 and the
+second child is another ASTFunNode.
+This second ASTFunNode has Operator "*" and two children both of which are 
+ASTConstant's with values 3 and 4.
+The tree structure can be represented as follows
+<pre>
+ASTFunNode: Operator "+"
+    Child0:
+    	ASTConstant: value == 2
+    Child1:
+        ASTFunNode: Operator "*"
+            Child0:
+            	ASTConstant: value == 3
+            Child1:
+            	ASTConstant: value == 4
+</pre>
+
+<p>
+Now consider -sin(x+y). This has tree structure
+<pre>
+ASTFunNode: Operator unary minus
+    Child0:
+        ASTFunNode: name sin
+            Child0:
+                ASTVarNode: variable x
+            Child1:
+                ASTVarNode: variable y
+</pre>
+
+<h3>Grammer Rules</h3>
+<p>
+The syntax of the allowable input is split into a number of
+grammar rules. The full set of rules is
+shown in the <a href="../grammar.html">Grammar documentation</a>.
+For example
+<pre>
+AdditiveExpression 	::= 
+	MultiplicativeExpression 
+	( 
+	  ( &lt;PLUS&gt; MultiplicativeExpression ) 
+	| ( &lt;MINUS&gt; MultiplicativeExpression ) 
+	)*
+</pre>
+This has elements of standard regular expresion syntax as in perl:
+<ul>
+<li><tt>( expression )*</tt> represents a sequence of 0 or more copies of expression.
+<li><tt>( expression1 | expression2 )</tt> either expression1 or expression2.
+<li><tt>&lt;PLUS&gt; expression</tt> the PLUS token followed by an expression.
+</ul>
+The full grammar rule can be interpreted as 
+An AddititativeExpression constist of a MultiplicativeExpression
+followed by 0 or more copies of
+(either a plus sign followed by a MultiplicativeExpression
+or a munis sign  followed by a MultiplicativeExpression).
+</p>
+<p>
+If ME1, ME2, ME3, ... are instances of a MultiplicativeExpression then the following
+are all legal syntaxes for an AdditiveExpression.
+<ul>
+<li>ME1</li>
+<li>ME1 + ME2</li>
+<li>ME1 - ME2</li>
+<li>ME1 + ME2 + ME3</li>
+<li>ME1 + ME2 - ME3</li>
+<li>ME1 - ME2 + ME3</li>
+<li>ME1 - ME2 - ME3</li>
+<li>etc...</li>
+</ul>
+
+<h3>The actual code</h3>
+<p>
+The actual code shows a close corespondance with the syntax of the grammar rules.
+<pre>
+void AdditiveExpression() :
+{
+}
+{
+  MultiplicativeExpression()
+  (
+    ( &lt;PLUS&gt; MultiplicativeExpression()
+      {
+        jjtThis.setOperator(opSet.getAdd());
+      }
+    ) #FunNode(2)
+    |
+    ( &lt;MINUS&gt; MultiplicativeExpression()
+      {
+        jjtThis.setOperator(opSet.getSubtract());
+      }
+    ) #FunNode(2)
+  )*
+}
+</pre>
+
+<p>
+The rule start with some initilisation
+<pre>
+void AdditiveExpression() :
+{
+}
+</pre>
+In this case no initilisation is needed, some other rules have java code
+to set up local variables between the first pair of curly brackets.
+<p>
+The second pair of curly brackets define the rule.
+<pre>
+{
+  MultiplicativeExpression()
+  (
+    ( &lt;PLUS&gt; MultiplicativeExpression()
+      {
+        jjtThis.setOperator(opSet.getAdd());
+      }
+    ) #FunNode(2)
+    |
+    ...
+   )*
+ }
+</pre>
+For each part of the rule the actual action to be performed
+is contained in a set of curly brackets. This code will be 
+executed if the imput matches this part of the rule.
+So in the input matches
+<pre>MultiplicativeExpression &lt;PLUS&gt; MultiplicativeExpression</pre>
+then the code
+<pre>
+      {
+        jjtThis.setOperator(opSet.getAdd());
+      }
+</pre>
+will be executed. jjtThis refers to the current Node, and the setOperator() method will be called.
+</p>
+
+<p>
+Finally there is a special syntax which related to JJTree part of the parser.
+<pre>
+    ) #FunNode(2)
+</pre>
+This means that when this part of the rule is matched then 
+an ASTFunNode with two children should be created. These two children
+will be the two instances of the nodes represented by two MultiplicativeExpression.
+
+<h3>Adding a new rule</h3>
+<p>
+Supose that you want to add a new binary "@" operator represented by the
+<tt>&lt;AT&gt;</tt> TOKEN. This operator has precedence between
+a AdditativeExpression and MultiplicativeExpression and is left associative.
+</p>
+<p>
+A new grammar rule, ATExpression needs to be created. Legal
+syntax might be
+<ul>
+<li>ME1
+<li>ME1 @ ME2
+<li>ME1 @ ME2 @ ME3
+<li>etc.
+</ul>
+At appropriate grammar rule would be:
+<pre>
+AtExpression 	::= 
+	MultiplicativeExpression 
+	( 
+	  ( &lt;AT&gt; MultiplicativeExpression ) 
+	)*
+</pre>
+i.e. a MultiplicativeExpression followed by 0 or more MultiplicativeExpression's
+separated by @.
+</p>
+
+
+<p>
+This rule can be translated into the code
+<pre>
+void AtExpression() :
+{
+}
+{
+  MultiplicativeExpression()
+  (
+    ( &lt;AT&gt; MultiplicativeExpression()
+      {
+        jjtThis.setOperator(opSet.getAt());
+      }
+    ) #FunNode(2)
+  )*
+}
+</pre>
+
+<p>
+As we have insterted a new rule between AdditiveExpression and MultiplicativeExpression.
+It is also necessary to modify the code of AdditiveExpression to refer to
+AtExpression instead of MultiplicativeExpression.
+<pre>
+void AdditiveExpression() :
+{
+}
+{
+  AtExpression()
+  (
+    ( &lt;PLUS&gt; AtExpression()
+      {
+        jjtThis.setOperator(opSet.getAdd());
+      }
+    ) #FunNode(2)
+    |
+    ( &lt;MINUS&gt; AtExpression()
+      {
+        jjtThis.setOperator(opSet.getSubtract());
+      }
+    ) #FunNode(2)
+  )*
+}
+</pre>
+
+<p>
+This code should appear before the code for AtExpression.
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="../img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable -->
+
+<h2>Operators and OperatorSet</h2>
+<p>
+The Operator class is used to represent each operator used by the parser.
+It has three fields: name, symbol and pfmc. Name is unique name of the operator
+and symbol is the symbol used to represent the operator in print out and pfmc
+is the coresponding PostfixMathCommandI. For most operators name an symbol are identical,
+however there are a few cases where two operators share the same symbol but have diferent unique names.
+</p>
+<p>
+There are two constructors
+<ul>
+<li>public Operator(String name,PostfixMathCommandI pfmc)
+<li>public Operator(String name,String symbol,PostfixMathCommandI pfmc)
+</ul>
+and four main methods
+<ul>
+<li>public final String getSymbol()
+<li>public final String getName()
+<li>public final PostfixMathCommandI getPFMC()
+<li>public final void setPFMC(PostfixMathCommandI pfmc)
+</ul>
+The final method can be used to change the associated pfmc.
+</p>
+
+<p>
+The OperatorSet is used to collect all the Operators used by the parser.
+An instance of OperatorSet haa fields for each operator used, 
+and it will constructs the required instances.
+<pre>
+public class OperatorSet {
+	protected Operator OP_GT  
+	  =  new Operator(">",new Comparative(Comparative.GT));
+	protected Operator OP_LT  
+	  =  new Operator("<",new Comparative(Comparative.LT));
+	...
+}
+</pre>
+For each operator there is also a coresponding method
+<pre>
+	public Operator getGT() {return OP_GT;	}
+	public Operator getLT() {return OP_LT;	}
+</pre>
+This pattern allows subclasses of OperatorSet to modify the operators
+and all methods to read them.
+</p>
+
+<p>
+To add a new operator, either modify the OperatorSet class, or create a sub class.
+A new field should we add for the operator and a new method added. For example
+<pre>
+public class MyOperatorSet extends OperatorSet
+{
+	protected Operator OP_AT = new Operator("@", new AtPFMC() );
+	public Operator getAt() { return OP_AT; }
+}
+</pre>
+This OperatorSet can be registered with a JEP subclass by setting the opSet field.
+</p>
+
+<p>
+Using the OperatorSet in the parser. The public methods of the OperatorSet allow the different operators to be
+found.
+Typically the code for the action for a specific rule will
+have a line like
+<pre>
+        jjtThis.setOperator(opSet.getAt());
+</pre>
+Which sets the operator of the current node to the coresponding Operator in the OperatorSet.
+</p>
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="../img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable -->
+
+<h2>Summary</h2>
+<p>
+Here are the steps needed to add a new operator to the parser.
+<ol>
+<li>Add a new operator TOKEN
+<pre>| &lt; AT: "@" &gt;</pre></li>
+<li>Sub class OperatorSet and add a new fieild and method.
+<pre>
+public class MyOperatorSet extends OperatorSet
+{
+	protected Operator OP_AT = new Operator("@", new AtPFMC() );
+	public Operator getAt() { return OP_AT; }
+}
+</pre>
+</li>
+<li>Add a new Grammar Rule and action
+<pre>
+void AtExpression() :
+{
+}
+{
+  MultiplicativeExpression()
+  (
+    ( &lt;AT&gt; MultiplicativeExpression()
+      {
+        jjtThis.setOperator(opSet.getAt());
+      }
+    ) #FunNode(2)
+  )*
+}
+</pre>
+</li>
+<li>Modify existing grammar rules to refere to the new rule.</li>
+<li>Build the code:
+<ul>
+<li>Run JJTree to generate parser.jj
+<li>Run javacc to generate parser.java
+<li>Compile
+</ul>
+<li>Test!
+</ul>
+
+<!-- #BeginLibraryItem "/Library/top bar.lbi" --><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+    <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
+</tr>
+<tr>
+ <td bgcolor="#CCCCCC"><img src="../img/spacer.gif" width="1" height="1"></td></tr></table>
+ <br><br><!-- #EndLibraryItem --><!-- #EndEditable -->
+
+<br/>
+<br/>
+<br/>
+<div id="footer">&copy; 2004 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a></div>
+</div>
+</body>
+<!-- #EndTemplate --></html>
