@@ -149,8 +149,9 @@ public class JEP {
 	}
 
 	/**
-	 * Adds the constants pi and e to the parser. As addStandardFunctions(), this
-	 * method should be called immediatly after the JEP object is created.
+	 * Adds the constants pi and e to the parser. As addStandardFunctions(),
+	 * this method should be called immediatly after the JEP object is
+	 * created.
 	 */
 	public void addStandardConstants() {
 		//add constants to Symbol Table
@@ -225,6 +226,19 @@ public class JEP {
 	 */
 	public void addVariableAsObject(String name, Object object) {
 		symTab.put(name, object);
+	}
+	
+	/**
+	 * Removes a variable from the parser. For example after calling
+	 * addStandardConstants(), removeVariable("e") might be called to remove
+	 * the euler constant from the set of variables.
+	 *
+	 * @return The value of the variable if it was added earlier. If
+	 * the variable is not in the table of variables, <code>null</code> is
+	 * returned.
+	 */
+	public Object removeVariable(String name) {
+		return symTab.remove(name);
 	}
 
 	/**
@@ -416,7 +430,10 @@ public class JEP {
 	}
 
 	/**
-	 * Returns the top node of the expression tree.
+	 * Returns the top node of the expression tree. Because all nodes are
+	 * pointed to either directly or indirectly, the entire expression tree
+	 * can be accessed through this node. It may be used to manipulate the
+	 * expression, and subsequently evaluate it manually.
 	 * @return The top node of the expression tree
 	 */
 	public Node getTopNode() {
@@ -424,7 +441,8 @@ public class JEP {
 	}
 
 	/**
-	 * Returns the symbol table
+	 * Returns the symbol table (the list of all variables that the parser
+	 * recognises).
 	 * @return The symbol table
 	 */
 	public SymbolTable getSymbolTable() {
