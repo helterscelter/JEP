@@ -31,6 +31,7 @@ package  org.nfunk.jep.type;
  * @version 2.3.0.1 now extends Number, has add and sub methods.
  * @version 2.3.0.2 now overrides equals and hashCode.
  */
+//* @version 2.3.0.3 does not implement Number anymore, as caused too many problems.
 
 public class Complex extends Number
 {
