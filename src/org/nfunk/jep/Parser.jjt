@@ -1,28 +1,9 @@
 /***************************************************************
 
-JEP - Java Expression Parser
-    JEP is a Java package for parsing and evaluating mathematical
-	expressions. It currently supports user defined variables,
-	constant, and functions. A number of common mathematical
-	functions and constants are included.
-
-Author: Nathan Funk
-Copyright (C) 2000 Nathan Funk
-
-    JEP is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    JEP is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with JEP; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
+@header@
+@date@
+@copyright@
+@license@
 
 This file contains the grammar from which the parser is
 generated. The parser generation tools being used are JavaCC
@@ -105,6 +86,55 @@ public class Parser {
 	private void addToErrorList(String errorStr) {
 		jep.errorList.addElement(errorStr);		
 	}
+
+	/**
+	 * Translate all escape sequences to characters. Inspired by Rob Millar's
+	 * unescape() method in rcm.util.Str fron the Web Sphinx project.
+	 *
+	 * @param inputStr String containing escape characters.
+	 * @return String with all escape sequences replaced.
+	 */
+	private String replaceEscape(String inputStr) {
+		int len = inputStr.length();
+		int p = 0;
+		int i;
+		String metachars = "tnrbf\\\"'";
+		String chars = "\t\n\r\b\f\\\"'";
+		
+		StringBuffer output = new StringBuffer();
+		
+		while ((i = inputStr.indexOf('\\', p)) != -1) {
+			output.append(inputStr.substring(p, i));
+			
+			if (i+1 == len) break;
+			
+			// find metacharacter
+            char metac = inputStr.charAt(i+1);
+            
+            // find the index of the metac
+            int k = metachars.indexOf(metac);
+            if (k == -1) {
+            	// didn't find the metachar, leave sequence as found.
+            	// This code should be unreachable if the parser
+            	// is functioning properly because strings containing
+            	// unknown escape characters should not be accepted.
+            	output.append('\\');
+                output.append(metac);
+            } else {
+            	// its corresponding true char
+                output.append(chars.charAt(k));   
+            }
+
+			// skip over both escape character & metacharacter
+            p = i + 2;
+		}
+
+		// add the end of the input string to the output
+        if (p < len)
+            output.append(inputStr.substring(p));
+            
+        return output.toString();
+	}
 }
 
 PARSER_END(Parser)
@@ -148,13 +178,8 @@ TOKEN : /* LITERALS */
 |
 	< STRING_LITERAL:
 		"\""
-		(   (~["\"","\\","\n","\r"])
-		| ("\\"
-			( ["n","t","b","r","f","\\","'","\""]
-			| ["0"-"7"] ( ["0"-"7"] )?
-			| ["0"-"3"] ["0"-"7"] ["0"-"7"]
-			)
-			)
+		( (~["\"","\\","\n","\r"])
+		| ("\\" ["n","t","b","r","f","\\","'","\""]	)
 		)*
 		"\""
 	>
@@ -528,7 +553,11 @@ void AnyConstant() #Constant:
 }
 {
 	t=<STRING_LITERAL> {
+		// strip away double quotes at end of string
 		String temp = (t.image).substring(1,t.image.length()-1);
+		
+		// replace escape characters
+		temp = replaceEscape(temp);
 		
 		jjtThis.setValue(temp);
 	}

@@ -1,9 +1,12 @@
-/**
- * Evaluator
- * JEP Example Applet
- *
- * @author Nathan Funk
- */
+/*****************************************************************************
+
+@header@
+@date@
+@copyright@
+@license@
+
+*****************************************************************************/
+
 package org.nfunk.jepexamples;
 
 import java.io.*;

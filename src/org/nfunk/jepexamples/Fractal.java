@@ -1,3 +1,12 @@
+/*****************************************************************************
+
+@header@
+@date@
+@copyright@
+@license@
+
+*****************************************************************************/
+
 /*
 <applet code="org.nfunk.jepexamples.Fractal" width=300 height=320>
 <param name=initialExpression value="z*z+c">

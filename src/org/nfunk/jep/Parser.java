@@ -21,6 +21,55 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                 jep.errorList.addElement(errorStr);
         }
 
+        /**
+	 * Translate all escape sequences to characters. Inspired by Rob Millar's
+	 * unescape() method in rcm.util.Str fron the Web Sphinx project.
+	 *
+	 * @param inputStr String containing escape characters.
+	 * @return String with all escape sequences replaced.
+	 */
+        private String replaceEscape(String inputStr) {
+                int len = inputStr.length();
+                int p = 0;
+                int i;
+                String metachars = "tnrbf\\\"'";
+                String chars = "\t\n\r\b\f\\\"'";
+
+                StringBuffer output = new StringBuffer();
+
+                while ((i = inputStr.indexOf('\\', p)) != -1) {
+                        output.append(inputStr.substring(p, i));
+
+                        if (i+1 == len) break;
+
+                        // find metacharacter
+            char metac = inputStr.charAt(i+1);
+
+            // find the index of the metac
+            int k = metachars.indexOf(metac);
+            if (k == -1) {
+                // didn't find the metachar, leave sequence as found.
+                // This code should be unreachable if the parser
+                // is functioning properly because strings containing
+                // unknown escape characters should not be accepted.
+                output.append('\\');
+                output.append(metac);
+            } else {
+                // its corresponding true char
+                output.append(chars.charAt(k));
+            }
+
+                        // skip over both escape character & metacharacter
+            p = i + 2;
+                }
+
+                // add the end of the input string to the output
+        if (p < len)
+            output.append(inputStr.substring(p));
+
+        return output.toString();
+        }
+
 /***************************************************************
 GRAMMAR START
 ***************************************************************/
@@ -903,7 +952,11 @@ GRAMMAR START
         t = jj_consume_token(STRING_LITERAL);
                              jjtree.closeNodeScope(jjtn000, true);
                              jjtc000 = false;
+                // strip away double quotes at end of string
                 String temp = (t.image).substring(1,t.image.length()-1);
+
+                // replace escape characters
+                temp = replaceEscape(temp);
 
                 jjtn000.setValue(temp);
         break;
@@ -1040,85 +1093,8 @@ GRAMMAR START
     return retval;
   }
 
-  final private boolean jj_3R_12() {
-    if (jj_scan_token(MOD)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_24() {
-    if (jj_3R_26()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_11() {
-    if (jj_scan_token(DIV)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_32() {
-    if (jj_scan_token(31)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_10() {
-    if (jj_scan_token(MUL)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_20() {
-    if (jj_3R_24()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_19() {
-    if (jj_3R_23()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_29() {
-    if (jj_3R_32()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3_2() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_3()) {
-    jj_scanpos = xsp;
-    if (jj_3R_10()) {
-    jj_scanpos = xsp;
-    if (jj_3R_11()) {
-    jj_scanpos = xsp;
-    if (jj_3R_12()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3_3() {
-    if (jj_3R_13()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
   final private boolean jj_3R_15() {
     if (jj_3R_19()) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
-  final private boolean jj_3R_28() {
-    if (jj_3R_31()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
@@ -1250,12 +1226,6 @@ GRAMMAR START
     return false;
   }
 
-  final private boolean jj_3R_39() {
-    if (jj_scan_token(NOT)) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
-    return false;
-  }
-
   final private boolean jj_3R_34() {
     if (jj_scan_token(INTEGER_LITERAL)) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
@@ -1270,6 +1240,12 @@ GRAMMAR START
     if (jj_3R_35()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_39() {
+    if (jj_scan_token(NOT)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
 
@@ -1310,6 +1286,83 @@ GRAMMAR START
 
   final private boolean jj_3R_18() {
     if (jj_3R_23()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_12() {
+    if (jj_scan_token(MOD)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_24() {
+    if (jj_3R_26()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_32() {
+    if (jj_scan_token(31)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_11() {
+    if (jj_scan_token(DIV)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_10() {
+    if (jj_scan_token(MUL)) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_20() {
+    if (jj_3R_24()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_29() {
+    if (jj_3R_32()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_19() {
+    if (jj_3R_23()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3R_28() {
+    if (jj_3R_31()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3R_10()) {
+    jj_scanpos = xsp;
+    if (jj_3R_11()) {
+    jj_scanpos = xsp;
+    if (jj_3R_12()) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    } else if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
+    return false;
+  }
+
+  final private boolean jj_3_3() {
+    if (jj_3R_13()) return true;
     if (jj_la == 0 && jj_scanpos == jj_lastpos) return false;
     return false;
   }
