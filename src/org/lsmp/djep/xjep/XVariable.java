@@ -54,9 +54,10 @@ public class XVariable extends Variable {
 	{
 		StringBuffer sb = new StringBuffer(name);
 		sb.append(": val "+getValue() );
-		if(!hasValidValue()) sb.append("(invalid)");
-		sb.append(" ");
-		if(getEquation()!=null) sb.append(pv.toString(getEquation()));
+		if(!hasValidValue()) sb.append("NA");
+		sb.append("\t");
+		if(this.isConstant()) sb.append("constant");
+		else if(getEquation()!=null) sb.append(pv.toString(getEquation()));
 		else sb.append("no equation");
 		return sb.toString();
 	}

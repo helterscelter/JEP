@@ -55,6 +55,7 @@ public class DVariable extends XVariable
 	/** makes value and values of all derivatives invalid. **/
 	public void invalidateAll()
 	{
+		if(isConstant()) return;
 		setValidValue(false);
 		for(Enumeration e = derivatives.elements(); e.hasMoreElements(); ) 
 		{
@@ -196,26 +197,27 @@ public class DVariable extends XVariable
 		return findDerivative(newnames,jep);
 	}
 	
-	public void print(PrintVisitor bpv)
+	public String toString(PrintVisitor bpv)
 	{
 		StringBuffer sb = new StringBuffer(name);
-		sb.append(": ");
-		if(hasValidValue()) sb.append(" val "+getValue() );
-		else	sb.append(" val invalid");
-		sb.append(" ");
-		if(getEquation()!=null) sb.append(bpv.toString(getEquation()));
-		sb.append("\n");
+		sb.append(":\t");
+		if(hasValidValue()) sb.append(getValue() );
+		else	sb.append("NA");
+		sb.append("\t");
+		if(this.isConstant()) sb.append("constant");
+		else if(getEquation()!=null) sb.append("eqn "+bpv.toString(getEquation()));
+		else sb.append("no equation");
 		for(Enumeration e = derivatives.elements(); e.hasMoreElements(); ) 
 		{
+			sb.append("\n");
 			PartialDerivative var = (PartialDerivative) e.nextElement();
 			sb.append("\t"+var.toString()+": ");
-			if(var.hasValidValue()) sb.append(" val "+var.getValue() );
-			else	sb.append(" val invalid");
-			sb.append(" ");
+			if(var.hasValidValue()) sb.append(var.getValue() );
+			else	sb.append("NA");
+			sb.append("\t");
 			sb.append(bpv.toString(var.getEquation()));
-			sb.append("\n");
 		}
-		System.out.print(sb.toString());
+		return sb.toString();
 	}
 
 	/**
