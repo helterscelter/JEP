@@ -86,9 +86,9 @@ public class Parser {
 		restart(stream,jep_in);
 		// Parse the expression, and return the 
 		enable_tracing();
-		Node res = Start();
-		if (res == null) throw new ParseException("No expression entered");
-		return res.jjtGetChild(0);
+		Node node = Start();
+		if (node == null) throw new ParseException("No expression entered");
+		return node.jjtGetChild(0);
 	}
 
 	/** 
@@ -125,7 +125,7 @@ public class Parser {
 	public Node continueParse() throws ParseException
 	{
 		ASTStart node = Start();
-		if(node==null) return null;
+		if (node==null) return null;
 		return node.jjtGetChild(0);
 	}
 
@@ -245,7 +245,7 @@ TOKENS
 	Letters before version 2.22
 	< #LETTER: ["_","a"-"z","A"-"Z"] >
 
-	In Ver 2.3.0.1 prescance of . in an identifier is switchable.
+	In Ver 2.3.0.1 presence of . in an identifier is switchable.
 	In the DEFAULT lexical state identifiers can contain a .
 	In the NO_DOT_IN_IDENTIFIERS state identifiers cannot contain a .
 	the state can be set by using
@@ -343,8 +343,13 @@ ASTStart Start() #Start :
 	Expression() ( <EOF> | <SEMI> ) { return jjtThis; }
 	|  ( <EOF> | <SEMI> )
 	{
-		//throw new ParseException("No expression entered");
-		addToErrorList("No expression entered");
+		// njf - The next line is commented out in 2.3.0 since
+		//       two "No expression entered" errors are reported
+		//       in EvaluatorVisitor and Console (one from here
+		//       the other from ParseStream() )
+		//       Decided to just return null, and handle the error
+		//       in ParseStream.
+		// addToErrorList("No expression entered");
 		return null;
 	}
 }

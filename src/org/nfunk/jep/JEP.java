@@ -132,7 +132,7 @@ public class JEP {
 	 * of the arguments to the new instance. Subclasses can call this 
 	 * protected constructor and set the individual components
 	 * themselves.
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */
 	protected JEP(JEP j)
 	{
@@ -171,8 +171,8 @@ public class JEP {
 	 * produce an "Unrecognized function..." error.
 	 * In most cases, this method should be called immediately after the JEP
 	 * object is created.
-	 * @since 2.3.0 added if and exp functions
-	 * @since 2.3.1 added str function
+	 * @since 2.3.0 alpha added if and exp functions
+	 * @since 2.3.0 beta 1 added str function
 	 */
 	public void addStandardFunctions() {
 		//add functions to Function Table
@@ -224,8 +224,8 @@ public class JEP {
 	 * (0,1). Two functions re() and im() are also added for extracting the
 	 * real or imaginary components of a complex number respectively.
 	 *<p>
-	 * @since 2.3.0 The functions cmod and arg are added to get the modulus and argument. 
-	 * @since 2.3.1 The functions complex and polar to convert x,y and r,theta to Complex. 
+	 * @since 2.3.0 alpha The functions cmod and arg are added to get the modulus and argument. 
+	 * @since 2.3.0 beta 1 The functions complex and polar to convert x,y and r,theta to Complex. 
 	 */
 	public void addComplex() {
 		//add constants to Symbol Table
@@ -268,7 +268,7 @@ public class JEP {
 
 	/** Adds a constant.
 	 * This is a variable whos value cannot be changed.
-	 * @since 2.3.0.1
+	 * @since 2.3.0 beta 1
 	 */
 	public void addConstant(String name,Object value) {
 		symTab.addConstant(name, value);
@@ -317,7 +317,7 @@ public class JEP {
 	 * Returns the value of the varible with given name.
 	 * @param name name of the variable.
 	 * @return the current value of the variable.
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */
 	public Object getVarValue(String name) {
 		return symTab.getVar(name).getValue();
@@ -328,7 +328,7 @@ public class JEP {
 	 * @param name name of the variable.
 	 * @param val the initial value of the variable.
 	 * @return false if  variable does not exist or if its value cannot be changed.
-	 * @since 2.3.0 
+	 * @since 2.3.0 alpha
 	 */
 	public boolean setVarValue(String name,Object val) {
 		return symTab.setVarValue(name,val);
@@ -337,7 +337,7 @@ public class JEP {
 	 * Gets the object representing the variable with a given name. 
 	 * @param name the name of the variable to find.
 	 * @return the Variable object or null if name not found.
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */
 	public Variable getVar(String name) {
 		return symTab.getVar(name);
@@ -365,6 +365,12 @@ public class JEP {
 	public void setTraverse(boolean value) {
 		traverse = value;
 	}
+	
+	/**
+	 * Returns the value of the traverse option.
+	 * @return True if the traverse option is enabled. False otherwise.
+	 */
+	public boolean getTraverse() { return traverse; }
 
 	/**
 	 * Sets the value of the implicit multiplication option.
@@ -379,6 +385,10 @@ public class JEP {
 		implicitMul = value;
 	}
 	
+	/**
+	 * Returns the value of the implicit multiplication option.
+	 * @return True if the implicit multiplication option is enabled. False otherwise.
+	 */
 	public boolean getImplicitMul() { return implicitMul; }
 	
 	/**
@@ -398,25 +408,29 @@ public class JEP {
 		allowUndeclared = value;
 	}
 
+	/**
+	 * Returns the value of the allowUndeclared option.
+	 * @return True if the allowUndeclared option is enabled. False otherwise.
+	 */
 	public boolean getAllowUndeclared() { return allowUndeclared; }
 	
-	/**
-	 * Whether assignment equation <tt>y=x+1</tt> equations are allowed.
-	 * @since 2.3.0
-	 */
-	public boolean getAllowAssignment() { return allowAssignment; }
-
 	/** Sets wheter assignment equations like <tt>y=x+1</tt> are allowed.
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */ 
 	public void setAllowAssignment(boolean value) {
 		allowAssignment = value;
 	}
 
 	/**
+	 * Whether assignment equation <tt>y=x+1</tt> equations are allowed.
+	 * @since 2.3.0 alpha
+	 */
+	public boolean getAllowAssignment() { return allowAssignment; }
+
+
+	/**
 	 * Parses the expression. If there are errors in the expression,
 	 * they are added to the <code>errorList</code> member.
-	 *
 	 * @param expression_in The input expression string
 	 */
 	public void parseExpression(String expression_in) {
@@ -466,7 +480,7 @@ public class JEP {
 	}
 
 	/**
-	 * parses an expression. 
+	 * Parses an expression. 
 	 * Returns a object of type Node, does not catch errors.
 	 * Does not set the topNode variable of the JEP instance.
 	 * This method should generally be used with the {@link #evaluate evaluate}
@@ -474,12 +488,12 @@ public class JEP {
 	 * @param expression represented as a string.
 	 * @return The top node of an tree representing the parsed expression.
 	 * @throws ParseException
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */
 	public Node parse(String expression) throws ParseException
 	{
 		java.io.StringReader sr = new java.io.StringReader(expression);
-		Node node = parser.parseStream(sr,this);
+		Node node = parser.parseStream(sr, this);
 		return node;
 	}
 
@@ -491,16 +505,15 @@ public class JEP {
 	 * @param node the top node of the tree representing the expression.
 	 * @return The value of the expression
 	 * @throws Exception if for some reason the expression could not be evaluated
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */
 	public Object evaluate(Node node) throws Exception
 	{
-		return ev.getValue(node,new Vector(),this.symTab);
+		return ev.getValue(node, new Vector(), this.symTab);
 	}
 
 	/**
 	 * Evaluates and returns the value of the expression as a double number.
-	 *
 	 * @return The calculated value of the expression as a double number.
 	 * If the type of the value does not implement the Number interface
 	 * (e.g. Complex), NaN is returned. If an error occurs during evaluation,
@@ -647,7 +660,7 @@ public class JEP {
 	/**
 	 * Returns the operator set.
 	 * @return the OperatorSet used by this JEP instance.
-	 * @since 2.3.0
+	 * @since 2.3.0 alpha
 	 */
 	public OperatorSet getOperatorSet() {
 		return opSet;
@@ -656,7 +669,7 @@ public class JEP {
 	/**
 	 * Returns the parse object.
 	 * @return the Parse used by this JEP.
-	 * @since 2.3.0.1
+	 * @since 2.3.0 beta 1
 	 */
 	public Parser getParser() {return parser;	}
 //------------------------------------------------------------------------
