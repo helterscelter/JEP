@@ -8,10 +8,8 @@
 *****************************************************************************/
 package org.nfunk.jep.function;
 
-import java.lang.Math;
 import java.util.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
 
 public class Not extends PostfixMathCommand
 {
