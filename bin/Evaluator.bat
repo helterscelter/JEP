@@ -1,5 +1,7 @@
-REM call jview.exe /cp:a d:\java\packages /a Evaluator.java
+@echo off
+echo This batch file may not run correctly if executed from a path containing space characters.
 
+REM call jview.exe /cp:a d:\java\packages /a Evaluator.java
 if not "%OS%"=="Windows_NT" goto win9xStart
 
 :winNTStart

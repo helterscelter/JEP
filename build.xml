@@ -3,7 +3,7 @@
   build.xml (ant build script)
 
   JEP - Java Expression Parser
-  http://jep.sourceforge.net
+  http://www.singularsys.com/jep
 
   Setting up your system to compile JEP:
     1. Set the JAVACCHOME environment variable to the location of the
@@ -26,8 +26,8 @@
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
 	<property name="lib"     value="lib"/>
-	<property name="website" value="website"/>
-	<property name="version" value="2.23"/>
+	<!-- <property name="website" value="website"/> -->
+	<property name="version" value="2.24"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
@@ -42,6 +42,8 @@
 
 	<taskdef name="javacc"
 	classname="org.apache.tools.ant.taskdefs.optional.javacc.JavaCC" />
+
+	
 
 <!--======================================================================-->
 <!-- INIT -->
@@ -95,13 +97,13 @@
 <!--======================================================================-->
 <!-- JAVADOC -->
 	<target name="javadoc" depends="init">
-		<delete dir="${website}/htdocs/doc/javadoc"/>
-		<mkdir dir="${website}/htdocs/doc/javadoc"/>
+		<delete dir="doc/javadoc"/>
+		<mkdir dir="doc/javadoc"/>
 		<javadoc packagenames="org.nfunk.jep.*"
 				sourcepath="src"
-				destdir="${website}/htdocs/doc/javadoc"
+				destdir="doc/javadoc"
 				windowtitle="JEP API">
-			<bottom><![CDATA[<A HREF=\"http://jep.sourceforge.net\" TARGET=\"_blank\">http://jep.sourceforge.net</A> Copyright &#169; 2000 Nathan Funk]]></bottom>
+			<bottom><![CDATA[<A HREF=\"http://www.singularsys.com/jep\" TARGET=\"_blank\">http://www.singularsys.com/jep</A> Copyright &#169; 2000 Nathan Funk]]></bottom>
 		</javadoc>
 	</target>
 
@@ -132,20 +134,35 @@
 		<!-- Copy jar -->
 		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}/jep-${version}"/>
 
-		<!-- Copy web site -->
+		<!-- Copy web site 
 		<mkdir dir="${doc}/website"/>
 		<copy todir="${doc}/website">
 			<fileset dir="${website}/htdocs"
 					includes="**"
 					excludes="_notes/**, Library/**, Templates/**"/>
 		</copy>
+		-->
 
-		<!-- Copy src, doc, bin, build, and single files -->
+		<!-- Copy src files -->
+		<!-- define filterset -->
+		<filterset id="sourcefilters">
+			<filter token="header" value="JEP - Java Math Expression Parser ${version}"/>
+			<filter token="date" value="      ${TODAY}"/>
+			<filter token="copyright" value="      (c) Copyright 2002, Nathan Funk"/>
+			<filter token="license" value="      See LICENSE.txt for license information."/>
+		</filterset>
 		<copy todir="${disttemp}/jep-${version}">
 			<fileset dir="."
 					includes="
 					 ${src}/org/nfunk/jep/**,
-					 ${src}/org/nfunk/jepexamples/**,
+					 ${src}/org/nfunk/jepexamples/**"/>
+			<filterset refid="sourcefilters"/>
+		</copy>
+
+		<!-- Copy doc, bin, build, and single files -->
+		<copy todir="${disttemp}/jep-${version}">
+			<fileset dir="."
+					includes="
 					 ${doc}/**,
 					 ${bin}/**,
 					 ${lib}/**,

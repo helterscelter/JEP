@@ -1,4 +1,6 @@
 @echo off
+echo This batch file may not run correctly if executed from a path containing space characters.
+
 
 if not "%OS%"=="Windows_NT" goto win9xStart
 
