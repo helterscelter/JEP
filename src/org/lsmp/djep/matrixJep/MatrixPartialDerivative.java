@@ -8,6 +8,7 @@
 package org.lsmp.djep.matrixJep;
 import org.nfunk.jep.*;
 import org.lsmp.djep.djep.*;
+import org.lsmp.djep.matrixJep.nodeTypes.ASTMConstant;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 /**
@@ -27,9 +28,21 @@ public class MatrixPartialDerivative extends PartialDerivative implements Matrix
 	**/ 
 	protected MatrixPartialDerivative(MatrixVariable var, String derivnames[],Node deriv)
 	{
-		super(var,derivnames,deriv);
-		setValidValue(false);
-		mvalue=Tensor.getInstance(var.getDimensions());
+		super(var,derivnames);
+		/*TODO could be a little cleverer just have a 
+		 * partial derivative which is a constant dy/dx = 1
+		 * don't use an equation, instead use a value.
+		 * 
+		if(deriv instanceof ASTMConstant) {
+			MatrixValueI val = ((ASTMConstant) deriv).getMValue();
+			System.out.println("Warning constant derivative "+getName()+"="+val);
+			mvalue = (Scaler) Scaler.getInstance(val);
+		}
+		else {
+		*/
+			setEquation(deriv);
+			setValidValue(false);
+			mvalue=Tensor.getInstance(var.getDimensions());
 	}
 	
 	public Dimensions getDimensions()

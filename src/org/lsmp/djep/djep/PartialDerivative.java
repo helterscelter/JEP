@@ -26,14 +26,29 @@ public class PartialDerivative extends XVariable  implements Observer {
 	 * Protected constructor, should only be constructed
 	 * through the findDerivative method in {@link DVariable DVariable}.
 	**/ 
-	protected PartialDerivative(DVariable var, String derivnames[],Node deriv)
+	protected PartialDerivative(DVariable var, String derivnames[])
 	{
 		super(var.getName());
 		root = var;
 		dnames = derivnames;
-		setEquation(deriv);
 		printString = DVariable.makeDerivString(root.getName(),derivnames);
 		root.addObserver(this);
+	}
+	
+	protected PartialDerivative(DVariable var, String derivnames[],Node deriv)
+	{
+		this(var,derivnames);
+		/*TODO could be a little cleverer just have a 
+		 * partial derivative which is a constant dy/dx = 1
+		 * don't use an equation, instead use a value.
+		 * 
+		if(deriv instanceof ASTConstant) {
+			System.out.println("Warning constant derivative "+printString+"="+((ASTConstant) deriv).getValue());
+			this.setValue(((ASTConstant) deriv).getValue());
+		}
+		else
+		*/
+			setEquation(deriv);
 	}
 	
 	public String getName() { return printString; }
