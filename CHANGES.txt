@@ -1,6 +1,15 @@
 
 == org.nfunk.* ======================================================
-2.3.0 release
+2.3.0 release (Oct 3)
+Oct  3 - 
+
+Oct  2 - build.xml now creates javadoc using new breakiterator
+         (gets rid of all the "helpful" output when running javadoc)
+       - added package.html files to package directories
+       - updated details in documentation
+       - documented error handling using hasError() and getErrorInfo()
+       - added 1.2 compatibility checking in build.xml
+       
 Oct  1 - removed org.lsmp.* from compile in build.xml
        - commented out addToErrorList("No expression entered"); from
          Start() in Parser.jjt
@@ -9,7 +18,9 @@ Oct  1 - removed org.lsmp.* from compile in build.xml
           2.3.0   ->  2.3.0 alpha
           2.3.1   ->  2.3.0 beta 1
           2.3.2   ->  2.3.0 beta 2
+          2.3.3   ->  2.3.0 beta 2
           2.3.0.1 ->  2.3.0 alpha
+          
 
 2.3.0 beta 2
 ?      - NumberFactory has been changed to create the number from a String

@@ -1,13 +1,12 @@
 == TODO for version 2.3.0 ===========================================
-- document hasError() better with examples
-- ensure EvaluatorVisitor reports multiple errors for one evaluation
-   (compare Rich's code to version 1.12)
 - check for undocumented functions
 - dot product?
+- ensure EvaluatorVisitor reports multiple errors for one evaluation
+   (compare Rich's code to version 1.12)
 - finalize docs
-- fix link to javadoc
-- update version history
-- upload new documentation+example files to web site
+- update version history(s)
+- upload new documentation + example files to web site
+- send license to Preet
 
 Optional
 - benchmark evaluation performance against 2.24?
@@ -15,6 +14,7 @@ Optional
 - add more JUnit tests
 
 Complete
+x added 1.2 compatibility checking
 x replace @license_info@ with GPL info using replace task and loadfile
    also @version@ @date@ @license@ @copyright@
 x change getValue() and getComplexValue()
@@ -22,33 +22,42 @@ x fix ln(e) = 0 with getValue() (nothing to fix?)
 x rename comments from 2.3.0 to 2.3.0 alpha
                        2.3.1 to 2.3.0 beta1
                        2.3.2 to 2.3.0 beta2
-
+                       2.3.3 to 2.3.0 beta2
+x fix link to javadoc (just worked)
+x is it still possible to find the names of variables in an expression?
+  how? document
+x document hasError() better with examples
 
 == Web site todo ====================================================
+ - add link from support to bug report
+ - feature request?
  - add Double -> Number?
 
+== Phone call with Rich =============================================
+ - THANK YOU!
+ - logging changes into CHANGES.txt
+ - compatibility 1.2?
 
 == Further todos ====================================================
+ - change Functions and Operators documentation. That table just has too
+   much empty space
  - JUnit with ANT http://www-106.ibm.com/developerworks/library/j-ant/?dwzone=java
- - add shell scripts for starting up in linux
  - comparison needs to be more flexible with complex type ((i-i) == 0)
- - automaticize web site uploading/cvs
  - add to features, that it is "easy to integrate in your project"
- - clean up javadoc so warnings are avoided during javadoc generation
  - add max(), min(), avg() methods
  - add example for multiple arguments to the documentation
  - extend build.xml to automatically generate commercial package
+ - automate purchase with download of licensed file
  - allow dumpvisitor to show values of function nodes and variables
  - allow custom symbol tables (Map interface only in 1.2 - talk with dude)
  - add list of reference companies that use JEP to web site
  - add exp function
  - make case sensitivity optional
- - think about adding a "static double getValue(String expr) throw Exception"
+ - think about adding a "static double getValue(String expr) throws Exception"
  - add support for delimited identifiers (suggestion from Ralph Harnden)
  - new example applet, show gray-scale image with function evaluated at
  - check out caligula http://www.home.foni.net/~wkurz/caligula/caligula.htm
  - complete applying new code convention to complex class
- - add documentation to most imporant classes
  - update Parser.jjt and JEP for smooth configuration optioning
  - optimize evaluation
  - look at 330 design patterns and see whether some might be useful
@@ -59,6 +68,7 @@ x rename comments from 2.3.0 to 2.3.0 alpha
 http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - compare features with the french guy's site, and plan to match important capabilities
  - add applet for displaying expression trees
+ - automaticize web site uploading/cvs
 
 -- Mamala -----------------------------------------------------------
  - use <apply></apply> instead (content MathML?)

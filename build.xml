@@ -6,8 +6,14 @@
   http://www.singularsys.com/jep
 
   Setting up your system to compile JEP:
-  ! Set the JAVACCHOME environment variable to the location of the
+  - Set the JAVACCHOME environment variable to the location of the
     library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
+  - This build file ensures compatibility with Java 1.2 by using the
+    bootclasspath option for cross-compilation when compiling. For this
+    a Java 1.2 JDK needs to be available on the system. The location
+    is set in the jdk1.2home property. If you want to compile without
+    ensuring 1.2 compatibility, you can remove the "target" and
+    "bootclasspath" options from the javac target.
 =============================================================================
 -->
 
@@ -29,6 +35,7 @@
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
 	<property name="classpath" value="${lib}/junit.jar"/>
+	<property name="jdk1.2home" value="C:/jdk1.2.2"/>
 
 	<taskdef name="jjtree"
 	classname="org.apache.tools.ant.taskdefs.optional.javacc.JJTree" />
@@ -107,7 +114,9 @@
 		<javac srcdir="${src}"
 			   includes="org/nfunk/**"
 		       destdir="${build}"
-		       classpath="${classpath}"/>
+		       classpath="${classpath}"
+			   target="1.2"
+			   bootclasspath="${jdk1.2home}/jre/lib/rt.jar"/>
 	</target>
 
 
