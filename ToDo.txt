@@ -1,15 +1,19 @@
 == Web site todo ====================================================
- - add "Added NumberFactory..."
  - add Double -> Number?
 
 == v2.23 todos ======================================================
  x support for Number type
- - update javadoc on website
- - add download of documentation for old versions
- - figure out way to distribute documentation with each version
- - automaticize web site uploading/cvs
+ x update javadoc on website
+ x figure out way to distribute documentation with each version
+ - change version in license
+ - update Main page
+ - add doc for loading custom NumberFactory
+ - upload new website
+ - update links
+ 
 
 == Further todos ====================================================
+ - automaticize web site uploading/cvs
  - add max(), min(), avg() methods
  - add user wish list to this file
  - add example for multiple arguments to the documentation
