@@ -1,7 +1,7 @@
 import org.nfunk.jep.*;
 
 /**
- * An example class to test custom functions with JEP version 2.12.
+ * An example class to test custom functions with JEP.
  */
 class CustFunc {
 	
@@ -41,6 +41,6 @@ class CustFunc {
 			return;
 		}
 		
-		System.out.println(expr + " = " + parser.getValue()); // Print value
+		System.out.println(expr + " = " + value); // Print value
 	}
 }
