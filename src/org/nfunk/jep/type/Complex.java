@@ -402,7 +402,10 @@ public class Complex
 		
 		return new Complex(scalar*Math.cos(temp2Im), scalar*Math.sin(temp2Im));
 	}
-
+	/** Returns the complex conjugate. */
+	public Complex conj() {
+		return new Complex(re,-im);
+	}
 	/**
 	 * Returns the logarithm of this complex number.
 	 */	
