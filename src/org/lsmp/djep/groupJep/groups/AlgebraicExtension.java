@@ -19,7 +19,7 @@ import org.nfunk.jep.type.*;
  * @author Rich Morris
  * Created on 09-Mar-2004
  */
-public class AlgebraicExtension extends FreeGroup implements RingI {
+public class AlgebraicExtension extends ExtendedFreeGroup implements RingI {
 
 	private Polynomial poly;
 	private Polynomial poly2;

@@ -116,6 +116,23 @@ public class FreeGroup extends Group implements RingI {
 		rootVal = complex;
 	}
 
+	/** Sets the root value for given symbol.
+	 * 
+	 * @param sym the symbol to set
+	 * @param val the complex value
+	 * @return true is sym is a symbol for either this group or its baseRing or the basrRing's baseRing etc.
+	 */
+	public boolean setRootVal(String sym,Complex val) {
+		if(symbol.equals(sym))
+		{
+			rootVal = val;
+			return true;
+		}
+		else if(baseRing instanceof FreeGroup)
+			return ((FreeGroup) baseRing).setRootVal(sym,val);
+		return false;
+	}
+
 	/** Returns an aproximation to the value of the root as a complex number. */
 	public Complex getRootVal() {
 		return rootVal;
