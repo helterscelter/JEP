@@ -26,7 +26,7 @@ import org.nfunk.jep.function.SpecialEvaluationI;
  * Some changes implemented by rjm. Nov 03.
  * Added hook to SpecialEvaluationI.
  * Clears stack before evaluation.
- * Simplifies error handeling by making visit methods throw ParseException.
+ * Simplifies error handling by making visit methods throw ParseException.
  * Changed visit(ASTVarNode node) so messages not calculated every time. 
  */
 public class EvaluatorVisitor implements ParserVisitor {
@@ -45,7 +45,10 @@ public class EvaluatorVisitor implements ParserVisitor {
 	/** Debug flag */
 	protected static final boolean debug = false;
 
-	/** Constructor. Initialize the stack member */
+	/** TrapNull **/
+	protected boolean trapNullValues = true;
+	
+	/** Constructor. Initialise the stack member */
 	public EvaluatorVisitor() {
 		errorList = null;
 		symTab = null;
@@ -118,9 +121,9 @@ public class EvaluatorVisitor implements ParserVisitor {
 	/**
 	 * The following methods was used to facilitate 
 	 * using visitors which implemented a interface
-	 * which subclassed ParserVisitor.
+	 * which sub-classed ParserVisitor.
 	 *  
-	 * If subclassed to extend to implement a different visitor
+	 * If sub-classed to extend to implement a different visitor
 	 * this method should be overwritten to ensure the correct 
 	 * accept method is called.
 	 * This method simply calls the jjtAccept(ParserVisitor this,Object data) of node.
@@ -174,7 +177,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 		// as the pfmc.run method does not have enough information
 		// in such cases we call the evaluate method which passes
 		// all available info. Note evaluating the children is
-		// the responsability of the evaluate method. 
+		// the responsibility of the evaluate method. 
 		if (pfmc instanceof SpecialEvaluationI) {
 			return ((SpecialEvaluationI) node.getPFMC()).evaluate(
 				node,data,this,stack,this.symTab);
@@ -221,7 +224,7 @@ public class EvaluatorVisitor implements ParserVisitor {
 		//		if (symTab == null)
 		//			throw new ParseException(message += "the symbol table is null");
 
-		// optimize (table lookup is costly?)
+		// Optimise (table lookup is costly?)
 		//		Object temp = symTab.get(node.getName());
 
 		// new code
@@ -234,15 +237,13 @@ public class EvaluatorVisitor implements ParserVisitor {
 
 		Object temp = var.getValue();
 
-		if (temp == null) {
+		if (trapNullValues && temp == null) {
 			String message = "Could not evaluate " + node.getName() + ": ";
 			throw new ParseException(message + "the variable was not found in the symbol table");
-		} else {
-			// all is fine
-			// push the value on the stack
-			stack.push(temp);
 		}
-
+		// all is fine
+		// push the value on the stack
+		stack.push(temp);
 		return data;
 	}
 
@@ -254,4 +255,28 @@ public class EvaluatorVisitor implements ParserVisitor {
 		stack.push(node.getValue());
 		return data;
 	}
+	
+	
+	/**
+	 * Tests whether null variable values are trapped by evaluator. 
+	 * @return true is nulls are trapped
+	 */
+	public boolean isTrapNullValues()
+	{
+		return trapNullValues;
+	}
+
+	/**
+	 * Sets the behaviour when a variable's value is null.
+	 * If true an exception will be thrown is a variable value is null.
+	 * If false then the value will be passed to other functions, this may cause error
+	 * else where.
+	 * 
+	 * @param b 
+	 */
+	public void setTrapNullValues(boolean b)
+	{
+		trapNullValues = b;
+	}
+
 }
