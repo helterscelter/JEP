@@ -14,17 +14,14 @@ import org.nfunk.jep.*;
  * @author Rich Morris
  * Created on 16-Nov-2003
  */
-public class DJep extends XJep implements DJepI {
-	public DifferentationVisitor dv = new DifferentationVisitor(this);
-	public DifferentationVisitor getDV() { return dv; }
-	public DSymbolTable getVarTab() { return (DSymbolTable) this.getSymbolTable(); } 
-	public VariableFactory vf = new DVariableFactory();
-//	public DSymbolTable varTab = new DSymbolTable(vf); 
-	public DPrintVisitor dpv = new DPrintVisitor();
+public class DJep extends XJep {
+	protected DifferentationVisitor dv = new DifferentationVisitor(this);
+
 	public DJep()
 	{
+		this.pv = new DPrintVisitor();
+		this.vf = new DVariableFactory();
 		this.symTab = new DSymbolTable(vf);
-		this.pv = dpv;
 	}
 	public Node differentiate(Node node,String name) throws ParseException
 	{
@@ -36,16 +33,20 @@ public class DJep extends XJep implements DJepI {
 		this.dv=j.dv;
 	}
 
-	public XJepI newInstance()
+	public XJep newInstance()
 	{
 		DJep newJep = new DJep(this);
 		return newJep;
 	}
-	public XJepI newInstance(SymbolTable st)
+	public XJep newInstance(SymbolTable st)
 	{
 		DJep newJep = new DJep(this);
 		newJep.symTab = st;
 		return newJep;
 	}
-	
+
+	public DifferentationVisitor getDifferentationVisitor() { return dv; }
+	public DSymbolTable getVarTab() { return (DSymbolTable) this.getSymbolTable(); } 
+	public boolean addStandardDiffRules() { return dv.addStandardDiffRules(); }
+	public DPrintVisitor getDPrintVisitor() { return (DPrintVisitor) pv; }
 }

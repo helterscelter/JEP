@@ -19,7 +19,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 {
 	private String name;
 //	private String macroExpresion;
-	private XJepI xjep;
+	private XJep xjep;
 	
 	public String getName() { return name; }
 //	public Node getTopNode() { return topNode; }
@@ -29,7 +29,7 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 	 * Create a function that evaluates the lhs with values given on rhs.
 	 * e.g. eval(f,x,1,y,2) sets variable x to 1, y to 2 and evaluates f.
 	 */
-	public Eval(String inName,XJepI jep) throws IllegalArgumentException,ParseException
+	public Eval(String inName,XJep jep) throws IllegalArgumentException,ParseException
 	{
 		super();
 		name = inName;
@@ -37,14 +37,14 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 		numberOfParameters = -1;
 	}
 	//TODO probably broken
-	public Node process(Node node,Node children[],XJepI xjep) throws ParseException
+	public Node process(Node node,Node children[],XJep xjep) throws ParseException
 	{
 		Vector errorList = new Vector();
 		int nchild = children.length;
 		if(nchild %2 == 0)
 			throw new ParseException("Number of parameters must be odd");
 		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) xjep.getSymbolTable()).newInstance();
-		XJepI localJep = xjep.newInstance(localSymTab);
+		XJep localJep = xjep.newInstance(localSymTab);
 
 		for(Enumeration enume = xjep.getSymbolTable().keys();enume.hasMoreElements();)
 		{

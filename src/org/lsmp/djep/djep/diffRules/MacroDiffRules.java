@@ -8,7 +8,7 @@
 package org.lsmp.djep.djep.diffRules;
 
 import org.nfunk.jep.*;
-import org.lsmp.djep.djep.DJepI;
+import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.function.PostfixMathCommandI;
 
@@ -32,7 +32,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @throws ParseException
 	 */
 	
-	public MacroDiffRules(DJepI djep,String inName,Node node) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,Node node) throws ParseException
 	{
 		name = inName;
 		pfmc = djep.getFunctionTable().get(inName);
@@ -53,7 +53,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param rule		a string represention differation of a function wrt "x"
 	 * @throws ParseException
 	 */
-	public MacroDiffRules(DJepI djep,String inName,String rule) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,String rule) throws ParseException
 	{
 		this(djep,inName,djep.getFunctionTable().get(inName),rule);
 	} 	
@@ -65,7 +65,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param rule		a string represention differation of function wrt "x"
 	 * @throws ParseException
 	 */
-	public MacroDiffRules(DJepI djep,String inName,PostfixMathCommandI inPfmc,String rule) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,String rule) throws ParseException
 	{
 		//super(dv);
 		name = inName;
@@ -78,7 +78,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 		}
 		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
-		XJepI localJep = djep.newInstance(localSymTab);
+		XJep localJep = djep.newInstance(localSymTab);
 		Node node = localJep.parse(rule);
 		rules = new Node[1];
 		rules[0] = node;
@@ -94,7 +94,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param rule2		a string represention differation of function wrt "y"
 	 * @throws ParseException
 	 */
-	public MacroDiffRules(DJepI djep,String inName,PostfixMathCommandI inPfmc,String rule1,String rule2) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,String rule1,String rule2) throws ParseException
 	{
 		//super(dv);
 		name = inName;
@@ -107,7 +107,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 		}
 		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
-		XJepI localJep = djep.newInstance(localSymTab);
+		XJep localJep = djep.newInstance(localSymTab);
 		Node node1 = localJep.parse(rule1);
 		Node node2 = localJep.parse(rule2);
 		rules = new Node[2];
@@ -124,7 +124,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param rule2		a string represention differation of function wrt "y"
 	 * @throws ParseException
 	 */
-	public MacroDiffRules(DJepI djep,String inName,String rule1,String rule2) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,String rule1,String rule2) throws ParseException
 	{
 		this(djep,inName,djep.getFunctionTable().get(inName),rule1,rule2);
 	}
@@ -138,7 +138,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param node2		a expression tree represention differation of function wrt "y"
 	 * @throws ParseException
 	 */
-/*	public MacroDiffRules(DJepI djep,String inName,PostfixMathCommandI inPfmc,Node node1,Node node2) throws ParseException
+/*	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,Node node1,Node node2) throws ParseException
 	{
 	  //super(dv);
 		name = inName;
@@ -163,7 +163,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param node2		a expression tree represention differation of function wrt "y"
 	 * @throws ParseException
 	 */
-/*	public MacroDiffRules(DJepI djep,String inName,Node node1,Node node2) throws ParseException
+/*	public MacroDiffRules(DJep djep,String inName,Node node1,Node node2) throws ParseException
 	{
 		this(djep,inName,djep.getFunctionTable().get(inName),node1,node2);
 	}
@@ -175,7 +175,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param inRule	an array of strings represention differation of function wrt "x1",...
 	 * @throws ParseException
 	 */
-	public MacroDiffRules(DJepI djep,String inName,PostfixMathCommandI inPfmc,String[] inRules) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,String[] inRules) throws ParseException
 	{
 		//super(dv);
 		name = inName;
@@ -189,7 +189,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 		
 		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
-		XJepI localJep = djep.newInstance(localSymTab);
+		XJep localJep = djep.newInstance(localSymTab);
 
 		rules = new Node[inRules.length];
 		for(int i=0;i<inRules.length;++i)
@@ -207,7 +207,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param inRule	an array of strings represention differation of function wrt "x1",...
 	 * @throws ParseException
 	 */
-	public MacroDiffRules(DJepI djep,String inName,String[] inRules) throws ParseException
+	public MacroDiffRules(DJep djep,String inName,String[] inRules) throws ParseException
 	{
 		this(djep,inName,djep.getFunctionTable().get(inName),inRules);
 	}
@@ -219,7 +219,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param inRule	an array of expression trees represention differation of function wrt "x1",...
 	 * @throws ParseException
 	 */
-/*	public MacroDiffRules(DJepI djep,String inName,PostfixMathCommandI inPfmc,Node[] inRules) throws ParseException
+/*	public MacroDiffRules(DJep djep,String inName,PostfixMathCommandI inPfmc,Node[] inRules) throws ParseException
 	{
 		//super(dv);
 		name = inName;
@@ -241,7 +241,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
 	 * @param inRules	an array of expression trees represention differation of function wrt "x1",...
 	 * @throws ParseException
 	 */
-/*	public MacroDiffRules(DJepI djep,String inName,Node[] inRules) throws ParseException
+/*	public MacroDiffRules(DJep djep,String inName,Node[] inRules) throws ParseException
 	{
 		this(djep,inName,djep.getFunctionTable().get(inName),inRules);
 	}

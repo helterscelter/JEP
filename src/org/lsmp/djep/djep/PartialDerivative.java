@@ -47,7 +47,7 @@ public class PartialDerivative extends XVariable  {
 		return printString;
 	}
 	
-	public PartialDerivative findDerivative(String name,DJepI jep)
+	public PartialDerivative findDerivative(String name,DJep jep)
 		throws ParseException
 	{
 		return root.findDerivative(this,name,jep);

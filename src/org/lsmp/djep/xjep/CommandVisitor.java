@@ -32,7 +32,7 @@ import org.nfunk.jep.function.PostfixMathCommandI;
  */
 public class CommandVisitor extends DoNothingVisitor
 {
-  private XJepI xjep;
+  private XJep xjep;
   /** private default constructor to prevent init without a tree utils
    */
     public CommandVisitor()
@@ -43,10 +43,10 @@ public class CommandVisitor extends DoNothingVisitor
    * Decends the tree processing all diff, eval and simplify options
    */
 
-  public Node process(Node node,XJepI xjep) throws ParseException
+  public Node process(Node node,XJep xjep) throws ParseException
   {
   	this.xjep=xjep;
-	Node res = (Node) nodeAccept(node,null);
+	Node res = (Node) node.jjtAccept(this,null);
 	return res;
   }
 

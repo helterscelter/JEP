@@ -7,7 +7,7 @@
  */
 package org.lsmp.djep.djep.diffRules;
 
-import org.lsmp.djep.djep.DJepI;
+import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.*;
 
@@ -21,7 +21,7 @@ import org.nfunk.jep.*;
 	/**
 	 * Calculates the rules for the given function.
 	 */
-	  public MacroFunctionDiffRules(DJepI djep,MacroFunction fun)  throws ParseException
+	  public MacroFunctionDiffRules(DJep djep,MacroFunction fun)  throws ParseException
 	  {
 		  //super(dv);
 		  name = fun.getName();
@@ -29,7 +29,7 @@ import org.nfunk.jep.*;
 		  
 		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) djep.getSymbolTable()).newInstance(); //new SymbolTable();
 		localSymTab.copyConstants(djep.getSymbolTable());
-		DJepI localJep = (DJepI) djep.newInstance(localSymTab);
+		DJep localJep = (DJep) djep.newInstance(localSymTab);
 
 		  int nargs = fun.getNumberOfParameters();
 		  rules = new Node[nargs];

@@ -41,7 +41,7 @@ public class XVariable extends Variable {
 	 * if the value is valid then just return the value
 	 * otherwise calculate the value from the equation.
 	 */
-	public Object findValue(XJepI jep) throws Exception
+	public Object findValue(XJep jep) throws Exception
 	{
 		if(equation == null ) return getValue();
 		Object val = jep.evaluate(equation);

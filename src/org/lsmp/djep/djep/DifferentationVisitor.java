@@ -43,15 +43,15 @@ import java.io.PrintStream;
 public class DifferentationVisitor extends DeepCopyVisitor
 {
 	private static final boolean DEBUG = false; 
-	private DJepI localDJep;
-	private DJepI globalDJep;
+	private DJep localDJep;
+	private DJep globalDJep;
 	private NodeFactory nf;
 //	private OperatorSet opSet;
   /**
    * Construction with a given set of tree utilities 
    * @param tu
    */
-  public DifferentationVisitor(DJepI jep)
+  public DifferentationVisitor(DJep jep)
   {
 	this.globalDJep = jep;
 	
@@ -221,7 +221,7 @@ public class DifferentationVisitor extends DeepCopyVisitor
 	 * @throws ParseException if some error occured while trying to differentiate, for instance of no rule supplied for given function.
 	 * @throws IllegalArgumentException
 	 */
-	public Node differentiate(Node node,String var,DJepI djep) throws ParseException,IllegalArgumentException
+	public Node differentiate(Node node,String var,DJep djep) throws ParseException,IllegalArgumentException
 	{
 	  this.localDJep = djep;
 	  this.nf=djep.getNodeFactory();

@@ -19,11 +19,9 @@ import java.util.*;
  * Created on 23-Nov-2003
  */
 public class DSymbolTable extends XSymbolTable {
-	private VariableFactory vf;
 	public DSymbolTable(VariableFactory varFac)
 	{
 		super(varFac);
-		vf=varFac;
 	}
 
 	/** Creates a new SymbolTable with the same variable factory as this. */

@@ -7,7 +7,7 @@
  */
 package org.lsmp.djep.djep.diffRules;
 
-import org.lsmp.djep.djep.DJepI;
+import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DiffRulesI;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.ASTFunNode;
@@ -47,7 +47,7 @@ public abstract class ChainRuleDiffRules implements DiffRulesI
 	 *  Use the chain rule to differentiate.
 	 *  df(g(x),h(x))/dx -> df/dg * dg/dx + df/dh * dh/dx
 	 */
-	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJepI djep) throws ParseException
+	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJep djep) throws ParseException
 	{
 		OperatorSet opSet=djep.getOperatorSet();
 		NodeFactory nf=djep.getNodeFactory();

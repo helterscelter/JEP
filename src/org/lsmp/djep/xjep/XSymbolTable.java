@@ -12,11 +12,9 @@ import org.nfunk.jep.*;
 
 public class XSymbolTable extends SymbolTable
 {
-	private VariableFactory vf;
 	public XSymbolTable(VariableFactory varFac)
 	{
 		super(varFac);
-		vf = varFac;
 	}
 	
 	/** Creates a new SymbolTable with the same variable factory as this. */

@@ -34,7 +34,7 @@ public class MacroFunction extends PostfixMathCommand
 	private String macroExpression;
 	private Node topNode;
 	private EvaluatorVisitor ev = new EvaluatorVisitor();
-	private XJepI localJep;
+	private XJep localJep;
 	private XSymbolTable mySymTab;
 	
 	public String getName() { return name; }
@@ -49,7 +49,7 @@ public class MacroFunction extends PostfixMathCommand
 	 * @param expression a string representing the expression.
 	 * @param inTu a reference to the TreeUtils object.
 	 */
-	public MacroFunction(String inName,int nargs,String expression,XJepI jep) throws IllegalArgumentException,ParseException
+	public MacroFunction(String inName,int nargs,String expression,XJep jep) throws IllegalArgumentException,ParseException
 	{
 		super();
 		name = inName;

@@ -7,7 +7,7 @@
  */
 package org.lsmp.djep.djep.diffRules;
 
-import org.lsmp.djep.djep.DJepI;
+import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DiffRulesI;
 import org.nfunk.jep.ASTFunNode;
 import org.nfunk.jep.Node;
@@ -32,7 +32,7 @@ import org.nfunk.jep.ParseException;
 	{	  return name + "  \t\tdiff(f-g,x) -> diff(f,x)-diff(g,x)";  }
 	public String getName() { return name; }
   	
-	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJepI djep) throws ParseException
+	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJep djep) throws ParseException
 	{
 	  int nchild = node.jjtGetNumChildren();
 	  if(nchild==2) 

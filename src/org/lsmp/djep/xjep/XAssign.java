@@ -28,7 +28,7 @@ public class XAssign extends Assign implements CommandVisitorI {
 	/**
 	 * In the pre-process stage, set the equation of the lhs variable to the rhs equation.
 	 */
-	public Node process(Node node,Node children[],XJepI xjep) throws ParseException
+	public Node process(Node node,Node children[],XJep xjep) throws ParseException
 	{
 		if(node.jjtGetNumChildren()!=2)
 			throw new ParseException("Assignment opperator must have 2 operators.");

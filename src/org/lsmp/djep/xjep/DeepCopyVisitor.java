@@ -19,12 +19,12 @@ import org.nfunk.jep.*;
  */
 public class DeepCopyVisitor extends DoNothingVisitor implements ParserVisitor {
 
-	private XJepI xjep;
+	private XJep xjep;
 	/** Creates a deepCopy of a Node **/	
-	public Node deepCopy(Node node,XJepI xjep) throws ParseException
+	public Node deepCopy(Node node,XJep xjep) throws ParseException
 	{
 		this.xjep = xjep;
-		Node res = (Node) nodeAccept(node,null);
+		Node res = (Node) node.jjtAccept(this,null);
 		return res;
 	}
 

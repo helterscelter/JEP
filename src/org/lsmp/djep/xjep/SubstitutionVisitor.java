@@ -10,7 +10,7 @@ import org.nfunk.jep.*;
 /**
  * Allows substution of a given variable with an expresion tree.
  * Substitution is best done using the 
- * {@link XJepI#substitute XJepI.sumstitute} method. 
+ * {@link XJep#substitute XJep.sumstitute} method. 
  * For example
  * <pre>
  * XJepI xjep = ...;
@@ -27,7 +27,7 @@ public class SubstitutionVisitor extends DoNothingVisitor {
 
 	private String names[];
 	private Node replacements[];
-	private XJepI xjep;
+	private XJep xjep;
 	public SubstitutionVisitor() {}
 
 	/**
@@ -39,12 +39,12 @@ public class SubstitutionVisitor extends DoNothingVisitor {
 	 * @return the tree with variable replace (does not do a DeepCopy)
 	 * @throws ParseException
 	 */
-	public Node substitute(Node orig,String name,Node replacement,XJepI xjep) throws ParseException
+	public Node substitute(Node orig,String name,Node replacement,XJep xjep) throws ParseException
 	{
 		this.names = new String[]{name};
 		this.replacements = new Node[]{replacement};
 		this.xjep=xjep;
-		Node res = (Node) nodeAccept(orig,null);
+		Node res = (Node) orig.jjtAccept(this,null);
 		return res;
 	}
 
@@ -57,12 +57,12 @@ public class SubstitutionVisitor extends DoNothingVisitor {
 	 * @return the tree with variable replace (does not do a DeepCopy)
 	 * @throws ParseException
 	 */
-	public Node substitute(Node orig,String names[],Node replacements[],XJepI xjep) throws ParseException
+	public Node substitute(Node orig,String names[],Node replacements[],XJep xjep) throws ParseException
 	{
 		this.names = names;
 		this.replacements = replacements;
 		this.xjep=xjep;
-		Node res = (Node) nodeAccept(orig,null);
+		Node res = (Node) orig.jjtAccept(this,null);
 		return res;
 	}
 

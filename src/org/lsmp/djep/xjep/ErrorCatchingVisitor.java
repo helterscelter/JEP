@@ -8,8 +8,6 @@
 package org.lsmp.djep.xjep;
 //import org.lsmp.djep.matrixParser.*;
 import org.nfunk.jep.*;
-import java.util.Vector;
-import java.util.Enumeration;
 
 /**
  * An abstract ParserVisitor
@@ -25,58 +23,37 @@ import java.util.Enumeration;
  * @author Rich Morris
  * Created on 19-Jun-2003
  */
-abstract public class ErrorCatchingVisitor implements ParserVisitor
+abstract public class ErrorCatchingVisitor extends DoNothingVisitor
 {
 	/** The current error list. */
-	private Vector errorList;
-	/** Flag for errors during evaluation. */
-	private boolean errorFlag;
+	private Exception error=null;
 
-	/**
-	 * Reset the list of errors.
-	 */
-	public void clearErrors()
+	/** calls jjtAccept inside a try catch block, adding the error if necessary */
+	public Object acceptCatchingErrors(Node node,Object data)
 	{
-		errorList = new Vector();
-		errorFlag = false;
+		Object res=null;
+		clearErrors();
+		try
+		{
+			res = node.jjtAccept(this,data);
+		}
+		catch (ParseException e) { addError(e); }
+		return res;
 	}
+	/** Reset the list of errors. */
+	public void clearErrors() {	error = null;	}
 
-	/*
-	 * Are their any errors?
-	 */	
-	public boolean hasErrors() { return errorFlag; }
+	/** Are their any errors? */	
+	public boolean hasErrors() { return error != null; }
 	
-	/**
-	 * Adds an error message to the list of errors.
-	 */
-	public void addToErrorList(String errorStr) 
-	{
-		if(errorList == null)
-		  errorList = new Vector();
-	  	
-		errorList.addElement(errorStr);
-		errorFlag = true;
-	}
+	/** Adds an error message to the list of errors. */
+	public void addError(Exception e) 	{error = e;	}
 
-	/**
-	 * Returns a String of all the error messages.
-	 */
-	public String getErrors()
-	{
-		StringBuffer sb = new StringBuffer();
-		Enumeration enume = errorList.elements();
-		while(enume.hasMoreElements())
-			sb.append((String) enume.nextElement());
-		return sb.toString();
+	/** Returns the error messages.	 */
+	public String getErrorsMessage() {
+		if(error==null) return null;
+		else return error.getMessage();
 	}
-	
-	public Object visit(SimpleNode node, Object data) {
-		addToErrorList(this.toString()+": encountered a simple node, problem with visitor.");
-		return null;
-	}
-
-	public Object visit(ASTStart node, Object data) {
-		addToErrorList(this.toString()+": encountered a start node, problem with visitor.");
-		return null;
-	}
+	/** Returns the Exception or null if no error. */
+	public Exception getError() { return error; }
 }

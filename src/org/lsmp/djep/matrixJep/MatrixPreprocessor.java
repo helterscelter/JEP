@@ -47,7 +47,7 @@ public class MatrixPreprocessor implements ParserVisitor
 	public MatrixNodeI preprocess(Node node,MatrixJep mdjep) throws ParseException
 	{
 		this.mjep=mdjep;
-		this.nf=(MatrixNodeFactory) mdjep.nf;
+		this.nf=(MatrixNodeFactory) mdjep.getNodeFactory();
 		this.vt=(DSymbolTable) mdjep.getSymbolTable();
 		return (MatrixNodeI) node.jjtAccept(this,null);
 	}

@@ -53,16 +53,9 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
   public void print(Node node,PrintStream out)
   {
-	clearErrors();
 	sb = new StringBuffer();
-	try
-	{
-		node.jjtAccept(this,null);
-	}
-	catch (ParseException e) { out.print(e.getMessage()); }
+	acceptCatchingErrors(node,null);
 	out.print(sb);
-	if(hasErrors()) 
-		out.print(getErrors());
   }
 
   /** Prints on System.out. */
@@ -72,16 +65,9 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
   public void println(Node node,PrintStream out)
   {
-	clearErrors();
 	sb = new StringBuffer();
-	try
-	{
-		node.jjtAccept(this,null);
-	}
-	catch (ParseException e) { out.print(e.getMessage()); }
+	acceptCatchingErrors(node,null);
 	out.println(sb);
-	if(hasErrors()) 
-		out.print(getErrors());
   }
 
   /** Prints on System.out. */
@@ -92,16 +78,9 @@ public class PrintVisitor extends ErrorCatchingVisitor
   public String toString(Node node)
   {
 	sb = new StringBuffer();
-	try
-	{
-		node.jjtAccept(this,null);
-	}
-	catch (ParseException e) { sb.append(e.getMessage()); }
+	acceptCatchingErrors(node,null);
 	return sb.toString();
   }
-  
-  /** Add a string to buffer. */
-  public void append(String s) { sb.append(s); }
   
 	/**
 	 * This interface specifies the method needed to implement a special print rule.
@@ -129,6 +108,11 @@ public class PrintVisitor extends ErrorCatchingVisitor
   	/** The method called to append data for the rule. **/
   	public void append(Node node,PrintVisitor pv) throws ParseException;
   }
+
+  /** Add a string to buffer. Classes implementing PrintRulesI 
+   * should call this add the */
+  public void append(String s) { sb.append(s); }
+
   /** Adds a special print rule to be added for a given operator. 
    * TODO Allow special rules for other functions. */
   public void addSpecialRule(Operator op,PrintRulesI rules)
@@ -138,30 +122,14 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
 /***************** visitor methods ********************************/
 
-/** 
- * If subclassed to extend to implement a different visitor
- * this method should be overwritten to ensure the correct 
- * accept method is called.
- * This method simply calls the jjtAccept(this,data) of node.
- */
-
-protected Object nodeAccept(Node node, Object data) throws ParseException
-{
-	return node.jjtAccept(this,data);
-}
-
 /** print the node with no brackets. */
-private void printNoBrackets(Node node)
+private void printNoBrackets(Node node) throws ParseException
 {
-	try
-	{
-		nodeAccept(node,null);
-	}
-	catch (ParseException e) { addToErrorList(e.getMessage()); }
+	node.jjtAccept(this,null);
 }
 
 /** print a node suronded by brackets. */
-private void printBrackets(Node node)
+private void printBrackets(Node node) throws ParseException
 {
 	sb.append("(");
 	printNoBrackets(node);
@@ -169,7 +137,7 @@ private void printBrackets(Node node)
 }
 
 /** print a unary operator. */
-private Object visitUnary(ASTFunNode node, Object data)
+private Object visitUnary(ASTFunNode node, Object data) throws ParseException
 {
 	Node rhs = node.jjtGetChild(0);
 
@@ -184,11 +152,9 @@ private Object visitUnary(ASTFunNode node, Object data)
 	return data;
 }
 
-public Object visit(ASTFunNode node, Object data)
+public Object visit(ASTFunNode node, Object data) throws ParseException
 {
 	if(!node.isOperator()) return visitFun(node);
-	try
-	{
 	if(node instanceof PrintRulesI)
 	{
 		((PrintRulesI) node).append(node,this);
@@ -196,8 +162,7 @@ public Object visit(ASTFunNode node, Object data)
 	}
 	if(node.getOperator()==null)
 	{
-		addToErrorList("Null operator in print for "+node);
-		return null;
+		throw new ParseException("Null operator in print for "+node);
 	}
 	if(specialRules.containsKey(node.getOperator()))
 	{
@@ -263,28 +228,24 @@ public Object visit(ASTFunNode node, Object data)
 		else
 			printNoBrackets(rhs);
 	}
-	}
-	catch(ParseException e) { sb.append(e.getMessage()); }
-	return null;
-}
-    
-private Object visitFun(ASTFunNode node)
-{
-	try
-	{
-		sb.append(node.getName()+"(");
-		for(int i=0;i<node.jjtGetNumChildren();++i)
-		{
-			if(i>0) sb.append(",");
-			nodeAccept(node.jjtGetChild(i), null);
-		}
-		sb.append(")");
-	}
-	catch (ParseException e) { addToErrorList(e.getMessage()); }
 	return null;
 }
 
-  public Object visit(ASTVarNode node, Object data) {
+/** prints a standard function: fun(arg,arg) */
+private Object visitFun(ASTFunNode node) throws ParseException
+{
+	sb.append(node.getName()+"(");
+	for(int i=0;i<node.jjtGetNumChildren();++i)
+	{
+		if(i>0) sb.append(",");
+		node.jjtGetChild(i).jjtAccept(this, null);
+	}
+	sb.append(")");
+
+	return null;
+}
+
+  public Object visit(ASTVarNode node, Object data) throws ParseException  {
 	sb.append(node.getName());
 	return data;
   }

@@ -34,14 +34,14 @@ public class SimplificationVisitor extends DoNothingVisitor
   }
 
   /** must be implemented for subclasses. **/
-  public Node simplify(Node node,XJepI xjep) throws ParseException,IllegalArgumentException
+  public Node simplify(Node node,XJep xjep) throws ParseException,IllegalArgumentException
   {
 	nf = xjep.getNodeFactory();
 	opSet = xjep.getOperatorSet();
 	if (node == null) 
 		throw new IllegalArgumentException(
 			"topNode parameter is null");
-	Node res = (Node) nodeAccept(node,null);
+	Node res = (Node) node.jjtAccept(this,null);
 	return res;
   }
 

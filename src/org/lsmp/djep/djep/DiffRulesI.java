@@ -32,7 +32,7 @@ public interface DiffRulesI {
 	 * @return top node of and expression tree for the derivative.
 	 * @throws ParseException if there is some problem in compiling the derivative.
 	 */
-	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJepI djep) throws ParseException;
+	public Node differentiate(ASTFunNode node,String var,Node [] children,Node [] dchildren,DJep djep) throws ParseException;
 
 	/**
 	 * Returns a string representation of the rule.

@@ -27,13 +27,6 @@ public class DVariable extends XVariable
 {
 	protected Hashtable derivatives = new Hashtable();
 	
-//	private VariableInfo(String name,MatrixNodeI eqn,Dimensions dims) 
-//	{ 
-//		this.name = name; this.equation = eqn; this.dims = dims;
-//		value = Tensor.getInstance(dims);
-//		this.validValue=false;
-//	}
-
 	protected PartialDerivative createDerivative(String derivnames[],Node eqn)
 	{
 		return new PartialDerivative(this,derivnames,eqn);
@@ -144,7 +137,7 @@ public class DVariable extends XVariable
  * @return The derivative or null if it cannot be calculated.
  * @throws ParseException
  */
-	public PartialDerivative findDerivativeSorted(String derivnames[],DJepI jep)
+	public PartialDerivative findDerivativeSorted(String derivnames[],DJep jep)
 		throws ParseException
 	{
 		if(getEquation()==null) return null;
@@ -179,14 +172,14 @@ public class DVariable extends XVariable
 		return res;	
 	}
 
-	public PartialDerivative findDerivative(String derivnames[],DJepI jep)
+	public PartialDerivative findDerivative(String derivnames[],DJep jep)
 		throws ParseException
 	{
 		String newnames[] = sortedNames(derivnames); 
 		return findDerivativeSorted(newnames,jep);
 	}
 
-	public PartialDerivative findDerivative(String derivname,DJepI jep)
+	public PartialDerivative findDerivative(String derivname,DJep jep)
 		throws ParseException
 	{
 		String newnames[] = new String[1];
@@ -194,7 +187,7 @@ public class DVariable extends XVariable
 		return findDerivativeSorted(newnames,jep);
 	}
 
-	public PartialDerivative findDerivative(PartialDerivative deriv,String name,DJepI jep)
+	public PartialDerivative findDerivative(PartialDerivative deriv,String name,DJep jep)
 		throws ParseException
 	{
 		int len = deriv.getDnames().length;

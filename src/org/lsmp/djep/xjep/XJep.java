@@ -17,19 +17,19 @@ import java.io.PrintStream;
  * @author Rich Morris
  * Created on 16-Nov-2003
  */
-public class XJep extends JEP implements XJepI {
+public class XJep extends JEP {
 	/** Creates new nodes */
-	public NodeFactory nf = null;
+	protected NodeFactory nf = null;
 	/** Collects operators **/
-	public OperatorSet opSet = null;
+	protected OperatorSet opSet = null;
 	/** A few utility functions. */
-	public TreeUtils tu = null;
-	public DeepCopyVisitor copier = null;
-	public SubstitutionVisitor subv = null;
-	public SimplificationVisitor simpv = null;
-	public CommandVisitor commandv = null;
-	public PrintVisitor pv = null;
-	public VariableFactory vf = new XVariableFactory();
+	protected TreeUtils tu = null;
+	protected DeepCopyVisitor copier = null;
+	protected SubstitutionVisitor subv = null;
+	protected SimplificationVisitor simpv = null;
+	protected CommandVisitor commandv = null;
+	protected PrintVisitor pv = null;
+	protected VariableFactory vf = new XVariableFactory();
 
 	public XJep()
 	{
@@ -64,12 +64,12 @@ public class XJep extends JEP implements XJepI {
 		this.tu=j.tu;
 	}
 
-	public XJepI newInstance()
+	public XJep newInstance()
 	{
 		XJep newJep = new XJep(this);
 		return newJep;
 	}
-	public XJepI newInstance(SymbolTable st)
+	public XJep newInstance(SymbolTable st)
 	{
 		XJep newJep = new XJep(this);
 		newJep.symTab = st;
@@ -121,11 +121,13 @@ public class XJep extends JEP implements XJepI {
 	public OperatorSet getOperatorSet() {return opSet;}
 	public TreeUtils getTreeUtils() { return tu; }
 //	public SimplificationVisitor getSimpV() { return simpv; }
+	public PrintVisitor getPrintVisitor() {	return pv;	}
 
 	public Object findVarValue(String name) throws Exception
 	{
 		XVariable xvar = (XVariable) getVar(name);
 		return xvar.findValue(this);
 	}
+
 
 }

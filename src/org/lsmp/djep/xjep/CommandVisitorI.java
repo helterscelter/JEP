@@ -9,23 +9,19 @@ package org.lsmp.djep.xjep;
 import org.nfunk.jep.*;
 
 /**
- * Interface for commands used by the CommandVisitor
+ * Interface defining the special actions performed during the preprocess 
+ * stage. This interface should be implemented by PostFixMath Commands
+ * which wish to perform a special action during the XJep.preprocess() method. 
  */
 public interface CommandVisitorI {
 
 	/**
 	 * Performs the specified action on an expression tree.
 	 * @param node top node of the tree
+	 * @param children the children of the node after they have been preprocessed.
+	 * @param xjep a reference to the current XJep interface.
 	 * @return top node of the results.
 	 * @throws ParseException
 	 */
-	public Node process(Node node,Node children[],XJepI xjep) throws ParseException;
-
-	/**
-	 * Performs the specified action during evaluation.
-	 * @param node top node of the tree
-	 * @return Result of evaluating the node.
-	 * @throws ParseException
-	 */
-//	public Object evaluate(Node node,Node children[]) throws ParseException;
+	public Node process(Node node,Node children[],XJep xjep) throws ParseException;
 }

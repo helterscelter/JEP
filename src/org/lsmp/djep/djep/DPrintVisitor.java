@@ -26,32 +26,17 @@ public class DPrintVisitor extends PrintVisitor {
 	private boolean printPartialEquations = true;
 	private boolean printVariableEquations = false;
 	
-	/** 
-	 * If subclassed to extend to implement a different visitor
-	 * this method should be overwritten to ensure the correct 
-	 * accept method is called.
-	 * This method simply calls the jjtAccept(this,data) of node.
-	 */
-
-	protected Object nodeAccept(Node node, Object data)
-	{
-		try {
-		return node.jjtAccept(this,data);
-		}
-		catch (ParseException e) { addToErrorList(e.getMessage()); }
-		return null;
-	}
-
 	/** Prints the variable or its equation.
 	 * Depends on the statr of the flags and whether the variable has an equation.
 	 */
-	public Object visit(ASTVarNode node, Object data) {
+	public Object visit(ASTVarNode node, Object data) throws ParseException
+	{
 		Variable var = node.getVar();
 		if(var instanceof PartialDerivative)
 		{
 			PartialDerivative deriv = (PartialDerivative) var;
 			if(printPartialEquations && deriv.hasEquation())
-				nodeAccept(deriv.getEquation(),null);
+				deriv.getEquation().jjtAccept(this,null);
 			else
 				sb.append(node.getName());
 		}
@@ -59,7 +44,7 @@ public class DPrintVisitor extends PrintVisitor {
 		{
 			DVariable dvar = (DVariable) var;
 			if(printVariableEquations && dvar.hasEquation())
-				nodeAccept(dvar.getEquation(),null);
+				dvar.getEquation().jjtAccept(this,null);
 			else
 				sb.append(node.getName());
 		}
