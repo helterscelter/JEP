@@ -1,4 +1,4 @@
-
+=====================================================================
 == org.nfunk.* ======================================================
 ---- 2.3.0 release (Oct 3, 2004) ------------------------------------
 Oct  3 njf - created new features document for the core JEP and moved
@@ -26,7 +26,6 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
              2.3.2   ->  2.3.0 beta 2
              2.3.3   ->  2.3.0 beta 2
              2.3.0.1 ->  2.3.0 alpha
-          
 ---- 2.3.0 beta 2 ---------------------------------------------------
 
 ---- 2.3.0 beta 1 ---------------------------------------------------
@@ -36,11 +35,11 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
              representation (in order to allow creation of arbitrary precision
              numbers without the limitations of double)
 
+Many previous changes not included here. See the documentation for details.
 
-
+=====================================================================
 == org.lsmp.* =======================================================
 
 -- 1.0.0 (Oct 3rd, 2004) --------------------------------------------
 
-
-
+Many previous changes not included here. See the documentation for details.
