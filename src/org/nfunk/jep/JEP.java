@@ -82,7 +82,7 @@ public class JEP {
 		errorList = new Vector();
 		ev = new EvaluatorVisitor();
 		parser = new Parser(new StringReader(""));
-
+		
 		//Ensure errors are reported for the initial expression
 		//e.g. No expression entered
 		parseExpression("");
@@ -234,7 +234,7 @@ public class JEP {
 	 * @param re Initial imaginary value or new imaginary value for the variable
 	 * @return Complex object of the variable
 	 */
-	public Complex addComplexVariable(String name, double re, double im) {
+	public Complex addVariable(String name, double re, double im) {
 		Complex object = new Complex(re,im);
 		symTab.put(name, object);
 		return object;
@@ -248,7 +248,7 @@ public class JEP {
 	 * @param name Name of the variable to be added
 	 * @param object Initial value or new value for the variable
 	 */
-	public void addVariableAsObject(String name, Object object) {
+	public void addVariable(String name, Object object) {
 		symTab.put(name, object);
 	}
 	
