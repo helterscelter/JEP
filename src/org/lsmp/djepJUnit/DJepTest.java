@@ -1,6 +1,7 @@
 package org.lsmp.djepJUnit;
 
 import junit.framework.*;
+
 import org.nfunk.jep.*;
 import org.lsmp.djep.djep.*;
 
@@ -179,6 +180,12 @@ public class DJepTest extends TestCase {
 		calcValue("a=T"); calcValue("b=T"); calcValue("c=T");
 		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
 		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
+	}
+
+	public void testEval() throws ParseException
+	{
+//		simplifyTest("eval(x^2,x,3)","9.0");
+//		simplifyTest("eval(diff(diff(x^2+y^3,x),y),x,3,y,4)","9.0");
 	}
 	
 	public void testSimp() throws ParseException
@@ -463,6 +470,49 @@ public class DJepTest extends TestCase {
 		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"36.0");
 	}
 	
+	public void testNaN()  throws ParseException, Exception
+	{
+		System.out.println("Set x to Double(Double.NaN)");
+		j.setVarValue("x",new Double(Double.NaN));
+		j.addVariable("y",new Double(Double.NaN));
+		Node n = j.parse("x+5");
+		System.out.println(j.evaluate(n));
+		Node n2 = j.parse("y");
+		System.out.println(j.evaluate(n2));
+		valueTest("x == x+5",1);
+		valueTest("x == 0/0",1);
+		valueTest("x == x",1);
+		valueTest("x == 0 * x",1);
+		valueTest("x == 5",0);
+		valueTest("x == y",1);
+		valueTest("y == y",1);
+		System.out.println("Set x to Double(5)");
+		j.setVarValue("x",new Double(5));
+		valueTest("x == x+5",0);
+	}
+
+	public void testAssign2()
+	{
+		JEP parser = new JEP();
+
+		parser.addVariable("AB",12);
+		parser.setAllowAssignment(true);
+		parser.parseExpression("AB=3"); // AB = 8
+		System.out.println("AB=3"+parser.getValue());
+		parser.parseExpression("AB+2");
+		double result= parser.getValue(); // Result = 17
+		assertEquals("<AB+2>",5.0,result,0.0);
+	}
+	
+	public void testSqrt()
+	{
+		j.parseExpression("sqrt(-1)");
+		double val = j.getValue();
+		assert(Double.isNaN(val));
+		j.parseExpression("sqrt(-1)^2");
+		val = j.getValue();
+		assertEquals("sqrt(-1)^2",-1.0,val,0.0);
+	}
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)
