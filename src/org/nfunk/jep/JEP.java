@@ -471,7 +471,7 @@ public class JEP {
 	 * Does not set the topNode variable of the JEP instance.
 	 * This method should generally be used with the {@link #evaluate evaluate}
 	 * method rather than getValueAsObject.
-	 * @param expression represeded as a string.
+	 * @param expression represented as a string.
 	 * @return The top node of an tree representing the parsed expression.
 	 * @throws ParseException
 	 * @since 2.3.0
