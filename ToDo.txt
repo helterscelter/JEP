@@ -6,6 +6,7 @@
  - new commercial license (like UCalc??)
  - make same change to getValue as for ERIN
  - add Exponential class
+ - add "Optional implicit multiplication"
 
 == Web site todo ====================================================
  - add Double -> Number?
