@@ -33,15 +33,11 @@ import org.nfunk.jep.type.*;
  
 public class UMinus extends PostfixMathCommand
 {
-	public UMinus()
-	{
+	public UMinus() {
 		numberOfParameters = 1;
-	
 	}
 	
-	public void run(Stack inStack)
-		throws ParseException 
-	{
+	public void run(Stack inStack) throws ParseException {
 		checkStack(inStack);// check the stack
 
 		Object param = inStack.pop();
@@ -50,19 +46,13 @@ public class UMinus extends PostfixMathCommand
 		return;
 	}
 	
-	public Object umin(Object param)
-		throws ParseException
-	{
-		if (param instanceof Number)
-		{
+	public Object umin(Object param) throws ParseException {
+		if (param instanceof Number) {
 			return new Double(-((Number)param).doubleValue());
-		}
-		else if (param instanceof Complex)
-		{
+		} else if (param instanceof Complex) {
 			return ((Complex)param).neg();
 		}
 
 		throw new ParseException("Invalid parameter type");
 	}
-
 }
