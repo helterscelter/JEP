@@ -28,9 +28,10 @@ package  org.nfunk.jep.type;
  * recommended to use the netlib package.
  *
  * @author Nathan Funk
+ * @version 2.3.0.1 now extends Number
  */
 
-public class Complex
+public class Complex extends Number
 {
 	/** the real component */
 	private double re;
@@ -233,6 +234,23 @@ public class Complex
 		return new Complex(re*b, im*b);
 	}
 
+	/**
+	 * Adds the complex number with another complex value.
+	 * @return The result of the addition
+	 * @since 2.3.0.1
+	 */
+	public Complex add(Complex b) {
+		return new Complex(re+b.re,im+b.im);
+	}
+
+	/**
+	 * Adds the complex number with another complex value.
+	 * @return The result of the addition
+	 * @since 2.3.0.1
+	 */
+	public Complex sub(Complex b) {
+		return new Complex(re-b.re,im-b.im);
+	}
 	/**
 	 * Multiply the complex number with another complex value.
 	 * @return The result of the multiplication
@@ -707,4 +725,34 @@ public class Complex
 		
 		return result;
 	}
+
+
+	/** Returns real part.
+	 * @since 2.3.0.1
+	 */
+	public double doubleValue() {
+		return re;
+	}
+
+	/** Returns real part.
+	 * @since 2.3.0.1
+	 */
+	public float floatValue() {
+		return (float) re;
+	}
+
+	/** Returns real part.
+	 * @since 2.3.0.1
+	 */
+	public int intValue() {
+		return (int) re;
+	}
+
+	/** Returns real part.
+	 * @since 2.3.0.1
+	 */
+	public long longValue() {
+		return (long) re;
+	}
+
 }
