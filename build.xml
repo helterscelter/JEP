@@ -201,9 +201,7 @@
 		<!-- copy source files with filter to disttemp -->
 		<copy todir="${disttemp}/jep-${version}">
 			<fileset dir="."
-					includes="
-					 ${src}/org/nfunk/jep/**,
-					 ${src}/org/nfunk/jepexamples/**"/>
+					includes="${src}/**"/>
 			<filterset refid="sourcefilters"/>
 		</copy>
 
@@ -240,6 +238,7 @@
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
+		<delete dir="${doc}/grammar"/>
 	</target>
 
 
