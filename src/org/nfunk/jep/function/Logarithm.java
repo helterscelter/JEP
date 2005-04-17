@@ -46,6 +46,8 @@ public class Logarithm extends PostfixMathCommand
 			double num = ((Number) param).doubleValue();
 			if( num > 0)
 				return new Double(Math.log(num)/LOG10);
+			else if(num != num)
+				return new Double(Double.NaN);
 			else
 			{	
 				Complex temp = new Complex(num);
