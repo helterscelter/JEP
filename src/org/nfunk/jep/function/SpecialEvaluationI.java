@@ -18,12 +18,12 @@ public interface SpecialEvaluationI {
 
 	/**
 	 * Performs some special evaluation on the node.
-	 * This method has the responsability for evaluating the children of the node
+	 * This method has the responsibility for evaluating the children of the node
 	 * and it should generally call
 	 * <pre>
 	 * node.jjtGetChild(i).jjtAccept(pv,data);	
 	 * </pre>
-	 * for each child. Breifly the symbol table was removed as argumnets to this method, it is now reinserted.
+	 * for each child. Briefly the symbol table was removed as arguments to this method, it is now reinserted.
 	 *
 	 * @param node	The current node
 	 * @param data	The data passed to visitor, typically not used
