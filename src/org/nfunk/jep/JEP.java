@@ -196,6 +196,7 @@ public class JEP {
 		funTab.put("log", new Logarithm());
 		funTab.put("ln", new NaturalLogarithm());
 		funTab.put("exp", new Exp());
+		funTab.put("pow", new Power());
 
 		funTab.put("sqrt",new SquareRoot());
 		funTab.put("abs", new Abs());
