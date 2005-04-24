@@ -98,4 +98,9 @@ public class MVector implements MatrixValueI
 		return result;
 	}
 	
+	public MatrixValueI copy() {
+		MVector tmp = new MVector(this.data.length);
+		tmp.setEles(this);
+		return tmp;
+	}
 }

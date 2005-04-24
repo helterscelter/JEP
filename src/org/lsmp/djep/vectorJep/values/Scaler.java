@@ -58,7 +58,7 @@ public class Scaler extends Number implements MatrixValueI {
 	
 	/**
 	 * Always override hashCode when you override equals.
-	 * Efective Java, Joshua Bloch, Sun Press
+	 * Effective Java, Joshua Bloch, Sun Press
 	 */
 	public int hashCode() {
 		int result = 17;
@@ -66,4 +66,7 @@ public class Scaler extends Number implements MatrixValueI {
 		return result;
 	}
 
+	public MatrixValueI copy() {
+		return new Scaler(value);
+	}
 }

@@ -25,4 +25,6 @@ public interface MatrixValueI {
 	public Object getEle(int i);
 	/** sets the elements to those of the arguments. */
 	public void setEles(MatrixValueI val);
+	/** returns a copy of this value. */
+	public MatrixValueI copy();
 }

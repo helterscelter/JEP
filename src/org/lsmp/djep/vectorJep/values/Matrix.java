@@ -17,12 +17,17 @@ import org.lsmp.djep.vectorJep.*;
  * @author Rich Morris
  * Created on 07-Jul-2003
  * @version 2.3.0.2 now extends number
- * @version 2.3.1.1 Bug with non square matricies fixed.
+ * @version 2.3.1.1 Bug with non square matrices fixed.
  * @since 2.3.2 Added equals method.
  */
 public class Matrix implements MatrixValueI 
 {
-	// want package access to simplify addition of matricies
+	public MatrixValueI copy() {
+		Matrix tmp = new Matrix(this.rows,this.cols);
+		tmp.setEles(this);
+		return tmp;
+	}
+	// want package access to simplify addition of matrices
 	int rows=0;
 	int cols=0;
 	Object data[][] = null;
@@ -69,7 +74,7 @@ public class Matrix implements MatrixValueI
 	}
 */
 	/**
-	 * Returns a string rep of matrix. Uses [[a,b],[c,d]] syntax.  
+	 * Returns a string representation of matrix. Uses [[a,b],[c,d]] syntax.  
 	 */
 	public String toString()
 	{
@@ -135,7 +140,7 @@ public class Matrix implements MatrixValueI
 	//public float floatValue() {	return ((Number) data[0][0]).floatValue();	}
 	/** value of ele(1,1). */	
 	//public double doubleValue() {return ((Number) data[0][0]).doubleValue();	}
-	/** Are two matricies equal, element by element 
+	/** Are two matrices equal, element by element 
 	 * Overrides Object.
 	 */
 	public boolean equals(Object obj) {
@@ -150,7 +155,7 @@ public class Matrix implements MatrixValueI
 	
 	/**
 	 * Always override hashCode when you override equals.
-	 * Efective Java, Joshua Bloch, Sun Press
+	 * Effective Java, Joshua Bloch, Sun Press
 	 */
 	public int hashCode() {
 		int result = 17;

@@ -35,6 +35,11 @@ public class Tensor implements MatrixValueI {
 		this.dims = t.getDim();
 	}
 	
+	public MatrixValueI copy() {
+		Tensor tmp = new Tensor(this);
+		tmp.setEles(tmp);
+		return tmp;
+	}
 	/** Creates a tensor with dimensions [len,dims[0],...,dims[n]] **/
 	public Tensor(int len,Dimensions dims)
 	{
