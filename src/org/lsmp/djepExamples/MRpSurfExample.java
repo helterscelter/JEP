@@ -114,7 +114,7 @@ public class MRpSurfExample {
 			yref = mrpe.getVarRef(yVar);
 
 		}
-		catch(ParseException e) {e.getMessage();}
+		catch(ParseException e) {System.out.println(e.getMessage());}
 	}
 
 	public void vecEquationChanged(String lines[])
