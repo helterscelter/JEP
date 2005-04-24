@@ -91,6 +91,7 @@ public class MatrixVariable extends DVariable implements MatrixVariableI {
 		}
 		else 
 			mvalue.setEle(0,val);
+		this.setValidValue(true);
 		return true;
 	}
 	 
