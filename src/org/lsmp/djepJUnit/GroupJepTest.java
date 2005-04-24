@@ -46,7 +46,7 @@ public class GroupJepTest extends TestCase {
 		return new TestSuite(GroupJepTest.class);
 	}
 
-	public void myAssertEquals(String msg,String actual,String expected)
+	public void myAssertEquals(String msg,String expected,String actual)
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
@@ -54,7 +54,7 @@ public class GroupJepTest extends TestCase {
 		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
 	}
 
-	public void myAssertEquals(String msg,String actual,String expected,String ending)
+	public void myAssertEquals(String msg,String expected,String actual,String ending)
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
@@ -79,7 +79,7 @@ public class GroupJepTest extends TestCase {
 			Complex cval = ((HasComplexValueI) val).getComplexValue();
 			ending = cval.toString();
 		}
-		myAssertEquals(expr,res,expected,ending);
+		myAssertEquals(expr,expected,res,ending);
 	}
 
 	/** Tests very large numbers, 20! */
@@ -235,7 +235,7 @@ public class GroupJepTest extends TestCase {
 		Complex val = fge.calculateComplexValue(new Complex(1.0));
 		System.out.println("Value "+val);
 		System.out.println(fge.toString());
-		myAssertEquals("(x+7.6)*(x+5.8832)*(x-55.12): x=1.0",val.toString(),"(-3203.6615424, 0.0)");
+		myAssertEquals("(x+7.6)*(x+5.8832)*(x-55.12): x=1.0","(-3203.6615424, 0.0)",val.toString());
 		System.out.println("rounding error 7.6+5.8832-55.12 = "+(7.6+5.8832-55.12));
 
 		FreeGroup fg2 = new ExtendedFreeGroup(fg,"y");
@@ -250,14 +250,14 @@ public class GroupJepTest extends TestCase {
 		{
 			FreeGroupElement fge3 = (FreeGroupElement) co1[i];
 			Number co2[] = fge3.getCoeffs();
-			for(int j=0;j<co2.length;++j)
-				System.out.print(co2[j]+"\t");
+			for(int jj=0;jj<co2.length;++jj)
+				System.out.print(co2[jj]+"\t");
 			System.out.println();
 		}
 		fg.setRootVal(new Complex(5.0));
 		fg2.setRootVal(new Complex(4.0));
 		System.out.println(fge2.toString());
-		myAssertEquals("(x+1)*(y-2): x=5,y=4",fge2.getComplexValue().toString(),"(12.0, 0.0)");		
+		myAssertEquals("(x+1)*(y-2): x=5,y=4","(12.0, 0.0)",fge2.getComplexValue().toString());		
 
 		valueToStringTest("a=5","5.0");
 		valueToStringTest("z=x+y-1","y+x-1.0");

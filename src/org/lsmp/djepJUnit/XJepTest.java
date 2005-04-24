@@ -1,39 +1,40 @@
+/* @author rich
+ * Created on 17-Apr-2005
+ *
+ * See LICENSE.txt for license information.
+ */
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
-import org.lsmp.djep.xjep.*;
 import java.text.NumberFormat;
 import java.util.Vector;
 
-/* @author rich
- * Created on 19-Nov-2003
- *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
- */
+import org.nfunk.jep.*;
+import org.nfunk.jep.type.Complex;
+import org.lsmp.djep.xjep.*;
+
+import junit.framework.Test;
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
 
 /**
  * @author Rich Morris
- * Created on 19-Nov-2003
+ * Created on 17-Apr-2005
  */
-public class XJepTest extends TestCase {
-	XJep j;
-	public static final boolean SHOW_BAD=false;
-	
+public class XJepTest extends JepTest {
+
 	public XJepTest(String name) {
 		super(name);
 	}
 
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
+	public static Test suite() {
+		return new TestSuite(XJepTest.class);
+	}
 
+	public static void main(String[] args) {
 		TestSuite suite= new TestSuite(XJepTest.class);
 		suite.run(new TestResult());
-	}	
-
+	}
+	
 	protected void setUp() {
 		j = new XJep();
 		j.addStandardConstants();
@@ -44,125 +45,48 @@ public class XJepTest extends TestCase {
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
 	}
-
-	public static Test suite() {
-		return new TestSuite(XJepTest.class);
-	}
-
-	public void myAssertEquals(String msg,String actual,String expected)
-	{
-		if(!actual.equals(expected))
-			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
-		assertEquals("<"+msg+">",expected,actual);
-		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
-	}
-	/** just test JUnit working OK */
-	public void testGood()
-	{
-		assertEquals(1,1);
-	}
-
-	public void valueTestInt(String expr,int dub) throws Exception
-	{
-		valueTest(expr,new Integer(dub));
-	}
-	public void valueTest(String expr,double dub) throws Exception
-	{
-		valueTest(expr,new Double(dub));
-	}
-	public void valueTest(String expr,Object expected) throws Exception
-	{
-		Node node = j.parse(expr);
-		Node node2 = j.preprocess(node);
-		Object res = j.evaluate(node2);
-		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Success value of <"+expr+"> is "+res);
-	}
-	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
-	{
-		Node node = j.parse(expr);
-		Node node2 = j.preprocess(node);
-		Object res = j.evaluate(node2);
-		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
-			expected.equals((Complex) res,tol));
-		System.out.println("Success value of <"+expr+"> is "+res);
-	}
-
-	public Object calcValue(String expr) throws ParseException
-	{
-		Node n = j.parse(expr);
-		Node n2 = j.preprocess(n);
-		Object val = j.evaluate(n2);
-		return val;
-	}
-	
-	public void simplifyTest(String expr,String expected) throws ParseException
-	{
-		Node node = j.parse(expr);
-		Node processed = j.preprocess(node);
-		Node simp = j.simplify(processed);
-		String res = j.toString(simp);
-		
-		Node node2 = j.parse(expected);
-		Node processed2 = j.preprocess(node2);
-		Node simp2 = j.simplify(processed2);
-		String res2 = j.toString(simp2);
-
-		if(!res2.equals(res))		
-			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+res2+"\"");
-		assertEquals("<"+expr+">",res2,res);
-		System.out.println("Success: Value of \""+expr+"\" is \""+res+"\"");
-			
-//		System.out.print("Full Brackets:\t");
-//		j.pv.setFullBrackets(true);
-//		j.pv.println(simp);
-//		j.pv.setFullBrackets(false);
-
-	}
-
 	public void simplifyTestString(String expr,String expected) throws ParseException
 	{
-		Node node = j.parse(expr);
-		Node processed = j.preprocess(node);
-		Node simp = j.simplify(processed);
-		String res = j.toString(simp);
+		XJep xj = (XJep) j;
+
+		Node node = xj.parse(expr);
+		Node processed = xj.preprocess(node);
+		Node simp = xj.simplify(processed);
+		String res = xj.toString(simp);
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
 		assertEquals("<"+expr+">",expected,res);
 		System.out.println("Success: Value of \""+expr+"\" is \""+res+"\"");
-			
-//		System.out.print("Full Brackets:\t");
-//		j.pv.setFullBrackets(true);
-//		j.pv.println(simp);
-//		j.pv.setFullBrackets(false);
-
 	}
-	
+
+	public void simplifyTest(String expr,String expected) throws ParseException
+	{
+		XJep xj = (XJep) j;
+		
+		Node node2 = xj.parse(expected);
+		Node processed2 = xj.preprocess(node2);
+		Node simp2 = xj.simplify(processed2);
+		String res2 = xj.toString(simp2);
+
+		simplifyTestString(expr,res2);
+	}
+
 	public Node parseProcSimpEval(String expr,Object expected) throws ParseException,Exception
 	{
-		Node node = j.parse(expr);
-		Node processed = j.preprocess(node);
-		Node simp = j.simplify(processed);
-		Object res = j.evaluate(simp);
+		XJep xj = (XJep) j;
+
+		Node node = xj.parse(expr);
+		Node processed = xj.preprocess(node);
+		Node simp = xj.simplify(processed);
+		Object res = xj.evaluate(simp);
 		
-		if(!expected.equals(res))		
-			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
-		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Sucess: Value of \""+expr+"\" is \""+res+"\"");
+		myAssertEquals(expr,expected,res);
 		return simp;
 	}
 
-
-	public void testSimpleSum() throws Exception
-	{
-		valueTest("1+2",3);		
-		valueTest("2*6+3",15);		
-		valueTest("2*(6+3)",18);
-	}
-	
-	public void testOperators() throws Exception
-	{
+	public void testLogical() throws Exception {
+		super.testLogical();
 		OperatorSet opSet = j.getOperatorSet();
 		if(!((XOperator) opSet.getMultiply()).isDistributiveOver(opSet.getAdd()))
 			fail("* should be distrib over +");
@@ -171,33 +95,6 @@ public class XJepTest extends TestCase {
 		if(((XOperator) opSet.getMultiply()).getPrecedence() > ((XOperator) opSet.getAdd()).getPrecedence())
 			fail("* should have a lower precedence than +");
 
-		valueTest("T=1",1);
-		valueTest("F=0",0);
-		calcValue("a=F"); calcValue("b=F"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=F"); calcValue("b=F"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=F"); calcValue("b=T"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=F"); calcValue("b=T"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-
-		calcValue("a=T"); calcValue("b=F"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=T"); calcValue("b=F"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=T"); calcValue("b=T"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=T"); calcValue("b=T"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
 	}
 	
 	public void testPrint() throws ParseException
@@ -359,56 +256,20 @@ public class XJepTest extends TestCase {
 		simplifyTest("(2*(3+(x/4)))","6+0.5*x");
 		simplifyTest("1+(2*(3+(x/4)))","7+0.5*x");
 		simplifyTest("((3+(x/4))*2)+1","7+0.5*x");
-		
-	}
 
-	public void testComplex() throws Exception
-	{
-		double tol = 0.00000001;
+		simplifyTest("(x/2)*3","x*1.5");
 
-		complexValueTest("z=complex(3,2)",new Complex(3,2),tol);
-		complexValueTest("z*z-z",new Complex(2,10),tol);
-		complexValueTest("z^3",new Complex(-9,46),tol);
-		complexValueTest("(z*z-z)/z",new Complex(2,2),tol);
-		complexValueTest("w=polar(2,pi/2)",new Complex(0,2),tol);
-		
-	}
-
-	public void testIf()  throws Exception
-	{
-		valueTest("if(1,2,3)",2);		
-		valueTest("if(-1,2,3)",3);		
-		valueTest("if(0,2,3)",3);		
-		valueTest("if(1,2,3,4)",2);		
-		valueTest("if(-1,2,3,4)",3);		
-		valueTest("if(0,2,3,4)",4);		
-		valueTest("if(0>=0,2,3,4)",2);		
-		valueTest("x=3",3);		
-		valueTest("if(x==3,1,-1)",1);		
-		valueTest("if(x!=3,1,-1)",-1);		
-		valueTest("if(x>=3,1,-1)",1);		
-		valueTest("if(x>3,1,-1)",-1);		
-		valueTest("if(x<=3,1,-1)",1);		
-		valueTest("if(x<3,1,-1)",-1);		
-	}
-
-	public void testAssign()  throws Exception
-	{
-		valueTest("x=3",3);
-		valueTest("y=3+4",7);
-		valueTest("z=x+y",10);
-		valueTest("a=b=c=z",10);
-		valueTest("b",10);
-		valueTest("d=f=a-b",0);
 	}
 
 	public void testMacroFun() throws Exception
 	{
-		j.addFunction("zap",new MacroFunction("zap",1,"x*(x-1)/2",j));
+		j.addFunction("zap",new MacroFunction("zap",1,"x*(x-1)/2",(XJep) j));
 		valueTest("zap(10)",45);
 	}
+
 	public void testVariableReuse() throws Exception
 	{
+		XJep xj = (XJep) j;
 		System.out.println("\nTesting variable reuse");
 		parseProcSimpEval("x=3",new Double(3));
 		Node node13 = parseProcSimpEval("y=x^2",new Double(9));
@@ -417,122 +278,86 @@ public class XJepTest extends TestCase {
 		j.setVarValue("x",new Double(4));
 		System.out.println("j.setVarValue(\"x\",new Double(4));");
 		System.out.println("j.getVarValue(y): "+j.getVarValue("y"));
-		myAssertEquals("eval y eqn",j.evaluate(node13).toString(),"16.0");
+		myAssertEquals("eval y eqn","16.0",j.evaluate(node13).toString());
 		System.out.println("j.getVarValue(y): "+j.getVarValue("y"));
-		myAssertEquals("eval z eqn",j.evaluate(node15).toString(),"20.0");
+		myAssertEquals("eval z eqn","20.0",j.evaluate(node15).toString());
 
 //		j.getSymbolTable().clearValues();
 		j.setVarValue("x",new Double(5));
 		System.out.println("j.setVarValue(\"x\",new Double(5));");
-		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"25.0");
-		myAssertEquals("j.findVarValue(z)",j.calcVarValue("z").toString(),"30.0");
+		myAssertEquals("j.findVarValue(y)","25.0",xj.calcVarValue("y").toString());
+		myAssertEquals("j.findVarValue(z)","30.0",xj.calcVarValue("z").toString());
 
 		j.getSymbolTable().clearValues();
 		j.setVarValue("x",new Double(6));
 		System.out.println("j.setVarValue(\"x\",new Double(6));");
-		myAssertEquals("j.findVarValue(z)",j.calcVarValue("z").toString(),"42.0");
-		myAssertEquals("j.findVarValue(y)",j.calcVarValue("y").toString(),"36.0");
+		myAssertEquals("j.findVarValue(z)","42.0",xj.calcVarValue("z").toString());
+		myAssertEquals("j.findVarValue(y)","36.0",xj.calcVarValue("y").toString());
 
 		parseProcSimpEval("x=7",new Double(7));
-		myAssertEquals("eval y eqn",j.evaluate(node13).toString(),"49.0");
-		myAssertEquals("eval z eqn",j.evaluate(node15).toString(),"56.0");
-	}
-	
-	public void testDotInName() throws ParseException,Exception
-	{
-		valueTest("x.x=3",3);
-		valueTest("x.x+1",4);
+		myAssertEquals("eval y eqn","49.0",j.evaluate(node13).toString());
+		myAssertEquals("eval z eqn","56.0",j.evaluate(node15).toString());
 	}
 
 	public void testReentrant() throws ParseException,Exception
 	{
-		j.restartParser("x=1; // semi-colon; in comment\n y=2; z=x+y;");
-		Node node = j.continueParsing();
-		myAssertEquals("x=1; ...",j.evaluate(node).toString(),"1.0");
-		node = j.continueParsing();
-		myAssertEquals("..., y=2; ...",j.evaluate(node).toString(),"2.0");
-		node = j.continueParsing();
-		myAssertEquals("..., z=x+y;",j.evaluate(node).toString(),"3.0");
-		node = j.continueParsing();
+		XJep xj = (XJep) j;
+
+		xj.restartParser("x=1; // semi-colon; in comment\n y=2; z=x+y;");
+		Node node = xj.continueParsing();
+		myAssertEquals("x=1; ...","1.0",calcValue(node).toString());
+		node = xj.continueParsing();
+		myAssertEquals("..., y=2; ...","2.0",calcValue(node).toString());
+		node = xj.continueParsing();
+		myAssertEquals("..., z=x+y;","3.0",calcValue(node).toString());
+		node = xj.continueParsing();
 		assertNull("empty string ",node);
 	}
 	
 	
 	public void testFormat() throws ParseException
 	{
+		XJep xj = (XJep) j;
+
 		NumberFormat format = NumberFormat.getInstance();
-		j.getPrintVisitor().setNumberFormat(format);
+		xj.getPrintVisitor().setNumberFormat(format);
 		format.setMaximumFractionDigits(3);
 		format.setMinimumFractionDigits(0);
 		
 		String s1 = "[10,0,0.1,0.11,0.111,0.1111]";
-		String r1 = j.toString(j.parse(s1));
+		String r1 = xj.toString(j.parse(s1));
 		String s2 = "[0.9,0.99,0.999,0.9999]";
-		String r2 = j.toString(j.parse(s2));
+		String r2 = xj.toString(j.parse(s2));
 		this.myAssertEquals(s1,r1,"[10,0,0.1,0.11,0.111,0.111]");
 		this.myAssertEquals(s2,r2,"[0.9,0.99,0.999,1]");
 		
 		j.addComplex();
-		j.println(j.parse("[0,1,i,1+i]"));
-		j.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
-		j.println(j.simplify(j.parse("(2+i)+(1+i)")));
-		j.parseExpression("(2+i)+(1+i)");
-		Complex c = j.getComplexValue();
+		xj.println(j.parse("[0,1,i,1+i]"));
+		xj.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
+		xj.println(xj.simplify(j.parse("(2+i)+(1+i)")));
+		//j.parseExpression("(2+i)+(1+i)");
+		Complex c = (Complex) calcValue("(2+i)+(1+i)");
 		System.out.println(c.toString(format,true));
 	}
 
-	public void testBinom() throws ParseException,Exception
-	{
-		valueTestInt("binom(0,0)",1);
-		valueTestInt("binom(1,0)",1);
-		valueTestInt("binom(1,1)",1);
-		valueTestInt("binom(2,0)",1);
-		valueTestInt("binom(2,1)",2);
-		valueTestInt("binom(2,2)",1);
-		valueTestInt("binom(3,0)",1);
-		valueTestInt("binom(3,1)",3);
-		valueTestInt("binom(3,2)",3);
-		valueTestInt("binom(3,3)",1);
-		valueTestInt("binom(4,0)",1);
-		valueTestInt("binom(4,1)",4);
-		valueTestInt("binom(4,2)",6);
-		valueTestInt("binom(4,3)",4);
-		valueTestInt("binom(4,4)",1);
-		valueTestInt("binom(5,0)",1);
-		valueTestInt("binom(5,1)",5);
-		valueTestInt("binom(5,2)",10);
-		valueTestInt("binom(5,3)",10);
-		valueTestInt("binom(5,4)",5);
-		valueTestInt("binom(5,5)",1);
-
-		valueTestInt("binom(6,0)",1);
-		valueTestInt("binom(6,1)",6);
-		valueTestInt("binom(6,2)",15);
-		valueTestInt("binom(6,3)",20);
-		valueTestInt("binom(6,4)",15);
-		valueTestInt("binom(6,5)",6);
-		valueTestInt("binom(6,6)",1);
-		
-		valueTestInt("binom(10,1)",10);
-		valueTestInt("binom(10,5)",252);
-	}
-	
 	public void testVarInEqn() throws Exception
 	{
+		XJep xj = (XJep) j;
+
 		Node n1 = j.parse("a+b+c+d");
-		Vector v = j.getVarsInEquation(n1,new Vector());
+		Vector v = xj.getVarsInEquation(n1,new Vector());
 		assertTrue("Does not contain a",v.contains(j.getSymbolTable().getVar("a")));
 		assertTrue("Does not contain b",v.contains(j.getSymbolTable().getVar("b")));
 		assertTrue("Does not contain c",v.contains(j.getSymbolTable().getVar("c")));
 		assertTrue("Does not contain d",v.contains(j.getSymbolTable().getVar("d")));
 
-		j.preprocess(j.parse("x=a+b t"));
-		j.preprocess(j.parse("y=c+d t"));
-		j.preprocess(j.parse("f=x*y"));
-		j.preprocess(j.parse("g=x+y"));
-		Node n2 = j.preprocess(j.parse("f+g"));
+		xj.preprocess(j.parse("x=a+b t"));
+		xj.preprocess(j.parse("y=c+d t"));
+		xj.preprocess(j.parse("f=x*y"));
+		xj.preprocess(j.parse("g=x+y"));
+		Node n2 = xj.preprocess(j.parse("f+g"));
 
-		Vector v2 = j.recursiveGetVarsInEquation(n2,new Vector());
+		Vector v2 = xj.recursiveGetVarsInEquation(n2,new Vector());
 		Vector v3 = new Vector();
 		v3.add(j.getVar("a"));
 		v3.add(j.getVar("b"));
@@ -547,6 +372,24 @@ public class XJepTest extends TestCase {
 		System.out.println(v2.toString());
 		assertEquals("Bad element seq",v3,v2);
 	}
+
+	public void testUndecVar() throws ParseException {
+		j.setAllowUndeclared(true);
+		Node node1 = ((XJep) j).parse("zap * biff * gosh");
+		((XJep) j).preprocess(node1);
+	}
+
+	public void testSum() throws Exception
+	{
+		valueTest("Sum(x,x,1,10)",55);
+		valueTest("Sum(x^2,x,1,5)",55);
+		valueTest("Product(x,x,1,5)",120);
+		valueTest("Min(x^2,x,1,5)",1);
+		valueTest("Max(x^2,x,1,5)",25);
+		valueTest("MinArg(x^2,x,1,5)",1);
+		valueTest("MaxArg(x^2,x,1,5)",5);
+	}
+
 	public void testBad() throws Exception
 	{
 		if(SHOW_BAD)
@@ -558,7 +401,7 @@ public class XJepTest extends TestCase {
 			simplifyTest("diff(re(x+i y),y)","0");
 			simplifyTest("diff(im(x+i y),x)","0");
 			simplifyTest("diff(im(x+i y),y)","1");
-			simplifyTest("(x/2)*3","x*1.5");
 		}
 	}
+
 }

@@ -1,39 +1,50 @@
+/* @author rich
+ * Created on 22-Apr-2005
+ *
+ * See LICENSE.txt for license information.
+ */
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-import org.nfunk.jep.*;
-import org.lsmp.djep.vectorJep.*;
-/* @author rich
- * Created on 19-Nov-2003
- *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
- */
+import org.lsmp.djep.vectorJep.VectorJep;
+import org.nfunk.jep.ParseException;
+
+import junit.framework.Test;
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
 
 /**
- * JUnit test for VectorJep
- * 
  * @author Rich Morris
- * Created on 19-Nov-2003
+ * Created on 22-Apr-2005
  */
-public class VectorJepTest extends TestCase {
-	VectorJep j;
-	public static final boolean SHOW_BAD=false;
-	
+public class VectorJepTest extends JepTest {
+
+	/**
+	 * @param name
+	 */
 	public VectorJepTest(String name) {
 		super(name);
+		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Create a test suite.
+	 * @return the TestSuite
+	 */
+	public static Test suite() {
+		return new TestSuite(VectorJepTest.class);
+	}
+
+	/**
+	 * Main entry point.
+	 * @param args
+	 */
 	public static void main(String args[]) {
 		// Create an instance of this class and analyse the file
 
 		TestSuite suite= new TestSuite(VectorJepTest.class);
-//		DJepTest jt = new DJepTest("DJepTest");
-//		jt.setUp();
 		suite.run(new TestResult());
 	}	
-
+	
 	protected void setUp() {
 		j = new VectorJep();
 		j.addStandardConstants();
@@ -45,128 +56,9 @@ public class VectorJepTest extends TestCase {
 		j.setImplicitMul(true);
 	}
 
-	public static Test suite() {
-		return new TestSuite(VectorJepTest.class);
-	}
-
-	public void testGood()
-	{
-		assertEquals(1,1);
-	}
-
-	public void valueTest(String expr,double dub) throws Exception
-	{
-		valueTest(expr,new Double(dub));
-	}
-	public void valueTest(String expr,Object expected) throws Exception
-	{
-		Node node = j.parse(expr);
-		Object res = j.evaluate(node);
-		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Sucess value of <"+expr+"> is "+res);
-	}
-
-	public void valueTest(String expr,String expected) throws Exception
-	{
-		Node node = j.parse(expr);
-		Object res = j.evaluate(node);
-		assertEquals("<"+expr+">",expected,res.toString());
-		System.out.println("Sucess value of <"+expr+"> is "+res.toString());
-	}
-
-	public Object calcValue(String expr) throws Exception
-	{
-		Node node = j.parse(expr);
-		Object res = j.evaluate(node);
-		return res;
-	}
-	
-
-	public void testSimpleSum() throws Exception
-	{
-		valueTest("1+2",3);		
-		valueTest("2*6+3",15);		
-		valueTest("2*(6+3)",18);
-	}
-	
-	public void testOperators()  throws Exception
-	{
-//		if(!Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_ADD))
-//			fail("* should be distrib over +");
-//		if(Operator.OP_MULTIPLY.isDistributiveOver(Operator.OP_DIVIDE))
-//			fail("* should not be distrib over /");
-//		if(Operator.OP_MULTIPLY.getPrecedence() > Operator.OP_ADD.getPrecedence())
-//			fail("* should have a lower precedence than +");
-
-		valueTest("T=1",1);
-		valueTest("F=0",0);
-		calcValue("a=F"); calcValue("b=F"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=F"); calcValue("b=F"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=F"); calcValue("b=T"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=F"); calcValue("b=T"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-
-		calcValue("a=T"); calcValue("b=F"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=T"); calcValue("b=F"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=T"); calcValue("b=T"); calcValue("c=F");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-		calcValue("a=T"); calcValue("b=T"); calcValue("c=T");
-		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
-		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
-	}
-
-	public void testIf()  throws Exception
-	{
-		valueTest("if(1,2,3)",2);		
-		valueTest("if(-1,2,3)",3);		
-		valueTest("if(0,2,3)",3);		
-		valueTest("if(1,2,3,4)",2);		
-		valueTest("if(-1,2,3,4)",3);		
-		valueTest("if(0,2,3,4)",4);		
-		valueTest("if(0>=0,2,3,4)",2);		
-		valueTest("x=3",3);		
-		valueTest("if(x==3,1,-1)",1);		
-		valueTest("if(x!=3,1,-1)",-1);		
-		valueTest("if(x>=3,1,-1)",1);		
-		valueTest("if(x>3,1,-1)",-1);		
-		valueTest("if(x<=3,1,-1)",1);		
-		valueTest("if(x<3,1,-1)",-1);		
-	}
-
-	public void testAssign()  throws Exception
-	{
-		valueTest("x=3",3);
-		valueTest("y=3+4",7);
-		valueTest("z=x+y",10);
-		valueTest("a=b=c=z",10);
-		valueTest("b",10);
-		valueTest("d=f=a-b",0);
-	}
-
-						
-
-	public void myAssertEquals(String msg,String actual,String expected)
-	{
-		if(!actual.equals(expected))
-			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
-		assertEquals("<"+msg+">",expected,actual);
-		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
-	}
-
 	public void testMatrix() throws Exception
 	{
+		System.out.println("\nTesting vector and matrix operations");
 		j.getSymbolTable().clearValues();
 		valueTest("x=2",2);
 		valueTest("(x*x)*x*(x*x)",32.0);
@@ -202,9 +94,10 @@ public class VectorJepTest extends TestCase {
 		valueTest("ele(x,[2,1])","3.0");          // Value: 2.0
 		valueTest("ele(x,[2,2])","4.0");          // Value: 2.0
 	}
-	
+
 	public void testLength() throws ParseException,Exception
 	{
+		System.out.println("\nTesting vector and matrix functions");
 		valueTest("len(5)","1");
 		valueTest("len([1,2,3])","3");
 		valueTest("len([[1,2,3],[4,5,6]])","6");
@@ -234,10 +127,14 @@ public class VectorJepTest extends TestCase {
 		valueTest("Map(if(x>0,x,0),x,[-2,-1,0,1,2])","[0.0,0.0,0.0,1.0,2.0]");
 		valueTest("Map(abs(x),x,[[-2,-1],[1,2]])","[[2.0,1.0],[1.0,2.0]]");
 	}
-	public void testBad() throws Exception
-	{
-		if(SHOW_BAD)
-		{
-		}
+
+	public void testSumVector() throws Exception {
+		
+	}
+	public void testVecCmp() throws Exception {
+		valueTest("[1,2,3]==[1,2,3]",1);
+		valueTest("[1,2,3]==[1,2,4]",0);
+	}
+	public void testDotInName() throws ParseException, Exception {
 	}
 }
