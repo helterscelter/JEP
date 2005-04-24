@@ -5,28 +5,26 @@
  */
 package org.lsmp.djep.vectorJep.function;
 
-import java.util.Stack;
-
 import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.CallbackEvaluationI;
 import org.nfunk.jep.function.PostfixMathCommand;
-import org.nfunk.jep.function.SpecialEvaluationI;
 
 /**
  * evaluates a function on every element of a vector or matrix.
  * Map(x^2,x,[1,2,3]) -> [1,4,9]
  * Map(x^y,[x,y],[1,2,3],[1,2,3]) -> [1,4,27]
  * First argument is a equation, second argument is the name or names of variables.
- * Third and subsequent arguments are vectors or matricies, they must have the same dimensions
- * and the number of subseqent arguments must match the number of variables specified in the second argument.
+ * Third and subsequent arguments are vectors or matrices, they must have the same dimensions
+ * and the number of subsequent arguments must match the number of variables specified in the second argument.
  * 
  * @author Rich Morris
  * Created on 14-Feb-2005
  */
 public class VMap
 	extends PostfixMathCommand
-	implements NaryOperatorI, SpecialEvaluationI
+	implements NaryOperatorI, CallbackEvaluationI
 {
 
 	/**
@@ -79,10 +77,7 @@ public class VMap
 	}
 	public Object evaluate(
 		Node node,
-		Object data,
-		ParserVisitor pv,
-		Stack stack,
-		SymbolTable symTab)
+		EvaluatorI pv)
 		throws ParseException
 	{
 		int nChild = node.jjtGetNumChildren();
@@ -100,9 +95,7 @@ public class VMap
 		Dimensions dim=null;
 		for(int i=0;i<nChild-2;++i)
 		{
-			node.jjtGetChild(i+2).jjtAccept(pv,data);	
-			checkStack(stack); // check the stack
-			Object out = stack.pop();
+			Object out = pv.eval(node.jjtGetChild(i+2));
 			if(out instanceof MatrixValueI)
 			{
 				inputs[i] = (MatrixValueI) out;
@@ -123,10 +116,9 @@ public class VMap
 		{
 			for(int j=0;j<vars.length;++j)
 				vars[j].setValue(inputs[j].getEle(i));
-			node.jjtGetChild(0).jjtAccept(pv,data);
-			res.setEle(i,stack.pop());
+			Object val = pv.eval(node.jjtGetChild(0));
+			res.setEle(i,val);
 		}
-		stack.push(res);
 		return res;
 	}
 

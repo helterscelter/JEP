@@ -19,9 +19,9 @@ import java.util.Stack;
  * 
  * @author Rich Morris
  * Created on 30-Oct-2003
- * @since 2.3.2 Hack so comparitive operations work with vectors and matricies. 
+ * @since 2.3.2 Hack so comparative operations work with vectors and matrices. 
  */
-public class MatrixEvaluator implements ParserVisitor
+public class MatrixEvaluator implements ParserVisitor,EvaluatorI
 {
 //	private DimensionCalculator dimCalc;
 	private Stack stack = new Stack();
@@ -30,6 +30,11 @@ public class MatrixEvaluator implements ParserVisitor
 	{
 		this.mjep=mj;
 		return (MatrixValueI) node.jjtAccept(this,null);
+	}
+
+	public Object eval(Node node) throws ParseException {
+		MatrixValueI val = (MatrixValueI) node.jjtAccept(this,null);
+		return val.copy();
 	}
 
 	public Object visit(SimpleNode node, Object data)	{ return null;	}
@@ -46,6 +51,8 @@ public class MatrixEvaluator implements ParserVisitor
 		MatrixVariableI var = (MatrixVariableI) node.getVar();
 		if(var.hasValidValue())
 			return var.getMValue();
+		if(!var.hasEquation())
+			throw new ParseException("Tried to evaluate a variable with an invalid value but no equation");
 		MatrixValueI res = (MatrixValueI) var.getEquation().jjtAccept(this,data);
 		var.setMValue(res);
 		return res;
@@ -82,11 +89,17 @@ public class MatrixEvaluator implements ParserVisitor
 				results[i] = (MatrixValueI) node.jjtGetChild(i).jjtAccept(this,data);
 			return uni.calcValue(mnode.getMValue(),results);
 		}
+		else if (pfmc instanceof CallbackEvaluationI) {
+			Object val = ((CallbackEvaluationI) pfmc).evaluate(node,this);
+			if(val instanceof MatrixValueI)
+				mnode.getMValue().setEles((MatrixValueI) val);
+			else
+				mnode.getMValue().setEle(0,val);
+			return mnode.getMValue();
+		}
 		else if (pfmc instanceof SpecialEvaluationI) {
-			throw new IllegalArgumentException("Encountered an instance of SpecialEvaluationI");
-//			((SpecialEvaluationI) node.getPFMC()).evaluate(
-//				node,data,this,stack,mjep.getSymbolTable());
-//			mnode.getMValue().setEle(0,stack.peek());
+			
+			throw new ParseException("Encountered an instance of SpecialEvaluationI");
 		}
 		else if(pfmc instanceof Comparative) {
 			Object lhsval = (MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data);

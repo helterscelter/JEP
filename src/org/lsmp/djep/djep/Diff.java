@@ -17,7 +17,7 @@ import org.nfunk.jep.function.*;
 /**
    * The diff(f,x) operator.
    */
-  public class Diff extends PostfixMathCommand implements CommandVisitorI,SpecialEvaluationI
+  public class Diff extends PostfixMathCommand implements CommandVisitorI
   {
 	  public Diff() {
 		  super();
@@ -33,11 +33,7 @@ import org.nfunk.jep.function.*;
 		throw new ParseException("Cannot evaluate the diff function. ");
 	}
 
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack,SymbolTable symTab) throws ParseException
-	{
-		throw new ParseException("Cannot evaluate the diff function. ");
-	}
-  /**
+ /**
    * Process the differentiation specified by node.
    * Defines process in
    * @see CommandVisitorI 

@@ -5,16 +5,14 @@
  */
 package org.lsmp.djep.vectorJep.function;
 
-import java.util.Stack;
-
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.CallbackEvaluationI;
 import org.nfunk.jep.function.PostfixMathCommand;
-import org.nfunk.jep.function.SpecialEvaluationI;
 
 /**
- * Generate vectors and matricies.
+ * Generate vectors and matrices.
  * First argument gives the size of the vector or matrix
  * second argument is the function to use to generate elements of vector or matrix.
  * Third argument (if present gives free variables used in the function, these will
@@ -32,7 +30,7 @@ import org.nfunk.jep.function.SpecialEvaluationI;
  * @author Rich Morris
  * Created on 14-Feb-2005
  */
-public class GenMat extends PostfixMathCommand implements SpecialEvaluationI
+public class GenMat extends PostfixMathCommand implements CallbackEvaluationI
 {
 	public GenMat()
 	{
@@ -42,14 +40,10 @@ public class GenMat extends PostfixMathCommand implements SpecialEvaluationI
 
 	public Object evaluate(
 		Node node,
-		Object data,
-		ParserVisitor pv,
-		Stack stack,
-		SymbolTable symTab)
+		EvaluatorI pv)
 		throws ParseException
 	{
-		node.jjtGetChild(0).jjtAccept(pv,data);
-		Object sizeObj = stack.pop();
+		Object sizeObj = pv.eval(node.jjtGetChild(0));
 		int sizes[] = null;
 		if( sizeObj instanceof Scaler)
 		{
@@ -81,11 +75,9 @@ public class GenMat extends PostfixMathCommand implements SpecialEvaluationI
 			// no need to set variables
 			for(int i=0;i<res.getNumEles();++i)
 			{
-				node.jjtGetChild(1).jjtAccept(pv,data);
-				Object val = stack.pop();
+				Object val = pv.eval(node.jjtGetChild(1));
 				res.setEle(i,val);
 			}
-			stack.push(res);
 			return res;
 		}
 		
@@ -99,11 +91,9 @@ public class GenMat extends PostfixMathCommand implements SpecialEvaluationI
 			for(int i=0;i<sizes[0];++i)
 			{
 				vars[0].setValue(new Integer(i+1));
-				node.jjtGetChild(1).jjtAccept(pv,data);
-				Object val = stack.pop();
+				Object val = pv.eval(node.jjtGetChild(1));
 				res.setEle(i,val);
 			}
-			stack.push(res);
 			return res;
 		}
 		else if(vars.length == 2)
@@ -115,15 +105,13 @@ public class GenMat extends PostfixMathCommand implements SpecialEvaluationI
 				for(int j=0;j<sizes[1];++j)
 				{
 					vars[1].setValue(new Integer(j+1));
-					node.jjtGetChild(1).jjtAccept(pv,data);
-					Object val = stack.pop();
+					Object val = pv.eval(node.jjtGetChild(1));
 					mat.setEle(i,j,val);
 				}
 			}
-			stack.push(res);
 			return res;
 		}
 		else
-			throw new ParseException("GenMat: can currently only generate vectors and matricies");
+			throw new ParseException("GenMat: can currently only generate vectors and matrices");
 	}
 }

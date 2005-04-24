@@ -18,11 +18,13 @@ import org.nfunk.jep.function.*;
  */
 public class Sum extends SumType {
 
-	static Add add = new Add();
+	static Add add;
 
-	public Sum()
+	private Sum() {}
+	public Sum(JEP j)
 	{
 		super("Sum");
+		add = (Add) j.getOperatorSet().getAdd().getPFMC();
 	}
 
 		

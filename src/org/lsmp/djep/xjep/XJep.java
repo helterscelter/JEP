@@ -119,7 +119,7 @@ public class XJep extends JEP {
 		} 
 		else super.addStandardFunctions();
 		addFunction("eval",new Eval());
-		addFunction("Sum",new Sum());
+		addFunction("Sum",new Sum(this));
 		addFunction("Product",new Product());
 		addFunction("Min",new Min());
 		addFunction("Max",new Max());

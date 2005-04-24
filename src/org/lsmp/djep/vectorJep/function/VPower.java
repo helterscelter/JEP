@@ -25,6 +25,7 @@ public class VPower extends PostfixMathCommand implements BinaryOperatorI
 
 	public VPower() {
 		super();
+		this.numberOfParameters = 2;
 	}
 	public Dimensions calcDim(Dimensions ldim,Dimensions rdim) throws ParseException
 	{

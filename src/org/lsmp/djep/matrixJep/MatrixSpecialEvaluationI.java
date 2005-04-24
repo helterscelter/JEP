@@ -20,7 +20,7 @@ import org.lsmp.djep.vectorJep.values.*;
 public interface MatrixSpecialEvaluationI {
 	/** 
 	 * Returns the result of evaluating this node and the tree below.
-	 * This method has the responsability for evaluating the children of the node
+	 * This method has the responsibility for evaluating the children of the node
 	 * and it should generally call
 	 * <pre>
 	 * MatrixValueI val = (MatrixValueI) node.jjtGetChild(i).jjtAccept(visitor,null);	

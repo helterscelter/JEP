@@ -7,7 +7,6 @@
  */
 package org.lsmp.djep.xjep.function;
 
-import java.util.Stack;
 
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
@@ -34,9 +33,7 @@ public class MaxArg extends SumType {
 		double min,
 		double max,
 		double inc,
-		Object data,
-		ParserVisitor pv,
-		Stack stack)
+		EvaluatorI pv)
 		throws ParseException {
 
 			int i=0;
@@ -48,9 +45,7 @@ public class MaxArg extends SumType {
 				Object curArg = new Double(val); 
 				var.setValue(curArg);
 				
-				node.jjtGetChild(0).jjtAccept(pv,data);	
-				checkStack(stack); // check the stack
-				Object res = stack.pop();
+				Object res = pv.eval(node);
 				if(i==0)
 				{
 					maxVal = res;
@@ -62,7 +57,6 @@ public class MaxArg extends SumType {
 					maxArg = curArg;
 				}
 			}
-			stack.push(maxArg);
 			return maxArg;
 	}
 

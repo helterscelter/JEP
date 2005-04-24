@@ -41,12 +41,16 @@ public class VectorEvaluator extends EvaluatorVisitor {
 		// as the pfmc.run method does not have enough information
 		// in such cases we call the evaluate method which passes
 		// all available info. Note evaluating the children is
-		// the responsability of the evaluate method. 
+		// the responsibility of the evaluate method. 
 		if (pfmc instanceof SpecialEvaluationI) {
 			return ((SpecialEvaluationI) node.getPFMC()).evaluate(
 				node,data,this,stack,this.symTab);
 		}
-
+		if(pfmc instanceof CallbackEvaluationI) {
+			Object value = ((CallbackEvaluationI) pfmc).evaluate(node,this);
+			stack.push(value);
+			return value;
+		}
 		if (debug == true) {
 			System.out.println(
 				"Stack size before childrenAccept: " + stack.size());
@@ -71,7 +75,8 @@ public class VectorEvaluator extends EvaluatorVisitor {
 
 		if(pfmc instanceof UnaryOperatorI ||
 		pfmc instanceof BinaryOperatorI ||
-		pfmc instanceof NaryOperatorI )
+		pfmc instanceof NaryOperatorI || 
+		pfmc instanceof Comparative)
 			pfmc.run(stack);
 		else if(numChild == 0)
 		{

@@ -13,7 +13,6 @@ import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.function.NaryOperatorI;
 import org.lsmp.djep.vectorJep.values.*;
 import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
 
 /**
  * The if(condExpr,posExpr,negExpr) function.
@@ -25,12 +24,12 @@ import org.nfunk.jep.type.*;
  * For Complex numbers only the real part is used.
  * <p>
  * An alternate form if(condExpr,posExpr,negExpr,zeroExpr)
- * is also availiable. Note most computations
- * are caried out over floating point doubles so
+ * is also available. Note most computations
+ * are carried out over floating point doubles so
  * testing for zero can be dangerous.
  * <p>
  * This function implements the SpecialEvaluationI interface
- * so that it handles seting the value of a variable. 
+ * so that it handles setting the value of a variable. 
  * @author Rich Morris
  * Created on 18-Nov-2003
  */
@@ -78,20 +77,10 @@ public class MIf extends PostfixMathCommand implements NaryOperatorI, MatrixSpec
 
 		// get value of argument
 		
-		MatrixValueI cond = (MatrixValueI) node.jjtGetChild(0).jjtAccept(visitor,null);	
-		Object condVal = cond.getEle(0);		
+		Scaler cond = (Scaler) node.jjtGetChild(0).jjtAccept(visitor,null);	
+//		Object condVal = cond.getEle(0);		
 		// convert to double
-		double val;
-		if(condVal instanceof Double)
-		{
-			val = ((Double) condVal).doubleValue();
-		}
-		else if(condVal instanceof Complex)
-		{
-			val = ((Complex) condVal).re();
-		}
-		else
-			throw new ParseException("Condition in if operator must be double or complex");
+		double val = cond.doubleValue();
 		MatrixValueI res;
 		if(val>0.0)
 		{

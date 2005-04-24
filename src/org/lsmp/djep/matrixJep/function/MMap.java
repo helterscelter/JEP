@@ -63,7 +63,7 @@ public class MMap extends VMap implements SpecialPreProcessorI,MatrixSpecialEval
 				else
 				{
 					if(!dim.equals(inputs[i].getDim()))
-						throw new ParseException("Map: dimensions of thrid and subsequent arguments must match");
+						throw new ParseException("Map: dimensions of third and subsequent arguments must match");
 				}
 			}
 			else

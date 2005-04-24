@@ -16,7 +16,7 @@ import org.nfunk.jep.function.*;
  * Base class for functions like Sum(x^2,x,1,10) which finds the sum of x^2 with x running from 1 to 10.
  * The first argument should be an equation, the second argument is a variable name,
  * the third argument is the min value, the forth is the max value and the 
- * fifth argument (if presant, default 1) is the increment to use.
+ * fifth argument (if present, default 1) is the increment to use.
  * Sub classes should implement the 
  * <pre>public abstract Object evaluate(Object elements[]) throws ParseException;</pre>
  * method, which is passed an array of the value 
@@ -24,7 +24,7 @@ import org.nfunk.jep.function.*;
  * @author Rich Morris
  * Created on 10-Sept-2004
  */
-public abstract class SumType extends PostfixMathCommand implements SpecialEvaluationI {
+public abstract class SumType extends PostfixMathCommand implements CallbackEvaluationI {
 	/** The name of the function, use in error reporting. */
 	protected String name;
 
@@ -40,16 +40,10 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 	}
 
 	/**
-	 * Evaluates the operator in given context. Typically does not need to be sub-classed as the other evaluate methods are more useful. This method just checks the arguments.
-	 * 
-	 * @see org.nfunk.jep.function.SpecialEvaluationI#evaluate(org.nfunk.jep.Node, java.lang.Object, org.nfunk.jep.ParserVisitor, java.util.Stack, org.nfunk.jep.SymbolTable)
+	 * Evaluates the operator in given context. 
+	 * Typically does not need to be sub-classed as the other evaluate methods are more useful. This method just checks the arguments.
 	 */
-	public Object evaluate(
-		Node node,
-		Object data,
-		ParserVisitor pv,
-		Stack stack,SymbolTable symTab)
-		throws ParseException {
+	public Object evaluate(Node node,EvaluatorI pv) throws ParseException {
 
 		int numParams =  node.jjtGetNumChildren();
 		if(numParams < 4 || numParams > 5)
@@ -62,17 +56,13 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 		else
 			throw new ParseException(name+": second argument should be a variable");
 			
-		node.jjtGetChild(2).jjtAccept(pv,data);	
-		checkStack(stack); // check the stack
-		Object minObj = stack.pop();
+		Object minObj = pv.eval(node.jjtGetChild(2));
 		double min;
 		if(minObj instanceof Number)
 			min = ((Number ) minObj).doubleValue();
 		else throw new ParseException(name+": third argument (min) should evaluate to a number it is "+minObj.toString());
 			
-		node.jjtGetChild(3).jjtAccept(pv,data);	
-		checkStack(stack); // check the stack
-		Object maxObj = stack.pop();
+		Object maxObj = pv.eval(node.jjtGetChild(3));
 		double max;
 		if(maxObj instanceof Number)
 			max = ((Number ) maxObj).doubleValue();
@@ -82,22 +72,21 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 		
 		if(numParams == 5)
 		{
-			node.jjtGetChild(3).jjtAccept(pv,data);	
-			checkStack(stack); // check the stack
-			Object incObj = stack.pop();
+			//node.jjtGetChild(3).jjtAccept(pv,data);	
+			//checkStack(stack); // check the stack
+			//Object incObj = stack.pop();
+			Object incObj = pv.eval(node.jjtGetChild(4));
 			double inc;
 			if(incObj instanceof Number)
 				inc = ((Number ) incObj).doubleValue();
 			else throw new ParseException(name+": fifth argument (steps) should evaluate to a number it is "+minObj.toString());
 			
-			evaluate(node.jjtGetChild(0),var,min,max,inc,data,pv,stack);
+			return evaluate(node.jjtGetChild(0),var,min,max,inc,pv);
 		}
-		else
-			evaluate(node,var,min,max,1.0,data,pv,stack);
-		return null;
+		return evaluate(node.jjtGetChild(0),var,min,max,1.0,pv);
 	}
 
-	/** Evaluates the node by repeatably setting the value of the variable from min to max, and calculating the value of the first argument.
+	/** Evaluates the node by repeatibly setting the value of the variable from min to max, and calculating the value of the first argument.
 	 * Sub classes generally do not need to implement this method as
 	 * {@link #evaluate(Object[])}
 	 * is more useful. If they do they should follow the pattern used here. 
@@ -107,9 +96,7 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 	 * @param min
 	 * @param max
 	 * @param inc
-	 * @param data
 	 * @param pv
-	 * @param stack
 	 * @return the result of evaluation
 	 * @throws ParseException
 	 */ 
@@ -118,9 +105,7 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 		Node node,
 		Variable var,
 		double min, double max, double inc,
-		Object data,
-		ParserVisitor pv,
-		Stack stack)
+		EvaluatorI pv)
 		throws ParseException {
 			
 			int i=0;
@@ -130,24 +115,21 @@ public abstract class SumType extends PostfixMathCommand implements SpecialEvalu
 			{
 				var.setValue(new Double(val));
 				
-				node.jjtGetChild(0).jjtAccept(pv,data);	
-				checkStack(stack); // check the stack
-				res[i] = stack.pop();
+				res[i] = pv.eval(node);
 			}
 			Object ret = evaluate(res);
-			stack.push(ret);
 			return ret;
-		}
+	}
 		
-		/** Evaluates the function given the set of y values.
-		 * For example for Sum(x^2,x,1,5) the function will be passed the array [1,4,9,16,25].
-		 * 
-		 * @param elements the y values
-		 * @return the result of the function
-		 * @throws ParseException
-		 */
-		public abstract Object evaluate(Object elements[]) throws ParseException;
-		
+	/** Evaluates the function given the set of y values.
+	 * For example for Sum(x^2,x,1,5) the function will be passed the array [1,4,9,16,25].
+	 * 
+	 * @param elements the y values
+	 * @return the result of the function
+	 * @throws ParseException
+	 */
+	public abstract Object evaluate(Object elements[]) throws ParseException;
+	
 	/**
 	 * run method. Should not be called.
 	 */

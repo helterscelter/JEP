@@ -17,8 +17,8 @@ import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.vectorJep.*;
 
 /**
- * A matrix enabled asignment function.
- * The lhs of an assigment must be a variable.
+ * A matrix enabled assignment function.
+ * The lhs of an assignment must be a variable.
  * 
  * @author Rich Morris
  * Created on 23-Feb-2004
@@ -40,16 +40,16 @@ public class MAssign extends Assign implements MatrixSpecialEvaluationI,SpecialP
 
 	/**
 	 * A special methods for evaluating an assignment.
-	 * When an asignment is encountered, first
+	 * When an assignment is encountered, first
 	 * evaluate the rhs. Then set the value 
 	 * of the lhs to the result.
 	 */
 	public MatrixValueI evaluate(MatrixNodeI node,MatrixEvaluator visitor,MatrixJep j) throws ParseException
 	{
 		if(node.jjtGetNumChildren()!=2)
-			throw new ParseException("Assignment opperator must have 2 operators.");
+			throw new ParseException("Assignment operator must have 2 operators.");
 
-		// evaluate the value of the righthand side. Left on top of stack
+		// evaluate the value of the right-hand side. Left on top of stack
 		
 		MatrixValueI rhsVal = (MatrixValueI) node.jjtGetChild(1).jjtAccept(visitor,null);	
 
