@@ -10,6 +10,7 @@ package org.lsmp.djep.matrixJep;
 import org.lsmp.djep.djep.*;
 import org.lsmp.djep.djep.diffRules.*;
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.Power;
 import org.lsmp.djep.vectorJep.values.*;
 import org.lsmp.djep.vectorJep.function.*;
 import org.lsmp.djep.xjep.*;
@@ -46,11 +47,11 @@ public class MatrixJep extends DJep {
 	public void addStandardFunctions()
 	{
 		super.addStandardFunctions();
+		addFunction("pow",new Power());
 		this.getFunctionTable().remove("if");
-		this.getFunctionTable().remove("diff");
-		addFunction("pow",new MPower());
 		addFunction("if",new MIf());
 		addFunction("ele",new Ele());
+		this.getFunctionTable().remove("diff");
 		addFunction("diff",new MDiff());
 		addFunction("len",new Length());
 		addFunction("size",new Size());
