@@ -22,4 +22,6 @@ Definable functions
 	foo(x,y)=sqrt(x^2+y^2)
 requires (x,y) to be returned as a list.
 
+Allow array access as x[i]
+
 Many more I'm sure.

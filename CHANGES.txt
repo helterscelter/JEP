@@ -1,5 +1,9 @@
 == org.nfunk.* =======================================================
 
+Apr 24 05 rjm - Created a CallbackEvaluationI interface which 
+			replaces SpecialEvaluationI. This facilitates functions
+			which need access to the node tree.
+			
 Apr 01 05 rjm - Variable: Fixed setting validValue for constants.
 			Passes value to observers on setValue.
 			
@@ -87,6 +91,10 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
 Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
+
+Apr 24 05 rjm - Reworked junit tests using inheretance.
+
+Apr 24 05 rjm - Simpson and Trapesium functionsa added to XJep.
 
 Apr 03 05 rjm - DifferentationVisitor is now smarter when calculating zero derivatives
 			  - PrintVisitor.getMode(int testmode) added.
