@@ -17,7 +17,7 @@ import java.util.Stack;
  * @author Rich Morris
  * Created on 18-Nov-2003
  */
-public class Assign extends PostfixMathCommand implements SpecialEvaluationI {
+public class Assign extends PostfixMathCommand implements CallbackEvaluationI {
 
 	public Assign() {
 		super();
@@ -27,15 +27,13 @@ public class Assign extends PostfixMathCommand implements SpecialEvaluationI {
 	/** For assignment set the value of the variable on the lhs to value returned by evaluating the righthand side.
 	 *   
 	 */
-	public Object evaluate(Node node,Object data,ParserVisitor pv,Stack inStack,SymbolTable symTab) throws ParseException
+	public Object evaluate(Node node,EvaluatorI pv) throws ParseException
 	{
 		if(node.jjtGetNumChildren()!=2)
 			throw new ParseException("Assignment opperator must have 2 operators.");
 
-		// evaluate the value of the righthand side. Left on top of stack
-		node.jjtGetChild(1).jjtAccept(pv,data);	
-		checkStack(inStack); // check the stack
-		Object rhsVal = inStack.peek();
+		// evaluate the value of the righthand side.
+		Object rhsVal = pv.eval(node.jjtGetChild(1));	
 
 		// Set the value of the variable on the lhs. 
 		Node lhsNode = node.jjtGetChild(0);

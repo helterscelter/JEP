@@ -12,6 +12,8 @@ import java.util.Stack;
  * Functions which require greater control over their evaluation should implement this interface.
  *
  * @author Rich Morris
+ * @deprecated The interface CallbackEvaluationI should generally be used instead as its simpler and allows different evaluation schemes to be used.
+ * @see CallbackEvaluationI
  * Created on 18-Nov-2003
  */
 public interface SpecialEvaluationI {

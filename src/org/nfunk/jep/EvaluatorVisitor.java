@@ -10,8 +10,8 @@
 package org.nfunk.jep;
 
 import java.util.*;
-import org.nfunk.jep.function.PostfixMathCommandI;
-import org.nfunk.jep.function.SpecialEvaluationI;
+
+import org.nfunk.jep.function.*;
 
 /**
  * This class is used for the evaluation of an expression. It uses the Visitor
@@ -29,7 +29,7 @@ import org.nfunk.jep.function.SpecialEvaluationI;
  * Simplifies error handling by making visit methods throw ParseException.
  * Changed visit(ASTVarNode node) so messages not calculated every time. 
  */
-public class EvaluatorVisitor implements ParserVisitor {
+public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
 	/** Stack used for evaluating the expression */
 	protected Stack stack;
 
@@ -135,6 +135,12 @@ public class EvaluatorVisitor implements ParserVisitor {
 		return node.jjtAccept(this,data);
 	}
 	*/
+	
+	public Object eval(Node node) throws ParseException {
+		node.jjtAccept(this,null);
+		return stack.pop();
+	}
+	
 
 	/**
 	 * This method should never be called when evaluation a normal
@@ -178,10 +184,14 @@ public class EvaluatorVisitor implements ParserVisitor {
 		// all available info. Note evaluating the children is
 		// the responsibility of the evaluate method. 
 		if (pfmc instanceof SpecialEvaluationI) {
-			return ((SpecialEvaluationI) node.getPFMC()).evaluate(
+			return ((SpecialEvaluationI) pfmc).evaluate(
 				node,data,this,stack,this.symTab);
 		}
-
+		if(pfmc instanceof CallbackEvaluationI) {
+			Object val = ((CallbackEvaluationI) pfmc).evaluate(node,this);
+			stack.push(val);
+			return val;
+		}
 		if (debug == true) {
 			System.out.println(
 				"Stack size before childrenAccept: " + stack.size());
