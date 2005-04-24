@@ -7,21 +7,20 @@
  */
 package org.lsmp.djep.xjep.function;
 
-import java.util.*;
-
 import org.nfunk.jep.*;
-import org.nfunk.jep.function.*;
 
 /**
- * A sum function Sum(x^2,x,1,10) finds the sum of x^2 with x running from 1 to 10.
- * Sum(x^2,x,1,10,2) calculates the 1^2+3^2+5^2+7^2+9^2 i.e. in steps of 2.
+ * The Simpson rule for approximation to a definite integral.
+ * h * (y0 + yn + 4(y1+y3+...+y_(n-1)) + 2(y2+y4+...+y_(n-2)) ) /3
+ * where h = (xn-x0)/n, yi = f(xi)
+ * Simpson(x^2,x,0,10,0.5) 
+ * finds an approximation for int(x^2) where x runs from 0 to 10 in steps of 
+ * h=0.5. 
+ *
  * @author Rich Morris
  * Created on 10-Sept-2004
  */
-public class Simpson extends SumType {
-
-	static Add add = new Add();
-	static Multiply mul = new Multiply();
+public class Simpson extends Trapezium {
 
 	public Simpson()
 	{
@@ -31,42 +30,19 @@ public class Simpson extends SumType {
 		
 	public Object evaluate(Object elements[]) throws ParseException
 	{
-		Object ret;
-		if(elements.length % 2 != 1)
+		if(elements.length % 2 != 1 || elements.length <2)
 			throw new ParseException("Simpson: there should be an odd number of ordinates, its"+elements.length);
 
-		ret = add.add(elements[0],elements[elements.length-1]);
-		for(int i=1;i<elements.length-2;i+=2)
-		{
-			ret = add.add(ret,elements[i]);
+		Object ret = add.add(elements[0],elements[elements.length-1]);
+		for(int i=1;i<elements.length-1;++i) { 
+			//TODO could be quicker
+			if(i %2 == 0)
+				ret = add.add(ret,
+						mul.mul(TWO,elements[i]));
+			else
+				ret = add.add(ret,
+					mul.mul(FOUR,elements[i]));
 		}
-		return ret;
+		return mul.mul(ret,THIRD);
 	}
-
-	public Object evaluate(
-		Node node,
-		Variable var,
-		double min,
-		double max,
-		double inc,
-		Object data,
-		ParserVisitor pv,
-		Stack stack)
-		throws ParseException {
-		int i=0;
-		double val;
-		Object[] res=new Object[(int) ((max-min)/inc)+1];	
-		for(i=0,val=min;val<=max;++i,val=min+i*inc)
-		{
-			var.setValue(new Double(val));
-				
-			node.jjtGetChild(0).jjtAccept(pv,data);	
-			checkStack(stack); // check the stack
-			res[i] = stack.pop();
-		}
-		Object ret = evaluate(res);
-		stack.push(ret);
-		return ret;
-	}
-
 }
