@@ -125,6 +125,8 @@ public class XJep extends JEP {
 		addFunction("Max",new Max());
 		addFunction("MinArg",new MinArg());
 		addFunction("MaxArg",new MaxArg());
+		addFunction("Simpson",new Simpson());
+		addFunction("Trapezium",new Trapezium());
 	}
 
 	public void addStandardConstants()
