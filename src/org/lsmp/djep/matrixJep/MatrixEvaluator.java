@@ -68,6 +68,18 @@ public class MatrixEvaluator implements ParserVisitor,EvaluatorI
 			MatrixSpecialEvaluationI se = (MatrixSpecialEvaluationI) pfmc;
 			return se.evaluate(mnode,this,mjep);
 		}
+		else if (pfmc instanceof CallbackEvaluationI) {
+			Object val = ((CallbackEvaluationI) pfmc).evaluate(node,this);
+			if(val instanceof MatrixValueI)
+				mnode.getMValue().setEles((MatrixValueI) val);
+			else
+				mnode.getMValue().setEle(0,val);
+			return mnode.getMValue();
+		}
+		else if (pfmc instanceof SpecialEvaluationI) {
+			
+			throw new ParseException("Encountered an instance of SpecialEvaluationI");
+		}
 		else if(pfmc instanceof BinaryOperatorI)
 		{
 			BinaryOperatorI bin = (BinaryOperatorI) pfmc;
@@ -88,18 +100,6 @@ public class MatrixEvaluator implements ParserVisitor,EvaluatorI
 			for(int i=0;i<results.length;++i)
 				results[i] = (MatrixValueI) node.jjtGetChild(i).jjtAccept(this,data);
 			return uni.calcValue(mnode.getMValue(),results);
-		}
-		else if (pfmc instanceof CallbackEvaluationI) {
-			Object val = ((CallbackEvaluationI) pfmc).evaluate(node,this);
-			if(val instanceof MatrixValueI)
-				mnode.getMValue().setEles((MatrixValueI) val);
-			else
-				mnode.getMValue().setEle(0,val);
-			return mnode.getMValue();
-		}
-		else if (pfmc instanceof SpecialEvaluationI) {
-			
-			throw new ParseException("Encountered an instance of SpecialEvaluationI");
 		}
 		else if(pfmc instanceof Comparative) {
 			Object lhsval = (MatrixValueI) node.jjtGetChild(0).jjtAccept(this,data);

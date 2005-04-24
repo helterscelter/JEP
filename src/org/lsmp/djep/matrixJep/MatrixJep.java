@@ -62,6 +62,8 @@ public class MatrixJep extends DJep {
 		addFunction("trace",new Trace());
 		addFunction("vsum",new VSum());
 		addFunction("Map",new MMap());
+		this.getFunctionTable().remove("Sum");
+		addFunction("Sum",new MSum(this));
 	}
 
 	/** Evaluate a node. If the result is a scaler it
