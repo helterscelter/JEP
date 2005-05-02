@@ -108,14 +108,17 @@ public class SymbolTable extends Hashtable
 
 	/**
 	 * Sets the value of variable with the given name.
-	 * Returns false if variable does not exist or if its value cannot be set.
+	 * @throws NullPointerException if the variable has not been previously created
+	 * with {@link #addVariable(String,Object)} first.
 	 */
-	public boolean setVarValue(String name,Object val)
+	public void setVarValue(String name,Object val)
 	{
 		Variable var = (Variable) super.get(name);
-		if(var != null)
-			return var.setValue(val);
-		return false;
+		if(var != null) {
+			var.setValue(val); 
+			return; 
+		}
+		throw new NullPointerException("Variable "+name+" does not exist.");
 	}
 
 	/**
@@ -142,13 +145,17 @@ public class SymbolTable extends Hashtable
 		return var;
 	}
 
-	/** Creates a variable with given value.
-	 * Returns null if variable already exists.
+	/** Creates a new variable with given value.
+	 * 
+	 * @param name name of variable
+	 * @param val initial value of variable
+	 * @return a reference to the created variable.
 	 */
 	public Variable addVariable(String name,Object val)
 	{
 		Variable var = (Variable) super.get(name);
-		if(var != null)	return null;
+		if(var != null)
+		    throw new IllegalStateException("Variable "+name+" already exists.");
 		
 		var = createVariable(name,val);
 		super.put(name,var);
@@ -162,7 +169,7 @@ public class SymbolTable extends Hashtable
 	public Variable addConstant(String name,Object val)
 	{
 		Variable var = addVariable(name,val);
-		if(var != null)	var.setIsConstant(true);
+		var.setIsConstant(true);
 		return var;
 	}
 
@@ -175,6 +182,8 @@ public class SymbolTable extends Hashtable
 		Variable var = (Variable) super.get(name);
 		if(var != null)
 		{
+		    if(var.isConstant())
+		        throw new IllegalStateException("Attempt to change the value of constant variable "+name);
 			var.setValue(val);
 			return var; 
 		}

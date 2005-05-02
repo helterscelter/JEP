@@ -332,14 +332,16 @@ public class JEP {
 	}
 	/** 
 	 * Sets the value of a variable.
-	 * Returns false if variable does not exist or if its value cannot be changed.
+	 * The variable must exist before hand.
 	 * @param name name of the variable.
 	 * @param val the initial value of the variable.
-	 * @return false if  variable does not exist or if its value cannot be changed.
+	 * @throws NullPointerException if the variable has not been previously created
+	 * with {@link #addVariable(String,Object)} first.
 	 * @since 2.3.0 alpha
+	 * @since April 05 - throws an exception if variable unset.
 	 */
-	public boolean setVarValue(String name,Object val) {
-		return symTab.setVarValue(name,val);
+	public void setVarValue(String name,Object val) {
+		symTab.setVarValue(name,val);
 	}
 	/** 
 	 * Gets the object representing the variable with a given name. 
