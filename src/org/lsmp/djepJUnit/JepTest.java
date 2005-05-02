@@ -414,6 +414,22 @@ public class JepTest extends TestCase {
 		assertEquals("<AB+2>",5.0,result,0.0);
 	}
 
+	public void testUndeclared() throws Exception
+	{
+	    j.setAllowUndeclared(false);
+	    try {
+	        Node n = j.parse("zap * wow");
+	        fail("Should have found undeclared error");
+	    } catch(ParseException e) {
+	        System.out.println("Error caught: "+e.getMessage());
+	    }
+	    try {
+	        j.setVarValue("foo",new Double(5.0));
+	        fail("Should have found a null pointer exception");
+	    } catch(NullPointerException e) {
+	        System.out.println("Error caught: "+e.getClass().getName()+": "+e.getMessage());
+	    }
+	}
 	
 	public void testBad() throws Exception
 	{

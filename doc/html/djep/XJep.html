@@ -401,6 +401,18 @@ Note all these function begin with a capital letter to distinguish from
 <tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
 </tbody></table>
 
+<h2>Other Functions</h2>
+<p>
+The <code>toHex()</code> function converts to hexidecimal string <code>toHex(255)</code> -&gt; 0xff.
+If a second argument is given this specifies number of displayed fraction digits
+<code>toHex(-15/16,1)</code> -&gt; -0x0.1.
+</p>
+
+<p>
+<code>toBase(val,base)</code> and <code>toBase(val,base,digits)</code> convert
+to a given base with <code>digits</code> fractional digits.
+</p>
+
 <h2><a name="depend"></a>Finding Variables in equations</h2>
 <p>
 <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#getVarsInEquation(org.nfunk.jep.Node%20java.util.Vector)">getVarsInEquation</a>

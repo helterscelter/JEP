@@ -24,4 +24,8 @@ requires (x,y) to be returned as a list.
 
 Allow array access as x[i]
 
+Use a MatrixFactory class for generation of matricies,
+could allow other libraries of matrix algorithms to work with JEP.
+
+
 Many more I'm sure.

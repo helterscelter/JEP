@@ -517,7 +517,7 @@ public class SJepTest extends TestCase {
 		this.myAssertEquals(s1,r1,"[10,0,0.1,0.11,0.111,0.111]");
 		this.myAssertEquals(s2,r2,"[0.9,0.99,0.999,1]");
 		
-		j.addComplex();
+		//j.addComplex();
 		j.println(j.parse("[0,1,i,1+i]"));
 		j.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
 		j.println(j.simplify(j.parse("(2+i)+(1+i)")));
