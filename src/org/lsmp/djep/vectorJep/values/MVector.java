@@ -35,7 +35,7 @@ public class MVector implements MatrixValueI
 		return new MVector(size);
 	}
 	/** Creates a vector from an array of elements. */
-	public static MatrixValueI getInstance(Object[] eles)
+	private static MatrixValueI getInstance(Object[] eles)
 	{
 		if(eles.length == 1)
 			return Scaler.getInstance(eles[0]);

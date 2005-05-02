@@ -73,7 +73,7 @@ public class Tensor implements MatrixValueI {
 		}
 	}
 	
-	public static MatrixValueI getInstance(int rows,Dimensions dims)
+	private static MatrixValueI getInstance(int rows,Dimensions dims)
 	{
 		switch(dims.rank())
 		{
