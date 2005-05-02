@@ -78,10 +78,10 @@ public class PolynomialCreator extends DoNothingVisitor {
 		os = j.getOperatorSet();
 		nf = j.getNodeFactory();
 		
-		zero = j.getNumberFactory().createNumber("0");
-		one = j.getNumberFactory().createNumber("1");
-		minusOne = j.getNumberFactory().createNumber("-1");
-		two = j.getNumberFactory().createNumber("2");
+		zero = j.getNumberFactory().getZero();
+		one = j.getNumberFactory().getOne();
+		minusOne = j.getNumberFactory().getMinusOne();
+		two = j.getNumberFactory().getTwo();
 		try {
 			infinity = div(one,zero);
 			nan = div(zero,zero);

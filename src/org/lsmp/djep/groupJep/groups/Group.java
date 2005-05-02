@@ -24,8 +24,51 @@ public abstract class Group implements GroupI {
 	private NumberFactory NumFac = new NumberFactory()	{
 		public Object createNumber(String s) {
 			return valueOf(s);
-		}};
-		
+		}
+		/** Return an object representing ZERO the additive identity. */
+		public Object getZero() { return getZERO() ; }
+        public Object createNumber(double value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object createNumber(int value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object createNumber(short value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object createNumber(float value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object createNumber(boolean value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object createNumber(Number value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object createNumber(Complex value) throws ParseException {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object getOne() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object getMinusOne() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+        public Object getTwo() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+	};
+
 	/** returns a number factory for creating group elements from strings */
 	public NumberFactory getNumberFactory() { return NumFac; }
 
