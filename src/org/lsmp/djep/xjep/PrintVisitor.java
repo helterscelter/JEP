@@ -19,15 +19,18 @@ import java.text.FieldPosition;
  * <tt>((-1.0)/sqrt((1.0-(x^2.0))))</tt>.
  * To use
  * <pre>
- * JEP j = ...; Node in = ...;
- * TreeUtils tu = new TreeUtils(j);
- * PrintVisitor pv = new PrintVisitor(tu);
- * pv.print(in,"x");
+ * XJep j = ...; Node in = ...;
+ * j.print(in,"x");
  * </pre>
  * @author Rich Morris
  * Created on 20-Jun-2003
  * @since Dec 04 and NumberFormat object can be supplied to modify printing of numbers.
  * @since 21 Dec 04 PrintVisitor can now cope with 3 or more arguments to + and *. 
+ * @see XJep#print(Node)
+ * @see XJep#print(Node, PrintStream)
+ * @see XJep#println(Node)
+ * @see XJep#println(Node, PrintStream)
+ * @see XJep#toString(Node)
  */
 public class PrintVisitor extends ErrorCatchingVisitor
 {
@@ -49,7 +52,10 @@ public class PrintVisitor extends ErrorCatchingVisitor
   }
 
   
-  /** Prints the tree decending from node with lots of brackets or specified stream. **/
+  /** Prints the tree descending from node with lots of brackets 
+   * or specified stream. 
+   * @see XJep#println(Node, PrintStream)
+   **/
 
   public void print(Node node,PrintStream out)
   {
@@ -81,7 +87,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
   /** Prints on System.out. */
   public void print(Node node) { print(node,System.out); }
     
-  /** Prints the tree decending from node with a newline at end. **/
+  /** Prints the tree descending from node with a newline at end. **/
 
   public void println(Node node,PrintStream out)
   {
@@ -147,7 +153,7 @@ private void printNoBrackets(Node node) throws ParseException
 	node.jjtAccept(this,null);
 }
 
-/** print a node suronded by brackets. */
+/** print a node surrounded by brackets. */
 private void printBrackets(Node node) throws ParseException
 {
 	sb.append("(");
@@ -435,9 +441,9 @@ public int getMaxLen() {
 }
 
 /**
- * Sets the maximium length printed per line.
+ * Sets the maximum length printed per line.
  * If the value is not -1 then the string will be broken into chunks
- * each of which is less than the max lenght.
+ * each of which is less than the max length.
  * @param i the maximum length
  */
 public void setMaxLen(int i) {
