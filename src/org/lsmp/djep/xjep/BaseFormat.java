@@ -9,6 +9,7 @@ import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 
+import org.lsmp.djep.xjep.function.FromBase;
 import org.lsmp.djep.xjep.function.ToBase;
 
 /**
@@ -21,12 +22,14 @@ import org.lsmp.djep.xjep.function.ToBase;
 public class BaseFormat extends NumberFormat {
     int base;
     ToBase tb=null;
+    FromBase fb=null;
     /**
      * 
      */
     private BaseFormat() {
         super();
         tb = new ToBase();
+        fb = new FromBase();
     }
 
     /**
@@ -38,6 +41,7 @@ public class BaseFormat extends NumberFormat {
         super();
         this.base = base;
         tb = new ToBase(base);
+        fb = new FromBase(base);
     }
     /**
      * Create a new base format object 
@@ -49,6 +53,7 @@ public class BaseFormat extends NumberFormat {
         super();
         this.base = base;
         tb = new ToBase(base,prefix);
+        fb = new FromBase(base,prefix);
     }
     /**
      * Format a double value in specific base.

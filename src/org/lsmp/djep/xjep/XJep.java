@@ -129,6 +129,8 @@ public class XJep extends JEP {
 		addFunction("Trapezium",new Trapezium());
 		addFunction("toBase",new ToBase());
 		addFunction("toHex",new ToBase(16,"0x"));
+		addFunction("fromBase",new FromBase());
+		addFunction("fromHex",new FromBase(16,"0x"));
 	}
 
 	public void addStandardConstants()
