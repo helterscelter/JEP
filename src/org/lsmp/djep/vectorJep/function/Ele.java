@@ -40,7 +40,7 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 		{
 			if(param2 instanceof Scaler)
 			{
-				int index = ((Double) param2.getEle(0)).intValue()-1;
+				int index = ((Number) param2.getEle(0)).intValue()-1;
 				Object val = ((MVector) param1).getEle(index);
 				res.setEle(0,val); 
 			}
@@ -53,8 +53,8 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				MVector vec = (MVector) param2;
 				if(vec.getDim().equals(Dimensions.TWO))
 				{
-					Double d1 = (Double) vec.getEle(0);
-					Double d2 = (Double) vec.getEle(1);
+					Number d1 = (Number) vec.getEle(0);
+					Number d2 = (Number) vec.getEle(1);
 					Object val = ((Matrix) param1).getEle(d1.intValue()-1,d2.intValue()-1);
 					res.setEle(0,val);
 				}
@@ -83,9 +83,9 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 	            
 		if(param1 instanceof MVector)
 		{
-			if(param2 instanceof Double)
+			if(param2 instanceof Number)
 			{
-				Object val = ((MVector) param1).getEle(((Double) param2).intValue()-1);
+				Object val = ((MVector) param1).getEle(((Number) param2).intValue()-1);
 				stack.push(val);
 				return; 
 			}
@@ -98,8 +98,8 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				MVector vec = (MVector) param2;
 				if(vec.getDim().equals(Dimensions.TWO))
 				{
-					Double d1 = (Double) vec.getEle(0);
-					Double d2 = (Double) vec.getEle(1);
+					Number d1 = (Number) vec.getEle(0);
+					Number d2 = (Number) vec.getEle(1);
 					Object val = ((Matrix) param1).getEle(d1.intValue()-1,d2.intValue()-1);
 					stack.push(val);
 					return; 

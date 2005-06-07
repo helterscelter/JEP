@@ -98,6 +98,8 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+June 07 05 rjm - Fixed bug in ele which only accepted Double arguments.
+
 May 02 05 rjm - added toBase pfmc and a BaseFormat NumberFormat object.
 
 Apr 24 05 rjm - Reworked junit tests using inheretance.

@@ -137,4 +137,10 @@ public class VectorJepTest extends JepTest {
 	}
 	public void testDotInName() throws ParseException, Exception {
 	}
+	public void testGenMatEle() throws Exception
+	{
+	    System.out.println("The following caused a problem as ele only acepted Double arguments");
+	    valueTest("m=[1,2,3]","[1.0,2.0,3.0]");
+	    valueTest("GenMat(3,ele(m,n)*10,n)","[10.0,20.0,30.0]");
+	}
 }

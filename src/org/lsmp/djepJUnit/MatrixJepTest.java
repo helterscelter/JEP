@@ -153,4 +153,13 @@ public class MatrixJepTest extends DJepTest {
 	public void testVectorSum() throws Exception {
 		valueTest("Sum([x,x^2],x,1,10)","[55.0,385.0]");
 	}
+	
+/* TODO GenMat Not jet implemented for MatrixJep (can it be done?)
+	public void testGenMatEle() throws Exception
+	{
+	    System.out.println("The following caused a problem as ele only acepted Double arguments");
+	    valueTest("m=[1,2,3]","[1.0,2.0,3.0]");
+	    valueTest("GenMat(3,ele(m,n)*10,n)","[10.0,20.0,30.0]");
+	}
+*/
 }
