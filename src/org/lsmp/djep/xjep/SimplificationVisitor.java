@@ -43,9 +43,9 @@ public class SimplificationVisitor extends DoNothingVisitor
 	opSet = xjep.getOperatorSet();
 	tu = xjep.getTreeUtils();
 	
-	if (node == null) 
-		throw new IllegalArgumentException(
-			"topNode parameter is null");
+	if (node == null) return null;
+//		throw new IllegalArgumentException(
+//			"topNode parameter is null");
 	Node res = (Node) node.jjtAccept(this,null);
 	return res;
   }
