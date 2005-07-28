@@ -30,7 +30,7 @@ public class MatrixJep extends DJep {
 	
 	public MatrixJep() {
 		super();
-		nf = new MatrixNodeFactory();
+		nf = new MatrixNodeFactory(this);
 		symTab = new DSymbolTable(mvf);
 		opSet = new MatrixOperatorSet();
 		this.parser.setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);

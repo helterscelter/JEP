@@ -25,8 +25,9 @@ import org.lsmp.djep.xjep.*;
  */
 public class MatrixNodeFactory extends NodeFactory {
 
-	public MatrixNodeFactory()
+	public MatrixNodeFactory(XJep xj)
 	{
+	    super(xj);
 	}
 	
 	/** Creates an ASTConstant node with specified value. **/

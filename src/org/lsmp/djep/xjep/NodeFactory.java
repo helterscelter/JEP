@@ -20,9 +20,9 @@ import java.util.Stack;
  * Created on 16-Nov-2003
  */
 public class NodeFactory {
-
-	public NodeFactory() {}
-	
+    private XJep xj;
+	public NodeFactory(XJep xj) {this.xj=xj;}
+	private NodeFactory() {}
 	/**
 	 * Sets the children of node to be those specified in array.
 	 * @param node the node whose children will be set.
@@ -62,7 +62,7 @@ public class NodeFactory {
 	/** Creates a ASTConstant whose value of applying the operator to its arguments. */
 	public ASTConstant buildConstantNode(PostfixMathCommandI pfmc,Node children[]) throws IllegalArgumentException,ParseException
 	{
-		Stack stack = new Stack();
+/*		Stack stack = new Stack();
 		for(int i=0;i<children.length;++i)
 		{
 			if(!(children[i] instanceof ASTConstant))
@@ -72,6 +72,9 @@ public class NodeFactory {
 		pfmc.setCurNumberOfParameters(children.length);
 		pfmc.run(stack);
 		return buildConstantNode(stack.pop());
+*/
+	    Object val = xj.getEvaluatorVisitor().eval(pfmc,children);
+		return buildConstantNode(val);
 	}
 
 	/** Creates a ASTConstant whose value of applying the operator to its arguments. */
