@@ -8,6 +8,8 @@
 package org.lsmp.djep.xjep;
 
 import org.nfunk.jep.*;
+import org.nfunk.jep.function.Exp;
+import org.nfunk.jep.function.PostfixMathCommandI;
 import org.lsmp.djep.xjep.function.*;
 import java.util.*;
 import java.io.PrintStream;
@@ -39,7 +41,7 @@ public class XJep extends JEP {
 		this.symTab = new XSymbolTable(vf); 
 
 		/* Creates new nodes */
-		nf = new NodeFactory();
+		nf = new NodeFactory(this);
 		/* Collects operators **/
 		opSet = new XOperatorSet();
 		/* A few utility functions. */
@@ -77,7 +79,7 @@ public class XJep extends JEP {
 	{
 		ingrediant=j;
 		/* Creates new nodes */
-		nf = new NodeFactory();
+		nf = new NodeFactory(this);
 		this.symTab = new XSymbolTable(vf); 
 		this.funTab = j.getFunctionTable();
 		/* Collects operators **/
@@ -131,6 +133,17 @@ public class XJep extends JEP {
 		addFunction("toHex",new ToBase(16,"0x"));
 		addFunction("fromBase",new FromBase());
 		addFunction("fromHex",new FromBase(16,"0x"));
+		
+		addFunction("exp",new Exp());
+		addFunction("Define",new Define(this));
+		try {
+		MacroFunction sec = new MacroFunction("sec",1,"1/cos(x)",this);
+		addFunction("sec",sec);
+		MacroFunction cosec = new MacroFunction("cosec",1,"1/sin(x)",this);
+		addFunction("cosec",cosec);
+		MacroFunction cot = new MacroFunction("cot",1,"1/tan(x)",this);
+		addFunction("cot",cot);
+		} catch (ParseException e) {System.err.println(e.getMessage());}
 	}
 
 	public void addStandardConstants()
@@ -149,6 +162,20 @@ public class XJep extends JEP {
 		} 
 		else super.addStandardConstants();
 	}
+
+	public void addComplex()
+	{
+		if(ingrediant!=null)
+		{
+			ingrediant.addComplex();
+		} 
+		else super.addComplex();
+		try {
+		MacroFunction complex = new MacroFunction("macrocomplex",2,"x+i*y",this);
+		addFunction("macrocomplex",complex);
+		} catch (ParseException e) {System.err.println(e.getMessage());}
+	}
+		
 
 	/** Returns a deep copy of an expression tree. */
 	public Node deepCopy(Node node) throws ParseException
@@ -299,4 +326,12 @@ public class XJep extends JEP {
 		return v;
 	}
 	
+    /**
+     *
+     */
+
+    public Object evaluate(PostfixMathCommandI pfmc,Node node) throws ParseException {
+        // TODO Auto-generated method stub
+        return super.evaluate(node);
+    }
 }
