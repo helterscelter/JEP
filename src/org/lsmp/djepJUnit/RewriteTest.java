@@ -511,9 +511,10 @@ public class RewriteTest extends TestCase {
 		DJep j=new DJep();
 		j.addStandardFunctions();
 		j.addStandardConstants();
+		j.setImplicitMul(true);    
+		j.addComplex();
 		j.setAllowUndeclared(true);    
 		j.setAllowAssignment(true);    
-		j.setImplicitMul(true);    
 		j.addStandardDiffRules();
 		j.getPrintVisitor().setMaxLen(80);
         
@@ -546,7 +547,8 @@ public class RewriteTest extends TestCase {
 		taylorParser.addStandardConstants();
 		taylorParser.setAllowUndeclared(true);    
 		taylorParser.setAllowAssignment(true);    
-		taylorParser.setImplicitMul(true);    
+		taylorParser.setImplicitMul(true); 
+		taylorParser.addComplex();
 		taylorParser.addStandardDiffRules();
 		taylorParser.getPrintVisitor().setMaxLen(80);
        
@@ -582,6 +584,7 @@ public class RewriteTest extends TestCase {
 		taylorParser.setAllowUndeclared(true);    
 		taylorParser.setAllowAssignment(true);    
 		taylorParser.setImplicitMul(true);    
+		taylorParser.addComplex();
 		taylorParser.addStandardDiffRules();
        
 		taylorParser.addVariable("x", 0);

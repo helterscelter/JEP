@@ -663,7 +663,13 @@ public class JEP {
 			return funTab;
 	}
 
-
+	/**
+	 * Returns the EvaluatorVisitor
+	 * @return the EvaluatorVisitor.
+	 */
+	public EvaluatorVisitor getEvaluatorVisitor() {
+	    return ev;
+	}
 	/**
 	 * Returns the number factory.
 	 * @return the NumberFactory used by this JEP instance.

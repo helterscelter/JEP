@@ -104,6 +104,7 @@ public class XJepConsole extends Console
 	{
 		XJep xj = (XJep) j;
 		Node processed = xj.preprocess(node);
+		if(processed==null) return;
 		Node simp = xj.simplify(processed);
 		print("Simplified:\t"); 
 		println(xj.toString(simp));

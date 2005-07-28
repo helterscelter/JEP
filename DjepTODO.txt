@@ -1,4 +1,12 @@
 TODO for djep suite
+
+28 July 05
+
+For Define function:
+improve syntax. So can have Define("half(x)",x/2)
+work out how to simplify and evaluate Define statements which don't really have a value. 
+fix parser so can do half(x) = x/2
+ 
 03 April 2005
 
 Check new functions in Vectorjep work with MatrixJep.

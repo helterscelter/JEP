@@ -98,6 +98,15 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+July 28 05 rjm - Added a Define function
+			   - NodeFactory now calls the jep evaluator in buildConstantNode.
+			   - SimplificationVisitor returns now returns null if null is parsed
+			   	rather than throwing an error.
+			   - added exp() function to XJep
+			   - added macrocomplex to xjep (Why?)
+			   	
+July 14 05 rjm - Restructured DJep so standard diffrules in DJep rather than DiffVisitor
+
 June 07 05 rjm - Fixed bug in ele which only accepted Double arguments.
 
 May 02 05 rjm - added toBase pfmc and a BaseFormat NumberFormat object.

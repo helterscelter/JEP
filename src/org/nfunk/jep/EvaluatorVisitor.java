@@ -141,7 +141,49 @@ public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
 		return stack.pop();
 	}
 	
+	/**
+	 * Evaluates a PostfixMathCommandI with given arguments.
+	 * Not used in normal use.
+	 * 
+	 * @param pfmc the command to evaluate.
+	 * @param children the parameters to the function.
+	 * @return the value of the function
+	 * @throws ParseException
+	 */
+	public Object eval(PostfixMathCommandI pfmc,Node children[]) throws ParseException 
+	{
+		if (pfmc instanceof SpecialEvaluationI) {
+		    ASTFunNode node = new ASTFunNode(ParserTreeConstants.JJTFUNNODE);
+			node.setFunction("TmpFun",pfmc);
+			node.jjtOpen();
+			for(int i=0;i<children.length;++i) 
+			    node.jjtAddChild(children[i],i);
+			node.jjtClose();
+			return ((SpecialEvaluationI) pfmc).evaluate(
+				node,null,this,new Stack(),this.symTab);
+		}
+		if(pfmc instanceof CallbackEvaluationI) {
+		    ASTFunNode node = new ASTFunNode(ParserTreeConstants.JJTFUNNODE);
+			node.setFunction("TmpFun",pfmc);
+			node.jjtOpen();
+			for(int i=0;i<children.length;++i) 
+			    node.jjtAddChild(children[i],i);
+			node.jjtClose();
+			Object val = ((CallbackEvaluationI) pfmc).evaluate(node,this);
+			return val;
+		}
 
+	    Stack lstack = new Stack();
+		for(int i=0;i<children.length;++i)
+		{
+			if(!(children[i] instanceof ASTConstant))
+				throw new ParseException("buildConstantNode: arguments must all be constant nodes");
+			lstack.push(((ASTConstant) children[i]).getValue());
+		}
+		pfmc.setCurNumberOfParameters(children.length);
+		pfmc.run(lstack);
+		return lstack.pop();
+	}
 	/**
 	 * This method should never be called when evaluation a normal
 	 * expression.

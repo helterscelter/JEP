@@ -593,6 +593,13 @@ public class XJepTest extends JepTest {
 	    String res = xj.toString(n);
 	    myAssertEquals(st,"0xa*x+0xf*x^0x2-0x10*x^0x3+0x20*x^0x4-0x100*x^0x5",res);
 }
+	public void testDefine() throws Exception
+	{
+	    XJep xj = (XJep) j;
+	    Node n = xj.parse("Define(\"sumToX\",1,\"x*(x+1)/2\")");
+	    xj.preprocess(n);
+	    valueTest("sumToX(4)",10);
+	}
 	public void testBad() throws Exception
 	{
 		if(SHOW_BAD)
