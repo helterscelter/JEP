@@ -113,6 +113,10 @@ public class NodeFactory {
 		return node;
 	}
 
+	public ASTVarNode buildVariableNode(String name,Object value) throws ParseException
+	{
+	    return buildVariableNode(xj.getSymbolTable().addVariable(name,value));
+	}
 	/**
 	 * Builds a operator node with n arguments
 	 * This method should be sub-classed
