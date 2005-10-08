@@ -16,6 +16,8 @@ package org.nfunk.jep;
  * This class should be subclassed if the type of variable used needs to be changed.
  * This class is passed to the constructor of {@link SymbolTable}
  * which ensures that variables of the correct type are always created.
+ * <p>
+ * This class should only be called from the SymbolTable class and not from application code.
  * 
  * @author Rich Morris
  * Created on 19-Dec-2003

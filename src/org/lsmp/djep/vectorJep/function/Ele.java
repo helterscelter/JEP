@@ -14,7 +14,17 @@ import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.PostfixMathCommand;
 
 /**
- * ele(x,i) returns the i-th element of x.
+ * ele(x,i) returns the i-th element of a vector x.
+ * ele(m,[i,j]) returns the (i-th,j-th) element of a matrix m. 
+ * Note this follows the mathematical indexing convention with indices starting from 1
+ * rather than the computer science convention with indices starting from 0.
+ * Hence
+ * <code>
+ * a = [1,2,3,4];
+ * ele(a,1); // returns 1
+ * m = [[1,2],[3,4]];
+ * ele(m,[2,2]); // return 4
+ * </code>
  * @author Rich Morris
  * Created on 15-Nov-2003
  */
