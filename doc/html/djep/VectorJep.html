@@ -305,6 +305,15 @@ Map(abs(x),x,[[-2,-1],[1,2]]) -> [[2.0,1.0],[1.0,2.0]]
 </tbody>
 </table>
 
+<h3>variable names with dot in them</h3>
+<p>
+As the dot <code>.</code> symbol is used for the dot or scaler product, it cannot be normally be
+used in a varible name. This behaviour can be switched on or off using
+<pre>
+jep.getParser().setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
+jep.getParser().setInitialTokenManagerState(ParserConstants.DEFAULT);
+</pre>
+
 <h2><a name="MAT"></a>MatrixJep</h2>
 <p>
 The MatrixJep package offers the same functionality as the VectorJep
