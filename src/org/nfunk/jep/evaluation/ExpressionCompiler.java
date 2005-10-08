@@ -26,10 +26,10 @@ public class ExpressionCompiler implements ParserVisitor {
 		commands.removeAllElements();
 		node.jjtAccept(this, null);
 		CommandElement[] temp = new CommandElement[commands.size()];
-		Enumeration enum = commands.elements();
+		Enumeration en = commands.elements();
 		int i = 0;
-		while (enum.hasMoreElements()) {
-			 temp[i++] = (CommandElement)enum.nextElement();
+		while (en.hasMoreElements()) {
+			 temp[i++] = (CommandElement)en.nextElement();
 		}
 		return temp;
 	}

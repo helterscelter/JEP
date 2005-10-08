@@ -151,9 +151,9 @@ public class XJep extends JEP {
 		if(ingrediant!=null)
 		{
 			ingrediant.addStandardConstants();
-			for(Enumeration enum=ingrediant.getSymbolTable().elements();enum.hasMoreElements();)
+			for(Enumeration en=ingrediant.getSymbolTable().elements();en.hasMoreElements();)
 			{
-				Variable var = (Variable) enum.nextElement();
+				Variable var = (Variable) en.nextElement();
 				if(var.isConstant())
 					this.symTab.addConstant(var.getName(),var.getValue());
 				//else

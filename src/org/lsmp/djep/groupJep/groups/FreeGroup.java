@@ -86,9 +86,9 @@ public class FreeGroup extends Group implements RingI {
 	{
 		baseRing.addStandardConstants(j);
 		SymbolTable st = j.getSymbolTable();
-		for(Enumeration enum=st.elements();enum.hasMoreElements();)
+		for(Enumeration en=st.elements();en.hasMoreElements();)
 		{
-			Variable val = (Variable) enum.nextElement();
+			Variable val = (Variable) en.nextElement();
 			st.remove(val.getName());
 			Number num = (Number) val.getValue();
 			Number p = this.valueOf(new Number[]{

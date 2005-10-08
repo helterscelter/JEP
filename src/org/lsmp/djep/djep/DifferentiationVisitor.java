@@ -82,9 +82,9 @@ public class DifferentiationVisitor extends DeepCopyVisitor
   public void printDiffRules(PrintStream out)
   {
 	out.println("Standard Functions and their derivatives");
-	for(Enumeration enume = globalDJep.getFunctionTable().keys(); enume.hasMoreElements();)
+	for(Enumeration en = globalDJep.getFunctionTable().keys(); en.hasMoreElements();)
 	{
-		String key = (String) enume.nextElement();
+		String key = (String) en.nextElement();
 		PostfixMathCommandI value = globalDJep.getFunctionTable().get(key);
 		DiffRulesI rule = (DiffRulesI) diffRules.get(key);
 		if(rule==null)
@@ -93,9 +93,9 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 			out.print(rule.toString());
 		out.println();
 	}
-	for(Enumeration enume = diffRules.keys(); enume.hasMoreElements();)
+	for(Enumeration en = diffRules.keys(); en.hasMoreElements();)
 		{
-			String key = (String) enume.nextElement();
+			String key = (String) en.nextElement();
 			DiffRulesI rule = (DiffRulesI) diffRules.get(key);
 			if(!globalDJep.getFunctionTable().containsKey(key))
 			{

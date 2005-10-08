@@ -36,9 +36,9 @@ public class Eval extends PostfixMathCommand implements CommandVisitorI
 		XSymbolTable localSymTab = (XSymbolTable) ((XSymbolTable) xjep.getSymbolTable()).newInstance();
 		XJep localJep = xjep.newInstance(localSymTab);
 
-		for(Enumeration enume = xjep.getSymbolTable().keys();enume.hasMoreElements();)
+		for(Enumeration en = xjep.getSymbolTable().keys();en.hasMoreElements();)
 		{
-			String key = (String) enume.nextElement();
+			String key = (String) en.nextElement();
 			Object val = xjep.getSymbolTable().getValue(key);
 			localSymTab.addVariable(key,val);
 		}
