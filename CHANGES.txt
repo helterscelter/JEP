@@ -98,6 +98,9 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Dec 08 05 rjm  - Added MDivide function
+			   - Fixed bug in MMultiply dividing Tensor by a scaler.
+				 
 July 28 05 rjm - Added a Define function
 			   - NodeFactory now calls the jep evaluator in buildConstantNode.
 			   - SimplificationVisitor returns now returns null if null is parsed
