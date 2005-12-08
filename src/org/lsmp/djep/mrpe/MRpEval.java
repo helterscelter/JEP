@@ -511,7 +511,7 @@ public final class MRpEval implements ParserVisitor {
 			double r = stack[--sp];
 			stack[sp-1] *= r;
 		} 
-		final void div(){
+		final void divS(){
 			double r = stack[--sp];
 			stack[sp-1] /= r;
 		} 
@@ -701,6 +701,15 @@ public final class MRpEval implements ParserVisitor {
 			res.b = l * r.b;
 			stack[sp++]=res;
 		} 
+		final void divS()
+		{
+			V2Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			V2Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			stack[sp++]=res;
+		} 
 		final void mulV2() { // treat as complex mult
 			V2Obj r = stack[--sp];
 			V2Obj l = stack[--sp];
@@ -803,6 +812,16 @@ public final class MRpEval implements ParserVisitor {
 			res.a = l * r.a;
 			res.b = l * r.b;
 			res.c = l * r.c;
+			stack[sp++]=res;
+		} 
+		final void divS()
+		{
+			V3Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			V3Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -908,6 +927,17 @@ public final class MRpEval implements ParserVisitor {
 			res.d = l * r.d;
 			stack[sp++]=res;
 		} 
+		final void divS()
+		{
+			V4Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			V4Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			stack[sp++]=res;
+		} 
 		final void makeList() {
 			V4Obj res = heap[hp++];
 			res.d = scalerStore.stack[--scalerStore.sp]; 
@@ -1010,6 +1040,15 @@ public final class MRpEval implements ParserVisitor {
 			VnObj res = new VnObj(r.data.length);
 			for(int i=0;i<r.data.length;++i)
 				res.data[i]=l * r.data[i];
+			stack[sp++]=res;
+		} 
+		final void divS()
+		{
+			VnObj l = stack[--sp];
+			double r = scalerStore.stack[--scalerStore.sp];
+			VnObj res = new VnObj(l.data.length);
+			for(int i=0;i<l.data.length;++i)
+				res.data[i]=l.data[i]/r;
 			stack[sp++]=res;
 		} 
 		final void makeList(int num) {
@@ -1148,6 +1187,17 @@ public final class MRpEval implements ParserVisitor {
 			res.c = l * r.c;
 			res.d = l * r.d;
 			stack[sp++]=res;
+		}
+		final void divS()
+		{
+			M22Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M22Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			stack[sp++]=res;
 		} 
 		final void assign(int i)
 		{
@@ -1271,6 +1321,19 @@ public final class MRpEval implements ParserVisitor {
 			res.d = l * r.d;
 			res.e = l * r.e;
 			res.f = l * r.f;
+			stack[sp++]=res;
+		}
+		final void divS()
+		{
+			M23Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M23Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -1414,6 +1477,21 @@ public final class MRpEval implements ParserVisitor {
 			res.g = l * r.g;
 			res.h = l * r.h;
 			stack[sp++]=res;
+		}
+		final void divS()
+		{
+			M24Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M24Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
+			res.g = l.g/r;
+			res.h = l.h/r;
+			stack[sp++]=res;
 		} 
 		final void makeList() {
 			M24Obj res = heap[hp++];
@@ -1546,6 +1624,19 @@ public final class MRpEval implements ParserVisitor {
 			res.d = l * r.d;
 			res.e = l * r.e;
 			res.f = l * r.f;
+			stack[sp++]=res;
+		}
+		final void divS()
+		{
+			M32Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M32Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -1695,6 +1786,22 @@ public final class MRpEval implements ParserVisitor {
 			res.g = l * r.g;
 			res.h = l * r.h;
 			res.i = l * r.i;
+			stack[sp++]=res;
+		} 		
+		final void divS()
+		{
+			M33Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M33Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
+			res.g = l.g/r;
+			res.h = l.h/r;
+			res.i = l.i/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -1871,6 +1978,25 @@ public final class MRpEval implements ParserVisitor {
 			res.l = l * r.l;
 			stack[sp++]=res;
 		} 
+		final void divS()
+		{
+			M34Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M34Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
+			res.g = l.g/r;
+			res.h = l.h/r;
+			res.i = l.i/r;
+			res.j = l.j/r;
+			res.k = l.k/r;
+			res.l = l.l/r;
+			stack[sp++]=res;
+		} 
 		final void makeList() {
 			M34Obj res = heap[hp++];
 			res.l = scalerStore.stack[--scalerStore.sp]; 
@@ -2029,6 +2155,21 @@ public final class MRpEval implements ParserVisitor {
 			res.f = l * r.f;
 			res.g = l * r.g;
 			res.h = l * r.h;
+			stack[sp++]=res;
+		}
+		final void divS()
+		{
+			M42Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M42Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
+			res.g = l.g/r;
+			res.h = l.h/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -2205,6 +2346,25 @@ public final class MRpEval implements ParserVisitor {
 			res.j = l * r.j;
 			res.k = l * r.k;
 			res.l = l * r.l;
+			stack[sp++]=res;
+		}
+		final void divS()
+		{
+			M43Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M43Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
+			res.g = l.g/r;
+			res.h = l.h/r;
+			res.i = l.i/r;
+			res.j = l.j/r;
+			res.k = l.k/r;
+			res.l = l.l/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -2418,6 +2578,29 @@ public final class MRpEval implements ParserVisitor {
 			res.n = l * r.n;
 			res.o = l * r.o;
 			res.p = l * r.p;
+			stack[sp++]=res;
+		} 
+		final void divS()
+		{
+			M44Obj l = stack[--sp]; 
+			double r = scalerStore.stack[--scalerStore.sp];
+			M44Obj res = heap[hp++]; 
+			res.a = l.a/r;
+			res.b = l.b/r;
+			res.c = l.c/r;
+			res.d = l.d/r;
+			res.e = l.e/r;
+			res.f = l.f/r;
+			res.g = l.g/r;
+			res.h = l.h/r;
+			res.i = l.i/r;
+			res.j = l.j/r;
+			res.k = l.k/r;
+			res.l = l.l/r;
+			res.m = l.m/r;
+			res.n = l.n/r;
+			res.o = l.o/r;
+			res.p = l.p/r;
 			stack[sp++]=res;
 		} 
 		final void makeList() {
@@ -2654,6 +2837,16 @@ public final class MRpEval implements ParserVisitor {
 			for(int i=0;i<r.rows;++i)
 				for(int j=0;j<r.cols;++j)
 					res.data[i][j]=l* r.data[i][j];
+			stack[sp++]=res;
+		} 
+		final void divS()
+		{
+			MnnObj l = stack[--sp];
+			double r = scalerStore.stack[--scalerStore.sp];
+			MnnObj res = new MnnObj(l.rows,l.cols);
+			for(int i=0;i<l.rows;++i)
+				for(int j=0;j<l.cols;++j)
+					res.data[i][j]=l.data[i][j]/r;
 			stack[sp++]=res;
 		} 
 		final void makeList(int rows,int cols) {
@@ -2948,11 +3141,13 @@ public final class MRpEval implements ParserVisitor {
 			}
 			else if(op == opSet.getDivide())
 			{
-				if(!ldims.is0D() || !rdims.is0D())throw new ParseException("Dimensions of operands for || operator must both be one");
-				scalerStore.incStack();
-				decByDim(ldims);
+				if(!rdims.is0D())throw new ParseException("RHS operands of / operator must be a Scaler");
 				decByDim(rdims);
-				curCommandList.addCommand(DIV,SCALER); return null;
+				decByDim(ldims);
+				incByDim(dims);
+				incheapByDim(dims);
+				curCommandList.addCommand(DIV,getDimType(ldims),getDimType(rdims));
+				return null;
 			}
 			else if(op == opSet.getMod())
 			{
@@ -3367,7 +3562,30 @@ public final class MRpEval implements ParserVisitor {
 			case MOD = 30;
 			case POW = 31;
 */
-			case DIV: scalerStore.div(); break;
+			case DIV: 
+				switch(aux1)
+				{
+				case SCALER: scalerStore.divS(); break;
+				case V2: v2Store.divS(); break;
+				case V3: v3Store.divS(); break;
+				case V4: v4Store.divS(); break;
+				case Vn: vnStore.divS(); break;
+	
+				case M22: m22Store.divS(); break;
+				case M23: m23Store.divS(); break;
+				case M24: m24Store.divS(); break;
+
+				case M32: m32Store.divS(); break;
+				case M33: m33Store.divS(); break;
+				case M34: m34Store.divS(); break;
+
+				case M42: m42Store.divS(); break;
+				case M43: m43Store.divS(); break;
+				case M44: m44Store.divS(); break;
+				case Mnn: mnnStore.divS(); break;
+
+				}
+				break;
 			case MOD: scalerStore.mod(); break;
 			case POW: scalerStore.pow(); break;
 
