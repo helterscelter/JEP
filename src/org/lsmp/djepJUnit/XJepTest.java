@@ -45,6 +45,17 @@ public class XJepTest extends JepTest {
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
 	}
+	
+	public String parsePreprocSimp(String expr) throws ParseException
+	{
+		XJep xj = (XJep) j;
+		Node node = xj.parse(expr);
+		Node matEqn = xj.preprocess(node);
+		Node simp = xj.simplify(matEqn);
+		String res = xj.toString(simp);
+		return res;
+	}
+
 	public void simplifyTestString(String expr,String expected) throws ParseException
 	{
 		XJep xj = (XJep) j;

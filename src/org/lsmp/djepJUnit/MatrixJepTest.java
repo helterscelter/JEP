@@ -154,6 +154,17 @@ public class MatrixJepTest extends DJepTest {
 		valueTest("Sum([x,x^2],x,1,10)","[55.0,385.0]");
 	}
 	
+	public void testTgtDev() throws Exception
+	{
+		parsePreprocSimp("v=[x,x^2.0,x^3.0]");
+		parsePreprocSimp("l=7");
+		parsePreprocSimp("v/l");
+		parsePreprocSimp("dv=diff(v,x)");
+		parsePreprocSimp("dotprod=dv.dv");
+		parsePreprocSimp("length=sqrt(dotprod)");
+		parsePreprocSimp("v+y*dv/length");
+	}
+
 /* TODO GenMat Not jet implemented for MatrixJep (can it be done?)
 	public void testGenMatEle() throws Exception
 	{

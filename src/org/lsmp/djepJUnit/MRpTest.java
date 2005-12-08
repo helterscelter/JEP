@@ -147,7 +147,7 @@ public class MRpTest extends TestCase {
 		Object res = mj.evaluate(matEqn);
 		return res;
 	}
-	
+
 	public void simplifyTest(String expr,String expected) throws ParseException
 	{
 		Node node = mj.parse(expr);
@@ -798,6 +798,7 @@ public class MRpTest extends TestCase {
 		//TODO Used to be an error but new procedure for working with derivs should add test
 		//rpTest2(new String[]{"x=2","y=x^5","z=diff(y,x)"});
 	}
+	
 /*
 	public void testMatrix() throws ParseException
 	{
