@@ -23,6 +23,7 @@ public class VOperatorSet extends OperatorSet {
 		OP_ADD.setPFMC(new MAdd());
 		OP_SUBTRACT.setPFMC(new MSubtract());
 		OP_MULTIPLY.setPFMC(new MMultiply());
+		OP_DIVIDE.setPFMC(new MDivide());
 //		OP_MULTIPLY.setPFMC(new ElementMultiply());
 		OP_POWER.setPFMC(new VPower());
 		OP_UMINUS.setPFMC(new MUMinus());
