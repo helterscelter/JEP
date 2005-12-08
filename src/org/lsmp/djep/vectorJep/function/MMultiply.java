@@ -261,7 +261,7 @@ public class MMultiply extends Multiply implements BinaryOperatorI {
 		{
 			if(param2 instanceof Scaler)
 			{
-				for(int i=0;i<param2.getDim().numEles();++i)
+				for(int i=0;i<param1.getDim().numEles();++i)
 					res.setEle(i,super.mul(param1.getEle(i),param2.getEle(0)));
 			}
 			else
