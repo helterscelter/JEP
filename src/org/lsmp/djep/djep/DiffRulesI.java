@@ -27,8 +27,8 @@ public interface DiffRulesI {
 	 * Returns the top node of of the derivative of this function 
 	 * wrt to variable var.
 	 * @param var The name of variable to differentiate wrt to.
-	 * @param children[] the arguments of the function
-	 * @param dchildren[] the derivatives of each argument of the function.
+	 * @param children the arguments of the function
+	 * @param dchildren the derivatives of each argument of the function.
 	 * @return top node of and expression tree for the derivative.
 	 * @throws ParseException if there is some problem in compiling the derivative.
 	 */

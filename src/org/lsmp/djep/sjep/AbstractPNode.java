@@ -8,7 +8,7 @@ package org.lsmp.djep.sjep;
 import org.nfunk.jep.ParseException;
 
 /**
- * Default methods, when more specific methods no not work. 
+ * Default methods, when more specific methods do not work. 
  * 
  * @author Rich Morris
  * Created on 22-Dec-2004

@@ -9,7 +9,8 @@ package org.lsmp.djep.sjep;
 import org.nfunk.jep.*;
 /**
  * Represents a polynomial.
- * i.e. a sum of terms which are typically Monomials.
+ * i.e. a sum of terms which are typically 
+ * {@link Monomial}s, but can be any {@link AbstractPNode}. The order of the terms is specified by the total ordering.
  * 
  * @author Rich Morris
  * Created on 14-Dec-2004
