@@ -8,7 +8,6 @@
 package org.nfunk.jep.function;
 
 import org.nfunk.jep.*;
-import java.util.Stack;
 /**
  * An assignment operator so we can do
  * x=3+4.
