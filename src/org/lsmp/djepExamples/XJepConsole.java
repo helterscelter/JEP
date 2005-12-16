@@ -44,6 +44,8 @@ public class XJepConsole extends Console
 		super.printHelp();
 		println("'setMaxLen 80'\tensures all lines and < 80 chars");
 		println("'setDP 3'\tonly prints 3 decimal places");
+		println("'setFullBrackets true'\tprints equations with full bracketing");
+		println("'setComplexI true'\tprint complex numbers in form x+iy");
 		println("'invalidate'\tmarks all variables as invalid, forcing reevaluation");
 		println("eg 'x=5','y=2*x' gives value 10, 'invalidate', 'x=6', 'y' gives value 12");
 	}
@@ -97,14 +99,40 @@ public class XJepConsole extends Console
 
 			return false;
 		}
+		if(command.startsWith("setFullBrackets"))
+		{
+			String words[] = split(command);
+			if(words.length>1 && words[1].equals("true"))
+				xj.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,true);
+			else
+				xj.getPrintVisitor().setMode(PrintVisitor.FULL_BRACKET,true);
+			return false;
+		}
+		if(command.startsWith("setComplexI"))
+		{
+			String words[] = split(command);
+			if(words.length>1 && words[1].equals("true"))
+				xj.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
+			else
+				xj.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
+			return false;
+		}
 		return true;
 	}
 
 	public void processEquation(Node node) throws ParseException
 	{
 		XJep xj = (XJep) j;
+		if(xj.getPrintVisitor().getMode(PrintVisitor.FULL_BRACKET))	{
+			print("Node:\t"); 
+			xj.println(node);
+		}
 		Node processed = xj.preprocess(node);
 		if(processed==null) return;
+		if(xj.getPrintVisitor().getMode(PrintVisitor.FULL_BRACKET))	{
+			print("Processed:\t"); 
+			xj.println(processed);
+		}
 		Node simp = xj.simplify(processed);
 		print("Simplified:\t"); 
 		println(xj.toString(simp));
