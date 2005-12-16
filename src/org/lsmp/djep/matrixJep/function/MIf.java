@@ -98,4 +98,10 @@ public class MIf extends PostfixMathCommand implements NaryOperatorI, MatrixSpec
 		mvalue.setEles(res);
 		return mvalue;
 	}
+
+	public boolean checkNumberOfParameters(int n) {
+		return (n == 3 || n == 4);
+	}
+	
+	
 }

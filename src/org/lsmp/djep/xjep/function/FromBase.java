@@ -22,18 +22,18 @@ public class FromBase extends PostfixMathCommand {
      */
     public FromBase() {
         super();
-        this.numberOfParameters = -1;
+        this.numberOfParameters = 2;
     }
 
     public FromBase(int base) {
         super();
-        this.numberOfParameters = -1;
+        this.numberOfParameters = 1;
         globalBase = base;
     }
 
     public FromBase(int base,String prefix) {
         super();
-        this.numberOfParameters = -1;
+        this.numberOfParameters = 1;
         globalBase = base;
         this.prefix = prefix;
     }

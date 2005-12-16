@@ -53,13 +53,17 @@ public class If extends PostfixMathCommand implements CallbackEvaluationI {
 //		return null;
 //	}
 
+	public boolean checkNumberOfParameters(int n) {
+		return (n == 3 || n == 4);
+	}
+
 	/**
 	 * 
 	 */
 	public Object evaluate(Node node,EvaluatorI pv) throws ParseException
 	{
 		int num = node.jjtGetNumChildren(); 
-		if( num < 3 || num > 4)
+		if( !checkNumberOfParameters(num))
 			throw new ParseException("If operator must have 3 or 4 arguments.");
 
 		// get value of argument

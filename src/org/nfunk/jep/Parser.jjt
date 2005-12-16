@@ -661,7 +661,14 @@ void ArgumentList(int reqArguments, String functionName) :
 	)*
 	]
     {
-    	if (reqArguments != count && reqArguments != -1) {
+    	if(reqArguments == -1) {
+    		if(!((PostfixMathCommandI)jep.funTab.get(functionName)).checkNumberOfParameters(count))
+    		{
+				errorStr = "Function \"" + functionName +"\" illegal number of arguments " + count;
+				addToErrorList(errorStr);
+			}
+    	}
+    	else if (reqArguments != count) {
 			errorStr = "Function \"" + functionName +"\" requires "
 			           + reqArguments + " parameter";
 			if (reqArguments!=1) errorStr += "s";

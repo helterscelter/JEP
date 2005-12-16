@@ -37,4 +37,14 @@ public interface PostfixMathCommandI
 	 * -1.
 	 */
 	public void setCurNumberOfParameters(int n);
+	
+	/**
+	 * Checks the number of parameters of the function.
+	 * This method is called during the parsing of the equation to check syntax.
+	 * Functions which set numberOfParameter=-1 should overwrite this method.
+	 * @param n number of parameters function will be called with.
+	 * @return False if an illegal number of parameters is supplied, true otherwise.
+	 */
+	public boolean checkNumberOfParameters(int n);
+
 }

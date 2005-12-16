@@ -39,6 +39,10 @@ public abstract class SumType extends PostfixMathCommand implements CallbackEval
 		numberOfParameters = -1;
 	}
 
+	public boolean checkNumberOfParameters(int n) {
+		return (n==4||n==5);
+	}
+
 	/**
 	 * Evaluates the operator in given context. 
 	 * Typically does not need to be sub-classed as the other evaluate methods are more useful. This method just checks the arguments.
@@ -46,7 +50,7 @@ public abstract class SumType extends PostfixMathCommand implements CallbackEval
 	public Object evaluate(Node node,EvaluatorI pv) throws ParseException {
 
 		int numParams =  node.jjtGetNumChildren();
-		if(numParams < 4 || numParams > 5)
+		if(!checkNumberOfParameters(numParams))
 			throw new ParseException(name+": called with invalid number of parameters: "+numParams+" it should be either 4 or 5.");
 			
 		Node varNode = node.jjtGetChild(1);

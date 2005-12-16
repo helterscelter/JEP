@@ -38,6 +38,10 @@ public class GenMat extends PostfixMathCommand implements CallbackEvaluationI
 		this.numberOfParameters = -1;
 	}
 
+	public boolean checkNumberOfParameters(int n) {
+		return (n == 2 || n == 3);
+	}
+
 	public Object evaluate(
 		Node node,
 		EvaluatorI pv)

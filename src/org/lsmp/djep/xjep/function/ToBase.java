@@ -61,16 +61,18 @@ public class ToBase extends PostfixMathCommand {
         this.prefix = prefix;
     }
     
-    public void run(Stack s) throws ParseException {
+    public boolean checkNumberOfParameters(int n) {
+        if(globalBase == -1) { return (n==2||n==3); }
+        else				 {return (n==1||n==2); }
+	}
+	public void run(Stack s) throws ParseException {
         int narg = curNumberOfParameters;
         int digits=0;
         int base = 0;
+        
+        if(!checkNumberOfParameters(narg))
+            throw new ParseException("toBase: can only have 1,2 or 3 arguments");
 
-        if(globalBase == -1) {
-            if(narg <1 || narg>3) throw new ParseException("toBase: can only have 1,2 or 3 arguments");
-        } else {    
-            if(narg <1 || narg>2) throw new ParseException("toBase: can only have 1,2 or 3 arguments");
-        }
         if(narg==3 || (globalBase != -1 && narg==2)) {
             try {
             digits = ((Number) s.pop()).intValue();

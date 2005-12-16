@@ -75,6 +75,11 @@ public class VMap
 			throw new ParseException("Map: second argument should be a variable or list of variables");
 		return vars;
 	}
+	
+	public boolean checkNumberOfParameters(int n) {
+		return (n >= 3);
+	}
+
 	public Object evaluate(
 		Node node,
 		EvaluatorI pv)

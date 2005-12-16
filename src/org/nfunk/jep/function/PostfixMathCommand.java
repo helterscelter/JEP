@@ -69,6 +69,17 @@ public class PostfixMathCommand implements PostfixMathCommandI
 	}
 	
 	/**
+	 * Checks the number of parameters of the function.
+ 	 * Functions which set numberOfParameter=-1 should overload this method
+
+	 * @param n number of parameters function will be called with.
+	 * @return False if an illegal number of parameters is supplied, true otherwise.
+	 */
+	public boolean checkNumberOfParameters(int n) {
+		if(numberOfParameters == -1) return true;
+		return (numberOfParameters==n);
+	}
+	/**
 	 * Throws an exception because this method should never be called under
 	 * normal circumstances. Each function should use it's own run() method
 	 * for evaluating the function. This includes popping off the parameters
