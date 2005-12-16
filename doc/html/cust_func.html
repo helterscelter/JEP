@@ -73,6 +73,8 @@
             new function. Do this by writing<br>
             <pre>parser.addFunction("half", new Half());</pre>
           </li>
+          <li>If numberOfParameters == -1 you may wish to overwrite the
+          <tt>boolean checkNumberOfParameters(int n)</tt> to catch an illegal number of arguments at parse time.</li>
         </ol>
         <p><b>Source files</b></p>
         <ul>
