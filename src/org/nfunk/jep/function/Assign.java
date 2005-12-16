@@ -12,7 +12,7 @@ import org.nfunk.jep.*;
  * An assignment operator so we can do
  * x=3+4.
  * This function implements the SpecialEvaluationI interface
- * so that it handles seting the value of a variable. 
+ * so that it handles setting the value of a variable. 
  * @author Rich Morris
  * Created on 18-Nov-2003
  */
@@ -29,7 +29,7 @@ public class Assign extends PostfixMathCommand implements CallbackEvaluationI {
 	public Object evaluate(Node node,EvaluatorI pv) throws ParseException
 	{
 		if(node.jjtGetNumChildren()!=2)
-			throw new ParseException("Assignment opperator must have 2 operators.");
+			throw new ParseException("Assignment operator must have 2 operators.");
 
 		// evaluate the value of the righthand side.
 		Object rhsVal = pv.eval(node.jjtGetChild(1));	
