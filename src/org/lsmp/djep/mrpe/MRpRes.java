@@ -40,7 +40,7 @@ public abstract class MRpRes {
 	}
 	/**
 	 * Returns an array of doubles with the values filled in. 
-	 * @return the array
+	 * @return the array either double[] or double[][]
 	 */
 	public abstract Object toArray();
 

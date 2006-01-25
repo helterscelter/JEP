@@ -1,5 +1,8 @@
 == org.nfunk.* =======================================================
 
+Dec 16 05 rjm - Added a checkNumberofParameters method to PostfixMathCommandI,
+	and a default method to PostfixMathCommand and implementations for necessary functions.
+	
 May 02 05 rjm - Added more functionality to NumberFactory.
 		CreateNumber(double) etc. and getZero() etc.
 
@@ -97,6 +100,9 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
 Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
+
+Dec 16 05 rjm - Added implementations of checkNumberOfParameters
+		for necessary functions.
 
 Dec 08 05 rjm  - Added MDivide function
 			   - Fixed bug in MMultiply dividing Tensor by a scaler.
