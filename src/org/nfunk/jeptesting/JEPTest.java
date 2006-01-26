@@ -219,7 +219,7 @@ public class JEPTest extends TestCase {
 			return ((Complex)param2).equals(new Complex((Number) param1), tolerance);
 		}
 		if ((param1 instanceof Number) && (param2 instanceof Number)) {
-			return Math.abs(((Number)param1).doubleValue()-((Number)param1).doubleValue())
+			return Math.abs(((Number)param1).doubleValue()-((Number)param2).doubleValue())
 					< tolerance;
 		}
 		// test any other types here
