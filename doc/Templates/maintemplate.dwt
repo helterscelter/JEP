@@ -8,6 +8,9 @@
 </head>
 
 <body>
+
+
+
 <!-- NAVIGATION ---------------------------------------------------- -->
 <div id="navcontainer"> 
   <ul>
@@ -35,14 +38,21 @@
   </ul>
 </div>
 
-<!-- CENTER CONTENT -------------------------------------------------- -->
+
+
 <div id="centercontent">
+<!-- CENTER CONTENT -------------------------------------------------- -->
 <!-- #BeginEditable "Text" -->{Text}<!-- #EndEditable -->
-<br/>
-<br/>
-<br/>
-<div id="footer">&copy; 2004 Singular Systems
-<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a></div>
+
+
+
+
+<!-- FOOTER ---------------------------------------------------------- -->
+<div id="footer">
+&copy; 2006 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
 </div>
+</div>
+
 </body>
 </html>
