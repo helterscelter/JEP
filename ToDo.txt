@@ -1,58 +1,7 @@
-== TODO for version 2.3.1 ===============================================
-- fix link problem to JavaDoc in documentation
-- documentation requirements
-  1 - easy to find what you're looking for
-  2 - comprehensive
-  3 - cross linked, externally linkable
-  4 - JEP and DJEP should be separable
-  5 - easy updating of menu/content (not required to use dreamweaver or other difficult accessible tool)
-  6 - correct spelling
-  7 - no broken links
-
-- Run spell check on docs
-- fix if(a, b, c) doc error
-- fix menu highlighting
-- change contact to About Us
-- new section DJEP
-- compiling JEP section
-
-== TODO for version 2.3.0 ===========================================
-- update CVS
-- upload new documentation + example files to web site
-
-Ignored/Optional
-- dot product?
-- benchmark evaluation performance against 2.24?
-- automatisize testing in ant script?
 - add more JUnit tests
 
-Complete
-x test downloading
-x create commercial package
-x tag CVS
-x send license to Preet
-x finalize docs
-x multiple jars? multiple zips?
-x move new features
-x check for undoc'd functions
-x added 1.2 compatibility checking
-x replace @license_info@ with GPL info using replace task and loadfile
-   also @version@ @date@ @license@ @copyright@
-x change getValue() and getComplexValue()
-x fix ln(e) = 0 with getValue() (nothing to fix?)
-x rename comments from 2.3.0 to 2.3.0 alpha
-                       2.3.1 to 2.3.0 beta1
-                       2.3.2 to 2.3.0 beta2
-                       2.3.3 to 2.3.0 beta2
-x fix link to javadoc (just worked)
-x is it still possible to find the names of variables in an expression?
-  how? document
-x document hasError() better with examples
-
 == Web site todo ====================================================
- - add link from support to bug report
  - feature request?
- - add Double -> Number?
 
 == Phone call with Rich =============================================
 Notes
@@ -63,6 +12,9 @@ Notes
  - use GroupJep/rationals for arbitrary precision math?
 
 == Further todos ====================================================
+ - add to license agreement that JUnit is included and that source
+   code is available from web site
+    - include common public license
  - move applicable examples to jepexamples
  - ensure EvaluatorVisitor reports multiple errors for one evaluation
    (use list of errors rather than throwing exceptions)
@@ -119,5 +71,5 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - Upload web site
  - Add message on SourceForge list
  - Update version number+ feature list from JARS, share*it,...
- - Add CVS tag for version (e.g. v223)
+ - Add CVS tag for version (e.g. v-3-0-0)
 
