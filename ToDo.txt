@@ -3,7 +3,7 @@
 == Web site todo ====================================================
  - feature request?
 
-== Phone call with Rich =============================================
+== Phone call =======================================================
 Notes
  - agreed to change everything to GPL
  - move towards strongly typed approach
@@ -12,6 +12,8 @@ Notes
  - use GroupJep/rationals for arbitrary precision math?
 
 == Further todos ====================================================
+ - somehow get around having ParserDumpVisitor referencing Sun's COPYRIGHT file (which doesn't exist)
+   (e.g. don't use ParserDumpVisitor, upgrade to JavaCC 4...)
  - add to license agreement that JUnit is included and that source
    code is available from web site
     - include common public license

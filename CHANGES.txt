@@ -1,7 +1,6 @@
 == org.nfunk.* =======================================================
 
-Feb 18 06 njf - removed creative commons reference from a few source
-                files
+Feb 18 06 njf - removed creative commons references from all source files
 Feb 15 06 njf - updated documentation by fixing some broken links and
                 reapplying the dreamweaver template to all files
               - merged new tests from version 2.3.1 into JEPTestExpressions.txt
