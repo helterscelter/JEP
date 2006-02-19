@@ -1,10 +1,12 @@
 == org.nfunk.* =======================================================
 
-Feb 15 05 njf - updated documentation by fixing some broken links and
+Feb 18 06 njf - removed creative commons reference from a few source
+                files
+Feb 15 06 njf - updated documentation by fixing some broken links and
                 reapplying the dreamweaver template to all files
               - merged new tests from version 2.3.1 into JEPTestExpressions.txt
 
-Jan    05 njf - Created a new branch "v230-patches" on which version 2.3.1
+Jan    06 njf - Created a new branch "v230-patches" on which version 2.3.1
                 was developed.
 
 Dec 16 05 rjm - Added a checkNumberofParameters method to PostfixMathCommandI,
