@@ -2,10 +2,6 @@
  * Created on 16-Jun-2003 by Rich webmaster@pfaf.org
  * www.comp.leeds.ac.uk/pfaf/lsmp
  *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
- *
  * Adapted from :
  */
 

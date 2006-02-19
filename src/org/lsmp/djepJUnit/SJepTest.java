@@ -9,10 +9,6 @@ import java.text.NumberFormat;
 import org.lsmp.djep.sjep.*;
 /* @author rich
  * Created on 19-Nov-2003
- *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 
 /**

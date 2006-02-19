@@ -1,9 +1,5 @@
 /* @author rich
  * Created on 26-Jul-2003
- *
- * This code is covered by a Creative Commons
- * Attribution, Non Commercial, Share Alike license
- * <a href="http://creativecommons.org/licenses/by-nc-sa/1.0">License</a>
  */
 package org.lsmp.djep.xjep;
 import org.lsmp.djep.xjep.function.*;
