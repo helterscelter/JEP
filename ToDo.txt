@@ -1,15 +1,91 @@
-- add more JUnit tests
 
-== Web site todo ====================================================
- - feature request?
+== JEP 2.4.0 ========================================================
+- read through Rich's changes, check documentation for consistency
+- make sure there aren't any "loose ends"
+- add more JUnit tests
+- check applets, update if necessary
 
 == Phone call =======================================================
-Notes
- - agreed to change everything to GPL
- - move towards strongly typed approach
-   enable before evaluation complex
- - changing SymbolTable to Map?
- - use GroupJep/rationals for arbitrary precision math?
+  - pricing probably down to $500 for JEP license
+    DJEP $150 and $100
+
+  - new name for DJEP
+    using "JEP Extensions" unless ideas come up within the next days
+
+  - new releases
+    - new release within next month (mostly current CVS state)
+      - JEP 2.4.0 and JEP Extensions 1.1
+    - next release will be JEP 3.0 and Extensions 2.0
+
+  - regular releases
+    - roughly every 2 months
+
+  - planned features for JEP 3.0
+    - Parser
+      - create interface
+      - easier operator extension (RunCC?)
+      - start implementing new parsers (RunCC,...)
+    - Evaluation
+      - create interface
+      - less creation of new objects in evaluation
+      - faster evaluation
+        (each node needs more annotation)
+      (rich is using 3 different evaluators (xjep overrides evalutar))
+    - new custom nodes
+      - switch on JavaCC to enable custom nodes
+    - move some group math features into JEP -> "arbitrary precision"
+    - move towards strongly typed approach enable before evaluation complex
+
+== Rich's ideas =====================================================
+
+1) Expandable parser. Whilst it is easy to add new functions it is a 
+non-trivial task to add a new operator. We've had a few requests about 
+this on the forum, I've written a page describing the process at
+http://singsurf.org/djep/html/djep/AddingOperators.html
+I've been looking at the runcc parser, this can build a parser at run 
+time, and seems relatively easy to create a parser. Conceivably JEP 
+could be built with a number of different parsers, each of which 
+implement an interface.
+
+2) Specific parser improvements.
+Allow f(option1=val1) so an equation with an equals sign can be parsed in.
+Allow vectors/matrices addressable by m[1] gives first element of an array.
+Allow ranges to be specified say x=-pi:pi
+
+3) Speeding up evaluation. I've achieved considerable 10 fold speed 
+increases using the rpe and mrpe packages. These use a reverse polish 
+representation of the equation. Speed is mainly achieved by eliminating 
+object creation, and hand coding matrix operations for matrices up to 4 
+by 4. I'd like to role which into the main JEP code, but it would need a 
+major rewrite to achieve.
+
+4) Currently JEP operates with a loose typing system, the values can be 
+Doubles, Complex, Strings,... I'd quite like to make versions of JEP 
+which is stricter on the values, for instance a version which operates 
+just on doubles, or just on complex numbers.
+
+5) Using a stack is not strictly necessary for parsing values to 
+functions. They could just as easily be parsed an array of values
+Object run(Object[] args)
+or even if its known the function is a binary operator
+Object run(Object left,Object right)
+suitable interfaces say BinaryFunction could define these methods.
+There would a speedup as result.
+
+6) Better exception handling.
+
+7) Thread safety. This is not something I've had any experience with but 
+is defiantly something both Nathan and I are keen to see.
+
+The above imply quite a major rewrite. I'd like to allow nodes to have 
+mutable value objects attached to them and define a system of interfaces 
+to allow for BinaryFunctions etc.
+
+As far as symbolic operations go the best simplification I've got is the 
+org.lsmp.djep.sjep package. This is still quite new and needs testing.
+I'm sure there are much better strategies about, but I've not done much 
+research in the field.
+
 
 == Further todos ====================================================
  - somehow get around having ParserDumpVisitor referencing Sun's COPYRIGHT file (which doesn't exist)
