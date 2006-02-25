@@ -19,8 +19,8 @@
 
 <project name="JEP" default="compile" basedir=".">
 	
-	<property name="version" value="2.3.0"/>
-	<property name="djep-version" value="1.0.0"/>
+	<property name="version" value="2.4.0"/>
+	<property name="djep-version" value="1.1.0"/>
 
 	<!-- library locations -->
 	<property environment="env"/>
@@ -37,7 +37,7 @@
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
 	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
 	<property name="disttemp"   value="disttemp"/>
-	<property name="classpath" value="${lib}/junit.jar"/>
+	<property name="classpath" value="${lib}/junit.jar;${lib}/Jama-1.0.2.jar"/>
 	<!-- <property name="website" value="website"/> -->
 
 	<taskdef name="jjtree"
@@ -197,7 +197,7 @@
 		<filterset id="sourcefilters">
 			<filter token="header" value="JEP - Java Math Expression Parser ${version}"/>
 			<filter token="date" value="      ${TODAY}"/>
-			<filter token="copyright" value="      (c) Copyright 2004, Nathan Funk and Richard Morris"/>
+			<filter token="copyright" value="      (c) Copyright 2006, Nathan Funk and Richard Morris"/>
 			<filter token="license" value="      See LICENSE.txt for license information."/>
 		</filterset>
 		<!-- copy source files with filter to disttemp -->
