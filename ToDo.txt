@@ -4,6 +4,7 @@
 - make sure there aren't any "loose ends"
 - add more JUnit tests
 - check applets, update if necessary
+- check Jama license
 
 == Phone call =======================================================
   - pricing probably down to $500 for JEP license
