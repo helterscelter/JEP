@@ -36,19 +36,22 @@ public class If extends PostfixMathCommand implements CallbackEvaluationI {
 		numberOfParameters = -1;
 	}
 
-	/**
+	/*
 	 * Performs the specified action on an expression tree.
 	 * Serves no function in standard JEP but 
 	 * @param node top node of the tree
 	 * @param pv	The visitor, can be used evaluate the children.
 	 * @return top node of the results.
 	 * @throws ParseException
+	public Node process(Node node,Object data,ParserVisitor pv) throws ParseException
+	{
+		return null;
+	}
+    */
+	/**
+	 * Checks the number of parameters of the call.
+	 * 
 	 */
-//	public Node process(Node node,Object data,ParserVisitor pv) throws ParseException
-//	{
-//		return null;
-//	}
-
 	public boolean checkNumberOfParameters(int n) {
 		return (n == 3 || n == 4);
 	}

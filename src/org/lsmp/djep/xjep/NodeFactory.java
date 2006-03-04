@@ -4,7 +4,6 @@
 package org.lsmp.djep.xjep;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.*;
-import java.util.Stack;
 /**
  * This class is used to create nodes of specified types.
  * It can be sub-classed to change the nature of how nodes
