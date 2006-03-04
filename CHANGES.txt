@@ -109,6 +109,7 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Mar 4  06 rjm - fixed bug in SJep 2x+x now correctly simplifies to 3x.
 Dec 16 05 rjm - Added implementations of checkNumberOfParameters
 		for necessary functions.
 
