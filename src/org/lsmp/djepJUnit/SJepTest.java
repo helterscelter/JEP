@@ -390,6 +390,11 @@ public class SJepTest extends TestCase {
 		simplifyTestString("-2/x","-2/x");
 		simplifyTestString("(1+x)*(1+x)","(1+x)^2");
 		simplifyTestString("(1+x)/(1+x)","1");
+		simplifyTest("2*x+x","3*x");
+		simplifyTest("2*x+3*x","5*x");
+		simplifyTest("5*x-3*x","2*x");
+		simplifyTest("3*x-5*x","-2*x");
+		simplifyTest("3*x-x","2*x");
 	}
 
 	public void testPolySimp() throws ParseException,Exception

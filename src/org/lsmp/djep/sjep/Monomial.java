@@ -128,6 +128,14 @@ public class Monomial extends AbstractPNode {
 	
 	public PNodeI add(PNodeI node) throws ParseException
 	{
+		if(node instanceof PVariable)
+		{
+			if(this.equalsIgnoreConstant(node))
+			{
+				return valueOf((PConstant)coeff.add(pc.oneConstant),
+						vars,powers);		
+			}
+		}
 		if(node instanceof Monomial)
 		{
 			Monomial mon = (Monomial) node;
@@ -142,6 +150,14 @@ public class Monomial extends AbstractPNode {
 
 	public PNodeI sub(PNodeI node) throws ParseException
 	{
+		if(node instanceof PVariable)
+		{
+			if(this.equalsIgnoreConstant(node))
+			{
+				return valueOf((PConstant)coeff.sub(pc.oneConstant),
+						vars,powers);		
+			}
+		}
 		if(node instanceof Monomial)
 		{
 			Monomial mon = (Monomial) node;
@@ -186,7 +202,7 @@ public class Monomial extends AbstractPNode {
 		if(vars.length != 1) return false;
 		if(!vars[0].equals(node)) return false;
 		if(!powers[0].isOne()) return false;
-		return false;
+		return true;
 	}
 	/** Compare this to argument.
 	 * x < y
