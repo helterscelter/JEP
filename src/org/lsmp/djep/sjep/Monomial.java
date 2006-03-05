@@ -102,7 +102,7 @@ public class Monomial extends AbstractPNode {
 		return mm.toPNode();
 	}
 	
-	PNodeI power(PNodeI pow) throws ParseException
+	public PNodeI pow(PNodeI pow) throws ParseException
 	{
 		if(pow instanceof PConstant)
 		{
