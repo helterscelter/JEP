@@ -6,7 +6,7 @@
 package org.lsmp.djep.sjep;
 import org.nfunk.jep.*;
 /**
- * A mutiable polynomial representing a + b + c.
+ * A mutable polynomial representing a + b + c.
  * There are no requirements that this is in a reduced form
  * so some powers can be zero.
  * 

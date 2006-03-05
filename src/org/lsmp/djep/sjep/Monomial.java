@@ -20,7 +20,7 @@ public class Monomial extends AbstractPNode {
 	Monomial(PolynomialCreator pc,PConstant coeff,PNodeI vars[],PNodeI powers[]) {
 		super(pc);
 		if(vars.length != powers.length)
-			throw new IllegalArgumentException("Monomial.valueOf length of vars and powers must be equal. they are "+vars.length+" "+powers.length);
+			throw new IllegalArgumentException("Monomial.valueOf length of variables and powers must be equal. they are "+vars.length+" "+powers.length);
 		this.coeff = coeff;
 		this.vars = vars;
 		this.powers = powers;

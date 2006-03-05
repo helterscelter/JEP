@@ -31,7 +31,7 @@ public interface PNodeI {
 	public boolean equals(Object o);
 	/** Compares this expression to argument. Uses a total ordering of expressions. Returns positive if this node comes after the argument. */
 	public int compareTo(PNodeI fun);
-	/** Converts the node to standard Jep format. */
+	/** Converts the node to standard JEP format. */
 	public Node toNode() throws ParseException;
 	/** Produces a string representation of the argument. */
 	public String toString();

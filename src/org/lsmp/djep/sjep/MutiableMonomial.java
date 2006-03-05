@@ -6,7 +6,7 @@
 package org.lsmp.djep.sjep;
 import org.nfunk.jep.*;
 /**
- * A mutiable monomial representing a * x^i * y^j * ... * z^k.
+ * A mutable monomial representing a * x^i * y^j * ... * z^k.
  * There are no requirements that this is in a reduced form
  * so some powers can be zero.
  * 
