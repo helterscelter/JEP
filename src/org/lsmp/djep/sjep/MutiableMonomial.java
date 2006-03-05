@@ -78,7 +78,7 @@ public class MutiableMonomial
 	
 	void power(PConstant c) throws ParseException
 	{
-		coeff = (PConstant) c.pow(c);
+		coeff = (PConstant) coeff.pow(c);
 		for(int i=0;i<length;++i)
 			powers[i] = powers[i].mul(c);
 	}
