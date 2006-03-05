@@ -395,6 +395,7 @@ public class SJepTest extends TestCase {
 		simplifyTest("5*x-3*x","2*x");
 		simplifyTest("3*x-5*x","-2*x");
 		simplifyTest("3*x-x","2*x");
+		simplifyTest("(2*x+x)^3","27*x^3");
 	}
 
 	public void testPolySimp() throws ParseException,Exception
@@ -416,6 +417,7 @@ public class SJepTest extends TestCase {
 		expandTestString("(a+b)^3","3*a*b^2+3*a^2*b+a^3+b^3");
 		expandTestString("(a-b)^3","3*a*b^2-3*a^2*b+a^3-b^3");
 		expandTestString("1+x+x^2+x*y+y^2","1+x+x*y+x^2+y^2");
+		expandTestString("(5*x+3*y)^2","30*x*y+25*x^2+9*y^2");
 
 		j.getPrintVisitor().setMaxLen(80);
 		Node Q8node = j.parse("(xx^2+yy^2+zz^2+ww^2)^4");
