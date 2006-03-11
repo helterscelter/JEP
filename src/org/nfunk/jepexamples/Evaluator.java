@@ -34,6 +34,8 @@ import org.nfunk.jep.JEP;
  */
 public class Evaluator extends Applet {
 
+	private static final long serialVersionUID = 4592714713689369505L;
+
 	/** Parser */
 	private JEP myParser;
 	
@@ -220,7 +222,7 @@ public class Evaluator extends Applet {
 	/**
 	 * Parses the current expression in the exprField. This method also
 	 * re-initializes the contents of the symbol and function tables. This
-	 * is neccessary because the "allow undeclared variables" option adds
+	 * is necessary because the "allow undeclared variables" option adds
 	 * variables from expressions to the symbol table.
 	 */
 	private void parseExpression() {

@@ -15,6 +15,7 @@ import java.util.Enumeration;
  */
 public class XJepConsole extends Console
 {
+	private static final long serialVersionUID = -3239922790774093668L;
 	protected NumberFormat format=null;
 	
 	public static void main(String[] args)

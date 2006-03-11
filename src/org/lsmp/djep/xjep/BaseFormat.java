@@ -20,7 +20,11 @@ import org.lsmp.djep.xjep.function.ToBase;
  * Created on 02-May-2005
  */
 public class BaseFormat extends NumberFormat {
-    int base;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1805136353312272410L;
+	int base;
     ToBase tb=null;
     FromBase fb=null;
     /**

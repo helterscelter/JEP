@@ -1,9 +1,11 @@
-/*
- * Created on 16-Jun-2003 by Rich webmaster@pfaf.org
- * www.comp.leeds.ac.uk/pfaf/lsmp
- *
- * Adapted from :
- */
+/*****************************************************************************
+
+@header@
+@date@
+@copyright@
+@license@
+
+*****************************************************************************/
 
 /*****************************************************************************
 
@@ -18,7 +20,7 @@ JEP - Java Math Expression Parser 2.24
  * Console - JEP Example Applet
  * Copyright (c) 2000 Nathan Funk
  *
- * @author Nathan Funk 
+ * @author Nathan Funk , Richard Morris
  */
 
 package org.lsmp.djepExamples;
@@ -41,7 +43,7 @@ import java.awt.event.*;
 * 
 * <p>
 * This class has been designed to be sub classed to allow different
-* consol aplications.
+* consol applications.
 * The methods
 * <pre>
 * public void initialise()
@@ -64,6 +66,9 @@ import java.awt.event.*;
 */
 
 public class Console extends Applet implements KeyListener {
+	
+	private static final long serialVersionUID = 9035584745289937584L;
+
 	/** Main JEP object */
 	protected JEP j;	
 	
@@ -78,7 +83,7 @@ public class Console extends Applet implements KeyListener {
 		br = new BufferedReader(new InputStreamReader(System.in));
 	}
 
-	/** Applet initialisation */
+	/** Applet initialization */
 		
 	public void init() 
 	{
@@ -206,7 +211,7 @@ public class Console extends Applet implements KeyListener {
 	
 	/**
 	 * Get a command from the input.
-	 * @return null if an io error or EOF occurs.
+	 * @return null if an IO error or EOF occurs.
 	 */
 	protected String getCommand() {
 		String s=null;
@@ -299,7 +304,7 @@ public class Console extends Applet implements KeyListener {
 	/**
 	 * Handle an error in the parse and evaluate routines.
 	 * @param e
-	 * @return false if the error canot be recovered and the program should exit
+	 * @return false if the error cannot be recovered and the program should exit
 	 */
 	public boolean handleError(Exception e)
 	{
@@ -362,7 +367,7 @@ public class Console extends Applet implements KeyListener {
 	}
 
 	/**
-	 * Handels keyRelease events
+	 * Handles keyRelease events
 	 */
 	public void keyReleased(KeyEvent event)
 	{
@@ -370,12 +375,8 @@ public class Console extends Applet implements KeyListener {
 		if(code == KeyEvent.VK_ENTER)
 		{
 			int cpos = ta.getCaretPosition();
-//			System.out.println("Enter pressed: "+cpos);
 			String alltext = ta.getText();
 			String before = alltext.substring(0,cpos-1);
-//			String after = alltext.substring(cpos);
-//			System.out.println("before ("+ before+")");
-//			System.out.println("after ("+ after+")");
 			int startOfLine = before.lastIndexOf('\n');
 			if(startOfLine > 0)
 					before = before.substring(startOfLine+1);

@@ -19,6 +19,11 @@ import org.nfunk.jep.*;
 public class XSymbolTable extends SymbolTable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 741560154912130566L;
+
+	/**
 	 * Create a new XSymbolTable with the given variable factory.
 	 */
 	public XSymbolTable(VariableFactory varFac)
@@ -39,7 +44,7 @@ public class XSymbolTable extends SymbolTable
 		{
 			XVariable var = (XVariable) e.nextElement();
 			pv.append(var.toString(pv)+"\n");
-			// TODO watchout for posible conflict with overriding pv's string buffer
+			// TODO watch out for possible conflict with overriding pv's string buffer
 		}
 	}	
 	

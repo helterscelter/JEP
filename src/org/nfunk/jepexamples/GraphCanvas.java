@@ -17,6 +17,7 @@ import org.nfunk.jep.JEP;
  * This class plots a graph using the JEP API.
  */
 public class GraphCanvas extends Canvas {
+	private static final long serialVersionUID = -3169263228971794887L;
 
 	/** Scaling of the graph in x and y directions */
 	private int scaleX, scaleY;

@@ -17,6 +17,8 @@ import org.nfunk.jep.Node;
  */
 public class ObserverConsole extends DJepConsole implements Observer
 {
+	private static final long serialVersionUID = 5393968786564920519L;
+
 	public void update(Observable arg0, Object arg1)
 	{
 		if(arg0 instanceof Variable)

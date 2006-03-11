@@ -16,6 +16,7 @@ import org.lsmp.djep.sjep.PolynomialCreator;
  */
 public class SJepConsole extends DJepConsole
 {
+	private static final long serialVersionUID = -2796652887843007314L;
 	PolynomialCreator pc = null;
 	
 	public static void main(String[] args)

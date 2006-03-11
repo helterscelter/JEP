@@ -7,13 +7,14 @@ package org.lsmp.djepExamples;
 import org.lsmp.djep.jama.JamaUtil;
 
 /**
- * has suport for Jama matrix operations
+ * has support for Jama matrix operations
  * @author Rich Morris
  * Created on 21-Mar-2005
  * @see <a href="http://math.nist.gov/javanumerics/jama/">http://math.nist.gov/javanumerics/jama/</a>
  */
 public class JamaConsole extends VectorConsole
 {
+	private static final long serialVersionUID = -4256036388099114905L;
 
 	public static void main(String[] args)
 	{

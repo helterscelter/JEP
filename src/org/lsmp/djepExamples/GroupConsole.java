@@ -15,12 +15,14 @@ import org.nfunk.jep.type.Complex;
 import java.math.*;
 
 /**
- * Console application with handeling for abstract groups 
+ * Console application with handling for abstract groups 
  * @author Rich Morris
  * Created on 21-Mar-2005
  */
 public class GroupConsole extends Console
 {
+	private static final long serialVersionUID = -3097491397108691409L;
+
 	public static void main(String args[]) {
 		Console c = new GroupConsole();
 		c.run(args);
@@ -110,7 +112,7 @@ public class GroupConsole extends Console
 			} 
 			else if(words[1].equals("Qu"))
 			{
-				initialise(new Quartonians());
+				initialise(new Quaternions());
 			}
 			else
 			{
@@ -166,14 +168,14 @@ public class GroupConsole extends Console
 		super.printHelp();
 		println("'group'\tprints the current group");
 		println("'group G'\tchanges underlying group to G");
-		println("'group Z'\tintegers (arbitary precision)");
+		println("'group Z'\tintegers (arbitrary precision)");
 		println("'group Q'\trationals");
 		println("'group R'\treals, represented as Doubles.");
-		println("'group R 3'\treals reprecented as BigDecimals with 3 decimal places");
+		println("'group R 3'\treals represented as BigDecimals with 3 decimal places");
 		println("'group P 3'\tpermutation group on three symbols");
 		println("\t[1,3,2]+[3,2,1] -> (3,1,2)");
 		println("'group Zn 5'\tintegers modulo 5");
-		println("'group Qu'\tQuartonians");
+		println("'group Qu'\tQuarternions");
 		println("'extend x'\textends current group by adding symbol x, i.e. a free group");
 		println("\tsuch a group can be considered as the ring of polynomials");
 		println("\tsimplification happens automatically");

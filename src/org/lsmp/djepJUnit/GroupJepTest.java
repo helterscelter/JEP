@@ -93,10 +93,10 @@ public class GroupJepTest extends TestCase {
 		valueToStringTest("(1/2)-(1/3)","1/6");
 	}
 	
-	/** Tests Quartonians */
+	/** Tests Quaternions */
 	public void testQuartonians() throws Exception
 	{
-		j = new GroupJep(new Quartonians());
+		j = new GroupJep(new Quaternions());
 		j.addStandardConstants();
 		System.out.println(j.getGroup().toString());
 		valueToStringTest("i*j","-k");

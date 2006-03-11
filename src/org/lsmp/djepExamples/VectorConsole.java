@@ -13,6 +13,7 @@ import org.lsmp.djep.vectorJep.*;
  */
 public class VectorConsole extends Console
 {
+	private static final long serialVersionUID = -2335406063822614650L;
 
 	public static void main(String[] args) 
 	{

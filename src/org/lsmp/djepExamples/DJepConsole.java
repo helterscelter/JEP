@@ -16,6 +16,7 @@ import org.lsmp.djep.xjep.PrintVisitor;
  */
 public class DJepConsole extends XJepConsole
 {
+	private static final long serialVersionUID = -5801701990800128777L;
 	boolean verbose = false;
 	
 	public void initialise()
@@ -39,7 +40,7 @@ public class DJepConsole extends XJepConsole
 
 	public void printIntroText()
 	{
-		println("DJep: differentation in JEP. eg. diff(x^2,x)");
+		println("DJep: differentiation in JEP. e.g. diff(x^2,x)");
 		printStdHelp();
 	}
 

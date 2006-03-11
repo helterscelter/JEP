@@ -16,7 +16,7 @@ import org.nfunk.jep.type.*;
 
 /**
  * The JEP class is the main interface with which the user should
- * interact. It contains all neccessary methods to parse and evaluate
+ * interact. It contains all necessary methods to parse and evaluate
  * expressions.
  * <p>
  * The most important methods are parseExpression(String), for parsing the
@@ -215,7 +215,7 @@ public class JEP {
 
 	/**
 	 * Adds the constants pi and e to the parser. As addStandardFunctions(),
-	 * this method should be called immediatly after the JEP object is
+	 * this method should be called immediately after the JEP object is
 	 * created.
 	 */
 	public void addStandardConstants() {
@@ -275,7 +275,7 @@ public class JEP {
 	}
 
 	/** Adds a constant.
-	 * This is a variable whos value cannot be changed.
+	 * This is a variable whose value cannot be changed.
 	 * @since 2.3.0 beta 1
 	 */
 	public void addConstant(String name,Object value) {
@@ -322,7 +322,7 @@ public class JEP {
 		return symTab.remove(name);
 	}
 	/** 
-	 * Returns the value of the varible with given name.
+	 * Returns the value of the variable with given name.
 	 * @param name name of the variable.
 	 * @return the current value of the variable.
 	 * @since 2.3.0 alpha
@@ -367,7 +367,7 @@ public class JEP {
 	/**
 	 * Sets the value of the traverse option. setTraverse is useful for
 	 * debugging purposes. When traverse is set to true, the parse-tree
-	 * will be dumped to the standard ouput device.
+	 * will be dumped to the standard output device.
 	 * <p>
 	 * The default value is false.
 	 * @param value The boolean traversal option.
@@ -424,7 +424,7 @@ public class JEP {
 	 */
 	public boolean getAllowUndeclared() { return allowUndeclared; }
 	
-	/** Sets wheter assignment equations like <tt>y=x+1</tt> are allowed.
+	/** Sets whether assignment equations like <tt>y=x+1</tt> are allowed.
 	 * @since 2.3.0 alpha
 	 */ 
 	public void setAllowAssignment(boolean value) {
@@ -647,7 +647,7 @@ public class JEP {
 
 	/**
 	 * Returns the symbol table (the list of all variables that the parser
-	 * recognises).
+	 * recognizes).
 	 * @return The symbol table
 	 */
 	public SymbolTable getSymbolTable() {
@@ -656,7 +656,7 @@ public class JEP {
 
 	/**
 	 * Returns the function table (the list of all functions that the parser
-	 * recognises).
+	 * recognizes).
 	 * @return The function table
 	 */
 	public FunctionTable getFunctionTable() {

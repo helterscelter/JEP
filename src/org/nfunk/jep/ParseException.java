@@ -11,8 +11,9 @@ package org.nfunk.jep;
  * mechanisms so long as you retain the public fields.
  */
 public class ParseException extends Exception {
+	private static final long serialVersionUID = 8169613785780477459L;
 
-  /**
+/**
    * This constructor is used by the method "generateParseException"
    * in the generated parser.  Calling this constructor generates
    * a new object of this type with the fields "currentToken",
@@ -66,7 +67,7 @@ public class ParseException extends Exception {
   /**
    * This is the last token that has been consumed successfully.  If
    * this object has been created due to a parse error, the token
-   * followng this token will (therefore) be the first error token.
+   * following this token will (therefore) be the first error token.
    */
   public Token currentToken;
 
@@ -137,7 +138,7 @@ public class ParseException extends Exception {
   /**
    * getErrorInfo() was added to the parser generated code to provide clean
    * output instead of the standard format of Exception.toString(). It returns
-   * a short description of the error that occured as well as the position of
+   * a short description of the error that occurred as well as the position of
    * next token as part of the string.
    */
   public String getErrorInfo()

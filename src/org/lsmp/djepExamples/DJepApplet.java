@@ -49,6 +49,13 @@ import java.awt.event.ActionEvent;
 * are also allowed.
 */
 public class DJepApplet extends Applet implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2026659445630529741L;
+	/**
+	 * 
+	 */
 	/** Main JEP object */
 	DJep j;	
 	/** Input equation. */

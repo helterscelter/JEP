@@ -19,6 +19,7 @@ import java.awt.*;
  * in GraphCanvas class.
  */
 public class FunctionPlotter extends Applet {
+	private static final long serialVersionUID = -27867883051236035L;
 
 	/** The expression field */
 	private java.awt.TextField exprField;

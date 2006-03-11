@@ -11,6 +11,8 @@ import java.util.Hashtable;
 import org.nfunk.jep.function.PostfixMathCommandI;
 public class FunctionTable extends Hashtable
 {
+	private static final long serialVersionUID = -1192898221311853572L;
+
 	public FunctionTable()
 	{
 		

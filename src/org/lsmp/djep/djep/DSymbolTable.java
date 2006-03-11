@@ -15,6 +15,9 @@ import java.util.*;
  * Created on 23-Nov-2003
  */
 public class DSymbolTable extends XSymbolTable {
+	private static final long serialVersionUID = 6350706295032274871L;
+
+
 	public DSymbolTable(VariableFactory varFac)
 	{
 		super(varFac);

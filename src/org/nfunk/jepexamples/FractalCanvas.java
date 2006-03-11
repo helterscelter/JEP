@@ -20,6 +20,7 @@ import org.nfunk.jep.evaluation.*;
 * This class performs the drawing of the fractal.
 */
 public class FractalCanvas extends Canvas {
+	private static final long serialVersionUID = -593341831485283712L;
 
 	private int scaleX, scaleY;
 

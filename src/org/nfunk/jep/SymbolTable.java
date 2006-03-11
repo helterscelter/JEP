@@ -67,6 +67,7 @@ import java.util.*;
  */ 
 public class SymbolTable extends Hashtable
 {
+	private static final long serialVersionUID = 1127787896437151144L;
 	private VariableFactory vf;
 	/** SymbolTable should always be constructed an associated variable factory. */
 	public SymbolTable(VariableFactory varFac)
