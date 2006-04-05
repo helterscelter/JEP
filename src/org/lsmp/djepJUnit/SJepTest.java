@@ -58,6 +58,22 @@ public class SJepTest extends TestCase {
 		assertEquals("<"+msg+">",expected,actual);
 		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
 	}
+	
+	public void assertPolynomialEquals(String s1,String s2) throws ParseException
+	{
+		Node n1= j.parse(s1);
+		PNodeI p1 = pc.createPoly(n1);
+		PNodeI e1 = p1.expand();
+		Node n2 = j.parse(s2);
+		PNodeI p2 = pc.createPoly(n2);
+		PNodeI e2 = p2.expand();
+		if(e1.equals(e2)){
+			System.out.println("Sucess: \""+s1+"\" equals \""+s2+"\"");
+		}else{
+			System.out.println("Error: \""+s1+"\" is not equal to \""+s2+"\"");
+			assertTrue("<"+s1+"> should be equal to <"+s2+"> it is not",false);
+		}
+	}
 	/** just test JUnit working OK */
 	public void testGood()
 	{
@@ -529,6 +545,10 @@ public class SJepTest extends TestCase {
 		System.out.println(c.toString(format,true));
 	}
 
+	public void testSimpleEquals() throws ParseException
+	{
+		assertPolynomialEquals("a+b-(c+d)","(a+b)-c-d");
+	}
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)
