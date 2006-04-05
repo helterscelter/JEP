@@ -44,7 +44,7 @@ public class Polynomial extends AbstractPNode {
 	public PNodeI sub(PNodeI node) throws ParseException
 	{
 		if(node instanceof Polynomial)
-			return this.add((Polynomial) node);
+			return this.sub((Polynomial) node);
 			
 		MutiablePolynomial mp = this.toMutiablePolynomial();
 		mp.add(node.negate());
