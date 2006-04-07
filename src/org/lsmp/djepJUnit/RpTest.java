@@ -232,6 +232,7 @@ public class RpTest extends TestCase {
 		rpTest2(new String[]{"x=0.5","cos(x)^2+sin(x)^2"});
 //		rpTest2(new String[]{"x=0.5","sec(x)","cosec(x)","cot(x)"});
 	}
+	
 /*	public void testSimpleSum() throws ParseException
 	{
 		valueTest("1+2",3);		
