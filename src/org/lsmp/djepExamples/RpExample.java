@@ -44,6 +44,32 @@ public class RpExample {
 //		System.out.println("dim(z) "+((MatrixVariableI) j.getVar("z")).getDimensions());
 	}
 
+	public static void extendedPrint(RpCommandList list) throws ParseException
+	{
+		int num = list.getNumCommands();
+		for(int i=0;i<num;++i)
+		{
+			RpCommand com=list.getCommand(i);
+			int type = com.getType();
+			int ref = com.getRef();
+			if(type == RpEval.CONST) {
+				double val = com.getConstantValue();
+				System.out.println("Constant\t"+val+"\t"+ref);
+			}
+			else if(type == RpEval.VAR) {
+				Variable var = com.getVariable();
+				System.out.println("Variable\t"+var.toString()+"\t"+ref);
+			}
+			else if(type == RpEval.FUN) {
+				String name = com.getFunction();
+				System.out.println("Function\t"+name+"\t"+ref);
+			}
+			else {
+				System.out.println("Operator\t"+com.toString());
+			}
+		}
+	}
+
 	public static void doStuff(String str)	{
 		try	{
 			Node node = j.parse(str);
@@ -53,11 +79,13 @@ public class RpExample {
 			double res = rpe.evaluate(list);
 
 			// conversion to String
-			System.out.println(str+"\nres " + res);
+			System.out.println("Expression:\t"+str+"\nresult\t" + res);
 			
 			// List of commands
-			System.out.println("Commands");
-			System.out.println(list.toString());
+			System.out.println("Commands:");
+			//System.out.println(list.toString());
+			extendedPrint(list);
+			System.out.println();
 		}
 		catch(ParseException e) { System.out.println("Parse error "+e.getMessage()); }		
 		catch(Exception e) { System.out.println("evaluation error "+e.getMessage()); e.printStackTrace(); }		
@@ -74,11 +102,13 @@ public class RpExample {
 				double res = rpe.evaluate(list);
 
 				// conversion to String
-				System.out.println(str[i]+"\nres " + res);
+				System.out.println("Expression "+i+":\t"+str[i]+"\nresult\t" + res);
 			
 				// List of commands
-				System.out.println("Commands");
-				System.out.println(list.toString());
+				System.out.println("Commands:");
+				//System.out.println(list.toString());
+				extendedPrint(list);
+				System.out.println();
 			}
 
 		}

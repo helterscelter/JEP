@@ -110,6 +110,7 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Apr 07 06 rjm - Added several functions to allow interegation of command lists
 Apr 04 06 rjm - Fixed bug with conversion of (a+b)-(c+d) to polynomial in sjep.
 Mar 11 06 rjm - Added serial version tags where needed
 Mar 4  06 rjm - fixed bug in SJep 2x+x now correctly simplifies to 3x.

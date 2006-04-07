@@ -56,7 +56,7 @@ public final class RpEval implements ParserVisitor {
 	private OperatorSet opSet;
 	private ScalerStore scalerStore = new ScalerStore();
 	/** Contains the constant values **/
-	private double constVals[] = new double[0];
+	double constVals[] = new double[0];
 
 	/** Temporary holder for command list used during compilation */
 	private RpCommandList curCommandList;
@@ -68,37 +68,37 @@ public final class RpEval implements ParserVisitor {
 	private RpEval() {}
 	
 	/** Index for each command */
-	static final short CONST = 0;
-	static final short VAR = 1;
+	public static final short CONST = 0;
+	public static final short VAR = 1;
 
-	static final short ADD = 2;
-	static final short SUB = 3;
-	static final short MUL = 4;
+	public static final short ADD = 2;
+	public static final short SUB = 3;
+	public static final short MUL = 4;
 	
-	static final short DIV = 5;
-	static final short MOD = 6;
-	static final short POW = 7;
+	public static final short DIV = 5;
+	public static final short MOD = 6;
+	public static final short POW = 7;
 
-	static final short AND = 8;
-	static final short OR  = 9;
-	static final short NOT = 10;
+	public static final short AND = 8;
+	public static final short OR  = 9;
+	public static final short NOT = 10;
 
-	static final short LT = 11;
-	static final short LE = 12;
-	static final short GT = 13;
-	static final short GE = 14;
-	static final short NE = 15;
-	static final short EQ = 16;
+	public static final short LT = 11;
+	public static final short LE = 12;
+	public static final short GT = 13;
+	public static final short GE = 14;
+	public static final short NE = 15;
+	public static final short EQ = 16;
 	
-	static final short LIST = 17;
-	static final short DOT = 18;
-	static final short CROSS = 19;
+	public static final short LIST = 17;
+	public static final short DOT = 18;
+	public static final short CROSS = 19;
 
-	static final short ASSIGN = 20;
-	static final short VLIST = 21;
-	static final short MLIST = 22;
-	static final short FUN = 23;
-	static final short UMINUS = 24;
+	public static final short ASSIGN = 20;
+	public static final short VLIST = 21;
+	public static final short MLIST = 22;
+	public static final short FUN = 23;
+	public static final short UMINUS = 24;
 	
 	/** Standard functions **/
 	
@@ -233,6 +233,16 @@ public final class RpEval implements ParserVisitor {
 		/** assign a variable to stack value
 		 * @param i index of variable */
 		abstract void assign(int i);
+		Variable getVariable(int ref)
+		{
+			for(Enumeration en=varRefs.keys();en.hasMoreElements();)
+			{
+				Variable var = (Variable) en.nextElement();
+				Integer index = (Integer) varRefs.get(var);
+				if(index.intValue()==ref) return var;
+			}
+			return null;
+		}
 	}
 
 	private final class ScalerStore extends ObjStore {
@@ -379,7 +389,7 @@ public final class RpEval implements ParserVisitor {
 	 */
 	public final RpCommandList compile(Node node) throws ParseException
 	{
-		curCommandList = new RpCommandList();
+		curCommandList = new RpCommandList(this);
 		node.jjtAccept(this,null);
 		scalerStore.alloc();
 		return curCommandList;
@@ -566,7 +576,7 @@ public final class RpEval implements ParserVisitor {
 		int num = comList.getNumCommands();
 		for(short commandNum=0;commandNum<num;++commandNum)
 		{
-			RpCommandList.RpCommand command = comList.commands[commandNum];
+			RpCommand command = comList.commands[commandNum];
 			short aux1 = command.aux1;
 			switch(command.command)
 			{
@@ -646,5 +656,37 @@ public final class RpEval implements ParserVisitor {
 	public void cleanUp()
 	{
 		scalerStore.cleanUp();
+	}
+	
+	public Variable getVariable(int ref)
+	{
+		return scalerStore.getVariable(ref);
+	}
+	
+	public String getFunction(short ref)
+	{
+			switch(ref) {
+			case SIN: return "sin";
+			case COS: return "cos";
+			case TAN: return "tan";
+			case ASIN: return "asin";
+			case ACOS: return "acos";
+			case ATAN: return "atan";
+			case SINH: return "sinh";
+			case COSH: return "cosh";
+			case TANH: return "tanh";
+			case ASINH: return "asinh";
+			case ACOSH: return "acosh";
+			case ATANH: return "atanh";
+			case ABS: return "abs";
+			case EXP: return "exp";
+			case LOG: return "log";
+			case LN: return "ln";
+			case SQRT: return "sqrt";
+			case SEC: return "sec";
+			case COSEC: return "cosec";
+			case COT: return "cot";
+			}
+			return null;
 	}
 }
