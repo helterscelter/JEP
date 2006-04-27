@@ -1,19 +1,22 @@
 <!--
 =============================================================================
+
   build.xml (ant build script)
 
   JEP - Java Expression Parser
   http://www.singularsys.com/jep
 
   Setting up your system to compile JEP:
-  - Set the JAVACCHOME environment variable to the location of the
+  
+  - Required: Set the JAVACCHOME environment variable to the location of the
     library directory of JavaCC (e.g. C:\apps\javacc\bin\lib)
-  - This build file ensures compatibility with Java 1.2 by using the
-    bootclasspath option for cross-compilation when compiling. For this
-    a Java 1.2 JDK needs to be available on the system. The location
-    is set in the JDK1_2HOME environment variable (e.g. C:\jdk1.2.2).
-    If you want to compile without ensuring 1.2 compatibility, you can
-    remove the "target" and "bootclasspath" options from the javac target.
+  
+  - Optional: This build file can ensure API compatibility with Java 1.2 by 
+    using the bootclasspath option for cross-compilation when compiling. For 
+    this a Java 1.2 JRE needs to be available on the system. The location 
+    of the JRE is set in the JRE1_2HOME environment variable 
+    (e.g. C:\jre1.2.2). The file {JRE1_2HOME}/lib/rt.jar must exist.
+
 =============================================================================
 -->
 
@@ -25,7 +28,7 @@
 	<!-- library locations -->
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
-	<property name="jdk1.2home" value="${env.JDK1_2HOME}"/>
+	<property name="oldjrehome" value="${env.JRE1_2HOME}"/>
 	<!-- set global properties for this build -->
 	<property name="src"     value="src"/>
 	<property name="bin"     value="bin"/>
@@ -35,9 +38,10 @@
 	<property name="lib"     value="lib"/>
 	<property name="jar"     value="${app.name}-${version}.jar"/>
 	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
-	<property name="src.tar.gz" value="${app.name}-${version}-src.tar.gz"/>
-	<property name="disttemp"   value="disttemp"/>
-	<property name="classpath" value="${lib}/junit.jar;${lib}/Jama-1.0.2.jar"/>
+	<property name="src.tar.gz"    value="${app.name}-${version}-src.tar.gz"/>
+	<property name="disttemp"      value="disttemp"/>
+	<property name="classpath"     value="${lib}/junit.jar;${lib}/Jama-1.0.2.jar"/>
+	<property name="bootclasspath" value="${oldjrehome}/lib/rt.jar"/>
 	<!-- <property name="website" value="website"/> -->
 
 	<taskdef name="jjtree"
@@ -110,19 +114,40 @@
       
 <!--======================================================================-->
 <!-- COMPILE -->
-	<target name="compile" depends="javacc">
+	
+	<!-- Compiles with or without compatibility ensurance-->
+	<target name="compile" depends="compile-with-ce, compile-without-ce">
+	</target>
+	
+	<!-- Compiles without ensuring compatibility if JRE1_2HOME is not set -->
+	<target name="compile-without-ce" depends="javacc" unless="${env.JRE1_2HOME}">
+		<echo message="Compiling without ensuring compatibility"/>
 		<!-- Create the build directory -->
 		<mkdir dir="${build}"/>
 
 		<!-- Compile the java code from ${src} into ${build} -->
-<!--		   includes="org/nfunk/**"-->
 		<javac srcdir="${src}"
 		       destdir="${build}"
 		       classpath="${classpath}"
-			   source="1.2"
-			   target="1.2"
-			   bootclasspath="${jdk1.2home}/jre/lib/rt.jar"/>
+		       source="1.2"
+			   target="1.2"/>
 	</target>
+	
+	<!-- Compiles with ensuring compatibility if JRE1_2HOME is set -->
+	<target name="compile-with-ce" depends="javacc" if="${env.JRE1_2HOME}">
+		
+		<!-- Create the build directory -->
+		<mkdir dir="${build}"/>
+
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}"
+		       destdir="${build}"
+		       classpath="${classpath}"
+		       source="1.2"
+			   target="1.2"
+		       bootclasspath="${bootclasspath}"/>
+	</target>
+	
 
 
 <!--======================================================================-->
