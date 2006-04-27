@@ -116,6 +116,7 @@ public class JEPTest extends TestCase {
 		try {
 			reader = new BufferedReader(new FileReader(fileName));
 		} catch (Exception e) {
+			Assert.assertTrue(false);
 			println("File \""+fileName+"\" not found");
 			return;
 		}
