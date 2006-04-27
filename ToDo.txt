@@ -5,7 +5,8 @@
 - switch to JavaCC 4.0
 - add more JUnit tests
 - check applets, update if necessary
-- check Jama license
+- check Jama license, check Jama compatibility
+- change pricing
 
 == Phone call =======================================================
   - pricing probably down to $500 for JEP license
