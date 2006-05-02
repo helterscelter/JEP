@@ -120,12 +120,12 @@ public class PConstant extends AbstractPNode {
 	}
 	public boolean isPositive() {
 		try	{
-			return ((Double) value).compareTo(pc.zero) > 0;
+			return ((Double) value).compareTo((Double) pc.zero) > 0;
 		} catch(Exception e) { return false; }
 	}
 	public boolean isNegative() {
 		try	{
-			return ((Double) value).compareTo(pc.zero) < 0;
+			return ((Double) value).compareTo((Double) pc.zero) < 0;
 		} catch(Exception e) { return false; }
 	}
 	public boolean isInteger() {
