@@ -26,6 +26,8 @@ public class VOperatorSet extends OperatorSet {
 		OP_DOT.setPFMC(new MDot());
 		OP_CROSS.setPFMC(new ExteriorProduct());
 		OP_LIST.setPFMC(new VList());
+		OP_ELEMENT.setPFMC(new ArrayAccess());
+//		OP_RANGE.setPFMC(new VRange());
 	}
 
 	/** When set the multiplication of vectors and matricies will be element by element.

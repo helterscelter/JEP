@@ -21,6 +21,15 @@ import org.nfunk.jep.function.PostfixMathCommand;
  * m = [[1,2],[3,4]];
  * ele(m,[2,2]); // return 4
  * </code>
+ * 
+ * New parser feature allow a[] notation to be used.
+ * <code>
+ * a=[1,2,3,4];
+ * a[3]; // returns 3
+ * b=[[1,2],[3,4]];
+ * b[1,2]; // returns 2
+ * </code>
+ * 
  * @author Rich Morris
  * Created on 15-Nov-2003
  */
@@ -50,6 +59,18 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				Object val = ((MVector) param1).getEle(index);
 				res.setEle(0,val); 
 			}
+			else if(param2 instanceof MVector)
+			{
+				MVector vec = (MVector) param2;
+				if(vec.getDim().equals(Dimensions.ONE))
+				{
+					int d1 = ((Number) vec.getEle(0)).intValue();
+					if( d1<1 || d1 > ((MVector) param1).getNumEles())
+						throw new ParseException("ArrayAccess: array indices "+d1+" out of range 1.."+param1.getDim());
+					Object val = ((MVector) param1).getEle(d1-1);
+					res.setEle(0,val);
+				}
+			}
 			else throw new ParseException("Bad second argument to ele, expecting a double "+param2.toString());
 		}
 		else if(param1 instanceof Matrix)
@@ -59,9 +80,13 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				MVector vec = (MVector) param2;
 				if(vec.getDim().equals(Dimensions.TWO))
 				{
-					Number d1 = (Number) vec.getEle(0);
-					Number d2 = (Number) vec.getEle(1);
-					Object val = ((Matrix) param1).getEle(d1.intValue()-1,d2.intValue()-1);
+					int d1 = ((Number) vec.getEle(0)).intValue();
+					int d2 = ((Number) vec.getEle(1)).intValue();
+					if( d1<1 || d1 > ((Matrix) param1).getNumRows()
+					 ||	d2<1 || d2 > ((Matrix) param1).getNumCols() )
+						throw new ParseException("ArrayAccess: array indices "+d1+", "+d2+" out of range 1.."+param1.getDim());
+
+					Object val = ((Matrix) param1).getEle(d1-1,d2-1);
 					res.setEle(0,val);
 				}
 			}
@@ -95,6 +120,19 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				stack.push(val);
 				return; 
 			}
+			else if(param2 instanceof MVector)
+			{
+				MVector vec = (MVector) param2;
+				if(vec.getDim().equals(Dimensions.ONE))
+				{
+					int d1 = ((Number) vec.getEle(0)).intValue();
+					if( d1<1 || d1 > ((MVector) param1).getNumEles())
+						throw new ParseException("ArrayAccess: array indices "+d1+" out of range 1.."+((MVector) param1).getDim());
+					Object val = ((MVector) param1).getEle(d1-1);
+					stack.push(val);
+					return; 
+				}
+			}
 			throw new ParseException("Bad second argument to ele, expecting a double "+param2.toString());
 		}
 		else if(param1 instanceof Matrix)
@@ -104,9 +142,12 @@ public class Ele extends PostfixMathCommand implements BinaryOperatorI {
 				MVector vec = (MVector) param2;
 				if(vec.getDim().equals(Dimensions.TWO))
 				{
-					Number d1 = (Number) vec.getEle(0);
-					Number d2 = (Number) vec.getEle(1);
-					Object val = ((Matrix) param1).getEle(d1.intValue()-1,d2.intValue()-1);
+					int d1 = ((Number) vec.getEle(0)).intValue();
+					int d2 = ((Number) vec.getEle(1)).intValue();
+					if( d1<1 || d1 > ((Matrix) param1).getNumRows()
+					 ||	d2<1 || d2 > ((Matrix) param1).getNumCols() )
+						throw new ParseException("ArrayAccess: array indices "+d1+", "+d2+" out of range 1.."+((Matrix) param1).getDim());
+					Object val = ((Matrix) param1).getEle(d1-1,d2-1);
 					stack.push(val);
 					return; 
 				}

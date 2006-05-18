@@ -15,6 +15,7 @@ package org.lsmp.djep.vectorJep;
 public class Dimensions
 {
 	private int dims[];
+	public static final Dimensions UNKNOWN = new Dimensions(-1);
 	public static final Dimensions ONE = new Dimensions(1);
 	public static final Dimensions TWO = new Dimensions(2);
 	public static final Dimensions THREE = new Dimensions(3);

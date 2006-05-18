@@ -49,7 +49,7 @@ public class MatrixConsole extends DJepConsole
 
 	public void printIntroText()
 	{
-		println("MatrixJep: advanced vector and matrix handeling");
+		println("MatrixJep: advanced vector and matrix handling");
 		super.printStdHelp();
 	}
 

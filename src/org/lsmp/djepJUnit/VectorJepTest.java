@@ -143,4 +143,16 @@ public class VectorJepTest extends JepTest {
 	    valueTest("m=[1,2,3]","[1.0,2.0,3.0]");
 	    valueTest("GenMat(3,ele(m,n)*10,n)","[10.0,20.0,30.0]");
 	}
+	
+	public void testArrayAccess() throws Exception {
+	    System.out.println("\nTests array access on lhs and rhs using the a[3] notation");
+		valueTest("a=[1,2,3]","[1.0,2.0,3.0]");
+		valueTest("a[2]=4",4);
+		valueTest("b=a[2]",4);
+		valueTest("b",4);
+		valueTest("c=[[1,2],[3,4]]","[[1.0,2.0],[3.0,4.0]]");
+		valueTest("c[1,2]=5",5);
+		valueTest("c","[[1.0,5.0],[3.0,4.0]]");
+		valueTest("c[2,1]",3);
+	}
 }

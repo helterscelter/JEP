@@ -54,6 +54,12 @@ public class MAssign extends Assign implements MatrixSpecialEvaluationI,SpecialP
 			var.setMValue(rhsVal);
 			return rhsVal;
 		}
+		else if(lhsNode instanceof ASTMFunNode && ((ASTMFunNode) lhsNode).getPFMC() instanceof LValueI)
+		{
+			((LValueI) ((ASTMFunNode) lhsNode).getPFMC()).set(visitor,lhsNode,rhsVal);
+			return rhsVal;
+		}
+
 		throw new ParseException("Assignment should have a variable for the lhs.");
 	}
 
@@ -68,13 +74,16 @@ public class MAssign extends Assign implements MatrixSpecialEvaluationI,SpecialP
 
 		if(node.jjtGetNumChildren()!=2) throw new ParseException("Operator "+node.getOperator().getName()+" must have two elements, it has "+children.length);
 		Dimensions rhsDim = children[1].getDim();
-		MatrixVariable var = (MatrixVariable) ((ASTVarNode) children[0]).getVar();
-		var.setDimensions(rhsDim);
-		Node copy =mjep.deepCopy(children[1]);
-		Node simp = mjep.simplify(copy);
-		//Node preproc = (Node) simp.jjtAccept(this,data);
-		var.setEquation(simp);
-		
+		if(children[0] instanceof ASTVarNode)
+		{
+			MatrixVariable var = (MatrixVariable) ((ASTVarNode) children[0]).getVar();
+			var.setDimensions(rhsDim);
+			Node copy =mjep.deepCopy(children[1]);
+			Node simp = mjep.simplify(copy);
+			//Node preproc = (Node) simp.jjtAccept(this,data);
+			var.setEquation(simp);
+		}
+		//TODO cope with ArrayAccess. Should really set the array access equations
 		return (ASTMFunNode) nf.buildOperatorNode(node.getOperator(),children,rhsDim);
 	}
 

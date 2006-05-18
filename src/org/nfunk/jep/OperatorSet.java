@@ -53,7 +53,8 @@ public class OperatorSet {
 	protected Operator OP_DOT = new Operator(".",new Dot()); 
 	protected Operator OP_CROSS = new Operator("^^",new Cross()); 
 	protected Operator OP_LIST = new Operator("LIST",new List()); 
-	
+	protected Operator OP_ELEMENT = new Operator("[]",null);
+//	protected Operator OP_RANGE = new Operator(":",new Range());
 	public OperatorSet()
 	{
 	}
@@ -64,7 +65,7 @@ public class OperatorSet {
 		OP_GT,OP_LT,OP_GE,OP_LE,OP_EQ,OP_NE,OP_AND,OP_OR,OP_NOT,
 		OP_ADD,OP_SUBTRACT,OP_UMINUS,OP_MULTIPLY,
 		OP_DIVIDE,OP_MOD,OP_POWER,
-		OP_ASSIGN,OP_DOT,OP_CROSS,OP_LIST};
+		OP_ASSIGN,OP_DOT,OP_CROSS,OP_LIST,OP_ELEMENT /*,OP_RANGE */};
 		return ops;
 	}
 
@@ -97,5 +98,7 @@ public class OperatorSet {
 	public Operator getDot() {return OP_DOT;	}
 	public Operator getCross() {return OP_CROSS;	}
 	public Operator getList() {return OP_LIST;	}
+	public Operator getElement() {return OP_ELEMENT;	}
+	//public Operator getRange() {return OP_RANGE;	}
 
 }

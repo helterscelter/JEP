@@ -7,8 +7,11 @@ import org.nfunk.jep.*;
 /**
  * An assignment operator so we can do
  * x=3+4.
- * This function implements the SpecialEvaluationI interface
+ * This function implements the CallbackEvaluationI interface
  * so that it handles setting the value of a variable. 
+ * 
+ * Any Variable or function which implements the LValueI can appear on the left hand side of the equation.
+ *  
  * @author Rich Morris
  * Created on 18-Nov-2003
  */
@@ -37,6 +40,11 @@ public class Assign extends PostfixMathCommand implements CallbackEvaluationI {
 			ASTVarNode vn = (ASTVarNode) lhsNode;
 			Variable var = vn.getVar();
 			var.setValue(rhsVal);
+			return rhsVal;
+		}
+		else if(lhsNode instanceof ASTFunNode && ((ASTFunNode) lhsNode).getPFMC() instanceof LValueI)
+		{
+			((LValueI) ((ASTFunNode) lhsNode).getPFMC()).set(pv,lhsNode,rhsVal);
 			return rhsVal;
 		}
 		throw new ParseException("Assignment should have a variable for the lhs.");

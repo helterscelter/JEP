@@ -43,7 +43,8 @@ public class XOperatorSet extends OperatorSet {
 	OP_DOT = new XOperator(o.getDot(),XOperator.BINARY+XOperator.LEFT); // 
 	OP_CROSS = new XOperator(o.getCross(),XOperator.BINARY+XOperator.LEFT); // 
 	OP_LIST = new XOperator(o.getList(),XOperator.NARY+XOperator.RIGHT); // 
-
+	OP_ELEMENT = new XOperator(o.getElement(),XOperator.NARY+XOperator.RIGHT); // 
+//	OP_RANGE = new XOperator(o.getRange(),XOperator.NARY+XOperator.RIGHT); //
 	setPrecedenceTable(new Operator[][] 
 		{	{OP_UMINUS},
 			{OP_NOT},

@@ -402,6 +402,8 @@ public class JepTest extends TestCase {
 		JEP parser = new JEP();
 
 		parser.addVariable("AB",12);
+		parser.addVariable("graph",new Object());
+		parser.addVariable("graph1",(Double) null);
 		parser.setAllowAssignment(true);
 		parser.parseExpression("AB=3"); // AB = 8
 		System.out.println("AB=3"+parser.getValue());

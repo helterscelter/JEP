@@ -11,9 +11,9 @@ and its component JJTree. JJTree processes the .jjt file and
 generates the .jj file. This file is then used be JavaCC to
 generate the final java classes.
 
-Knowledge of parser generation is definetly beneficial if you
+Knowledge of parser generation is definitely beneficial if you
 are planning to make changes to this file. Although many parts
-are self explanitory, it is helpful to know how the grammar is
+are self explanatory, it is helpful to know how the grammar is
 handled by JJTree and JavaCC.
 
 You can follow the structure of the grammar by starting in the
@@ -61,6 +61,8 @@ options {
 //	BUILD_NODE_FILES=false;
 	STATIC = false;
 //	DEBUG_TOKEN_MANAGER = true;
+//	DEBUG_PARSER = true;
+//	DEBUG_LOOKAHEAD = true;
 }
 
 
@@ -324,11 +326,12 @@ TOKENS
 |	< MOD:  "%"  >
 |	< NOT:  "!"  >
 |	< POWER:"^"  >
-|	< CROSS:"^^"  > // rjm
+|	< CROSS:"^^" > // rjm
 |	< LSQ:	"["  >	// rjm
 |	< RSQ:	"]"	 >	// rjm
 |	< LRND:	"("  >	// rjm
 |	< RRND:	")"	 >	// rjm
+|	< COLON: ":" >	// rjm
 }
 
 
@@ -360,16 +363,16 @@ ASTStart Start() #Start :
 
 void Expression() : {}
 {
-	LOOKAHEAD(3)		// need to prevent javacc warning with left recusion
+	LOOKAHEAD(LValue() <ASSIGN>)		// need to prevent javacc warning with left recusion
 	AssignExpression() // rjm changes from OrExpresion
 	|
-	OrExpression()
+	RightExpression()
 }
 
 void AssignExpression() : {} // rjm addition
 {
 	
-	( Variable() <ASSIGN> Expression()
+	( LValue() <ASSIGN> Expression()
 		{
 			if (!jep.getAllowAssignment()) throw new ParseException(
         	"Syntax Error (assignment not enabled)");
@@ -379,6 +382,14 @@ void AssignExpression() : {} // rjm addition
 	  )
 	  #FunNode(2)
 }
+
+void RightExpression() :
+{
+}
+{
+	OrExpression()
+}
+
 void OrExpression() :
 {
 }
@@ -579,16 +590,21 @@ void UnaryExpressionNotPlusMinus() :
 }
 {
 	AnyConstant()
-|
-	( LOOKAHEAD({ (getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
+	|
+	LOOKAHEAD(ArrayAccess())
+	ArrayAccess()
+	|
+	LOOKAHEAD({ (getToken(1).kind == INDENTIFIER1 || getToken(1).kind == INDENTIFIER2) &&
 				  jep.funTab.containsKey(getToken(1).image) })
-		Function()
-		|
-		Variable()
-	)
+	Function()
+	|
+	Variable()
 	|
 	<LRND> Expression() <RRND>
 	|
+//	LOOKAHEAD(<LSQ> Expression() <COLON>)
+//	RangeExpression()
+//	|
 	ListExpression()
 }
 
@@ -597,10 +613,38 @@ void ListExpression() #FunNode:
 	jjtThis.setOperator(opSet.getList());
 }
 {
-	( <LSQ> Expression() ( <COMMA> Expression() )* <RSQ> ) 
+	<LSQ> Expression() ( <COMMA> Expression() )* <RSQ> 
 }
 
+/*
+void RangeExpression()  #FunNode:
+{
+	jjtThis.setOperator(opSet.getRange());
+}
+{
+	<LSQ> Expression() ( <COLON> Expression() )+ <RSQ>
+}
+*/
 
+void LValue() :
+{
+}
+{
+	LOOKAHEAD(ArrayAccess())
+	ArrayAccess()
+	| 	Variable()
+}
+
+void ArrayAccess() : 
+{
+}
+{
+	Variable() ListExpression()
+	{
+     jjtThis.setOperator(opSet.getElement());
+	} #FunNode(2)
+
+}
 void Variable() :
 {
 	String identString = "";

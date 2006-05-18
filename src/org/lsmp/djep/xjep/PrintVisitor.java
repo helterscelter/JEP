@@ -143,262 +143,263 @@ public class PrintVisitor extends ErrorCatchingVisitor
 
 /***************** visitor methods ********************************/
 
-/** print the node with no brackets. */
-private void printNoBrackets(Node node) throws ParseException
-{
-	node.jjtAccept(this,null);
-}
-
-/** print a node surrounded by brackets. */
-private void printBrackets(Node node) throws ParseException
-{
-	sb.append("(");
-	printNoBrackets(node);
-	sb.append(")");
-}
-
-/** print a unary operator. */
-private Object visitUnary(ASTFunNode node, Object data) throws ParseException
-{
-	Node rhs = node.jjtGetChild(0);
-
-	// now print the node
-	sb.append(node.getOperator().getSymbol());
-	// now the rhs
-	if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
-		printBrackets(rhs);	// -(-3) -(1+2) or !(-3)
-	else
-		printNoBrackets(rhs);
+	/** print the node with no brackets. */
+	private void printNoBrackets(Node node) throws ParseException
+	{
+		node.jjtAccept(this,null);
+	}
 	
-	return data;
-}
-
-private boolean testLeft(XOperator top,Node lhs)
-{
-	if((mode & FULL_BRACKET)!= 0)
+	/** print a node surrounded by brackets. */
+	private void printBrackets(Node node) throws ParseException
 	{
-		return true;
+		sb.append("(");
+		printNoBrackets(node);
+		sb.append(")");
 	}
-	else if(lhs instanceof ASTFunNode && ((ASTFunNode) lhs).isOperator())
-	{
-		XOperator lhsop = (XOperator) ((ASTFunNode) lhs).getOperator();
-		if(top == lhsop)
-		{
-			if(top.getBinding() == XOperator.LEFT	// (1-2)-3 -> 1-2-3
-				&& top.isAssociative() )
-					return false;
-			else if(top.useBindingForPrint())
-					return false;
-			else
-					return true;				// (1=2)=3 -> (1=2)=3
-		}
-		else if(top.getPrecedence() == lhsop.getPrecedence())
-		{
-			if(lhsop.getBinding() == XOperator.LEFT && lhsop.isAssociative())
-					return false;
-			else if(lhsop.useBindingForPrint())
-					return false;
-			else	return true;
-		} 				// (1=2)=3 -> (1=2)=3
-			
-		else if(top.getPrecedence() > lhsop.getPrecedence()) // (1*2)+3
-					return false;
-		else
-					return true;
-	}
-	else
-		return false;
-
-}
-
-private boolean testMid(XOperator top,Node rhs)
-{
-	if((mode & FULL_BRACKET)!= 0)
-	{
-		return true;
-	}
-	else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
-	{
-		XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
-		if(top == rhsop)
-		{
-			return false;
-		}
-		else if(top.getPrecedence() == rhsop.getPrecedence())
-		{
-			return false;	// a+(b-c) -> a+b-c
-		}
-		else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
-					return false;
-		else
-					return true;
-	}
-	else
-		return false;
-}
-
-private boolean testRight(XOperator top,Node rhs)
-{
-	if((mode & FULL_BRACKET)!= 0)
-	{
-		return true;
-	}
-	else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
-	{
-		XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
-		if(top == rhsop)
-		{
-			if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
-				|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
-					return false;
-			return true;				// 1-(2+3) -> 1-(2-3)
-		}
-		else if(top.getPrecedence() == rhsop.getPrecedence())
-		{
-			if(top.getBinding() == XOperator.LEFT && top.isAssociative() )			// 1+(2-3) -> 1+2-3)
-				return false;	// a+(b-c) -> a+b-c
-			return true;		// a-(b+c) -> a-(b+c)
-		}
-		else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
-					return false;
-		else
-					return true;
-	}
-	else
-		return false;
-}
-
-private Object visitNaryBinary(ASTFunNode node,XOperator op) throws ParseException
-{
-	int n = node.jjtGetNumChildren();
-	for(int i=0;i<n;++i)
-	{
-		if(i>0) sb.append(op.getSymbol());
-		
-		Node arg = node.jjtGetChild(i);
-		if(testMid(op,arg))
-			printBrackets(arg);
-		else
-			printNoBrackets(arg);
-	}
-	return null;
-}
-public Object visit(ASTFunNode node, Object data) throws ParseException
-{
-	if(!node.isOperator()) return visitFun(node);
-	if(node instanceof PrintRulesI)
-	{
-		((PrintRulesI) node).append(node,this);
-		return null;
-	}
-	if(node.getOperator()==null)
-	{
-		throw new ParseException("Null operator in print for "+node);
-	}
-	if(specialRules.containsKey(node.getOperator()))
-	{
-		((PrintRulesI) specialRules.get(node.getOperator())).append(node,this);
-		return null;
-	}
-	if(node.getPFMC() instanceof org.nfunk.jep.function.List)
-	{	
-		append("[");
-			for(int i=0;i<node.jjtGetNumChildren();++i)
-			{
-				if(i>0) append(",");
-				node.jjtGetChild(i).jjtAccept(this, null);
-			}
-			append("]");
-		return null;
-	}
-		
-	if(((XOperator) node.getOperator()).isUnary())
-		return visitUnary(node,data);
-
-	if(((XOperator) node.getOperator()).isBinary())
-	{
-		XOperator top = (XOperator) node.getOperator();
-		if(node.jjtGetNumChildren()!=2)
-			return visitNaryBinary(node,top);
-		Node lhs = node.jjtGetChild(0);
-		Node rhs = node.jjtGetChild(1);
 	
-		if(testLeft(top,lhs))
-			printBrackets(lhs);
-		else
-			printNoBrackets(lhs);
-		
+	/** print a unary operator. */
+	private Object visitUnary(ASTFunNode node, Object data) throws ParseException
+	{
+		Node rhs = node.jjtGetChild(0);
+	
 		// now print the node
 		sb.append(node.getOperator().getSymbol());
 		// now the rhs
-
-		if(testRight(top,rhs))
-			printBrackets(rhs);
+		if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
+			printBrackets(rhs);	// -(-3) -(1+2) or !(-3)
 		else
 			printNoBrackets(rhs);
-
+		
+		return data;
 	}
-	return null;
-}
-
-/** prints a standard function: fun(arg,arg) */
-private Object visitFun(ASTFunNode node) throws ParseException
-{
-	sb.append(node.getName()+"(");
-	for(int i=0;i<node.jjtGetNumChildren();++i)
+	
+	private boolean testLeft(XOperator top,Node lhs)
 	{
-		if(i>0) sb.append(",");
-		node.jjtGetChild(i).jjtAccept(this, null);
-	}
-	sb.append(")");
-
-	return null;
-}
-
-  public Object visit(ASTVarNode node, Object data) throws ParseException  {
-	sb.append(node.getName());
-	return data;
-  }
-
-  private FieldPosition fp = new FieldPosition(NumberFormat.FRACTION_FIELD);
-
-  /** Appends a formatted versions of val to the string buffer.
-   * 
-   * @param val The value to format
-   * @param sb1  The StingBuffer to append to
-   */
-  public void formatValue(Object val,StringBuffer sb1)
-  {
-	if(format != null)
-	{
-		if(val instanceof Number)
-			format.format(val,sb1,fp);
-		else if(val instanceof Complex)
+		if((mode & FULL_BRACKET)!= 0)
 		{
-			if((mode | COMPLEX_I) == COMPLEX_I)
-				sb1.append(((Complex) val).toString(format,true));
+			return true;
+		}
+		else if(lhs instanceof ASTFunNode && ((ASTFunNode) lhs).isOperator())
+		{
+			XOperator lhsop = (XOperator) ((ASTFunNode) lhs).getOperator();
+			if(top == lhsop)
+			{
+				if(top.getBinding() == XOperator.LEFT	// (1-2)-3 -> 1-2-3
+					&& top.isAssociative() )
+						return false;
+				else if(top.useBindingForPrint())
+						return false;
+				else
+						return true;				// (1=2)=3 -> (1=2)=3
+			}
+			else if(top.getPrecedence() == lhsop.getPrecedence())
+			{
+				if(lhsop.getBinding() == XOperator.LEFT && lhsop.isAssociative())
+						return false;
+				else if(lhsop.useBindingForPrint())
+						return false;
+				else	return true;
+			} 				// (1=2)=3 -> (1=2)=3
+				
+			else if(top.getPrecedence() > lhsop.getPrecedence()) // (1*2)+3
+						return false;
 			else
-				sb1.append(((Complex) val).toString(format));
+						return true;
+		}
+		else
+			return false;
+	
+	}
+	
+	private boolean testMid(XOperator top,Node rhs)
+	{
+		if((mode & FULL_BRACKET)!= 0)
+		{
+			return true;
+		}
+		else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
+		{
+			XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
+			if(top == rhsop)
+			{
+				return false;
+			}
+			else if(top.getPrecedence() == rhsop.getPrecedence())
+			{
+				return false;	// a+(b-c) -> a+b-c
+			}
+			else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
+						return false;
+			else
+						return true;
+		}
+		else
+			return false;
+	}
+	
+	private boolean testRight(XOperator top,Node rhs)
+	{
+		if((mode & FULL_BRACKET)!= 0)
+		{
+			return true;
+		}
+		else if(rhs instanceof ASTFunNode && ((ASTFunNode) rhs).isOperator())
+		{
+			XOperator rhsop = (XOperator) ((ASTFunNode) rhs).getOperator();
+			if(top == rhsop)
+			{
+				if(top.getBinding() == XOperator.RIGHT	// 1=(2=3) -> 1=2=3
+					|| top.isAssociative() )			// 1+(2-3) -> 1+2-3
+						return false;
+				return true;				// 1-(2+3) -> 1-(2-3)
+			}
+			else if(top.getPrecedence() == rhsop.getPrecedence())
+			{
+				if(top.getBinding() == XOperator.LEFT && top.isAssociative() )			// 1+(2-3) -> 1+2-3)
+					return false;	// a+(b-c) -> a+b-c
+				return true;		// a-(b+c) -> a-(b+c)
+			}
+			else if(top.getPrecedence() > rhsop.getPrecedence()) // 1+(2*3) -> 1+2*3
+						return false;
+			else
+						return true;
+		}
+		else
+			return false;
+	}
+	
+	private Object visitNaryBinary(ASTFunNode node,XOperator op) throws ParseException
+	{
+		int n = node.jjtGetNumChildren();
+		for(int i=0;i<n;++i)
+		{
+			if(i>0) sb.append(op.getSymbol());
+			
+			Node arg = node.jjtGetChild(i);
+			if(testMid(op,arg))
+				printBrackets(arg);
+			else
+				printNoBrackets(arg);
+		}
+		return null;
+	}
+	public Object visit(ASTFunNode node, Object data) throws ParseException
+	{
+		if(!node.isOperator()) return visitFun(node);
+		if(node instanceof PrintRulesI)
+		{
+			((PrintRulesI) node).append(node,this);
+			return null;
+		}
+		if(node.getOperator()==null)
+		{
+			throw new ParseException("Null operator in print for "+node);
+		}
+		if(specialRules.containsKey(node.getOperator()))
+		{
+			((PrintRulesI) specialRules.get(node.getOperator())).append(node,this);
+			return null;
+		}
+		if(node.getPFMC() instanceof org.nfunk.jep.function.List)
+		{	
+			append("[");
+				for(int i=0;i<node.jjtGetNumChildren();++i)
+				{
+					if(i>0) append(",");
+					node.jjtGetChild(i).jjtAccept(this, null);
+				}
+				append("]");
+			return null;
+		}
+			
+		if(((XOperator) node.getOperator()).isUnary())
+			return visitUnary(node,data);
+	
+		if(((XOperator) node.getOperator()).isBinary())
+		{
+			XOperator top = (XOperator) node.getOperator();
+			if(node.jjtGetNumChildren()!=2)
+				return visitNaryBinary(node,top);
+			Node lhs = node.jjtGetChild(0);
+			Node rhs = node.jjtGetChild(1);
+		
+			if(testLeft(top,lhs))
+				printBrackets(lhs);
+			else
+				printNoBrackets(lhs);
+			
+			// now print the node
+			sb.append(node.getOperator().getSymbol());
+			// now the rhs
+	
+			if(testRight(top,rhs))
+				printBrackets(rhs);
+			else
+				printNoBrackets(rhs);
+	
+		}
+		return null;
+	}
+
+	/** prints a standard function: fun(arg,arg) */
+	private Object visitFun(ASTFunNode node) throws ParseException
+	{
+		sb.append(node.getName()+"(");
+		for(int i=0;i<node.jjtGetNumChildren();++i)
+		{
+			if(i>0) sb.append(",");
+			node.jjtGetChild(i).jjtAccept(this, null);
+		}
+		sb.append(")");
+	
+		return null;
+	}
+
+	public Object visit(ASTVarNode node, Object data) throws ParseException  {
+		sb.append(node.getName());
+		return data;
+	}
+
+	public Object visit(ASTConstant node, Object data) {
+		Object val = node.getValue();
+		formatValue(val,sb);
+		return data;
+	}
+
+	private FieldPosition fp = new FieldPosition(NumberFormat.FRACTION_FIELD);
+
+	/** Appends a formatted versions of val to the string buffer.
+	 * 
+	 * @param val The value to format
+	 * @param sb1  The StingBuffer to append to
+	 */
+	public void formatValue(Object val,StringBuffer sb1)
+	{
+		if(format != null)
+		{
+			if(val instanceof Number)
+				format.format(val,sb1,fp);
+			else if(val instanceof Complex)
+			{
+				if((mode | COMPLEX_I) == COMPLEX_I)
+					sb1.append(((Complex) val).toString(format,true));
+				else
+					sb1.append(((Complex) val).toString(format));
+			}
+			else
+				sb1.append(val);
 		}
 		else
 			sb1.append(val);
 	}
-	else
-		sb1.append(val);
-  }
-
-  /** Returns a formated version of the value. */
-  public String formatValue(Object val)
-  {
-  	StringBuffer sb2 = new StringBuffer();
-  	formatValue(val,sb2);
-  	return sb2.toString();
-  }
-  public Object visit(ASTConstant node, Object data) {
-	Object val = node.getValue();
-	formatValue(val,sb);
-	return data;
-  }
+	
+	/** Returns a formated version of the value. */
+	public String formatValue(Object val)
+	{
+	  	StringBuffer sb2 = new StringBuffer();
+	  	formatValue(val,sb2);
+	  	return sb2.toString();
+	}
 	/**
 	 * Return the current print mode.
 	 */
@@ -429,22 +430,22 @@ private Object visitFun(ASTFunNode node) throws ParseException
 	{
 		this.format = format;
 	}
-/**
- * @return the maximum length printed per line
- */
-public int getMaxLen() {
-	return maxLen;
-}
-
-/**
- * Sets the maximum length printed per line.
- * If the value is not -1 then the string will be broken into chunks
- * each of which is less than the max length.
- * @param i the maximum length
- */
-public void setMaxLen(int i) {
-	maxLen = i;
-}
+	
+	/**
+	 * Sets the maximum length printed per line.
+	 * If the value is not -1 then the string will be broken into chunks
+	 * each of which is less than the max length.
+	 * @param i the maximum length
+	 */
+	public void setMaxLen(int i) {
+		maxLen = i;
+	}
+	/**
+	 * @return the maximum length printed per line
+	 */
+	public int getMaxLen() {
+		return maxLen;
+	}
 
 }
 

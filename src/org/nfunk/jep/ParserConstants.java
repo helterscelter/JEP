@@ -39,6 +39,7 @@ public interface ParserConstants {
   int RSQ = 39;
   int LRND = 40;
   int RRND = 41;
+  int COLON = 42;
 
   int NO_DOT_IN_IDENTIFIERS = 0;
   int DEFAULT = 1;
@@ -86,6 +87,7 @@ public interface ParserConstants {
     "\"]\"",
     "\"(\"",
     "\")\"",
+    "\":\"",
   };
 
 }

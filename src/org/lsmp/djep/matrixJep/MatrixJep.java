@@ -33,6 +33,9 @@ public class MatrixJep extends DJep {
 
 		Operator tens = ((MatrixOperatorSet) opSet).getMList();
 		pv.addSpecialRule(tens,(PrintVisitor.PrintRulesI) tens.getPFMC());
+		Operator eleAccess = ((MatrixOperatorSet) opSet).getElement();
+		pv.addSpecialRule(eleAccess,(PrintVisitor.PrintRulesI) eleAccess.getPFMC());
+
 		addDiffRule(new PassThroughDiffRule(tens.getName(),tens.getPFMC()));
 		Operator cross = ((MatrixOperatorSet) opSet).getCross();
 		addDiffRule(new MultiplyDiffRule(cross.getName(),cross));

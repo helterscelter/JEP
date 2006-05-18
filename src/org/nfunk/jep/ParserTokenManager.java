@@ -67,6 +67,8 @@ private final int jjMoveStringLiteralDfa0_1()
          return jjStartNfaWithStates_1(0, 32, 1);
       case 47:
          return jjStartNfaWithStates_1(0, 33, 13);
+      case 58:
+         return jjStopAtPos(0, 42);
       case 59:
          return jjStopAtPos(0, 19);
       case 60:
@@ -539,6 +541,8 @@ private final int jjMoveStringLiteralDfa0_0()
          return jjStartNfaWithStates_0(0, 32, 1);
       case 47:
          return jjStartNfaWithStates_0(0, 33, 13);
+      case 58:
+         return jjStopAtPos(0, 42);
       case 59:
          return jjStopAtPos(0, 19);
       case 60:
@@ -944,17 +948,17 @@ public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, null, null, null, null, null, null, null, null, 
 null, null, null, null, null, "\75", "\73", "\54", "\76", "\74", "\75\75", "\74\75", 
 "\76\75", "\41\75", "\46\46", "\174\174", "\53", "\55", "\52", "\56", "\57", "\45", 
-"\41", "\136", "\136\136", "\133", "\135", "\50", "\51", };
+"\41", "\136", "\136\136", "\133", "\135", "\50", "\51", "\72", };
 public static final String[] lexStateNames = {
    "NO_DOT_IN_IDENTIFIERS", 
    "DEFAULT", 
 };
 public static final int[] jjnewLexState = {
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
 };
 static final long[] jjtoToken = {
-   0x3fffffc9a81L, 
+   0x7fffffc9a81L, 
 };
 static final long[] jjtoSkip = {
    0x7eL, 

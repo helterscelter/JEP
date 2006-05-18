@@ -29,6 +29,8 @@ public class MatrixOperatorSet extends XOperatorSet {
 		OP_CROSS= new XOperator("^^","^",new ExteriorProduct(),XOperator.BINARY+XOperator.RIGHT,((XOperator) OP_CROSS).getPrecedence());
 		OP_ASSIGN.setPFMC(new MAssign());
 		OP_LIST.setPFMC(new MList());
+		OP_ELEMENT.setPFMC(new MArrayAccess());
+//		OP_RANGE.setPFMC(new VRange());
 	}
 	
 	public Operator[] getOperators()
