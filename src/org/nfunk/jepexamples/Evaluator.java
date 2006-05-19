@@ -70,7 +70,8 @@ public class Evaluator extends Applet {
 			}
 		);
 		
-		f.show();
+//		f.show(); 
+		f.setVisible(true);
 	}
 
 	/**
