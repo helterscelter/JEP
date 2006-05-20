@@ -139,4 +139,11 @@ public class DJepTest extends XJepTest {
 
 	}
 
+	public void testChainedVaraibles() throws Exception
+	{
+		simplifyTestString("x=5","x=5.0");
+		simplifyTestString("y=x","y=x");
+		simplifyTestString("z=y","z=y");
+		simplifyTestString("w=diff(z,x)","w=1.0");
+	}
 }
