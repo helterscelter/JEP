@@ -155,4 +155,16 @@ public class VectorJepTest extends JepTest {
 		valueTest("c","[[1.0,5.0],[3.0,4.0]]");
 		valueTest("c[2,1]",3);
 	}
+	
+	public void testElementOperations() throws Exception {
+		((VectorJep) j).setElementMultiply(true);
+		valueTest("[1,2,3] == [2,2,2]","[0.0,1.0,0.0]");
+		valueTest("[1,2,3] != [2,2,2]","[1.0,0.0,1.0]");
+		valueTest("[1,2,3] < [2,2,2]","[1.0,0.0,0.0]");
+		valueTest("[1,2,3] <= [2,2,2]","[1.0,1.0,0.0]");
+		valueTest("[1,2,3] > [2,2,2]","[0.0,0.0,1.0]");
+		valueTest("[1,2,3] >= [2,2,2]","[0.0,1.0,1.0]");
+		valueTest("[1,2,3] * [2,2,2]","[2.0,4.0,6.0]");
+		valueTest("[1,2,3] / [2,2,2]","[0.5,1.0,1.5]");
+	}
 }
