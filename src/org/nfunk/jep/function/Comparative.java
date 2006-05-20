@@ -31,7 +31,7 @@ import org.nfunk.jep.type.*;
  */
 public class Comparative extends PostfixMathCommand
 {
-	int id;
+	protected int id;
 	double tolerance;
 	public static final int LT = 0;
 	public static final int GT = 1;

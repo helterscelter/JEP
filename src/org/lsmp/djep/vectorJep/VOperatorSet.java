@@ -41,11 +41,23 @@ public class VOperatorSet extends OperatorSet {
 		{
 			OP_MULTIPLY.setPFMC(new ElementMultiply());
 			OP_DIVIDE.setPFMC(new ElementDivide());
+			OP_GT.setPFMC(new ElementComparative(Comparative.GT));
+			OP_LT.setPFMC(new ElementComparative(Comparative.LT));
+			OP_EQ.setPFMC(new ElementComparative(Comparative.EQ));
+			OP_LE.setPFMC(new ElementComparative(Comparative.LE));
+			OP_GE.setPFMC(new ElementComparative(Comparative.GE));
+			OP_NE.setPFMC(new ElementComparative(Comparative.NE));
 		}
 		else
 		{
 			OP_MULTIPLY.setPFMC(new MMultiply());
 			OP_DIVIDE.setPFMC(new Divide());
+			OP_GT.setPFMC(new Comparative(Comparative.GT));
+			OP_LT.setPFMC(new Comparative(Comparative.LT));
+			OP_EQ.setPFMC(new Comparative(Comparative.EQ));
+			OP_LE.setPFMC(new Comparative(Comparative.LE));
+			OP_GE.setPFMC(new Comparative(Comparative.GE));
+			OP_NE.setPFMC(new Comparative(Comparative.NE));
 		}
 	}
 }
