@@ -1,4 +1,10 @@
 == org.nfunk.* =======================================================
+May 20 06 rjm - Added a ElementComparative function, changed visability of field in Comparative.
+May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
+			  - Changed parser to handle the a[5] syntax 
+			  - Added an LValueI interface for functions which can be used on lhs of an asignment,
+			  - Change Assign to work with LValueI.
+			  - Added new OP_ELEMENT to OperatorSet
 Apr 27 06 njf - changed build.xml to rely on setting a JRE instead of a JDK enviroment variable
               - changed build.xml to allow compiling without having a 1.2 JRE env. var. set
                 (doesn't ensure compatibility to old version then)
@@ -112,7 +118,12 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
 Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
-
+May 20 06 rjm - Fixed bug with differentation visitor. isConstant method returned true for b=a; a=x; when differentiating wrt x.
+May 20 06 rjm - Added a ElementComparative function, changed visability of field in Comparative.
+May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
+			  - Created a ArrayAccess function 
+			  - Modified OperatorSets
+			  - Print rule for array access in MatrixJep.
 Apr 07 06 rjm - Added several functions to allow interegation of command lists
 Apr 04 06 rjm - Fixed bug with conversion of (a+b)-(c+d) to polynomial in sjep.
 Mar 11 06 rjm - Added serial version tags where needed
