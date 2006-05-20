@@ -76,7 +76,7 @@ public class XOperatorSet extends OperatorSet {
 	((XOperator) OP_UDIVIDE).setRootOp(OP_MULTIPLY);
 	((XOperator) OP_UDIVIDE).setBinaryInverseOp(OP_DIVIDE);
 		
-	// Set distribuative over
+	// Set distributive over
 	((XOperator) OP_UMINUS).setDistributiveOver(OP_ADD); // -(a+b) -> (-a) + (-b)
 	((XOperator) OP_UMINUS).setDistributiveOver(OP_SUBTRACT); // -(a-b) -> (-a) - (-b)
 
@@ -125,7 +125,7 @@ public class XOperatorSet extends OperatorSet {
 				((XOperator) precArray[i][j]).setPrecedence(i);
 	}
 	
-	/** Prints all the opperators, with verbose representations of each operators properties. 
+	/** Prints all the operators, with verbose representations of each operators properties. 
 	 * 
 	 */
 	public void printOperators()
