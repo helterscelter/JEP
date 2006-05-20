@@ -157,9 +157,10 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 		if(!var.hasEquation()) return true;
 		Node eqn = var.getEquation();
 		if(eqn instanceof ASTConstant) return true;
-		if(eqn instanceof ASTVarNode) {
-			return isConstantVar((XVariable)((ASTVarNode) eqn).getVar());
-		}
+		/* So why would we want a=x to be treated as a constant? */
+//		if(eqn instanceof ASTVarNode) {
+//			return isConstantVar((XVariable)((ASTVarNode) eqn).getVar());
+//		}
 		return false;
 	}
 	 /**
