@@ -17,6 +17,7 @@ public class XJepConsole extends Console
 {
 	private static final long serialVersionUID = -3239922790774093668L;
 	protected NumberFormat format=null;
+	protected boolean verbose = false;
 	
 	public static void main(String[] args)
 	{
@@ -118,6 +119,20 @@ public class XJepConsole extends Console
 				xj.getPrintVisitor().setMode(PrintVisitor.COMPLEX_I,true);
 			return false;
 		}
+		if(command.startsWith("verbose"))
+		{
+			String words[] = split(command);
+			if(words.length<2)
+				println("verbose should be on or off");
+			else if(words[1].equals("on"))
+				verbose = true;
+			else if(words[1].equals("off"))
+				verbose = true;
+			else
+				println("verbose should be on or off");
+			return false;
+		}
+
 		return true;
 	}
 
@@ -145,7 +160,7 @@ public class XJepConsole extends Console
 	public void printVars() {
 		PrintVisitor pv = ((XJep) j).getPrintVisitor();
 		SymbolTable st = j.getSymbolTable();
-		pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,false);
+		pv.setMode(DPrintVisitor.PRINT_PARTIAL_EQNS,!verbose);
 
 		println("Variables:");
 		for(Enumeration  loop = st.keys();loop.hasMoreElements();)

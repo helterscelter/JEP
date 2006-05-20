@@ -17,8 +17,6 @@ import org.lsmp.djep.xjep.PrintVisitor;
 public class DJepConsole extends XJepConsole
 {
 	private static final long serialVersionUID = -5801701990800128777L;
-	boolean verbose = false;
-	
 	public void initialise()
 	{
 		j = new DJep();
@@ -86,25 +84,6 @@ public class DJepConsole extends XJepConsole
 	public static void main(String args[]) {
 		Console c = new DJepConsole();
 		c.run(args);
-	}
-
-	public boolean testSpecialCommands(String command)
-	{
-		if(!super.testSpecialCommands(command)) return false;
-		if(command.startsWith("verbose"))
-		{
-			String words[] = split(command);
-			if(words.length<2)
-				println("verbose should be on or off");
-			else if(words[1].equals("on"))
-				verbose = true;
-			else if(words[1].equals("off"))
-				verbose = true;
-			else
-				println("verbose should be on or off");
-			return false;
-		}
-		return true;
 	}
 
 }
