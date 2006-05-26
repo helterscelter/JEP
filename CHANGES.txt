@@ -5,6 +5,8 @@ May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
 			  - Added an LValueI interface for functions which can be used on lhs of an asignment,
 			  - Change Assign to work with LValueI.
 			  - Added new OP_ELEMENT to OperatorSet
+May 12 06 njf - Changed GraphCanvas to use Java2D anti aliasing for prettier curve drawing in function
+                plotter applet
 Apr 27 06 njf - changed build.xml to rely on setting a JRE instead of a JDK enviroment variable
               - changed build.xml to allow compiling without having a 1.2 JRE env. var. set
                 (doesn't ensure compatibility to old version then)

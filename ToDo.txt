@@ -2,9 +2,8 @@
 == JEP 2.4.0 ========================================================
 - read through Rich's changes, check documentation for consistency
 - make sure there aren't any "loose ends"
-- switch to JavaCC 4.0
 - add more JUnit tests
-- check applets, update if necessary
+x check applets, update if necessary
 - check Jama license, check Jama compatibility
 - change pricing
 
