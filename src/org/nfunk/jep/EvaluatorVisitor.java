@@ -79,7 +79,7 @@ public class EvaluatorVisitor implements ParserVisitor, EvaluatorI {
 	 * <p>
 	 * An exception is thrown, if an error occurs during evaluation.
 	 * @return The value of the expression as an object.
-	 * @throws ParseException if some problem with evaluation.
+	 * @throws ParseException if there is a problem with the evaluation.
 	 */
 	public Object getValue(Node topNode,SymbolTable symTab_in)
 		throws ParseException {
