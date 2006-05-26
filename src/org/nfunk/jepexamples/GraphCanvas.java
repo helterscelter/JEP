@@ -123,7 +123,7 @@ public class GraphCanvas extends Canvas {
 	/**
 	 * Paints the graph of the function.
 	 */
-	private void paintCurve(Graphics g) {
+	private void paintCurve(Graphics2D g) {
 		boolean firstpoint=true;
 		int lastX=0, lastY=0;
 
@@ -163,8 +163,9 @@ public class GraphCanvas extends Canvas {
 	 * drawn on the buffer image, then that image is drawn on the Graphics
 	 * object.
 	 */
-	public void paint(Graphics g) {
+	public void paint(Graphics g_in) {
 		boolean changedDimensions = !dimensions.equals(getSize());
+		Graphics2D g = (Graphics2D) g_in;
 		
 		// If the buffer has not been initialized, do it now
 		if (!initializedBuffer || changedDimensions)
@@ -175,7 +176,9 @@ public class GraphCanvas extends Canvas {
 		}
 		
 		// Get the Graphics instance of the buffer
-		Graphics buffergc = buffer.getGraphics();
+		Graphics2D buffergc = (Graphics2D) buffer.getGraphics();
+		// Turn on anti aliasing
+		buffergc.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// Redraw the function on the buffer
 		if (changedFunction || changedDimensions)
