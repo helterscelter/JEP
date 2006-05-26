@@ -28,9 +28,7 @@ public class FractalCanvas extends Canvas {
 	
 	private int iterations, nEvals;
 
-	private Image buffer;
-
-	private boolean initializedBuffer, changedFunction, hasError;
+	private boolean hasError;
 
 	private JEP myParser;
 	private ExpressionCompiler expressionCompiler;
@@ -49,8 +47,6 @@ public class FractalCanvas extends Canvas {
 		scaleX = 100;
 		scaleY = 100;
 		dimensions = getSize();
-		initializedBuffer = false;
-		changedFunction = true;
 		hasError = true;
 		exprField = exprField_in;
 		initParser(initialExpression);
@@ -96,7 +92,6 @@ public class FractalCanvas extends Canvas {
 		else
 		  exprField.setForeground(Color.black);
 
-		changedFunction = true;
 	}
 
 	public void setIterations(int iterations_in) {
