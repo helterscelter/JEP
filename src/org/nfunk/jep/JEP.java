@@ -424,9 +424,10 @@ public class JEP {
 	 */
 	public boolean getAllowUndeclared() { return allowUndeclared; }
 	
-	/** Sets whether assignment equations like <tt>y=x+1</tt> are allowed.
+	/**
+	 * Sets whether assignment equations like <tt>y=x+1</tt> are allowed.
 	 * @since 2.3.0 alpha
-	 */ 
+	 */
 	public void setAllowAssignment(boolean value) {
 		allowAssignment = value;
 	}
@@ -506,7 +507,7 @@ public class JEP {
 		java.io.StringReader sr = new java.io.StringReader(expression);
 		errorList.removeAllElements();
 		Node node = parser.parseStream(sr, this);
-		if(this.hasError())
+		if (this.hasError())
 			throw new ParseException(getErrorInfo());
 		return node;
 	}
