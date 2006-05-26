@@ -55,6 +55,10 @@
 	<target name="init">
 		<!-- Create the time stamp -->
 		<tstamp/>
+		<!-- Echo environment variables -->
+		<echo message="JAVACCHOME = ${javacchome}"/>
+		<echo message="JRE1_2HOME = ${oldjrehome}"/>
+		<echo message="bootclasspath = ${bootclasspath}"/>
 
 		<!-- Ensure JavaCC is present -->
 		<!-- TODO get this working -->
@@ -120,7 +124,7 @@
 	</target>
 	
 	<!-- Compiles without ensuring compatibility if JRE1_2HOME is not set -->
-	<target name="compile-without-ce" depends="javacc" unless="${env.JRE1_2HOME}">
+	<target name="compile-without-ce" depends="javacc" unless="env.JRE1_2HOME">
 		<echo message="Compiling without ensuring compatibility"/>
 		<!-- Create the build directory -->
 		<mkdir dir="${build}"/>
@@ -134,7 +138,7 @@
 	</target>
 	
 	<!-- Compiles with ensuring compatibility if JRE1_2HOME is set -->
-	<target name="compile-with-ce" depends="javacc" if="${env.JRE1_2HOME}">
+	<target name="compile-with-ce" depends="javacc" if="env.JRE1_2HOME">
 		
 		<!-- Create the build directory -->
 		<mkdir dir="${build}"/>
