@@ -21,7 +21,7 @@ import java.awt.event.*;
 public class Fractal extends Applet implements ActionListener {
 	private static final long serialVersionUID = -1825231934586941116L;
 	private TextField exprField, itField;
-	private Button button, button2;
+	private Button button;
 	private FractalCanvas complexCanvas;
 
 
