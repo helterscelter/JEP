@@ -20,12 +20,19 @@ public interface EvaluatorI {
 	 * accept method is called.
 	 * This method simply calls the jjtAccept(ParserVisitor this,Object data) of node.
 	 *
-	 * We no longer need this as we use ParseVisitor everywhere,
+	 * We no longer need this as we use ParserVisitor everywhere,
 	 * but kept for future reference.
 	 * 
 	 private Object nodeAccept(Node node, Object data) throws ParseException
 	 {
 	 return node.jjtAccept(this,data);
 	 }
-	 */public abstract Object eval(Node node) throws ParseException;
+	 */
+	
+	/**
+	 * Evaluates a node and returns and object with the value of the node.
+	 * 
+	 * @throws ParseException if errors occur during evaluation;
+	 */
+	public abstract Object eval(Node node) throws ParseException;
 }
