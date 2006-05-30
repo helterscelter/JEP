@@ -113,6 +113,7 @@ pre {  font-size: 10pt}
 	background: #036;
 }
 
+
 /*-- centercontent ----------------------------------------------*/
 										
 #centercontent {
@@ -122,6 +123,20 @@ pre {  font-size: 10pt}
 /*	margin-left:150px;
 	margin-right:auto; */
 }
+
+/*-- topbar ------------------------------------------------------*/
+										
+.topbar {
+	margin: 20px 0 40px;
+	text-align: right;
+	border-bottom: 1px solid #999;
+	color: #666;
+}
+
+.topbar img {
+	border: 0px;
+}
+
 
 
 /*-- footer ------------------------------------------------------*/
