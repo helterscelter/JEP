@@ -4,12 +4,14 @@
 package org.lsmp.djep.vectorJep.values;
 
 import org.lsmp.djep.vectorJep.*;
+import org.nfunk.jep.type.Complex;
 
 /**
  * Degenerate i.e. rank 0 Tensor. Just has a single element.
  * @author Rich Morris
  * Created on 04-Nov-2003
  * @version 1.3.0.2 now extends number
+ * TODO don't implement number! So what if a scaler is a boolean
  */
 public class Scaler extends Number implements MatrixValueI {
 
@@ -39,13 +41,29 @@ public class Scaler extends Number implements MatrixValueI {
 	}
 	
 	/** value of constant coeff. */	
-	public int intValue() {return ((Number) value).intValue();	}
+	public int intValue() {
+		if(value instanceof Complex) return ((Complex) value).intValue();
+		if(value instanceof Boolean) return ((Boolean) value).booleanValue()?1:0;
+		return ((Number) value).intValue(); // throws a cast exception if not a number
+	}
 	/** value of constant coeff. */	
-	public long longValue() {return ((Number) value).longValue();	}
+	public long longValue() {
+		if(value instanceof Complex) return ((Complex) value).longValue();
+		if(value instanceof Boolean) return ((Boolean) value).booleanValue()?1l:0l;
+		return ((Number) value).longValue(); // throws a cast exception if not a number
+	}
 	/** value of constant coeff. */	
-	public float floatValue() {	return ((Number) value).floatValue();	}
+	public float floatValue() {	
+		if(value instanceof Complex) return ((Complex) value).floatValue();
+		if(value instanceof Boolean) return ((Boolean) value).booleanValue()?1f:0f;
+		return ((Number) value).floatValue(); // throws a cast exception if not a number
+	}
 	/** value of constant coeff. */	
-	public double doubleValue() {return ((Number) value).doubleValue();	}
+	public double doubleValue() {
+		if(value instanceof Complex) return ((Complex) value).doubleValue();
+		if(value instanceof Boolean) return ((Boolean) value).booleanValue()?1d:0d;
+		return ((Number) value).doubleValue();	 // throws a cast exception if not a number
+	}
 
 	public boolean equals(Object obj) {
 		if(!(obj instanceof Scaler)) return false;
