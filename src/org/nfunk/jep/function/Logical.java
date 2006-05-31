@@ -31,33 +31,36 @@ public class Logical extends PostfixMathCommand
 		Object param2 = inStack.pop();
 		Object param1 = inStack.pop();
 		
+		double x,y;
+		if ((param1 instanceof Number))
+			x = ((Number)param1).doubleValue();
+		else if((param1 instanceof Boolean))
+			x= ((Boolean) param1).booleanValue()?1.0:0.0;
+		else throw new ParseException("Logical: require a number or Boolean value on lhs, have "+
+				param1.getClass().getName());
+		if ((param2 instanceof Number))
+			y = ((Number)param2).doubleValue();
+		else if((param2 instanceof Boolean))
+			y= ((Boolean) param2).booleanValue()?1.0:0.0;
+		else throw new ParseException("Logical: require a number or Boolean value on lhs, have "+
+				param1.getClass().getName());
 		
-		if ((param1 instanceof Number) && (param2 instanceof Number))
-		{
-			double x = ((Number)param1).doubleValue();
-			double y = ((Number)param2).doubleValue();
-			int r;
+		int r;
 			
-			switch (id)
-			{
-				case 0:
-					// AND
-					r = ((x!=0d) && (y!=0d)) ? 1 : 0;
-					break;
-				case 1:
-					// OR
-					r = ((x!=0d) || (y!=0d)) ? 1 : 0;
-					break;
-				default:
-					r = 0;
-			}
-			
-			inStack.push(new Double(r)); // push the result on the inStack
-		}
-		else
+		switch (id)
 		{
-			throw new ParseException("Invalid parameter type");
+		case 0:
+			// AND
+			r = ((x!=0d) && (y!=0d)) ? 1 : 0;
+			break;
+		case 1:
+			// OR
+			r = ((x!=0d) || (y!=0d)) ? 1 : 0;
+			break;
+		default:
+			r = 0;
 		}
+		inStack.push(new Double(r)); // push the result on the inStack
 		return;
 	}
 }

@@ -147,6 +147,24 @@ public class Comparative extends PostfixMathCommand
 			double y = ((Number)param2).doubleValue();
 			return (x==y);
 		}
+		if ((param1 instanceof Boolean) && (param2 instanceof Boolean))
+		{
+			boolean x = ((Boolean)param1).booleanValue();
+			boolean y = ((Boolean)param2).booleanValue();
+			return (x==y);
+		}
+		if ((param1 instanceof Number) && (param2 instanceof Boolean))
+		{
+			double x = ((Number)param1).doubleValue();
+			double y = ((Boolean)param2).booleanValue()?1.0:0.0;
+			return (x==y);
+		}
+		if ((param1 instanceof Boolean) && (param2 instanceof Number))
+		{
+			double x = ((Boolean)param1).booleanValue()?1.0:0.0;
+			double y = ((Number)param2).doubleValue();
+			return (x==y);
+		}
 		
 		// if we get to here, just use the equal function
 		return param1.equals(param2);
@@ -169,6 +187,24 @@ public class Comparative extends PostfixMathCommand
 		if ((param1 instanceof Number) && (param2 instanceof Number))
 		{
 			double x = ((Number)param1).doubleValue();
+			double y = ((Number)param2).doubleValue();
+			return (x!=y);
+		}
+		if ((param1 instanceof Boolean) && (param2 instanceof Boolean))
+		{
+			boolean x = ((Boolean)param1).booleanValue();
+			boolean y = ((Boolean)param2).booleanValue();
+			return (x!=y);
+		}
+		if ((param1 instanceof Number) && (param2 instanceof Boolean))
+		{
+			double x = ((Number)param1).doubleValue();
+			double y = ((Boolean)param2).booleanValue()?1.0:0.0;
+			return (x!=y);
+		}
+		if ((param1 instanceof Boolean) && (param2 instanceof Number))
+		{
+			double x = ((Boolean)param1).booleanValue()?1.0:0.0;
 			double y = ((Number)param2).doubleValue();
 			return (x!=y);
 		}

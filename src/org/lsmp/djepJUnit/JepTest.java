@@ -248,6 +248,18 @@ public class JepTest extends TestCase {
 		calcValue("a=T"); calcValue("b=T"); calcValue("c=T");
 		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
 		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
+		
+		j.addVariable("true",new Boolean(true));
+		j.addVariable("false",new Boolean(false));
+		valueTest("true==true",1);
+		valueTest("false==false",1);
+		valueTest("true==false",0);
+		valueTest("true==true&&false==false",1);
+		valueTest("if(true==true&&false==false,6,7)",6);
+		valueTest("if(false&&true,6,7)",7);
+		valueTest("if(true&&false==false,6,7)",6);
+		valueTest("if((true&&true)==true,6,7)",6);
+		valueTest("if((!false)==true,6,7)",6);
 	}
 	
 	public void testFunction() throws Exception

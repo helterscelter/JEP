@@ -29,6 +29,11 @@ public class Not extends PostfixMathCommand
 			int r = (((Number)param).doubleValue() == 0) ? 1 : 0;
 			inStack.push(new Double(r));//push the result on the inStack
 		}
+		else if(param instanceof Boolean)
+		{
+			int r = (((Boolean)param).booleanValue()) ? 0 : 1;
+			inStack.push(new Double(r));//push the result on the inStack
+		}
 		else
 			throw new ParseException("Invalid parameter type");
 		return;
