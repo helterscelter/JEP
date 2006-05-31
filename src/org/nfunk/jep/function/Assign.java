@@ -47,6 +47,6 @@ public class Assign extends PostfixMathCommand implements CallbackEvaluationI {
 			((LValueI) ((ASTFunNode) lhsNode).getPFMC()).set(pv,lhsNode,rhsVal);
 			return rhsVal;
 		}
-		throw new ParseException("Assignment should have a variable for the lhs.");
+		throw new ParseException("Assignment should have a variable or LValue for the lhs.");
 	}
 }

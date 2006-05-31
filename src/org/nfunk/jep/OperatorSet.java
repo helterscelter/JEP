@@ -53,7 +53,7 @@ public class OperatorSet {
 	protected Operator OP_DOT = new Operator(".",new Dot()); 
 	protected Operator OP_CROSS = new Operator("^^",new Cross()); 
 	protected Operator OP_LIST = new Operator("LIST",new List()); 
-	protected Operator OP_ELEMENT = new Operator("[]",null);
+	protected Operator OP_ELEMENT = new Operator("[]",new Ele());
 //	protected Operator OP_RANGE = new Operator(":",new Range());
 	public OperatorSet()
 	{
