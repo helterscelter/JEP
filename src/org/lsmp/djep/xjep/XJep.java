@@ -6,6 +6,7 @@ package org.lsmp.djep.xjep;
 import org.nfunk.jep.*;
 import org.nfunk.jep.function.Exp;
 import org.nfunk.jep.function.PostfixMathCommandI;
+import org.lsmp.djep.xjep.PrintVisitor.PrintRulesI;
 import org.lsmp.djep.xjep.function.*;
 import java.util.*;
 import java.io.PrintStream;
@@ -49,6 +50,11 @@ public class XJep extends JEP {
 		simpv = new SimplificationVisitor();
 		commandv = new CommandVisitor();
 		pv = new PrintVisitor();
+		pv.addSpecialRule(opSet.getElement(),new PrintRulesI() {
+			public void append(Node node, PrintVisitor pv) throws ParseException {
+				node.jjtGetChild(0).jjtAccept(pv, null);
+				node.jjtGetChild(1).jjtAccept(pv, null);
+			}});
 	}
 
 	/** Copy constructions, reuses all the components of argument. */
