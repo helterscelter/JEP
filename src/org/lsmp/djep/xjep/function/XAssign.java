@@ -45,6 +45,12 @@ public class XAssign extends Assign implements CommandVisitorI {
 			TreeUtils.copyChildrenIfNeeded(node,children);
 			return node;
 		}
+		else if(lhsNode instanceof ASTFunNode && ((ASTFunNode) lhsNode).getPFMC() instanceof LValueI)
+		{
+			//TODO 
+			TreeUtils.copyChildrenIfNeeded(node,children);
+			return node;
+		}
 		throw new ParseException("Assignment should have a variable for the lhs.");
 	}
 }
