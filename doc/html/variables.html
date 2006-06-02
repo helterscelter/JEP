@@ -1,0 +1,140 @@
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --> 
+<title>JEP - Java Math Expression Parser</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1">
+</head>
+
+<body>
+
+
+
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc*</a></li>
+  </ul>
+
+<h1>JEP</h1>
+  <ul>
+    <li><a href="index.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="cust_func.html">Custom Functions</a></li>
+    <li><a href="newfeatures.html">New Features</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+
+<h1>Extensions</h1>
+  <ul>
+    <li><a href="djep/index.html">DJEP</a></li>
+    <li><a href="djep/XJep.html">XJep</a></li>
+    <li><a href="djep/DJep.html">Differentiation</a></li>
+    <li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="djep/GroupJep.html">Groups</a></li>
+    <li><a href="djep/AddingOperators.html">Adding Operators</a></li>
+    <li><a href="djep/version.html">Version History</a></li>
+  </ul>
+</div>
+
+
+
+<div id="centercontent">
+<!-- CENTER CONTENT -------------------------------------------------- -->
+<!-- #BeginEditable "Text" -->
+  <h1>Variables</h1>
+
+  <h2><a name="allowingundeclared"></a>Allowing undeclared variables</h2>
+  <p>To enable parsing of undeclared variables, use <a href="../javadoc/org/nfunk/jep/JEP.html#setAllowUndeclared(boolean)" target="_blank">setAllowUndeclared(true)</a>. 
+    The default setting is false (undeclared variables are not allowed).</p>
+  <p>If you do not know what variable names may occur in the expression before 
+    parsing it, you can use <code>setAllowUndeclared(true)</code>. With this option 
+    enabled, it is not necessary to add variables to the parser before parsing 
+    an expression. If a new variable is found while parsing, it is automatically 
+    added to the symbol table. See <a href="#obtainingalist">Obtaining a list 
+    of variables</a> to read about how to access these variables.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="obtainingalist"></a>Obtaining a list of variables</h2>
+  <p>While parsing an expression with undeclared variables allowed, all A list 
+    of all the variables and constants that have been added to the parser, can 
+    be obtained with the <a href="../javadoc/org/nfunk/jep/JEP.html#getSymbolTable()" target="_blank">getSymbolTable()</a> 
+    method.</p>
+  <p>This method is most useful when the undeclared variables option is enabled. 
+    After an expression has been parsed, a list of all variables occurring in 
+    that expression can be obtained using the <code>getSymbolTable()</code> method. 
+    The return value is a SymbolTable object. Note that SymbolTable extends Hashtable.</p>
+	
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="VAR"></a>Working with variables</h2>
+  <p> The value of a variable can be set and queried using the <a href="../javadoc/org/nfunk/jep/JEP.html#setVarValue(java.lang.String, java.lang.Object)">setVarValue</a> 
+    and <a href="../javadoc/org/nfunk/jep/JEP.html#getVarValue(java.lang.String)">getVarVal</a> 
+    methods of the JEP instance. A further method <a href="../javadoc/org/nfunk/jep/JEP.html#getVar(java.lang.String)">getVar</a> 
+    returns an object representing the variable. </p>
+  <pre>JEP j = new JEP();<br>try {<br>    Node node = j.parse("z=x^y");<br>    j.setVarValue("x", new Double(2));<br>    j.setVarValue("y", new Double(3));<br>    j.evaluate(node);<br>    System.out.println(j.getVarValue("z")); // prints 8<br>} catch .....<br></pre>
+  <p>The SymbolTable class stores objects representing variables rather than just 
+    their values and the <a href="../javadoc/org/nfunk/jep/SymbolTable.html#get(java.lang.Object)">get</a> 
+    and <a href="../javadoc/org/nfunk/jep/SymbolTable.html#put(java.lang.Object, java.lang.Object)">put</a> 
+    methods of this class are deprecated. This results in a slight speed up during 
+    evaluation.<br>
+  </p>
+  <p>Variables can be constants which cannot have their values changed. To add 
+    a new constant use <a href="../javadoc/org/nfunk/jep/JEP.html#addConstant(java.lang.String, java.lang.Object)">addConstant</a> 
+    to add a mutable variable use&nbsp;<a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)">addVariable</a>.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="LISTEN"></a>Observers for variables</h2>
+  <p> Both SymbolTable and Variable implement the Observer/Observable pattern. 
+    This allows objects to be informed whenever a new variable is created or when 
+    its value has been changed. An example of use is 
+  <pre>
+public class MyObserver implements Observer
+{
+    public void initialise()
+    {
+        SymbolTable st = j.getSymbolTable();
+        st.addObserver(this);
+        st.addObserverToExistingVariables(this);
+    }
+
+    public void update(Observable arg0, Object arg1)
+    {
+        if(arg0 instanceof Variable)
+            println("Var changed: " + arg0);
+        else if(arg0 instanceof SymbolTable.StObservable)
+        {
+            println("New var: "+arg1);
+
+            // This line is vital to ensure that 
+            // any new variable created will be observed. 
+            ((Variable) arg1).addObserver(this);
+        }
+    }
+}
+</pre>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ---------------------------------------------------------- -->
+<div id="footer">
+&copy; 2006 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+</div>
+</div>
+
+</body>
+<!-- #EndTemplate --></html>

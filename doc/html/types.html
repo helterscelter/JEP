@@ -1,0 +1,149 @@
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --> 
+<title>JEP - Java Math Expression Parser</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1">
+</head>
+
+<body>
+
+
+
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc*</a></li>
+  </ul>
+
+<h1>JEP</h1>
+  <ul>
+    <li><a href="index.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="cust_func.html">Custom Functions</a></li>
+    <li><a href="newfeatures.html">New Features</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+
+<h1>Extensions</h1>
+  <ul>
+    <li><a href="djep/index.html">DJEP</a></li>
+    <li><a href="djep/XJep.html">XJep</a></li>
+    <li><a href="djep/DJep.html">Differentiation</a></li>
+    <li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="djep/GroupJep.html">Groups</a></li>
+    <li><a href="djep/AddingOperators.html">Adding Operators</a></li>
+    <li><a href="djep/version.html">Version History</a></li>
+  </ul>
+</div>
+
+
+
+<div id="centercontent"> 
+  <!-- CENTER CONTENT -------------------------------------------------- -->
+  <!-- #BeginEditable "Text" --> 
+  <h1>Data Types</h1>
+  <p>JEP supports a number of different data types and allows. These include numbers, 
+    <a href="#strings">strings</a>, <a href="#vectors">vectors</a>, <a href="#complexnumbers">complex 
+    numbers</a>. Numbers are represented by the <code>double</code> data type 
+    by default. It is however possible to change the internal representation as 
+    described in the section <a href="#usingcustomnumberclasses">Using custom 
+    number classes</a>.</p>
+  <h2><a name="strings"></a>Strings</h2>
+  <p>Strings can be entered in an expression by using double quotes. They can 
+    be concatenated with the + operator and compared with the == and != relational 
+    operators. A sample expression involving the string type is &quot;foo&quot; 
+    + &quot;bar&quot; == &quot;foobar&quot;, which would be evaluated by JEP as 
+    1 (true).</p>
+  <p>To add a string as a variable, use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)" target="_blank">addVariable(String 
+    name, Object value)</a> method. If the result of an expression is a string, 
+    it can be obtained by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
+    function.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="vectors"></a>Vectors</h2>
+  <p>Vectors are ordered sets of Double elements. A vector is a list of values, 
+    separated by commas, and enclosed by square brackets. An example expression 
+    involving a vector is: 
+  <pre>[3, 4, 5]*2</pre>
+  <p>It would be evaluated as [6, 8, 10] by JEP. To add a vector as variable, 
+    use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)" target="_blank">addVariable(String 
+    name, Object value)</a> method. If the result of an expression is a vector, 
+    it can be obtained by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
+    function.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="complexnumbers"></a>Complex numbers</h2>
+  <p>If you want to use complex numbers in your expression, you can call <a href="../javadoc/org/nfunk/jep/JEP.html#addComplex()" target="_blank">addComplex()</a> 
+    after creating the parser object. This will add the imaginary unit as constant<b> 
+    </b><i>i</i>. Two parser functions re() and im() are also added and can be 
+    used to obtain the real and imaginary components of complex numbers. You will 
+    need to import the <a href="../javadoc/org/nfunk/jep/type/Complex.html" target="_blank">org.nfunk.jep.type.Complex</a> 
+    class to be able to manipulate complex values from expressions.</p>
+  <p>By using the imaginary unit constant <i>i</i>, you can work with complex 
+    numbers in your expressions. A sample complex expression would be (1+2*i)^3. 
+    Currently the (re, IM) notation is not supported.</p>
+  <p>To obtain a complex value from an expression, you must use the <a href="../javadoc/org/nfunk/jep/JEP.html#getComplexValue()" target="_blank">getComplexValue()</a> 
+    function. It will evaluate the expression and return the result as a Complex 
+    object. Note that the class used internally for Complex numbers is also used 
+    for returning the value.</p>
+  <p>Adding a complex variable or constant to the parser before evaluating an 
+    expression can be done with <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, double, double)" target="_blank">addVariable(String 
+    name, double re, double IM)</a>. It takes three parameters: the name of the 
+    variable as string, the real component, and the imaginary component.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="usingcustomnumberclasses"></a>Using custom number classes</h2>
+  <p>By default when an expression such as &quot;1+2&quot; is parsed, the constants 
+    &quot;1&quot; and &quot;2&quot; are created internally as Double objects. 
+    In most cases this is fine, but in some cases you may want to use custom classes 
+    for representing numbers.</p>
+  <p>This is made possible through creating a number class that implements the 
+    <a href="../javadoc/org/nfunk/jep/type/NumberFactory.html" target="_blank">NumberFactory</a> 
+    interface. It includes one method called <a href="../javadoc/org/nfunk/jep/type/NumberFactory.html#createNumber(java.lang.String)" target="_blank">createNumber(String 
+    value)</a>, which should return an object initialized to the value of the 
+    parameter. You can load your custom number factory with the JEP constructor 
+    <code>JEP(boolean traverse_in, Boolean allowUndeclared_in, Boolean implicitMul_in, 
+    NumberFactory numberFactory_in)</code>.</p>
+  <p>The custom number objects need to be handled by custom functions which you 
+    can create by following the instructions on the <a href="cust_func.html">Custom 
+    Functions</a> page.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="customtypes"></a>Custom types</h2>
+  <p>In most cases, you will only need to work with the few built in types that 
+    JEP supplies (Double, Complex, Vector, String). But suppose you want to evaluate 
+    expressions that involve other types. This is possible by using the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)" target="_blank">addVariableAsObject(String 
+    name, Object value)</a> method to add variables of any type. The only place 
+    where the type of a variable matters, is in the function classes.</p>
+  <p>When an expression is evaluated, values are operated on with the classes 
+    in the function package. These include the operators (such as <a href="../javadoc/org/nfunk/jep/function/Add.html" target="_blank">Add</a> 
+    and <a href="../javadoc/org/nfunk/jep/function/Subtract.html" target="_blank">Subtract</a>), 
+    as well as the functions (such as <a href="../javadoc/org/nfunk/jep/function/Sine.html" target="_blank">Sine</a> 
+    and <a href="../javadoc/org/nfunk/jep/function/Cosine.html" target="_blank">Cosine</a>). 
+    Without making modifications to the source code, only the default types are 
+    handled with these classes. So, in order to be able to handle your own types, 
+    you will need to modify theses classes, or make your own function classes 
+    as described in the custom functions section.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <!-- #EndEditable --> 
+  <!-- FOOTER ---------------------------------------------------------- -->
+  <div id="footer">
+&copy; 2006 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+</div>
+</div>
+
+</body>
+<!-- #EndTemplate --></html>

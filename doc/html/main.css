@@ -25,8 +25,6 @@ A:HOVER {
 }
 
 P  {
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE : 10pt;
 	margin-top: 0px;
 	padding-top: 0px;
 }
@@ -47,7 +45,7 @@ H2  {
 	COLOR : #036;
 	FONT-FAMILY : Arial, Helvetica, sans-serif;
 	FONT-SIZE : 13pt;
-	margin-bottom: 0px;
+	margin-bottom: 5px;
 	padding-bottom: 0px;
 }
 
@@ -82,16 +80,24 @@ pre {  font-size: 10pt}
 	position: absolute;
 	top: 12px;
 	left: 12px;
-	width: 120px;
+	width: 200px;
 	border: 1px solid #999;
+	padding: 5px;
 	/*border-right:1px solid #999;*/
+}
+
+#navcontainer h1 {
+	color: #003;
+	font-size: 11pt;
+	font-weight: bold;
+	margin-top: 15px;
+	margin-bottom: 5px;
+	border-bottom: solid #ccc 1px;
 }
 
 #navcontainer ul {
 	margin: 0;
 	padding: 0;
-	font-size: 14px;
-	font-weight: bold;
 	color: #000;
 	background: #fff;
 }
@@ -104,7 +110,6 @@ pre {  font-size: 10pt}
 	display: block;
 	padding: 5px 5px;
 	color: #000;
-	background: #fff;
 	text-decoration: none;
 }
 
@@ -114,12 +119,15 @@ pre {  font-size: 10pt}
 }
 
 
+
+
+
 /*-- centercontent ----------------------------------------------*/
 										
 #centercontent {
 	width: 500px;
 	text-align: left;
-	margin-left: 150px;
+	margin-left: 230px;
 /*	margin-left:150px;
 	margin-right:auto; */
 }

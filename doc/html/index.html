@@ -16,36 +16,39 @@
   <ul>
     <li><a href="../javadoc/index.html" target="_blank">JavaDoc*</a></li>
   </ul>
-  <hr/>
+
+<h1>JEP</h1>
   <ul>
-    <li><a href="index.html">Usage</a></li>
+    <li><a href="index.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
     <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
     <li><a href="grammar.html">Grammar</a></li>
     <li><a href="cust_func.html">Custom Functions</a></li>
-    <li><a href="newfeatures-2.3.html">New Features</a></li>
+    <li><a href="newfeatures.html">New Features</a></li>
     <li><a href="faq.html">FAQ</a></li>
     <li><a href="version.html">Version History</a></li>
   </ul>
-  <hr/>
+
+<h1>Extensions</h1>
   <ul>
     <li><a href="djep/index.html">DJEP</a></li>
     <li><a href="djep/XJep.html">XJep</a></li>
     <li><a href="djep/DJep.html">Differentiation</a></li>
     <li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
     <li><a href="djep/GroupJep.html">Groups</a></li>
-	<li><a href="djep/AddingOperators.html">Adding Operators to the Parser</a></li>
+    <li><a href="djep/AddingOperators.html">Adding Operators</a></li>
     <li><a href="djep/version.html">Version History</a></li>
   </ul>
 </div>
 
 
 
-<div id="centercontent"> 
-  <!-- CENTER CONTENT -------------------------------------------------- -->
-  <!-- #BeginEditable "Text" --> 
-  <h1><a name="top"></a>Usage</h1>
+<div id="centercontent">
+<!-- CENTER CONTENT -------------------------------------------------- -->
+<!-- #BeginEditable "Text" --> 
+  <h1><a name="top"></a>Basic Usage</h1>
   <ul>
-    <li><a href="#basicusage">Basic usage</a></li>
     <li><a href="#evaluatingexpressions">Evaluating expressions</a></li>
     <li><a href="#errorhandling">Error handling</a></li>
     <li><a href="#implicitmul">Implicit multiplication</a></li>
@@ -57,13 +60,8 @@
     <li><a href="#customtypes">Custom types</a></li>
     <li><a href="#manipulating">Manipulating expressions</a></li>
     <li><a href="#usingcustomnumberclasses">Using custom number classes</a></li>
-    <li>Assignment</li>
-    <li>Alternate parsing and evaluation functions</li>
-    <li>Working with variables</li>
-    <li>Observers for variables</li>
   </ul>
-  <h2><a name="basicusage"></a>Basic usage</h2>
-  <p>Using the JEP package of classes in your project is simple. The following 
+  <p>Using the JEP package of classes in your project is simple! The following 
     steps will get you started quickly.</p>
   <ol>
     <li>Download the JEP package</li>
@@ -105,23 +103,26 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
     methods are used.</p>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
+<!-- #EndLibraryItem --> 
   <h2><a name="evaluatingexpressions"></a>Evaluating expressions</h2>
-  <p>Three methods for evaluating an expression are available:</p>
+  <p>Four methods for evaluating an expression are available:</p>
   <ul>
     <li><a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target="_blank">getValue()</a>: 
       Use this if you are expecting a normal floating point value.</li>
     <li><a href="../javadoc/org/nfunk/jep/JEP.html#getComplexValue()" target="_blank">getComplexValue()</a>: 
       Use this if you are expecting a complex value.</li>
     <li><a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a>: 
-      Returns the result as an Object. Can be any type.</li>
+      Returns the result as an Object (any type)</li>
+    <li><a href="../javadoc/org/nfunk/jep/JEP.html#evaluate(Node)" target="_blank">evaluate(Node 
+      root)</a>: Evaluates a tree with from a root node and returns the result 
+      as an Object.</li>
   </ul>
   <p>The first two methods call <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
     internally, and perform the necessary conversions into either a <code>double</code> 
     value, or a <code>Complex</code> object.</p>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
+<!-- #EndLibraryItem --> 
   <h2><a name="errorhandling"></a>Error handling</h2>
   <p>Errors can occur both while parsing an expression and while evaluating an 
     expression. The <a href="../javadoc/org/nfunk/jep/JEP.html#hasError()" target="_blank">hasError()</a> 
@@ -131,7 +132,20 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
     to obtain further information on the errors that have occured.</p>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
+<!-- #EndLibraryItem --> 
+  <h2><a name="alternate"></a>Alternate parsing and evaluation functions</h2>
+  <p>There is an alternative method to parsing and evaluating expression which 
+    allows a little more flexibility in applications especially when working with 
+    a set of related equations. These are: </p>
+  <pre>public Node <a href="../javadoc/org/nfunk/jep/JEP.html#parse(java.lang.String)">parse(String expression)</a> throws ParseException<br>public Object <a href="../javadoc/org/nfunk/jep/JEP.html#evaluate(org.nfunk.jep.Node)">evaluate(Node node)</a> throws Exception</pre>
+  which parse and evaluate the expression. These can be used like 
+  <pre>try<br>{<br>	// Alternative syntax<br>	Node node1 = j.parse("z=i*pi");<br>	j.evaluate(node1);<br>	Node node2 = j.parse("exp(z)");<br>	Object val2 = j.evaluate(node2);<br>	System.out.println("Value: "+val2);<br>}<br>catch(ParseException e)	{<br>	System.out.println("Error with parsing");<br>}<br>catch(Exception e)	{<br>	System.out.println("Error with evaluation");<br>}</pre>
+  <p>Hence its a bit easier to keep track of a number of equations. Note that 
+    using this syntax Exceptions need to be caught and the <a href="../javadoc/org/nfunk/jep/JEP.html#getTopNode()">getTopNode()</a> 
+    method will not return meaningful results.</p>
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
   <h2><a name="implicitmul"></a>Implicit multiplication</h2>
   <p>You can enable the implicit multiplication option with <a href="../javadoc/org/nfunk/jep/JEP.html#setImplicitMul(boolean)" target="_blank">setImplicitMul(true)</a>. 
     The default setting is false (no implicit multiplication).</p>
@@ -142,98 +156,10 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
     as &quot;y*3&quot;, but &quot;y3&quot; is interpreted as a single variable 
     with the name y3. If a variable is preceded by a number, no space is required 
     between them for implicit multiplication to come in effect.</p>
+  
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="allowingundeclared"></a>Allowing undeclared variables</h2>
-  <p>To enable parsing of undeclared variables, use <a href="../javadoc/org/nfunk/jep/JEP.html#setAllowUndeclared(boolean)" target="_blank">setAllowUndeclared(true)</a>. 
-    The default setting is false (undeclared variables are not allowed).</p>
-  <p>If you do not know what variable names may occur in the expression before 
-    parsing it, you can use <code>setAllowUndeclared(true)</code>. With this option 
-    enabled, it is not necessary to add variables to the parser before parsing 
-    an expression. If a new variable is found while parsing, it is automatically 
-    added to the symbol table. See <a href="#obtainingalist">Obtaining a list 
-    of variables</a> to read about how to access these variables.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="obtainingalist"></a>Obtaining a list of variables</h2>
-  <p>While parsing an expression with undeclared variables allowed, all A list 
-    of all the variables and constants that have been added to the parser, can 
-    be obtained with the <a href="../javadoc/org/nfunk/jep/JEP.html#getSymbolTable()" target="_blank">getSymbolTable()</a> 
-    method.</p>
-  <p>This method is most useful when the undeclared variables option is enabled. 
-    After an expression has been parsed, a list of all variables occurring in 
-    that expression can be obtained using the <code>getSymbolTable()</code> method. 
-    The return value is a SymbolTable object. Note that SymbolTable extends Hashtable.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="complexnumbers"></a>Complex numbers</h2>
-  <p>If you want to use complex numbers in your expression, you can call <a href="../javadoc/org/nfunk/jep/JEP.html#addComplex()" target="_blank">addComplex()</a> 
-    after creating the parser object. This will add the imaginary unit as constant<b> 
-    </b><i>i</i>. Two parser functions re() and im() are also added and can be 
-    used to obtain the real and imaginary components of complex numbers. You will 
-    need to import the <a href="../javadoc/org/nfunk/jep/type/Complex.html" target="_blank">org.nfunk.jep.type.Complex</a> 
-    class to be able to manipulate complex values from expressions.</p>
-  <p>By using the imaginary unit constant <i>i</i>, you can work with complex 
-    numbers in your expressions. A sample complex expression would be (1+2*i)^3. 
-    Currently the (re, im) notation is not supported.</p>
-  <p>To obtain a complex value from an expression, you must use the <a href="../javadoc/org/nfunk/jep/JEP.html#getComplexValue()" target="_blank">getComplexValue()</a> 
-    function. It will evaluate the expression and return the result as a Complex 
-    object. Note that the class used internally for Complex numbers is also used 
-    for returning the value.</p>
-  <p>Adding a complex variable or constant to the parser before evaluating an 
-    expression can be done with <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, double, double)" target="_blank">addVariable(String 
-    name, double re, double im)</a>. It takes three parameters: the name of the 
-    variable as string, the real component, and the imaginary component.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="usingvectors"></a>Using Vectors</h2>
-  <p>Vectors are ordered sets of Double elements. A vector is a list of values, 
-    separated by commas, and enclosed by square brackets. An example expression 
-    involving a vector is: 
-  <pre>[3, 4, 5]*2</pre>
-  <p>It would be evaluated as [6, 8, 10] by JEP. To add a vector as variable, 
-    use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)" target="_blank">addVariable(String 
-    name, Object value)</a> method. If the result of an expression is a vector, 
-    it can be obtained by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
-    function.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="usingstrings"></a>Using Strings</h2>
-  <p>Strings can be entered in an expression by using double quotes. They can 
-    be concatenated with the + operator and compared with the == and != relational 
-    operators. A sample expression involving the string type is &quot;foo&quot; 
-    + &quot;bar&quot; == &quot;foobar&quot;, which would be evaluated by JEP as 
-    1 (true).</p>
-  <p>To add a string as a variable, use the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)" target="_blank">addVariable(String 
-    name, Object value)</a> method. If the result of an expression is a string, 
-    it can be obtained by calling the <a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a> 
-    function.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="customtypes"></a>Custom types</h2>
-  <p>In most cases, you will only need to work with the few built in types that 
-    JEP supplies (Double, Complex, Vector, String). But suppose you want to evaluate 
-    expressions that involve other types. This is possible by using the <a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)" target="_blank">addVariableAsObject(String 
-    name, Object value)</a> method to add variables of any type. The only place 
-    where the type of a variable matters, is in the function classes.</p>
-  <p>When an expression is evaluated, values are operated on with the classes 
-    in the function package. These include the operators (such as <a href="../javadoc/org/nfunk/jep/function/Add.html" target="_blank">Add</a> 
-    and <a href="../javadoc/org/nfunk/jep/function/Subtract.html" target="_blank">Subtract</a>), 
-    as well as the functions (such as <a href="../javadoc/org/nfunk/jep/function/Sine.html" target="_blank">Sine</a> 
-    and <a href="../javadoc/org/nfunk/jep/function/Cosine.html" target="_blank">Cosine</a>). 
-    Without making modifications to the source code, only the default types are 
-    handled with these classes. So, in order to be able to handle your own types, 
-    you will need to modify theses classes, or make your own function classes 
-    as described in the custom functions section.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
+<!-- #EndLibraryItem --> 
   <h2><a name="manipulating"></a>Manipulating expressions</h2>
   <p>The <a href="../javadoc/org/nfunk/jep/JEP.html#getTopNode()" target="_blank">getTopNode()</a> 
     method can be used to get the expression tree after parsing an expression. 
@@ -263,26 +189,8 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
     class to see how expressions are evaluated using the Visitor design pattern.</p>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="usingcustomnumberclasses"></a>Using custom number classes</h2>
-  <p>By default when an expression such as &quot;1+2&quot; is parsed, the constants 
-    &quot;1&quot; and &quot;2&quot; are created internally as Double objects. 
-    In most cases this is fine, but in some cases you may want to use custom classes 
-    for representing numbers.</p>
-  <p>This is made possible through creating a number class that implements the 
-    <a href="../javadoc/org/nfunk/jep/type/NumberFactory.html" target="_blank">NumberFactory</a> 
-    interface. It includes one method called <a href="../javadoc/org/nfunk/jep/type/NumberFactory.html#createNumber(java.lang.String)" target="_blank">createNumber(String 
-    value)</a>, which should return an object initialized to the value of the 
-    parameter. You can load your custom number factory with the JEP constructor 
-    <code>JEP(boolean traverse_in, Boolean allowUndeclared_in, Boolean implicitMul_in, 
-    NumberFactory numberFactory_in)</code>.</p>
-  <p>The custom number objects need to be handled by custom functions which you 
-    can create by following the instructions on the <a href="cust_func.html">Custom 
-    Functions</a> page.</p>
-<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <h2><a name="ASSIGN"></a>Assignment</h2>
+<!-- #EndLibraryItem --> 
+  <h2><a name="assignment"></a>Assignment</h2>
   <p> Assignment allows the values of variables to be set by using the <tt>=</tt> 
     operator in equations so it is possible to do something like <tt>x=3</tt> 
     then <tt>y=x^2</tt> and <tt>y</tt> will have the value 9. Assignment can be 
@@ -290,76 +198,14 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
     in the org.lsmp.djep tree. To switch on assignment facilities the <a href="../javadoc/org/nfunk/jep/JEP.html#setAllowAssignment(boolean)">setAllowAssignment</a> 
     method of the main JEP object should be called. </p>
   <pre>// standard initialisation<br>JEP j = new JEP();<br>j.addStandardConstants();<br>j.addStandardFunctions();<br>j.addComplex();<br>j.setAllowUndeclared(true);<br>j.setImplicitMul(true);<br><br>// switch assignment facilities on<br>j.setAllowAssignment(true);<br><br>// parse assignment equations<br>j.parseExpression("x=3");<br>// evaluate it - no need to save the value returned (unless you want to)<br>j.getValueAsObject();<br>// parse a second equation<br>j.parseExpression("y=2");<br>j.getValueAsObject();<br><br>// an equation involving above variables<br>j.parseExpression("x^y");<br>Object val3 = j.getValueAsObject();<br>System.out.println("Value is "+val3);<br></pre>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --> 
-  <h2><a name="SYNTAX"></a>Alternate parsing and evaluation functions</h2>
-  <p>A couple of utility functions have been added to the make it easier to work 
-    with a set of related equations. These are: </p>
-  <pre>public Node <a href="../javadoc/org/nfunk/jep/JEP.html#parse(java.lang.String)">parse(String expression)</a> throws ParseException<br>public Object <a href="../javadoc/org/nfunk/jep/JEP.html#evaluate(org.nfunk.jep.Node)">evaluate(Node node)</a> throws Exception</pre>
-  which parse and evaluate the expression. These can be used like 
-  <pre>try<br>{<br>	// Alternative syntax<br>	Node node1 = j.parse("z=i*pi");<br>	j.evaluate(node1);<br>	Node node2 = j.parse("exp(z)");<br>	Object val2 = j.evaluate(node2);<br>	System.out.println("Value: "+val2);<br>}<br>catch(ParseException e)	{<br>	System.out.println("Error with parsing");<br>}<br>catch(Exception e)	{<br>	System.out.println("Error with evaluation");<br>}</pre>
-  <p>Hence its a bit easier to keep track of a number of equations. Note that 
-    using this syntax Exceptions need to be caught and the <a href="../javadoc/org/nfunk/jep/JEP.html#getTopNode()">getTopNode()</a> 
-    method will not return meaningful results. 
-  <h2>&nbsp;</h2>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --> 
-  <h2><a name="VAR"></a>Working with variables</h2>
-  <p> The value of a variable can be set and queried using the <a href="../javadoc/org/nfunk/jep/JEP.html#setVarValue(java.lang.String, java.lang.Object)">setVarValue</a> 
-    and <a href="../javadoc/org/nfunk/jep/JEP.html#getVarValue(java.lang.String)">getVarVal</a> 
-    methods of the jep instance. A further method <a href="../javadoc/org/nfunk/jep/JEP.html#getVar(java.lang.String)">getVar</a> 
-    returns an object representing the variable. </p>
-  <pre>JEP j = new JEP();<br>try {<br>    Node node = j.parse("z=x^y");<br>    j.setVarValue("x",new Double(2));<br>    j.setVarValue("y",new Double(3));<br>    j.evaluate(node);<br>    System.out.println(j.getVarValue("z")); // prints 8<br>} catch .....<br></pre>
-  <p>The SymbolTable class now stores objects representing variables rather than 
-    just their values and the <a href="../javadoc/org/nfunk/jep/SymbolTable.html#get(java.lang.Object)">get</a> 
-    and <a href="../javadoc/org/nfunk/jep/SymbolTable.html#put(java.lang.Object, java.lang.Object)">put</a> 
-    methods of this class are deprecated. This results in a slight speed up during 
-    evaluation.<br>
-  </p>
-  <p>Variables can be constants which cannot have their values changed. To add 
-    a new constant use <a href="../javadoc/org/nfunk/jep/JEP.html#addConstant(java.lang.String, java.lang.Object)">addConstant</a> 
-    to add a mutable variable use&nbsp;<a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, java.lang.Object)">addVariable</a>.</p>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --> 
-  <h2><a name="LISTEN"></a>Observers for variables</h2>
-  <p> Both SymbolTable and Variable implement the Observer/Observable pattern. 
-    This allows objects to be informed whenever a new variable is created or when 
-    its value has been changed. An example of use is 
-  <pre>
-public class MyObserver implements Observer
-{
-    public void initialise()
-    {
-        SymbolTable st = j.getSymbolTable();
-        st.addObserver(this);
-        st.addObserverToExistingVariables(this);
-    }
 
-    public void update(Observable arg0, Object arg1)
-    {
-        if(arg0 instanceof Variable)
-            println("Var changed: "+arg0);
-        else if(arg0 instanceof SymbolTable.StObservable)
-        {
-            println("New var: "+arg1);
+  <!-- #EndEditable -->
 
-            // This line is vital to ensure that 
-            // any new variable created will be observed. 
-            ((Variable) arg1).addObserver(this);
-        }
-    }
-}
-</pre>
-  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
-<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem -->
-  <p>&nbsp;</p>
-  <!-- #EndEditable --> 
-  <!-- FOOTER ---------------------------------------------------------- -->
-  <div id="footer">
+
+
+
+<!-- FOOTER ---------------------------------------------------------- -->
+<div id="footer">
 &copy; 2006 Singular Systems
 <a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
 </div>
