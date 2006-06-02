@@ -44,7 +44,7 @@ public class Logarithm extends PostfixMathCommand
 		else if (param instanceof Number) 
 		{
 			double num = ((Number) param).doubleValue();
-			if( num > 0)
+			if( num >= 0)
 				return new Double(Math.log(num)/LOG10);
 			else if(num != num)
 				return new Double(Double.NaN);
