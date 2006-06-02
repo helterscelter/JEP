@@ -7,7 +7,7 @@ import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.xjep.*;
 /**
- * Examples using vectors and matricies
+ * Examples using vectors and matrices
  */
 public class VectorPrint {
 	static XJep j;
@@ -18,7 +18,6 @@ public class VectorPrint {
 
 		j.addStandardConstants();
 		j.addStandardFunctions();
-		//j.addFunction("ele",new Ele());
 		j.addComplex();
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
