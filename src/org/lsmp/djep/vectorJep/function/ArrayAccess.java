@@ -17,7 +17,7 @@ import org.nfunk.jep.function.LValueI;
 
 /**
  * A postfix MathCommand which facilitates the getting and setting of vector and matrix elements.
- * The class implements the set method of LValueI., read access is handled by parent Ele class.
+ * The class implements the set method of LValueI., read access is handled by parent VEle class.
  * For examples
  * <code>
  * a=[1,2,3];
@@ -28,7 +28,7 @@ import org.nfunk.jep.function.LValueI;
  * @author Richard Morris
  * TODO implement setting slices a[3:5]=[3,4,5] a[1,]=[1,3]
  */
-public class ArrayAccess extends Ele implements LValueI {
+public class ArrayAccess extends VEle implements LValueI {
 
 	public ArrayAccess() {
 		super();

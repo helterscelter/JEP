@@ -28,7 +28,7 @@ public class VectorJep extends JEP {
 	public void addStandardFunctions()
 	{
 		super.addStandardFunctions();
-		super.addFunction("ele",new Ele());
+		super.addFunction("ele",new VEle());
 		super.addFunction("len",new Length());
 		super.addFunction("size",new Size());
 		super.addFunction("id",new Id());
