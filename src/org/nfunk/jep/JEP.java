@@ -258,7 +258,15 @@ public class JEP {
 							PostfixMathCommandI function) {
 		funTab.put(functionName, function);
 	}
-
+	
+	/** Adds a constant.
+	 * This is a variable whose value cannot be changed.
+	 * @since 2.3.0 beta 1
+	 */
+	public void addConstant(String name,Object value) {
+		symTab.addConstant(name, value);
+	}
+	
 	/**
 	 * Adds a new variable to the parser, or updates the value of an
 	 * existing variable. This must be done before parsing
@@ -274,13 +282,7 @@ public class JEP {
 		return object;
 	}
 
-	/** Adds a constant.
-	 * This is a variable whose value cannot be changed.
-	 * @since 2.3.0 beta 1
-	 */
-	public void addConstant(String name,Object value) {
-		symTab.addConstant(name, value);
-	}
+
 	/**
 	 * Adds a new complex variable to the parser, or updates the value of an
 	 * existing variable. This must be done before parsing
