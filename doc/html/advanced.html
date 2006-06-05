@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --><title>JEP - Java Math Expression Parser</title><!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1">
+</head>
+
+<body>
+
+
+
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" width="15" height="11"></a></li>
+  </ul>
+
+<h1>JEP</h1>
+  <ul>
+    <li><a href="index.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="cust_func.html">Custom Functions</a></li>
+    <li><a href="advanced.html">Advanced Features</a></li>
+    <li><a href="newfeatures.html">New Features</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+
+<h1>Extensions</h1>
+  <ul>
+    <li><a href="djep/index.html">DJEP</a></li>
+    <li><a href="djep/XJep.html">XJep</a></li>
+    <li><a href="djep/DJep.html">Differentiation</a></li>
+    <li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="djep/GroupJep.html">Groups</a></li>
+    <li><a href="djep/AddingOperators.html">Adding Operators</a></li>
+    <li><a href="djep/version.html">Version History</a></li>
+  </ul>
+</div>
+
+
+
+<div id="centercontent">
+<!-- CENTER CONTENT -------------------------------------------------- -->
+<!-- #BeginEditable "Text" --> 
+  <h1><a name="top"></a>Advanced features</h1>
+ 
+  <h2><a name="manipulating"></a>Manipulating expressions</h2>
+  <p>The <a href="../javadoc/org/nfunk/jep/JEP.html#getTopNode()" target="_blank">getTopNode()</a> 
+    method can be used to get the expression tree after parsing an expression. 
+    This will be useful if you want to do more than just evaluate the expressions 
+    you parse. For example, you may want to determine the derivative of an expression. 
+    In order to be able to this, you will need direct access to the expression 
+    tree.</p>
+  <p>The expression tree consists of nodes. Each of the nodes in the parse tree 
+    is an object of one of the following types:</p>
+  <ul>
+    <li><a href="../javadoc/org/nfunk/jep/ASTFunNode.html" target="_blank">ASTFunNode</a> 
+      - Functions and operators</li>
+    <li><a href="../javadoc/org/nfunk/jep/ASTConstant.html" target="_blank">ASTConstant</a> 
+      - Constants</li>
+    <li><a href="../javadoc/org/nfunk/jep/ASTVarNode.html" target="_blank">ASTVarNode</a> 
+      - Variables</li>
+  </ul>
+  <p>All of them extend the <a href="../javadoc/org/nfunk/jep/SimpleNode.html" target="_blank">SimpleNode</a> 
+    class (which implements the <a href="../javadoc/org/nfunk/jep/Node.html" target="_blank">Node</a> 
+    interface). Binary operators (+,-,*,/...) and functions are ASTFunNodes. The 
+    type of operator (the function class) is stored in the pfmc member, and as 
+    a string in the name member. Use the <a href="../javadoc/org/nfunk/jep/ASTFunNode.html#getPFMC()" target="_blank">getPFMC()</a> 
+    and <a href="../javadoc/org/nfunk/jep/ASTFunNode.html#getName()" target="_blank">getName()</a> 
+    methods to access these members.</p>
+  <p>To traverse the expression tree you can use a visitor class (<a href="../javadoc/org/nfunk/jep/ParserDumpVisitor.html" target="_blank">ParserDumpVisitor</a> 
+    is an example class used to print out all the nodes). Look at the <a href="../javadoc/org/nfunk/jep/EvaluatorVisitor.html" target="_blank">EvaluatorVisitor</a> 
+    class to see how expressions are evaluated using the Visitor design pattern.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2><a name="assignment"></a>Assignment</h2>
+  <p> Assignment allows the values of variables to be set by using the <tt>=</tt> 
+    operator in equations so it is possible to do something like <tt>x=3</tt> 
+    then <tt>y=x^2</tt> and <tt>y</tt> will have the value 9. Assignment can be 
+    used with the standard JEP package, there is no need to use any of the packages 
+    in the org.lsmp.djep tree. To switch on assignment facilities the <a href="../javadoc/org/nfunk/jep/JEP.html#setAllowAssignment(boolean)">setAllowAssignment</a> 
+    method of the main JEP object should be called. </p>
+  <pre>// standard initialisation<br>JEP j = new JEP();<br>j.addStandardConstants();<br>j.addStandardFunctions();<br>j.addComplex();<br>j.setAllowUndeclared(true);<br>j.setImplicitMul(true);<br><br>// switch assignment facilities on<br>j.setAllowAssignment(true);<br><br>// parse assignment equations<br>j.parseExpression("x=3");<br>// evaluate it - no need to save the value returned<br>j.getValueAsObject();<br>// parse a second equation<br>j.parseExpression("y=2");<br>j.getValueAsObject();<br><br>// an equation involving above variables<br>j.parseExpression("x^y");<br>Object val3 = j.getValueAsObject();<br>System.out.println("Value is "+val3);</pre>  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ---------------------------------------------------------- -->
+<div id="footer">
+&copy; 2006 Singular Systems
+<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+</div>
+</div>
+
+</body>
+<!-- #EndTemplate --></html>

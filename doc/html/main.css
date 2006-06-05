@@ -1,75 +1,88 @@
-BODY  {
-	BACKGROUND-COLOR : #fff;
-	COLOR : #000;
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE : 10pt;
+body  {
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
 }
 
-TD  {
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE : 10pt;
+td {
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
 }
 
-A  {
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	COLOR : #036;
-	FONT-SIZE : 10pt;
+img {
+	border: 0px;
 }
 
-A:VISITED {
+a {
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	color : #036;
+	font-size : 10pt;
+}
+
+a:visited {
 	color : #009;
 }
 
-A:HOVER {
+a:hover {
 	color : #33f;
 }
 
-P  {
-	margin-top: 0px;
-	padding-top: 0px;
-}
 
-H1  {
-	COLOR : #003;
-	FONT-FAMILY : Arial, Helvetica, sans-serif;
-	FONT-SIZE : 15pt;
-	FONT-WEIGHT : bold;
+h1 {
+	color : #003;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 15pt;
+	font-weight : bold;
+	margin-top: 20px;
 	margin-bottom: 20px;
-	padding-bottom: 0px;
 	border-bottom: solid;
 	border-width: 1px;
 	border-color: #ccc;
 }
 
-H2  {
-	COLOR : #036;
-	FONT-FAMILY : Arial, Helvetica, sans-serif;
-	FONT-SIZE : 13pt;
+h2 {
+	color : #036;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 13pt;
+	margin-top: 30px;
 	margin-bottom: 5px;
 	padding-bottom: 0px;
 }
 
-H3  {
-	COLOR : #369;
-	FONT-FAMILY : Arial, Helvetica, sans-serif;
-	FONT-SIZE : 12pt;
+h2.version {
+	color : #000;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 10pt;
+	margin-top: 30px;
+	margin-bottom: 5px;
+	padding-bottom: 0px;
+}
+
+H2.version .date {
+	color : #999;
+}
+
+h3  {
+	color : #369;
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : 12pt;
 	margin-bottom: 5px;
 	padding-bottom: 0px;
 }
 
 OL  {
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE : 10pt;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
 }
 
 UL  {
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE : 10pt;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
 }
 
 LI  {
-	FONT-FAMILY : Verdana, Arial, Helvetica, sans-serif;
-	FONT-SIZE : 10pt;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
 }
 
 pre {  font-size: 10pt}
@@ -80,7 +93,7 @@ pre {  font-size: 10pt}
 	position: absolute;
 	top: 12px;
 	left: 12px;
-	width: 200px;
+	width: 180px;
 	border: 1px solid #999;
 	padding: 5px;
 	/*border-right:1px solid #999;*/
@@ -92,7 +105,9 @@ pre {  font-size: 10pt}
 	font-weight: bold;
 	margin-top: 15px;
 	margin-bottom: 5px;
-	border-bottom: solid #ccc 1px;
+	padding-top: 5px;
+	border-top: solid #ccc 1px;
+	border-bottom: none;
 }
 
 #navcontainer ul {
@@ -121,7 +136,6 @@ pre {  font-size: 10pt}
 
 
 
-
 /*-- centercontent ----------------------------------------------*/
 										
 #centercontent {
@@ -135,7 +149,7 @@ pre {  font-size: 10pt}
 /*-- topbar ------------------------------------------------------*/
 										
 .topbar {
-	margin: 20px 0 40px;
+	margin: 20px 0 0px;
 	text-align: right;
 	border-bottom: 1px solid #999;
 	color: #666;

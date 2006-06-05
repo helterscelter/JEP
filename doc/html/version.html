@@ -14,7 +14,7 @@
 <!-- NAVIGATION ---------------------------------------------------- -->
 <div id="navcontainer"> 
   <ul>
-    <li><a href="../javadoc/index.html" target="_blank">JavaDoc*</a></li>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" width="15" height="11"></a></li>
   </ul>
 
 <h1>JEP</h1>
@@ -25,6 +25,7 @@
     <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
     <li><a href="grammar.html">Grammar</a></li>
     <li><a href="cust_func.html">Custom Functions</a></li>
+    <li><a href="advanced.html">Advanced Features</a></li>
     <li><a href="newfeatures.html">New Features</a></li>
     <li><a href="faq.html">FAQ</a></li>
     <li><a href="version.html">Version History</a></li>
@@ -49,16 +50,18 @@
 <!-- #BeginEditable "Text" --> 
   <h1><a name="top"></a>Version History</h1>
 
-  <p><b>Version 2.4.0: <font color="#999999">(released 2006/04/01)</font></b> 
+  <h2 class="version">Version 2.4.0 <span class="date">(released 2006/04/01)</span></h2> 
   <ul>
   <li>Evaluator now swithchable to allow null variable values.</li>
   <li>SymbolTable can now tell java.util.observers when new variables are created.</li>
   <li>Changes in Error handling</li>
   <li>New functions binom(n,i) binomial coeffs, conj(z) - complex conjugate</li>
   </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem -->
 
-  <p><b>Version 2.3.1: <font color="#999999">(released 2006/01/27)</font></b> 
-  </p>
+  <h2 class="version">Version 2.3.1 <span class="date">(released 2006/01/27)</span></h2>
   <ul>
     <li>Fixed bug 1046349: bug in sum()</li>
     <li>Fixed broken links in documentation</li>
@@ -67,16 +70,21 @@
     <li>Added more tests for sum function</li>
     <li>Updated build.xml to work with 1.5 JVMs</li>
   </ul>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem -->
   
-  <p><b>Version 2.3.0: <font color="#999999">(released 2004/10/03)</font></b>
-  </p>
+  <h2 class="version">Version 2.3.0 <span class="date">(released 2004/10/03)</span></h2>
   <ul>
     <li>Switched from Java 1.1 compatibility to 1.2 compatibility</li>
     <li>Documentation updates</li>
     <li>Fixed batch script issues from beta 2</li>
   </ul>
-  <p><b>Version 2.3.0 beta 2: <font color="#999999">(released 2004/09/03)</font></b> 
-  </p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem -->
+  
+  <h2 class="version">Version 2.3.0 beta 2 <span class="date">(released 2004/09/03)</span></h2>
   <ul>
     <li>2004/09/11: Renamed angle() function to atan2()</li>
     <li>2004/04/12: New functions if, str, complex, polar.</li>
@@ -96,18 +104,18 @@
       to switching from the MS JVM to the Sun appletviewer. Planned to be fixed 
       for the 2.3.0 release.</li>
   </ul>
-  <p> 
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><p><b>Version 2.24: <font color="#999999">(released 2002/12/31)</font></b> </p>
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.24 <span class="date">(released 2002/12/31)</span></h2>
   <ul>
     <li>2002/12/25: Fixed &quot;not replacing escape sequences in strings&quot; 
       bug</li>
   </ul>
-  <p> 
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><p><b>Version 2.23: <font color="#999999">(released 2002/08/03)</font></b> </p>
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.23 <span class="date">(released 2002/08/03)</span></h2>
   <ul>
     <li>2002/07/01: Started adding Number support to JEP class and functions</li>
     <li>2002/07/08: Fixed string concatenation bug</li>
@@ -115,10 +123,9 @@
       for custom NumberFactory in JEP constructor)</li>
     <li>2002/08/02: Added website documents to distribution</li>
   </ul>
-  <p> 
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><p><b>Version 2.22: <font color="#999999">(released 2002/07/04)</font></b> </p>
+<!-- #EndLibraryItem --><h2 class="version">Version 2.22 <span class="date">(released 2002/07/04)</span></h2>
   <ul>
     <li>2002/06/06: Removed symbol table information from ASTVarNode (making AST 
       nodes into pure data structure elements)</li>
@@ -133,18 +140,19 @@
   <p> 
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.21: <font color="#999999">(released 2002/06/04)</font></b> 
-  <p></p>
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 
+  2.21 <span class="date">(released 2002/06/04)</span></h2>
+
   <ul>
     <li>2002/06/03: Fixed 1.1 compatibility issue in JEP.java (was using add() 
       and clear() which are not included in the 1.1.8 VM).</li>
   </ul>
-  <p> 
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.20: <font color="#999999">(released 2002/05/31)</font></b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 
+  2.20 <span class="date">(released 2002/05/31)</span></h2>
   <p></p>
   <ul>
     <li>2002/01/20: Combined multiplication and division to the same precedence 
@@ -172,8 +180,9 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.12: <font color="#999999">(released 2002/02/01)</font></b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 
+  2.12 <span class="date">(released 2002/02/01)</span></h2>
   <ul>
     <li>2001/08/31: Made a change to the Complex power function Complex.pow(to 
       avoid problems with applets run in Internet Explorer (Math.exp(-Infinity) 
@@ -194,16 +203,16 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.11:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.11</h2>
   <ul>
     <li>2001/08/26: Substituted the Netlib complex number class with a custom 
       class</li>
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.10:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.10</h2>
   <ul>
     <li>2001/07/07: Finished adding complex numbers, and incorporated complex 
       numbers in nearly all built in functions</li>
@@ -214,8 +223,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.05:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.05</h2>
   <ul>
     <li>2001/03/21: Fixed PostfixMathCommand class to allow inheritance to classes 
       in other packages</li>
@@ -225,16 +234,16 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.04:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.04</h2>
   <ul>
     <li>2001/03/01: Fixed EOF problem (included EOF in grammar)</li>
     <li>2001/03/16: Removed a few redundant exception classes</li>
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.03:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.03</h2>
   <ul>
     <li>2001/02/17: Corrected order of precedence for logical operators</li>
     <li>2001/02/17: Added '&amp;&amp;', '||', and '!' operators to extend the 
@@ -244,8 +253,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  2.0:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 2.0</h2>
   <ul>
     <li>2000/10/16: Started rebuilding the whole parser with JavaCC (<a href="http://www.webgain.com/products/java_cc/">http://www.webgain.com/products/java_cc/</a>)</li>
     <li>2000/10/27: Completed restructuring main background parser functions in 
@@ -257,8 +266,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  1.1:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 1.1</h2>
   <ul>
     <li>2000/11/30: Changed order of precedence so division occurs before multiplication 
     </li>
@@ -269,8 +278,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  1.0:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 1.0</h2>
   <ul>
     <li>2000/07/03: Added more documentation</li>
     <li>2000/07/10: Removed all operator nodes such as MulNode or PlusNode, and 
@@ -281,8 +290,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  0.3:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 0.3</h2>
   <ul>
     <li>2000/06/01: Created Web page and posted it</li>
     <li>2000/06/02: Edited Web page, added one variable field just for integers</li>
@@ -294,8 +303,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><b>VERSION 
-  0.2:</b> 
+<!-- #EndLibraryItem -->
+<h2 class="version">Version 0.2</h2>
   <ul>
     <li>2000/06/18: Added SharedConstants class for the parser package</li>
     <li>2000/06/18: Added InvalidExpressionException class which is thrown inside 
@@ -313,7 +322,8 @@
   </ul>
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
-<!-- #EndLibraryItem --><br>
+<!-- #EndLibraryItem -->
+
   <!-- #EndEditable -->
 
 
