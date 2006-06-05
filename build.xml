@@ -165,7 +165,7 @@
 				windowtitle="JEP API"
 				breakiterator="yes"
 				source="1.4">
-			<bottom><![CDATA[<A HREF=\"http://www.singularsys.com/jep\" TARGET=\"_blank\">http://www.singularsys.com/jep</A> Copyright &#169; 2004 Singular Systems]]></bottom>
+			<bottom><![CDATA[<A HREF="http://www.singularsys.com/jep" TARGET="_blank">http://www.singularsys.com/jep</A> Copyright &#169; 2006 Singular Systems]]></bottom>
 		</javadoc>
 	</target>
 
