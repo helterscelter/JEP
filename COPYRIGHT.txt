@@ -1,0 +1,48 @@
+JEP and JEP Extensions copyright information
+
+All source code in this package except some generated code is written by 
+Nathan Funk and Richard Morris. The generated code is output of JavaCC.
+
+The package includes the binary libraries Jama and JUnit.
+
+The copyright information for JavaCC, JAMA and JUnit is included below.
+
+
+
+-------------------------------------------------------------------------------
+ JavaCC                                           https://javacc.dev.java.net/
+-------------------------------------------------------------------------------
+ 
+The Java Compiler Compiler (JavaCC) is a parser generator used for creating 
+some of the source code in this package.
+
+
+
+Berkeley Software Distribution (BSD) License
+http://www.opensource.org/licenses/bsd-license.html
+
+
+
+-------------------------------------------------------------------------------
+ JAMA                                  http://math.nist.gov/javanumerics/jama/
+-------------------------------------------------------------------------------
+
+Jama is authored by members of the MathWorks (http://www.mathworks.com/) and 
+NIST (http://www.nist.gov/). It has been released to the public domain.
+
+The following is the official Copyright Noticed as posted on the JAMA web site.
+
+Copyright Notice: This software is a cooperative product of The MathWorks and 
+the National Institute of Standards and Technology (NIST) which has been 
+released to the public domain. Neither The MathWorks nor NIST assumes any 
+responsibility whatsoever for its use by other parties, and makes no 
+guarantees, expressed or implied, about its quality, reliability, or any 
+other characteristic.
+
+
+
+-------------------------------------------------------------------------------
+ JUnit                                                   http://www.junit.org/
+-------------------------------------------------------------------------------
+
+JUnit is
