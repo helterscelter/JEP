@@ -9,6 +9,10 @@
 package org.nfunk.jep;
 import java.util.Hashtable;
 import org.nfunk.jep.function.PostfixMathCommandI;
+
+/*
+ * A Hashtable which holds a list of functions.
+ */
 public class FunctionTable extends Hashtable
 {
 	private static final long serialVersionUID = -1192898221311853572L;
