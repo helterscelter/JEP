@@ -133,6 +133,7 @@
 		<javac srcdir="${src}"
 		       destdir="${build}"
 		       classpath="${classpath}"
+			   deprecation="on"
 		       source="1.2"
 			   target="1.2"/>
 	</target>
@@ -147,6 +148,7 @@
 		<javac srcdir="${src}"
 		       destdir="${build}"
 		       classpath="${classpath}"
+			   deprecation="on"
 		       source="1.2"
 			   target="1.2"
 		       bootclasspath="${bootclasspath}"/>
@@ -248,6 +250,7 @@
 					 compile.bat,
 					 LICENSE.txt,
 					 CHANGES.txt,
+					 COPYRIGHT.txt,
 					 README.html"/>
 		</copy>
 
