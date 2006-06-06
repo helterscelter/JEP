@@ -1,4 +1,6 @@
 == org.nfunk.* =======================================================
+Jun  6 06 njf - Added a COPYRIGHT.txt file including copyright and license information
+              - Enabled deprecation output while compiling with build.xml
 May 20 06 rjm - Added a ElementComparative function, changed visability of field in Comparative.
 May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
 			  - Changed parser to handle the a[5] syntax 
