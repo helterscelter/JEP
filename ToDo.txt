@@ -90,12 +90,13 @@ research in the field.
 
 
 == Further todos ====================================================
+ - do not throw ParseExceptions from function classes, but a different type instead
+ - upgrade JUnit to newest version
  - somehow get around having ParserDumpVisitor referencing Sun's COPYRIGHT file (which doesn't exist)
    (e.g. don't use ParserDumpVisitor, upgrade to JavaCC 4...)
  - add to license agreement that JUnit is included and that source
    code is available from web site
     - include common public license
- - move applicable examples to jepexamples
  - ensure EvaluatorVisitor reports multiple errors for one evaluation
    (use list of errors rather than throwing exceptions)
  - change Functions and Operators documentation. That table just has too
@@ -106,11 +107,8 @@ research in the field.
  - add max(), min(), avg() methods
  - add example for multiple arguments to the documentation
  - extend build.xml to automatically generate commercial package
- - automate purchase with download of licensed file
  - allow dumpvisitor to show values of function nodes and variables
  - allow custom symbol tables (Map interface only in 1.2 - talk with dude)
- - add list of reference companies that use JEP to web site
- - add exp function
  - make case sensitivity optional
  - think about adding a "static double getValue(String expr) throws Exception"
  - add support for delimited identifiers (suggestion from Ralph Harnden)
