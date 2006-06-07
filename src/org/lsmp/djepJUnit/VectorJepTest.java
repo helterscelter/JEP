@@ -167,4 +167,16 @@ public class VectorJepTest extends JepTest {
 		valueTest("[1,2,3] * [2,2,2]","[2.0,4.0,6.0]");
 		valueTest("[1,2,3] / [2,2,2]","[0.5,1.0,1.5]");
 	}
+	
+	public void testComplexMatricies() throws Exception {
+		valueTest("v=[1+i,1-2i]","[(1.0, 1.0),(1.0, -2.0)]");
+		valueTest("vsum(v)","(2.0, -1.0)");
+		valueTest("m=[[1+i,-1+i],[1-i,-1-i]]","[[(1.0, 1.0),(-1.0, 1.0)],[(1.0, -1.0),(-1.0, -1.0)]]");
+		valueTest("vsum(m)","(0.0, 0.0)");
+		valueTest("trace(m)","(0.0, 0.0)");
+		valueTest("m*v","[(1.0, 5.0),(-1.0, 1.0)]");
+		valueTest("v*m","[(-1.0, -1.0),(-5.0, 1.0)]");
+		valueTest("trans(m)","[[(1.0, 1.0),(1.0, -1.0)],[(-1.0, 1.0),(-1.0, -1.0)]]");
+		valueTest("det(m)","(0.0, -4.0)");
+	}
 }
