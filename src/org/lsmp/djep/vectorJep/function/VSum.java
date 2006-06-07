@@ -41,7 +41,7 @@ public class VSum extends PostfixMathCommand implements UnaryOperatorI
 		if(!(res instanceof Scaler))
 			throw new ParseException("vsum: result must be a scaler");
 
-		Object val = Scaler.getInstance(lhs.getEle(0));
+		Object val = lhs.getEle(0);
 			for(int i=1;i<lhs.getNumEles();++i)
 				val = add.add(val,lhs.getEle(i));
 			res.setEle(0,val);

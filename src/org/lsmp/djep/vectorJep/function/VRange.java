@@ -9,8 +9,6 @@
 
 package org.lsmp.djep.vectorJep.function;
 
-import java.util.*;
-
 import org.nfunk.jep.*;
 import org.lsmp.djep.vectorJep.Dimensions;
 import org.lsmp.djep.vectorJep.values.*;
@@ -71,7 +69,7 @@ public class VRange extends org.nfunk.jep.function.Range
 		else if(inputs.length == 4)
 		{
 			Object stepsObj = inputs[4];
-			Object incObj = inputs[3];
+			//Object incObj = inputs[3];
 			Object lastObj = inputs[2];
 			Object firstObj  = inputs[0];
 			int steps = ((Number) stepsObj).intValue();

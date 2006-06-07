@@ -56,7 +56,7 @@ public class Trace extends PostfixMathCommand implements UnaryOperatorI
 		}
 		else
 		{
-			Object val = Scaler.getInstance(mat.getEle(0,0));
+			Object val = mat.getEle(0,0);
 			for(int i=1;i<mat.getNumRows();++i)
 				val = add.add(val,mat.getEle(i,i));
 			res.setEle(0,val);
