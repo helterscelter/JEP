@@ -49,7 +49,7 @@ public class MatrixJep extends DJep {
 		addFunction("pow",new Power());
 		this.getFunctionTable().remove("if");
 		addFunction("if",new MIf());
-		addFunction("ele",new Ele());
+		addFunction("ele",new VEle());
 		this.getFunctionTable().remove("diff");
 		addFunction("diff",new MDiff());
 		addFunction("len",new Length());
