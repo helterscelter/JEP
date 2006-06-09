@@ -16,7 +16,7 @@ public class NaturalLogarithmTest extends TestCase {
 	 * Test method for 'org.nfunk.jep.function.Logarithm.run(Stack)'
 	 * Tests the return value of log(NaN). This is a test for bug #1177557
 	 */
-	public void testRun() {
+	public void testNaturalLogarithm() {
 		NaturalLogarithm logFunction = new NaturalLogarithm();
 		java.util.Stack stack = new java.util.Stack();
 		stack.push(new Double(Double.NaN));

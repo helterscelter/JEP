@@ -14,7 +14,7 @@ import java.io.*;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.nfunk.jep.JEP;
+import org.nfunk.jep.*;
 import org.nfunk.jep.type.Complex;
 
 /**
@@ -78,6 +78,7 @@ public class JEPTest extends TestCase {
 		testWithFile(fileName);
 		testGetValue();
 		testGetComplexValue();
+		testOpSetBug();
 	}
 	
 	/**
@@ -265,6 +266,14 @@ public class JEPTest extends TestCase {
 		// Test whether NaN is returned for String results
 		myParser.parseExpression("\"asdf\"");
 		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+	}
+	
+	/**
+	 * Tests the uninitialized OperatorSet bug 1061200
+	 */
+	public void testOpSetBug() {
+		JEP j = new JEP(false, true, true, null);
+		Assert.assertNotNull(j.getOperatorSet());
 	}
 
 	/**
