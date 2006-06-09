@@ -1,20 +1,42 @@
 == org.nfunk.* =======================================================
-Jun  6 06 njf - Added a COPYRIGHT.txt file including copyright and license information
+
+
+---- 2.4.0 release (Jun 8, 2006) ------------------------------------
+
+Jun  8 06 njf - Revisions to the documentation
+
+Jun  6 06 njf - Added a COPYRIGHT.txt file including copyright and license 
+                information
               - Enabled deprecation output while compiling with build.xml
-May 20 06 rjm - Added a ElementComparative function, changed visability of field in Comparative.
+              
+May 26 06 njf - Switched back to JavaCC 3.2 to maintain compatibility with 
+                Java 1.2
+                
+May 20 06 rjm - Added a ElementComparative function, changed visability of field 
+                in Comparative.
+                
 May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
 			  - Changed parser to handle the a[5] syntax 
-			  - Added an LValueI interface for functions which can be used on lhs of an asignment,
+			  - Added an LValueI interface for functions which can be used on 
+			    lhs of an asignment,
 			  - Change Assign to work with LValueI.
 			  - Added new OP_ELEMENT to OperatorSet
-May 12 06 njf - Changed GraphCanvas to use Java2D anti aliasing for prettier curve drawing in function
-                plotter applet
-Apr 27 06 njf - changed build.xml to rely on setting a JRE instead of a JDK enviroment variable
-              - changed build.xml to allow compiling without having a 1.2 JRE env. var. set
-                (doesn't ensure compatibility to old version then)
-Apr 26 06 njf - switched to JavaCC 4.0. Needed to regenerated JavaCharStream.java.
+			  
+May 12 06 njf - Changed GraphCanvas to use Java2D anti aliasing for prettier 
+                curve drawing in function plotter applet
+                
+Apr 27 06 njf - changed build.xml to rely on setting a JRE instead of a JDK 
+                enviroment variable
+              - changed build.xml to allow compiling without having a 1.2 JRE 
+                env. var. set (doesn't ensure compatibility to old version then)
+                
+Apr 26 06 njf - switched to JavaCC 4.0. Needed to regenerated 
+                JavaCharStream.java.
+                
 Mar 11 06 rjm - Added serial version tags where needed
+
 Feb 18 06 njf - removed creative commons references from all source files
+
 Feb 15 06 njf - updated documentation by fixing some broken links and
                 reapplying the dreamweaver template to all files
               - merged new tests from version 2.3.1 into JEPTestExpressions.txt
@@ -80,9 +102,10 @@ Oct 23 njf - added source="1.2" to javac options in build.xml
 
 Oct 22 njf - added simple sum test to JEPTesterExpressions.txt
 
-Oct  4 rjm - Changes the SpecialEvaluationI interface to include a SymbolTable parameter.
+Oct  4 rjm - Changes the SpecialEvaluationI interface to include a 
+             SymbolTable parameter.
        rjm - Added rules to differentiate atan2 removed support for angle
-       rjm - Doc update for GroupJep, improved consol and unit test or working with polynomials over the reals (Doubles).
+       rjm - Doc update for GroupJep, improved consol and unit test or 
 
 ---- 2.3.0 release (Oct 3, 2004) ------------------------------------
 Oct  3 njf - created new features document for the core JEP and moved
