@@ -16,30 +16,26 @@
   <ul>
     <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="../html/img/new-window-icon.gif" width="15" height="11"></a></li>
   </ul>
-
-<h1>JEP</h1>
+  <h1>JEP</h1>
   <ul>
     <li><a href="../html/index.html">Basic Usage</a></li>
     <li><a href="../html/variables.html">Variables</a></li>
     <li><a href="../html/types.html">Data types</a></li>
-    <li><a href="../html/op_and_func.html">Operators &amp; Functions</a></li>
-    <li><a href="../html/grammar.html">Grammar</a></li>
-    <li><a href="../html/cust_func.html">Custom Functions</a></li>
+    <li><a href="../html/operators.html">Operators</a></li>
+    <li><a href="../html/functions.html">Functions</a></li>
     <li><a href="../html/advanced.html">Advanced Features</a></li>
-    <li><a href="../html/newfeatures.html">New Features</a></li>
+    <li><a href="../html/grammar.html">Grammar</a></li>
     <li><a href="../html/faq.html">FAQ</a></li>
     <li><a href="../html/version.html">Version History</a></li>
   </ul>
-
-<h1>Extensions</h1>
+  <h1>Extensions</h1>
   <ul>
-    <li><a href="../html/djep/index.html">DJEP</a></li>
-    <li><a href="../html/djep/XJep.html">XJep</a></li>
-    <li><a href="../html/djep/DJep.html">Differentiation</a></li>
-    <li><a href="../html/djep/VectorJep.html">Vectors &amp; Matrices</a></li>
-    <li><a href="../html/djep/GroupJep.html">Groups</a></li>
-    <li><a href="../html/djep/AddingOperators.html">Adding Operators</a></li>
-    <li><a href="../html/djep/version.html">Version History</a></li>
+    <li><a href="../html/extensions/index.html">Overview</a></li>
+    <li><a href="../html/extensions/xjep.html">XJep</a></li>
+    <li><a href="../html/extensions/djep.html">Differentiation</a></li>
+    <li><a href="../html/extensions/vectorjep.html">Vectors and Matrices</a></li>
+    <li><a href="../html/extensions/groupjep.html">Groups</a></li>
+    <li><a href="../html/extensions/version.html">Version History</a></li>
   </ul>
 </div>
 
@@ -54,10 +50,11 @@
 
 <!-- FOOTER ---------------------------------------------------------- -->
 <div id="footer">
-&copy; 2006 Singular Systems
-<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+<a href="http://sourceforge.net/tracker/?func=add&group_id=24711&atid=382402">Report bugs / documentation errors</a><br/>
+<br/>
+&copy; 2006 <a href="http://www.singularsys.com" target="_blank">Singular Systems</a>
 </div>
-</div>
+</div> <!-- centercontent -->
 
 </body>
 </html>
