@@ -145,6 +145,9 @@ Oct  1 njf - removed org.lsmp.* from compile in build.xml
 Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
+
+-- 1.1.0 (Jun 9, 2006) --------------------------------------------
+
 May 20 06 rjm - Fixed bug with differentation visitor. isConstant method returned true for b=a; a=x; when differentiating wrt x.
 May 20 06 rjm - Added a ElementComparative function, changed visability of field in Comparative.
 May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
