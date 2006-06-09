@@ -1924,10 +1924,7 @@ Vector Array() :
   private int jj_gc = 0;
 
   public Parser(java.io.InputStream stream) {
-     this(stream, null);
-  }
-  public Parser(java.io.InputStream stream, String encoding) {
-    try { jj_input_stream = new JavaCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
+    jj_input_stream = new JavaCharStream(stream, 1, 1);
     token_source = new ParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -1937,10 +1934,7 @@ Vector Array() :
   }
 
   public void ReInit(java.io.InputStream stream) {
-     ReInit(stream, null);
-  }
-  public void ReInit(java.io.InputStream stream, String encoding) {
-    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
+    jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -2143,7 +2137,6 @@ Vector Array() :
   final private void jj_rescan_token() {
     jj_rescan = true;
     for (int i = 0; i < 9; i++) {
-    try {
       JJCalls p = jj_2_rtns[i];
       do {
         if (p.gen > jj_gen) {
@@ -2162,7 +2155,6 @@ Vector Array() :
         }
         p = p.next;
       } while (p != null);
-      } catch(LookaheadSuccess ls) { }
     }
     jj_rescan = false;
   }

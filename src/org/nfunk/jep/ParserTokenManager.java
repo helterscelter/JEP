@@ -967,12 +967,14 @@ protected JavaCharStream input_stream;
 private final int[] jjrounds = new int[36];
 private final int[] jjstateSet = new int[72];
 protected char curChar;
-public ParserTokenManager(JavaCharStream stream){
+public ParserTokenManager(JavaCharStream stream)
+{
    if (JavaCharStream.staticFlag)
       throw new Error("ERROR: Cannot use a static CharStream class with a non-static lexical analyzer.");
    input_stream = stream;
 }
-public ParserTokenManager(JavaCharStream stream, int lexState){
+public ParserTokenManager(JavaCharStream stream, int lexState)
+{
    this(stream);
    SwitchTo(lexState);
 }

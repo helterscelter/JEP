@@ -215,7 +215,7 @@
 
 <!--======================================================================-->
 <!-- DIST -->
-	<target name="dist" depends="jar,javadoc">
+	<target name="dist" depends="fixeols,jar,javadoc">
 		<!-- Create a temp dir for contents of packages-->
 		<mkdir dir="${disttemp}/jep-${jep-version}"/>
 
@@ -277,10 +277,21 @@
 
 
 <!--======================================================================-->
-<!-- EOLUNIX -->
-	<target name="eolunix">
-		<fixcrlf srcdir="${src}"
-			eol="lf" eof="remove"/>
+<!-- FIXEOLS -->
+	<target name="fixeols">
+		<!-- Windows EOL for most files -->
+		<fixcrlf
+			srcdir="."
+			eol="crlf"
+			eof="asis"
+			includes="**/*.java, **/*.html, **/*.bat, **/*.txt, **/*.xml"/>
+		<!-- Unix EOL for shell files -->
+		<fixcrlf
+			srcdir="${bin}"
+			eol="lf"
+			eof="remove"
+			includes="**/*.sh"/>
+		
 	</target>
 </project>
 
