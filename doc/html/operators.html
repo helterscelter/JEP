@@ -1,0 +1,230 @@
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" --> 
+<title>JEP - Java Math Expression Parser</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="main.css" title="style1">
+</head>
+
+<body>
+
+
+
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" width="15" height="11"></a></li>
+  </ul>
+  <h1>JEP</h1>
+  <ul>
+    <li><a href="index.html">Basic Usage</a></li>
+    <li><a href="variables.html">Variables</a></li>
+    <li><a href="types.html">Data types</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
+    <li><a href="advanced.html">Advanced Features</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+  <h1>Extensions</h1>
+  <ul>
+    <li><a href="extensions/index.html">Overview</a></li>
+    <li><a href="extensions/xjep.html">XJep</a></li>
+    <li><a href="extensions/djep.html">Differentiation</a></li>
+    <li><a href="extensions/vectorjep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="extensions/groupjep.html">Groups</a></li>
+    <li><a href="extensions/version.html">Version History</a></li>
+  </ul>
+</div>
+
+
+
+<div id="centercontent">
+<!-- CENTER CONTENT -------------------------------------------------- -->
+<!-- #BeginEditable "Text" --> 
+        
+  <h1><a name="top"></a>Operators</h1>
+  <h2>Built in operators</h2>
+  <p>All common arithmetic operators are supported. Boolean operators are also 
+    fully supported. Boolean expressions are evaluated to be either 1 or 0 (true 
+    or false respectively).</p>
+  <p>An <img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"> 
+    indicates that the operator can be used with the specific type of variable. 
+    Refer to the <a href="grammar.html">grammar</a> for detailed information about 
+    operator precedence.</p>
+  <table border="0" cellspacing="1" cellpadding="2" width="100%" bgcolor="#CCCCCC">
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">&nbsp;</td>
+      <td width="91">&nbsp;</td>
+      <td width="76"><b>Double</b></td>
+      <td width="81"><b>Complex</b></td>
+      <td width="91"><b>String</b></td>
+      <td width="91"><b>Vector</b></td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Power</td>
+      <td width="91">^</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Boolean Not</td>
+      <td width="91">!</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Unary Plus, Unary Minus</td>
+      <td width="91">+x, -x</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Modulus</td>
+      <td width="91">%</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Division</td>
+      <td width="91">/</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Multiplication</td>
+      <td width="91">*</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Addition, Subtraction</td>
+      <td width="91">+, -</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"> 
+        (only +)</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Less or Equal, More or Equal</td>
+      <td width="91" bordercolor="#CCCCCC">&lt;=, &gt;=</td>
+      <td width="76" bordercolor="#CCCCCC" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" bordercolor="#CCCCCC" align="center">&nbsp;</td>
+      <td width="91" bordercolor="#CCCCCC" align="center">&nbsp;</td>
+      <td width="91" bordercolor="#CCCCCC" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Less Than, Greater Than</td>
+      <td width="91">&lt;, &gt;</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Not Equal, Equal</td>
+      <td width="91">!=, ==</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Boolean And</td>
+      <td width="91">&amp;&amp;</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+    <tr bgcolor="#FFFFFF"> 
+      <td width="225">Boolean Or</td>
+      <td width="91">||</td>
+      <td width="76" align="center"><img src="img/checkmark.gif" width="10" height="10" border="0" alt="Check"></td>
+      <td width="81" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+      <td width="91" align="center">&nbsp;</td>
+    </tr>
+  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <h2>Adding operators</h2>
+  <p>Adding operators is currently only possible by modifying the JEP source code. 
+    To add an operator to the parser several steps are needed: 
+  <ul>
+    <li>Create a new <i>token</i> with the descriptive name AT, say, and a string 
+      representing the operator. </li>
+    <li>Modify the grammer rules to include a rule for the new operator </li>
+    <li>Create a new object implementing org.nfunk.jep.function.PostfixMathCommandI 
+      to provide methods for evaluating the operator. </li>
+    <li>Modify or sub class org.nfunk.jep.OperatorSet to bind the operator in 
+      the parser to PostfixMathCommand </li>
+  </ul>
+  Before atempting to add an operator you should be familiar with adding a <a href="functions.html#custom">custom 
+  function</a> to JEP. 
+  <h3>JavaCC The parser generator</h3>
+  <p> Rather than writing the parser by hand in java the parser is created using 
+    the <a href="https://javacc.dev.java.net/">JavaCC</a> parser/scanner generator. 
+    This reads a file Parser.jjt which is written in a special language which 
+    defines the grammer and creates Parser.java and some other java files which 
+    implement the parser.</p>
+  <p>You should read some of the documentation on <a href="https://javacc.dev.java.net/doc/docindex.html/">JavaCC</a> 
+    and <a href="https://javacc.dev.java.net/doc/JJTree.html">JJTree</a> before 
+    attempting to modify the parser.</p>
+  <p>There is a three step process used to generate the parser. </p>
+  <ol>
+    <li>JJTree is run. This reads the file Parser.jjt and creates a file Parser.jj. 
+      The purpose of this step is to add code needed to handle Abstract Systax 
+      Trees which are tree structures used represent a mathematical expression. 
+      As well as creating parser.jj it also creates some other java files: Node.java 
+      which represents the basic node in the parser; ASTConstant.java a node representing 
+      a constant value "0" or "1", ASTVarNode.java a node representing a variable, 
+      ASTFunNode.java a node representing a function or operator. 
+    <li>javacc is run. This reads Parser.jj and creates Parser.java the actual 
+      code for implementing the Parser. Parser.java is a very complicated file 
+      with nearly 2000 lines of code. 
+    <li>Normal java comilation step which compiles Parser.java. 
+  </ol>
+  <p> This process should automatically be caried out when the project is built 
+    using the ANT build.xml file. It is not sufficient to simple recompile all 
+    the java files.</p>
+  <p>Only the Parser.jjt file should be modified, Parser.jj, Parser.java should 
+    not be modified as they will be overwritten during the build process. Furthermore 
+    ASTConstant.java, ASTFunNode.java, ASTStart.java, ASTVarNode.java, JavaCharStream.java, 
+    JJTParserState.java, Node.java, SimpleNode.java, ParseException.java, ParserConstants.java, 
+    ParserTokenManager.java, ParseTreeConstants.java, Token.java, TokenMgrError.java 
+    should not normally be modified as these are also automatically generated.</p>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --> 
+  <!-- #EndEditable -->
+
+
+
+
+<!-- FOOTER ---------------------------------------------------------- -->
+<div id="footer">
+<a href="http://sourceforge.net/tracker/?func=add&group_id=24711&atid=382402">Report bugs / documentation errors</a><br/>
+<br/>
+&copy; 2006 <a href="http://www.singularsys.com" target="_blank">Singular Systems</a>
+</div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>
