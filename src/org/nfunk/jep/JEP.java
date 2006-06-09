@@ -118,6 +118,7 @@ public class JEP {
 		} else {
 			numberFactory = numberFactory_in;
 		}
+		opSet = new OperatorSet();
 		initSymTab();
 		initFunTab();
 		errorList = new Vector();
@@ -323,6 +324,7 @@ public class JEP {
 	public Object removeVariable(String name) {
 		return symTab.remove(name);
 	}
+	
 	/** 
 	 * Returns the value of the variable with given name.
 	 * @param name name of the variable.
@@ -332,6 +334,7 @@ public class JEP {
 	public Object getVarValue(String name) {
 		return symTab.getVar(name).getValue();
 	}
+	
 	/** 
 	 * Sets the value of a variable.
 	 * The variable must exist before hand.
@@ -345,6 +348,7 @@ public class JEP {
 	public void setVarValue(String name,Object val) {
 		symTab.setVarValue(name,val);
 	}
+	
 	/** 
 	 * Gets the object representing the variable with a given name. 
 	 * @param name the name of the variable to find.
