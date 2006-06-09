@@ -22,8 +22,8 @@
 
 <project name="JEP" default="compile" basedir=".">
 	
-	<property name="version" value="2.4.0"/>
-	<property name="djep-version" value="1.1.0"/>
+	<property name="jep-version" value="2.4.0"/>
+	<property name="ext-version" value="1.1.0"/>
 
 	<!-- library locations -->
 	<property environment="env"/>
@@ -36,9 +36,9 @@
 	<property name="dist"    value="dist"/>
 	<property name="doc"     value="doc"/>
 	<property name="lib"     value="lib"/>
-	<property name="jar"     value="${app.name}-${version}.jar"/>
-	<property name="src.zip" value="${app.name}-${version}-src.zip"/>
-	<property name="src.tar.gz"    value="${app.name}-${version}-src.tar.gz"/>
+	<property name="jar"     value="${app.name}-${jep-version}.jar"/>
+	<property name="src.zip" value="${app.name}-${jep-version}-src.zip"/>
+	<property name="src.tar.gz"    value="${app.name}-${jep-version}-src.tar.gz"/>
 	<property name="disttemp"      value="disttemp"/>
 	<property name="classpath"     value="${lib}/junit.jar;${lib}/Jama-1.0.2.jar"/>
 	<property name="bootclasspath" value="${oldjrehome}/lib/rt.jar"/>
@@ -197,18 +197,18 @@
 		<mkdir dir="${dist}"/>
 
 		<!-- JEP jar without examples or testing classes-->
-		<jar jarfile="${dist}/jep-${version}.jar"
+		<jar jarfile="${dist}/jep-${jep-version}.jar"
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**"/>
 		
-		<!-- DJEP jar without examples or testing classes -->
-		<jar jarfile="${dist}/djep-${djep-version}.jar"
+		<!-- Extensions jar without examples or testing classes -->
+		<jar jarfile="${dist}/ext-${ext-version}.jar"
 		     basedir="${build}"
 		     includes="org/lsmp/djep/**"/>
 		
 		<!-- JEP Examples jar for web site -->
 		<!-- TODO: DJEP examples as well? -->
-		<jar jarfile="${dist}/jep-${version}-withexamples.jar"
+		<jar jarfile="${dist}/jep-${jep-version}-withexamples.jar"
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
 	</target>
@@ -217,29 +217,29 @@
 <!-- DIST -->
 	<target name="dist" depends="jar,javadoc">
 		<!-- Create a temp dir for contents of packages-->
-		<mkdir dir="${disttemp}/jep-${version}"/>
+		<mkdir dir="${disttemp}/jep-${jep-version}"/>
 
 		<!-- Copy jars -->
-		<copy file="${dist}/jep-${version}.jar" todir="${disttemp}/jep-${version}"/>
-		<copy file="${dist}/djep-${djep-version}.jar" todir="${disttemp}/jep-${version}"/>
+		<copy file="${dist}/jep-${jep-version}.jar" todir="${disttemp}/jep-${jep-version}"/>
+		<copy file="${dist}/ext-${ext-version}.jar" todir="${disttemp}/jep-${jep-version}"/>
 
 		<!-- Copy src files -->
 		<!-- define filterset -->
 		<filterset id="sourcefilters">
-			<filter token="header" value="JEP - Java Math Expression Parser ${version}"/>
+			<filter token="header" value="JEP ${jep-version}, Extensions ${ext-version}"/>
 			<filter token="date" value="      ${TODAY}"/>
 			<filter token="copyright" value="      (c) Copyright 2006, Nathan Funk and Richard Morris"/>
 			<filter token="license" value="      See LICENSE.txt for license information."/>
 		</filterset>
 		<!-- copy source files with filter to disttemp -->
-		<copy todir="${disttemp}/jep-${version}">
+		<copy todir="${disttemp}/jep-${jep-version}">
 			<fileset dir="."
 					includes="${src}/**"/>
 			<filterset refid="sourcefilters"/>
 		</copy>
 
 		<!-- Copy doc, bin, build, and single files -->
-		<copy todir="${disttemp}/jep-${version}">
+		<copy todir="${disttemp}/jep-${jep-version}">
 			<fileset dir="."
 					includes="
 					 ${doc}/**,
@@ -255,8 +255,8 @@
 		</copy>
 
 		<!-- zip file -->
-		<delete file="${dist}/jep-djep-${version}.zip"/>
-		<zip zipfile="${dist}/jep-djep-${version}.zip"
+		<delete file="${dist}/jep-${jep-version}-ext-${ext-version}.zip"/>
+		<zip zipfile="${dist}/jep-${jep-version}-ext-${ext-version}.zip"
 		     basedir="${disttemp}"
 		     >
 		</zip>
