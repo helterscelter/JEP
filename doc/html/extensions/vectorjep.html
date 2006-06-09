@@ -31,7 +31,7 @@
     <li><a href="index.html">Overview</a></li>
     <li><a href="xjep.html">XJep</a></li>
     <li><a href="djep.html">Differentiation</a></li>
-    <li><a href="vectorjep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="vectorjep.html">Vectors and Matrices</a></li>
     <li><a href="groupjep.html">Groups</a></li>
     <li><a href="version.html">Version History</a></li>
   </ul>
@@ -83,13 +83,9 @@ Two interactive console applet illustrate the functionality of
 <a href="http://www.singsurf.org/djep/VectorJep.html">VectorJep</a> and
 <a href="http://www.singsurf.org/djep/MatrixJep.html">MatrixJep</a>.
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
-<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
-</tbody>
-</table>
-
-<h2><a name="VEC"></a>vectorJep</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h2><a name="VEC"></a>vectorJep</h2>
 <p>
 The use of the package can be illustrated by
 </p><pre>import org.nfunk.jep.*;
@@ -164,7 +160,7 @@ In addition <tt>Matrix</tt> has a <a href="../../javadoc/org/lsmp/djep/vectorJep
 and a <a href="../../javadoc/org/lsmp/djep/vectorJep/values/Matrix.html#setEle(int, int, java.lang.Object)">setEle(row,col,value)</a>.
 These methods allow the individual elements of vector or matrix to be set and queried.<p></p>
 
-<p>The <a href="../javadoc/org/lsmp/djep/matrixJep/MatrixJep.html#evaluateRaw(org.nfunk.jep.Node)">evaluate(Node node)</a> 
+<p>The <a href="../../javadoc/org/lsmp/djep/matrixJep/MatrixJep.html#evaluateRaw(org.nfunk.jep.Node)">evaluate(Node node)</a> 
 method behaves the same as <a href="../../javadoc/org/lsmp/djep/matrixJep/MatrixJep.html#evaluateRaw(org.nfunk.jep.Node)">evaluateRaw(Node node)</a>
 
 however if the result is a Scaler then it will be unwrapped and the
@@ -186,13 +182,9 @@ pv.print(node);
 String str = pv.toString(node);
 </pre>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
-<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
-</tbody>
-</table>
-
-<h3>Element by element calculations</h3>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3>Element by element calculations</h3>
 <p>
 The vectorJep package can be set up so that element by element multiplication and division
 is performed instead of matrix multiplication. To switch this mode on
@@ -205,13 +197,9 @@ j.setElementMultiply(true);</pre>
 Once set <tt>[1,2,3]*[4,5,6]</tt> will evaluate to <tt>[4,10,18]</tt>.
 </p>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
-<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
-</tbody>
-</table>
-
-<h3>Functions on Vectors and Matricies</h3>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3>Functions on Vectors and Matricies</h3>
 <p>
 Several functions are added with the VectorJep package these are:
 </p>
@@ -302,13 +290,9 @@ Map(if(x>0,x,0),x,[-2,-1,0,1,2]) -> [0.0,0.0,0.0,1.0,2.0]
 Map(abs(x),x,[[-2,-1],[1,2]]) -> [[2.0,1.0],[1.0,2.0]]
 </pre>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
-<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
-</tbody>
-</table>
-
-<h3>variable names with dot in them</h3>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3>variable names with dot in them</h3>
 <p>
 As the dot <code>.</code> symbol is used for the dot or scaler product, it cannot be normally be
 used in a varible name. This behaviour can be switched on or off using
@@ -316,8 +300,9 @@ used in a varible name. This behaviour can be switched on or off using
 jep.getParser().setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
 jep.getParser().setInitialTokenManagerState(ParserConstants.DEFAULT);
 </pre>
-
-<h2><a name="MAT"></a>MatrixJep</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h2><a name="MAT"></a>MatrixJep</h2>
 <p>
 The MatrixJep package offers the same functionality as the VectorJep
 package however it is implemented in a different manner internally
@@ -409,13 +394,9 @@ public class MatrixExample {
     which stores intermediate values. By reusing these objects evaluation speeds are increased by a third.
       </p>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
-<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
-</tbody>
-</table>
-
-<h2><a name="JAMA"></a>JAMA</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h2><a name="JAMA"></a>JAMA</h2>
 
 <p>
 JAMA <a href="http://math.nist.gov/javanumerics/jama/">http://math.nist.gov/javanumerics/jama/</a>
@@ -429,12 +410,9 @@ package allows these sophsticated matrix functions to be used with VectorJep and
 Currently only a small subset (solve, rank, inverse) are implemented.
 
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tbody><tr><td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td></tr>
-<tr><td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td></tr>
-</tbody>
-</table>
-<!-- #EndEditable -->
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
 
 
 

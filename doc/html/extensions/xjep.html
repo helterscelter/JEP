@@ -35,7 +35,7 @@
     <li><a href="index.html">Overview</a></li>
     <li><a href="xjep.html">XJep</a></li>
     <li><a href="djep.html">Differentiation</a></li>
-    <li><a href="vectorjep.html">Vectors &amp; Matrices</a></li>
+    <li><a href="vectorjep.html">Vectors and Matrices</a></li>
     <li><a href="groupjep.html">Groups</a></li>
     <li><a href="version.html">Version History</a></li>
   </ul>
@@ -68,16 +68,10 @@
   </ul>
   <p> An interactive console applet <a href="http://www.singsurf.org/djep/XJep.html">interactive 
     console applet</a> illustrates the functionality of XJep. 
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem -->
+
   <h2>Basic Usage</h2>
   <br>
   To use all the features mention on this page the <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html">org.lsmp.djep.xjep.XJep</a> 
@@ -87,17 +81,10 @@
   <p>The <i>parse, preprocess, simplify, evaluate</i> sequence is the standard 
     idiom for using this package. <br>
   </p>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h2><a name="PRINT"></a>Printing and conversion to strings</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem -->
+<h2><a name="PRINT"></a>Printing and conversion to strings</h2>
   <p> </p>
   A number of different routines are available to print equations: 
   <pre>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#print(org.nfunk.jep.Node)">print(Node node)</a>;  // prints the expression tree<br>                               // specified by node on standard output<br>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#print(org.nfunk.jep.Node, java.io.PrintStream)">print(Node node,PrintStream out)</a>;   // prints on given stream<br>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#println(org.nfunk.jep.Node)">println(Node node)</a>;               // newline at end<br>public void <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#println(org.nfunk.jep.Node, java.io.PrintStream)">println(Node node,PrintStream out)</a>; // newline at end<br>public String <a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#toString(org.nfunk.jep.Node)">toString(Node node)</a>;           // returns a string</pre>
@@ -128,17 +115,9 @@ System.out.println(j.toString(n1));
 </pre>
   <p> Prints <tt>[10,0,0.1,0.11,0.111,0.111,0.999,1]</tt> i.e. numbers are displayed 
     rounded to three decimal places. </p>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h2><a name="simp"></a>Simplification</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h2><a name="simp"></a>Simplification</h2>
   <p> The XJep class also offers routines to simplify expressions: </p>
   <pre>XJep j = new XJep();<br>....<br>Node node=j.parse("1*x^1+0");<br>j.println(node);<br>Node simp=j.<a href="../../javadoc/org/lsmp/djep/xjep/XJep.html#simplify(org.nfunk.jep.Node)">simplify(node)</a>;<br>j.println(simp);<br></pre>
   which produces the output 
@@ -159,17 +138,9 @@ System.out.println(j.toString(n1));
   <p> <b><i>Experimental</i></b> The and <a href="../../javadoc/org/lsmp/djep/rewrite/package-summary.html">org.lsmp.djep.rewrite.*</a> 
     package. allows arbitaty rewrite of equations. Very early in development. 
   </p>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h3><a name="reenter"></a>Re-entrant Parsers</h3>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3><a name="reenter"></a>Re-entrant Parsers</h3>
   <p>A new syntactical feature is the use of a semi-colon <tt>;</tt> to separate 
     expressions. This allows string like "x=1; y=2; z=x+y;" to be parsed. To enable 
     this the re-entrant methods of the XJep class should be used to access the 
@@ -186,17 +157,9 @@ System.out.println(j.toString(n1));
     for string "x=1; ;y=2; z=x+y;" the above loop would terminate before "y=2" 
     is parsed.<br>
   </p>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h3><a name="variable"></a>Variables and the preprocessing stage<br>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3><a name="variable"></a>Variables and the preprocessing stage<br>
   </h3>
   <p> Internally variables in the org.lsmp.djep.xjep package have both a value 
     and an equation. The equation for a variable is set using the assignment syntax 
@@ -367,17 +330,9 @@ System.out.println(j.toString(n1));
     and <a href="../../javadoc/org/lsmp/djep/xjep/XSymbolTable.html">XSymbolTable</a> 
     classes. Standard Hashtable methods can also be used <br>
   </p>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h3><a name="macro"></a>Macro Functions</h3>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3><a name="macro"></a>Macro Functions</h3>
   <p> XJep also make it easier to define you own simple functions in your code, 
     without having to create a new sub-class of PostFixMathCommand. Such functions 
     can be defined using an String containing its defining equation. </p>
@@ -385,17 +340,9 @@ System.out.println(j.toString(n1));
   See the <a href="../../javadoc/org/lsmp/djep/xjep/MacroFunction.html">MacroFunction</a> 
   for precise details of the syntax. Currently only works in 1D, i.e. no vectors 
   or matrices. 
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h3><a name="funct"></a>Sum type function</h3>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3><a name="funct"></a>Sum type function</h3>
   <p> An equivilent of the sigma notation for summation are provided by <a href="../../javadoc/org/lsmp/djep/xjep/function/SumType.html">SumType</a> 
     functions. For example <tt>Sum(x^2,x,1,10)</tt> finds the sum of <tt>x^2</tt> 
     with <tt>x</tt> running from 1 to 10, i.e. <tt>1^2+2^2+...+10^10</tt>. Other 
@@ -411,17 +358,9 @@ System.out.println(j.toString(n1));
   </ul>
   Note all these function begin with a capital letter to distinguish from <tt>sum(1,2,3,4)</tt> 
   which justs finds the sum of its arguments. 
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h2>Other Functions</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h2>Other Functions</h2>
   <p> The <code>toHex()</code> function converts to hexidecimal string <code>toHex(255)</code> 
     -&gt; 0xff. If a second argument is given this specifies number of displayed 
     fraction digits <code>toHex(-15/16,1)</code> -&gt; -0x0.1. </p>
@@ -433,17 +372,9 @@ System.out.println(j.toString(n1));
     Finds variables, in an equation. If any of those variables are defined by 
     equations, returns those variables as well. An ordered sequence is returned, 
     so that evaluation each variable in turn will give a correct equation. 
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tbody>
-    <tr>
-      <td align="right"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top" border="0"></a></td>
-    </tr>
-    <tr>
-      <td bgcolor="#cccccc"><img src="../img/spacer.gif" width="1" height="1"></td>
-    </tr>
-    </tbody>
-  </table>
-  <h2><a name="utils"></a>Other utilities</h2>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h2><a name="utils"></a>Other utilities</h2>
   A number of other features are included in the xjep package. These all work 
   on the trees which are used internally to represent an equation. 
   <ul>
