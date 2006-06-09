@@ -16,30 +16,26 @@
   <ul>
     <li><a href="../javadoc/index.html" target="_blank">JavaDoc <img src="img/new-window-icon.gif" width="15" height="11"></a></li>
   </ul>
-
-<h1>JEP</h1>
+  <h1>JEP</h1>
   <ul>
     <li><a href="index.html">Basic Usage</a></li>
     <li><a href="variables.html">Variables</a></li>
     <li><a href="types.html">Data types</a></li>
-    <li><a href="op_and_func.html">Operators &amp; Functions</a></li>
-    <li><a href="grammar.html">Grammar</a></li>
-    <li><a href="cust_func.html">Custom Functions</a></li>
+    <li><a href="operators.html">Operators</a></li>
+    <li><a href="functions.html">Functions</a></li>
     <li><a href="advanced.html">Advanced Features</a></li>
-    <li><a href="newfeatures.html">New Features</a></li>
+    <li><a href="grammar.html">Grammar</a></li>
     <li><a href="faq.html">FAQ</a></li>
     <li><a href="version.html">Version History</a></li>
   </ul>
-
-<h1>Extensions</h1>
+  <h1>Extensions</h1>
   <ul>
-    <li><a href="djep/index.html">DJEP</a></li>
-    <li><a href="djep/XJep.html">XJep</a></li>
-    <li><a href="djep/DJep.html">Differentiation</a></li>
-    <li><a href="djep/VectorJep.html">Vectors &amp; Matrices</a></li>
-    <li><a href="djep/GroupJep.html">Groups</a></li>
-    <li><a href="djep/AddingOperators.html">Adding Operators</a></li>
-    <li><a href="djep/version.html">Version History</a></li>
+    <li><a href="extensions/index.html">Overview</a></li>
+    <li><a href="extensions/xjep.html">XJep</a></li>
+    <li><a href="extensions/djep.html">Differentiation</a></li>
+    <li><a href="extensions/vectorjep.html">Vectors and Matrices</a></li>
+    <li><a href="extensions/groupjep.html">Groups</a></li>
+    <li><a href="extensions/version.html">Version History</a></li>
   </ul>
 </div>
 
@@ -50,11 +46,13 @@
 <!-- #BeginEditable "Text" --> 
   <h1><a name="top"></a>Basic Usage</h1>
   <ul>
-    <li><a href="#evaluatingexpressions">Evaluating expressions</a></li>
+    <li><a href="#gettingstarted">Getting started</a></li>
     <li><a href="#errorhandling">Error handling</a></li>
+    <li><a href="#evaluatingexpressions">Evaluating expressions</a></li>
+    <li><a href="#alternate">Alternate parsing and evaluation functions</a></li>
     <li><a href="#implicitmul">Implicit multiplication</a></li>
-    <li><a href="#manipulating">Manipulating expressions</a></li>
   </ul>
+  <h2><a name="gettingstarted"></a>Getting started</h2>
   <p>Using the JEP package of classes in your project is simple! The following 
     steps will get you started quickly.</p>
   <ol>
@@ -64,7 +62,7 @@
     <li>IMPORTANT: For the Java compiler to be able to find the JEP classes when 
       compiling your program, it needs to know their location. So you will need 
       to add the location of the .jar file to your CLASSPATH environment variable 
-      (if you don't know how, <a href="http://java.sun.com/j2se/1.4/docs/tooldocs/windows/classpath.html" target="_blank">read 
+      (if you don't know how, <a href="http://java.sun.com/j2se/1.5.0/docs/tooldocs/windows/classpath.html" target="_blank">read 
       this</a>). Your CLASSPATH variable should contain something like C:\java\packages\jep-x.x.x.jar, 
       depending on where you place the jar file. Alternatively you may need to 
       set the location of the jar archive in your Java IDE so that the compiler 
@@ -80,7 +78,7 @@ myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#addStandardConstants()" targ
     </li>
     <li> By default you need to specify which variables can be used in the expression. 
       If a variable is not added before the expression is parsed, the parser will 
-      claim that the expression is invalid (this can be changed by <a href="#allowingundeclared">allowing 
+      claim that the expression is invalid (this can be changed by <a href="variables.html#allowingundeclared">allowing 
       undeclared variables</a>).<br>
       To add the variable <i>x</i> and initialize it to 0 for example, write 
       <pre>myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#addVariable(java.lang.String, double)" target="_blank">addVariable(&quot;x&quot;, 0)</a>;</pre>
@@ -117,7 +115,7 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
       Use this if you are expecting a complex value.</li>
     <li><a href="../javadoc/org/nfunk/jep/JEP.html#getValueAsObject()" target="_blank">getValueAsObject()</a>: 
       Returns the result as an Object (any type)</li>
-    <li><a href="../javadoc/org/nfunk/jep/JEP.html#evaluate(Node)" target="_blank">evaluate(Node 
+    <li><a href="../javadoc/org/nfunk/jep/JEP.html#evaluate(org.nfunk.jep.Node)" target="_blank">evaluate(Node 
       root)</a>: Evaluates a tree with from a root node and returns the result 
       as an Object.</li>
   </ul>
@@ -161,10 +159,11 @@ result = myParser.<a href="../javadoc/org/nfunk/jep/JEP.html#getValue()" target=
 
 <!-- FOOTER ---------------------------------------------------------- -->
 <div id="footer">
-&copy; 2006 Singular Systems
-<a href="http://www.singularsys.com" target="_blank">www.singularsys.com</a>
+<a href="http://sourceforge.net/tracker/?func=add&group_id=24711&atid=382402">Report bugs / documentation errors</a><br/>
+<br/>
+&copy; 2006 <a href="http://www.singularsys.com" target="_blank">Singular Systems</a>
 </div>
-</div>
+</div> <!-- centercontent -->
 
 </body>
 <!-- #EndTemplate --></html>
