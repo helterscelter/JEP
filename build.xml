@@ -278,6 +278,8 @@
 
 <!--======================================================================-->
 <!-- FIXEOLS -->
+<!-- Sets the EOL characters to Windows format for most files, and UNIX for
+     bash scripts -->
 	<target name="fixeols">
 		<!-- Windows EOL for most files -->
 		<fixcrlf
