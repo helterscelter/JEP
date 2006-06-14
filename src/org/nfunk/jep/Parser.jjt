@@ -107,7 +107,7 @@ public class Parser {
 	}
 	/**
 	 * Continue parsing without re-initilising stream.
-	 * Allows renetrancy of parser so that strings like
+	 * Allows reentrance of parser so that strings like
 	 * "x=1; y=2; z=3;" can be parsed.
 	 * When a semi colon is encountered parsing finishes leaving the rest of the string unparsed.
 	 * Parsing can be resumed from the current position by using this method.
