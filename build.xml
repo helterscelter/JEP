@@ -22,24 +22,31 @@
 
 <project name="JEP" default="compile" basedir=".">
 	
-	<property name="jep-version" value="2.4.0"/>
-	<property name="ext-version" value="1.1.0"/>
+	<property name="jep-ver" value="2.4.0"/>
+	<property name="ext-ver" value="1.1.0"/>
 
 	<!-- library locations -->
 	<property environment="env"/>
 	<property name="javacchome" value="${env.JAVACCHOME}"/>
 	<property name="oldjrehome" value="${env.JRE1_2HOME}"/>
 	<!-- set global properties for this build -->
-	<property name="src"     value="src"/>
-	<property name="bin"     value="bin"/>
-	<property name="build"   value="build"/>
-	<property name="dist"    value="dist"/>
-	<property name="doc"     value="doc"/>
-	<property name="lib"     value="lib"/>
-	<property name="jar"     value="${app.name}-${jep-version}.jar"/>
-	<property name="src.zip" value="${app.name}-${jep-version}-src.zip"/>
-	<property name="src.tar.gz"    value="${app.name}-${jep-version}-src.tar.gz"/>
-	<property name="disttemp"      value="disttemp"/>
+	<property name="src"		value="src"/>
+	<property name="bin"		value="bin"/>
+	<property name="build"		value="build"/>
+	<property name="dist"		value="dist"/>
+	<property name="doc"		value="doc"/>
+	<property name="lib"		value="lib"/>
+	<property name="disttemp"	value="disttemp"/>
+	
+	<property name="jep-jar"	value="jep-${jep-ver}.jar"/>
+	<property name="ext-jar"	value="ext-${ext-ver}.jar"/>
+	
+	<property name="jep-com-bin" value="jep-${jep-ver}-commercial-bin"/>
+	<property name="jep-com-src" value="jep-${jep-ver}-commercial-src"/>
+	<property name="jep-ext-com-bin" value="jep-${jep-ver}-ext-${ext-ver}-commercial-bin"/>
+	<property name="jep-ext-com-src" value="jep-${jep-ver}-ext-${ext-ver}-commercial-src"/>
+	<property name="jep-ext-gpl"	  value="jep-${jep-ver}-ext-${ext-ver}-gpl"/>
+	
 	<property name="classpath"     value="${lib}/junit.jar;${lib}/Jama-1.0.2.jar"/>
 	<property name="bootclasspath" value="${oldjrehome}/lib/rt.jar"/>
 	<!-- <property name="website" value="website"/> -->
@@ -94,7 +101,7 @@
 
 <!--======================================================================-->
 <!-- JJTREE -->
-<target name="jjtree" depends="init"><!-- if="javacc.present">
+	<target name="jjtree" depends="init"><!-- if="javacc.present">
 		<echo message="javacc.present is true"/>-->
 		<jjtree
 			target="${src}/org/nfunk/jep/Parser.jjt"
@@ -105,7 +112,7 @@
 
 <!--======================================================================-->
 <!-- JAVACC -->
-<target name="javacc" depends="jjtree"><!--if="javacc.present">
+	<target name="javacc" depends="jjtree"><!--if="javacc.present">
 		<echo message="javacc.present is true"/>-->
 		<javacc
 			target="${src}/org/nfunk/jep/Parser.jj"
@@ -114,6 +121,22 @@
 		/>
 	</target>
 
+<!--======================================================================-->
+<!-- JAVACC -->
+	<target name="jjdoc" depends="javacc">
+		<mkdir dir="${doc}/grammar"/>
+		<jjdoc
+			target="${src}/org/nfunk/jep/Parser.jj"
+			outputfile="${doc}/grammar/grammar.html"
+			javacchome="${javacchome}"
+		/>
+		<jjdoc
+			target="${src}/org/nfunk/jep/Parser.jj"
+			outputfile="${doc}/grammar/grammar.txt"
+			text="true"
+			javacchome="${javacchome}"
+		/>
+	</target>
 
       
 <!--======================================================================-->
@@ -162,6 +185,7 @@
 		<delete dir="doc/javadoc"/>
 		<mkdir dir="doc/javadoc"/>
 		<javadoc packagenames="org.nfunk.jep.*,org.lsmp.*"
+				classpath="${classpath}"
 				sourcepath="src"
 				destdir="doc/javadoc"
 				windowtitle="JEP API"
@@ -171,22 +195,6 @@
 		</javadoc>
 	</target>
 
-<!--======================================================================-->
-<!-- JAVACC -->
-	<target name="jjdoc" depends="javacc">
-		<mkdir dir="${doc}/grammar"/>
-		<jjdoc
-			target="${src}/org/nfunk/jep/Parser.jj"
-			outputfile="${doc}/grammar/grammar.html"
-			javacchome="${javacchome}"
-		/>
-		<jjdoc
-			target="${src}/org/nfunk/jep/Parser.jj"
-			outputfile="${doc}/grammar/grammar.txt"
-			text="true"
-			javacchome="${javacchome}"
-		/>
-	</target>
 
 	
 	
@@ -197,75 +205,21 @@
 		<mkdir dir="${dist}"/>
 
 		<!-- JEP jar without examples or testing classes-->
-		<jar jarfile="${dist}/jep-${jep-version}.jar"
+		<jar jarfile="${dist}/${jep-jar}"
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**"/>
 		
 		<!-- Extensions jar without examples or testing classes -->
-		<jar jarfile="${dist}/ext-${ext-version}.jar"
+		<jar jarfile="${dist}/${ext-jar}"
 		     basedir="${build}"
 		     includes="org/lsmp/djep/**"/>
 		
 		<!-- JEP Examples jar for web site -->
 		<!-- TODO: DJEP examples as well? -->
-		<jar jarfile="${dist}/jep-${jep-version}-withexamples.jar"
+		<jar jarfile="${dist}/jep-${jep-ver}-withexamples.jar"
 		     basedir="${build}"
 		     includes="org/nfunk/jep/**,org/nfunk/jepexamples/**"/>
 	</target>
-
-<!--======================================================================-->
-<!-- DIST -->
-	<target name="dist" depends="fixeols,jar,javadoc">
-		<!-- Create a temp dir for contents of packages-->
-		<mkdir dir="${disttemp}/jep-${jep-version}"/>
-
-		<!-- Copy jars -->
-		<copy file="${dist}/jep-${jep-version}.jar" todir="${disttemp}/jep-${jep-version}"/>
-		<copy file="${dist}/ext-${ext-version}.jar" todir="${disttemp}/jep-${jep-version}"/>
-
-		<!-- Copy src files -->
-		<!-- define filterset -->
-		<filterset id="sourcefilters">
-			<filter token="header" value="JEP ${jep-version}, Extensions ${ext-version}"/>
-			<filter token="date" value="      ${TODAY}"/>
-			<filter token="copyright" value="      (c) Copyright 2006, Nathan Funk and Richard Morris"/>
-			<filter token="license" value="      See LICENSE.txt for license information."/>
-		</filterset>
-		<!-- copy source files with filter to disttemp -->
-		<copy todir="${disttemp}/jep-${jep-version}">
-			<fileset dir="."
-					includes="${src}/**"/>
-			<filterset refid="sourcefilters"/>
-		</copy>
-
-		<!-- Copy doc, bin, build, and single files -->
-		<copy todir="${disttemp}/jep-${jep-version}">
-			<fileset dir="."
-					includes="
-					 ${doc}/**,
-					 ${bin}/**,
-					 ${lib}/**,
-					 ${build}/**,
-					 build.xml,
-					 compile.bat,
-					 LICENSE.txt,
-					 CHANGES.txt,
-					 COPYRIGHT.txt,
-					 README.html"/>
-		</copy>
-
-		<!-- zip file -->
-		<delete file="${dist}/jep-${jep-version}-ext-${ext-version}.zip"/>
-		<zip zipfile="${dist}/jep-${jep-version}-ext-${ext-version}.zip"
-		     basedir="${disttemp}"
-		     >
-		</zip>
-
-		<!-- clean up temporary files -->
-		<delete dir="${disttemp}" />
-	</target>
-
-
 <!--======================================================================-->
 <!-- CLEAN -->
 	<target name="clean">
@@ -293,7 +247,104 @@
 			eol="lf"
 			eof="remove"
 			includes="**/*.sh"/>
-		
 	</target>
+	
+<!--======================================================================-->
+<!-- DIST -->
+<!-- Creates five temporary directories to which files are copied.
+     Then zip files are made from these directories -->
+	<target name="dist" depends="fixeols,jar,javadoc">
+		<!-- Create a temp dir for contents of packages-->
+		<delete dir="${disttemp}" />
+		<mkdir dir="${disttemp}/${jep-com-src}"/>
+		<mkdir dir="${disttemp}/${jep-com-bin}"/>
+		<mkdir dir="${disttemp}/${jep-ext-com-src}"/>
+		<mkdir dir="${disttemp}/${jep-ext-com-bin}"/>
+		<mkdir dir="${disttemp}/${jep-ext-gpl}"/>
+
+		<!-- Copy src files -->
+		<!-- define filterset -->
+		<filterset id="sourcefilters">
+			<filter token="header"    value=" JEP ${jep-ver}, Extensions ${ext-ver}"/>
+			<filter token="date"      value="      ${TODAY}"/>
+			<filter token="copyright" value="      (c) Copyright 2006, Nathan Funk and Richard Morris"/>
+			<filter token="license"   value="      See LICENSE-*.txt for license information."/>
+		</filterset>
+		<!-- copy source files with filter to disttemp -->
+		<copy todir="${disttemp}">
+			<fileset dir="."
+					includes="${src}/**"/>
+			<filterset refid="sourcefilters"/>
+		</copy>
+		<!-- copy common files -->
+		<copy todir="${disttemp}" enablemultiplemappings="true">
+			<fileset dir="."
+					includes="
+					 ${doc}/**,
+					 ${bin}/**,
+					 ${lib}/**,
+					 ${dist}/${jep-jar},
+					 build.xml,
+					 CHANGES.txt,
+					 COPYRIGHT.txt,
+					 README.html"/>
+			<compositemapper>
+				<globmapper from="*" to="${jep-com-src}/*"/>
+				<globmapper from="*" to="${jep-com-bin}/*"/>
+				<globmapper from="*" to="${jep-ext-com-src}/*"/>
+				<globmapper from="*" to="${jep-ext-com-bin}/*"/>
+				<globmapper from="*" to="${jep-ext-gpl}/*"/>
+			</compositemapper>
+		</copy>
+		
+		<!-- JEP Commercial Binary ================================== -->
+		<copy todir="${disttemp}/${jep-com-bin}">
+			<fileset dir="."
+					includes="${build}/org/nfunk/**, LICENSE-com-binary.txt"/>
+		</copy>
+		<!-- JEP Commercial Source ================================== -->
+		<copy todir="${disttemp}/${jep-com-src}">
+		    <fileset dir="${disttemp}"
+		    	includes="${src}/org/nfunk/**"/>
+		</copy>
+		<copy todir="${disttemp}/${jep-com-src}">
+			<fileset dir="."
+					includes="${build}/org/nfunk/**, LICENSE-com-source.txt"/>
+		</copy>
+		<!-- JEP+EXT Commercial Binary ================================== -->
+		<copy todir="${disttemp}/${jep-ext-com-bin}">
+			<fileset dir="."
+					includes="${build}/**, ${dist}/${ext-jar}, LICENSE-com-binary.txt"/>
+		</copy>
+		<!-- JEP+EXT Commercial Source ================================== -->
+		<copy todir="${disttemp}/${jep-ext-com-src}">
+		    <fileset dir="${disttemp}"
+		    	includes="${src}/**"/>
+		</copy>
+		<copy todir="${disttemp}/${jep-ext-com-src}">
+			<fileset dir="."
+					includes="${build}/**, ${dist}/${ext-jar}, LICENSE-com-source.txt"/>
+		</copy>
+		<!-- JEP+EXT GPL ================================================ -->
+		<copy todir="${disttemp}/${jep-ext-gpl}">
+		    <fileset dir="${disttemp}"
+		    	includes="${src}/**"/>
+		</copy>
+		<copy todir="${disttemp}/${jep-ext-gpl}">
+			<fileset dir="."
+					includes="${build}/**, ${dist}/${ext-jar}, LICENSE-gpl.txt"/>
+		</copy>
+
+		<!-- zip files -->
+		<zip zipfile="${dist}/${jep-com-bin}.zip"		basedir="${disttemp}/${jep-com-bin}" />
+		<zip zipfile="${dist}/${jep-com-src}.zip"		basedir="${disttemp}/${jep-com-src}" />
+		<zip zipfile="${dist}/${jep-ext-com-bin}.zip"	basedir="${disttemp}/${jep-ext-com-bin}" />
+		<zip zipfile="${dist}/${jep-ext-com-src}.zip"	basedir="${disttemp}/${jep-ext-com-src}" />
+		<zip zipfile="${dist}/${jep-ext-gpl}.zip"		basedir="${disttemp}/${jep-ext-gpl}" />
+
+		<!-- clean up temporary files 
+		<delete dir="${disttemp}" />-->
+	</target>
+
 </project>
 
