@@ -12,7 +12,7 @@ public class NaturalLogarithmTest extends TestCase {
 		super(name);
 	}
 
-	/*
+	/**
 	 * Test method for 'org.nfunk.jep.function.Logarithm.run(Stack)'
 	 * Tests the return value of log(NaN). This is a test for bug #1177557
 	 */
