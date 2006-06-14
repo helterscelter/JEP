@@ -70,7 +70,10 @@ syntax is allow:
 <li><b>Cross product</b> of vectors. The ^ operator is overloaded to be either the cross product: <tt>[1,2,3]^[4,5,6]</tt>
 	or the power operator 2^3. The ^^ operator can be used to force interpretation as a cross product.</li>
 <li>An <tt>ele(vec,index)</tt> function to access the elements of a vector
-	and an <tt>ele(matrix,[index1,index2])</tt> to access an element of a matrix.</li><li>As
+	and an <tt>ele(matrix,[index1,index2])</tt> to access an element of a matrix.</li>
+<li>As of Djep 1.1.0 new syntactical feature allows elements of a vector or matrix <tt>a</tt> to be accessed 
+using the <tt>a[2]</tt> notation. This can be used to get and set values.</li> 
+<li>As
 . is used to represent dot product it cannot normally be used inside a
 variable name. This behaviour can be changed by setting a flag in the
 parser.<br>
@@ -300,6 +303,28 @@ used in a varible name. This behaviour can be switched on or off using
 jep.getParser().setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
 jep.getParser().setInitialTokenManagerState(ParserConstants.DEFAULT);
 </pre>
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><h3>Array element access</h3>
+<p>
+In DJep version 1.1.0 the <tt>a[2]</tt> notation can be used to get and set individual elements of an array.
+</p>
+<code>
+a=[1,2,3];
+a[2]=4;
+c=a[3];
+b=[[1,2],[3,4]];
+b[2,1]=5; 
+</code>
+<ul>
+<li>This notation may break previous code as <tt>r[1,2]</tt> previously multiplied the vector <tt>[1,2]</tt> by the variable <tt>r</tt>.
+To multiple a vector by a scaler variable use <tt>r*[1,2]</tt>.</li>
+<li>Setting array elements is not compatable with storing the equations of variable discussed in <a href="xjep.html#variable">xjep</a>.
+In particular setting an element of a vector will not affect the differentation of the variable.</li>
+<li>The setting of array elements is acheived using the <a href="../../javadoc/org/nfunk/jep/function/LValueI.html">LValueI</a> which adds a hook to permit a PostfixMathCommand to be used on the left hand side of an assignment.</li>
+</ul>
+
+ 
   <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
 <div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
 <!-- #EndLibraryItem --><h2><a name="MAT"></a>MatrixJep</h2>
