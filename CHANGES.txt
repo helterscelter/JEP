@@ -146,9 +146,11 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Jun 14 06 rjm - Fixed bug with multi-arg macro functions.
+Jun 14 06 rjm - Added sample application illustrating nested block control stucture.
+
 -- 1.1.0 (Jun 9, 2006) --------------------------------------------
 
-Jun 14 06 rjm - Fixed bug with multi-arg macro functions.
 May 20 06 rjm - Fixed bug with differentation visitor. isConstant method returned true for b=a; a=x; when differentiating wrt x.
 May 20 06 rjm - Added a ElementComparative function, changed visability of field in Comparative.
 May 18 06 rjm - Changes to allow the a[5] syntax for access to array elements
