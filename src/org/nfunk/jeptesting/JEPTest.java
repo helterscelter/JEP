@@ -18,15 +18,15 @@ import org.nfunk.jep.*;
 import org.nfunk.jep.type.Complex;
 
 /**
-* This class is designed for testing the validity of JEP evaluations.
-* Expressions from a text file are evaluated with JEP in pairs of two, and
-* the result are compared. If they do not match the two expressions are 
-* printed to standard output.<p>
-* Take for example an input text file containing the two lines
-* <pre>1+2
-* 3</pre>.
-* The expressions '1+2' and '3' are evaluated with JEP and the results compared.
-*/
+ * This class is designed for testing the validity of JEP evaluations.
+ * Expressions from a text file are evaluated with JEP in pairs of two, and
+ * the results are compared. If they do not match, the two expressions are 
+ * printed to standard output.<p>
+ * Take for example an input text file containing the two lines
+ * <pre>1+2
+ *3.</pre>
+ * The expressions '1+2' and '3' are evaluated with JEP and the results compared.
+ */
 public class JEPTest extends TestCase {
 
 	/** The parser */
