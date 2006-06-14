@@ -276,6 +276,8 @@ public class XJepTest extends JepTest {
 	{
 		j.addFunction("zap",new MacroFunction("zap",1,"x*(x-1)/2",(XJep) j));
 		valueTest("zap(10)",45);
+		j.addFunction("zap2",new MacroFunction("zap",4,"x1+x2+x3+x4",(XJep) j));
+		valueTest("zap2(5,5,3,6)",19);
 	}
 
 	public void testVariableReuse() throws Exception
