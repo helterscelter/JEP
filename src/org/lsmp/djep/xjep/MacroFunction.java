@@ -68,8 +68,8 @@ public class MacroFunction extends PostfixMathCommand
 		else
 		{
 			vars = new Variable[numberOfParameters];
-			for(int i=numberOfParameters-1;i>0;)
-				vars[i] = mySymTab.addVariable("x"+String.valueOf(i),null);
+			for(int i=numberOfParameters;i>0;--i)
+				vars[i-1] = mySymTab.addVariable("x"+String.valueOf(i),null);
 		}
 
 		topNode = localJep.parse(expression);
@@ -92,8 +92,8 @@ public class MacroFunction extends PostfixMathCommand
 		}
 		else
 		{
-			for(int i=numberOfParameters-1;i>0;)
-				vars[i].setValue(stack.pop());
+			for(int i=numberOfParameters;i>0;--i)
+				vars[i-1].setValue(stack.pop());
 		}
 		try
 		{
