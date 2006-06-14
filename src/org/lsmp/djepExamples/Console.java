@@ -96,7 +96,19 @@ public class Console extends Applet implements KeyListener {
 		printIntroText();
 		print(getPrompt());
 	}
-	
+
+	/** sets up all the needed objects. */
+	public void initialise()
+	{
+		j = new JEP();
+		j.addStandardConstants();
+		j.addStandardFunctions();
+		j.addComplex();
+		j.setAllowUndeclared(true);
+		j.setAllowAssignment(true);
+		j.setImplicitMul(true);
+	}
+
 	/** Creates a new Console object and calls run() */
 	public static void main(String args[]) {
 		Console c = new Console();
@@ -184,17 +196,6 @@ public class Console extends Applet implements KeyListener {
 	}
 
 
-	/** sets up all the needed objects. */
-	public void initialise()
-	{
-		j = new JEP();
-		j.addStandardConstants();
-		j.addStandardFunctions();
-		j.addComplex();
-		j.setAllowUndeclared(true);
-		j.setAllowAssignment(true);
-		j.setImplicitMul(true);
-	}
 	
 	/** Performs the required operation on a node. 
 	 * Typically evaluates the node and prints the value.
