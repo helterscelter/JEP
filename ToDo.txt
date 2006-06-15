@@ -1,27 +1,7 @@
 == JEP 2.4.0 ========================================================
-x read through Rich's changes, check documentation for consistency
-x make sure there aren't any "loose ends"
-x check applets, update if necessary
-x check Jama license, check Jama compatibility
-x add more JUnit tests
-o add [] test
-x add tests for bugs
- x Run all tests
- x use "ant dist"
- x Update download page
- x Update license
- x Download package and test
- x add jep-x.xx-withexamples.jar to website folder
- x Update documentation with new features
- x Run spell check on changed pages
- x Test web site in multiple browsers
- x Upload new distribution file(s)
- x Upload web site
  - Add message on SourceForge list
  - Add message to freshmeat and other sites
  - Update version number+ feature list from JARS, share*it,...
- - Add CVS tag for version (e.g. v-2-4-0)
- - change pricing
  
 
 == Phone call =======================================================
@@ -107,6 +87,7 @@ research in the field.
 
 
 == Further todos ====================================================
+ - add FunctionPlotter.sh
  - do not throw ParseExceptions from function classes, but a different type instead
  - upgrade JUnit to newest version
  - redesign package structure org.nfunk -> com.singularsys... 
