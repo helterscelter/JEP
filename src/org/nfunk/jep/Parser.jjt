@@ -88,9 +88,15 @@ public class Parser {
 		restart(stream,jep_in);
 		// Parse the expression, and return the 
 		enable_tracing();
-		Node node = Start();
-		if (node == null) throw new ParseException("No expression entered");
-		return node.jjtGetChild(0);
+		try
+		{
+			Node node = Start();
+			if (node == null) throw new ParseException("No expression entered");
+			return node.jjtGetChild(0);
+		}
+		catch(TokenMgrError e) {
+			throw new ParseException(e.getMessage());
+		}
 	}
 
 	/** 
@@ -126,9 +132,15 @@ public class Parser {
 	 */
 	public Node continueParse() throws ParseException
 	{
-		ASTStart node = Start();
-		if (node==null) return null;
-		return node.jjtGetChild(0);
+		try
+		{
+			Node node = Start();
+			if (node == null) throw new ParseException("No expression entered");
+			return node.jjtGetChild(0);
+		}
+		catch(TokenMgrError e) {
+			throw new ParseException(e.getMessage());
+		}
 	}
 
 	private void addToErrorList(String errorStr) {
