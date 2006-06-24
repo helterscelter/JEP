@@ -135,7 +135,7 @@ public class Parser {
 		try
 		{
 			Node node = Start();
-			if (node == null) throw new ParseException("No expression entered");
+			if (node == null) return null;
 			return node.jjtGetChild(0);
 		}
 		catch(TokenMgrError e) {
