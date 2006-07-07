@@ -157,4 +157,11 @@ public class PConstant extends AbstractPNode {
 	}
 
 	public PNodeI expand()	{ return this;	}
+
+	/**
+	 * @return Returns the value.
+	 */
+	public Object getValue() {
+		return value;
+	}
 }

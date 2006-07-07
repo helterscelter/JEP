@@ -50,4 +50,11 @@ public class PVariable extends AbstractPNode {
 	}
 	
 	public PNodeI expand()	{ return this;	}
+
+	/**
+	 * @return Returns the variable.
+	 */
+	public XVariable getVariable() {
+		return variable;
+	}
 }

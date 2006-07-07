@@ -5,6 +5,7 @@ package org.lsmp.djep.sjep;
 import org.lsmp.djep.xjep.*;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
+import org.nfunk.jep.function.PostfixMathCommandI;
 
 /**
  * Represents an operator.
@@ -84,4 +85,35 @@ public class POperator extends AbstractPNode {
 			newTerms[i] = args[i].expand();
 		return new POperator(pc,op,newTerms);		
 	}
+	
+	/**
+	 * @return Returns the name of the operator.
+	 */
+	public String getName() {
+		return op.getName();
+	}
+
+	/**
+	 * @return Returns the PostfixMathCommandI for the operator.
+	 */
+	public PostfixMathCommandI getPfmc() {
+		return op.getPFMC();
+	}
+	/**
+	 * @return the number of arguments
+	 */
+	public int getNArgs() { return args.length; }
+	/**
+	 * @param i
+	 * @return returns the i-th argument
+	 */
+	public PNodeI getArg(int i) { return args[i]; }
+
+	/**
+	 * @return Returns the operator.
+	 */
+	public XOperator getOp() {
+		return op;
+	}
+
 }

@@ -15,7 +15,7 @@ public class PFunction extends AbstractPNode {
 	
 	String name;
 	PostfixMathCommandI pfmc;
-	XOperator op=null;
+	//XOperator op=null;
 	PNodeI args[];
 	/**
 	 * 
@@ -87,4 +87,27 @@ public class PFunction extends AbstractPNode {
 			newTerms[i] = args[i].expand();
 		return new PFunction(pc,name,pfmc,newTerms);		
 	}
+
+	/**
+	 * @return Returns the name of the function.
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return Returns the PostfixMathCommandI for the function.
+	 */
+	public PostfixMathCommandI getPfmc() {
+		return pfmc;
+	}
+	/**
+	 * @return the number of arguments
+	 */
+	public int getNArgs() { return args.length; }
+	/**
+	 * @param i
+	 * @return returns the i-th argument
+	 */
+	public PNodeI getArg(int i) { return args[i]; }
 }

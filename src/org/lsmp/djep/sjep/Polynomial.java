@@ -183,4 +183,16 @@ public class Polynomial extends AbstractPNode {
 		}
 		 return mp.toPNode();
 	}
+	
+	/**
+	 * The number of terms which make up the polynomial.
+	 * @return the number of terms
+	 */
+	public int getNTerms() { return terms.length; }
+	/**
+	 * Get the n-th term
+	 * @param i index of terms
+	 * @return PNodeI for that term.
+	 */
+	public PNodeI getTerm(int i) { return terms[i]; }
 }

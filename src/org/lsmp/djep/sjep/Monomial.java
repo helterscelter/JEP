@@ -415,4 +415,26 @@ public class Monomial extends AbstractPNode {
 		return mp.toPNode();		
 	}
 
+	/**
+	 * @return Returns the coefficient.
+	 */
+	public PConstant getCoeff() {
+		return coeff;
+	}
+	/**
+	 * @return return the number of variables.
+	 */
+	public int getNVars() { return vars.length; }
+	/**
+	 * Returns the i-th variable
+	 * @param i
+	 * @return PNodeI for the i-th variable in product
+	 */
+	public PNodeI getVar(int i) { return vars[i]; }
+	/**
+	 * Returns the i-th power
+	 * @param i
+	 * @return PNodeI for the power of the i-th variable in product
+	 */
+	public PNodeI getPower(int i) { return powers[i]; }
 }
