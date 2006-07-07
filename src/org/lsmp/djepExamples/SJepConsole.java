@@ -8,6 +8,13 @@ package org.lsmp.djepExamples;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 import org.lsmp.djep.xjep.XJep;
+import org.lsmp.djep.sjep.Monomial;
+import org.lsmp.djep.sjep.PConstant;
+import org.lsmp.djep.sjep.PFunction;
+import org.lsmp.djep.sjep.PNodeI;
+import org.lsmp.djep.sjep.POperator;
+import org.lsmp.djep.sjep.PVariable;
+import org.lsmp.djep.sjep.Polynomial;
 import org.lsmp.djep.sjep.PolynomialCreator;
 
 /**
@@ -53,6 +60,9 @@ public class SJepConsole extends DJepConsole
 		print("New simp:\t"); 
 		println(xj.toString(simp));
 
+		PNodeI poly = pc.createPoly(proc);
+		explain(poly,0);
+		
 		Node expand = pc.expand(proc);
 		print("Expanded:\t"); 
 		println(xj.toString(expand));
@@ -62,4 +72,51 @@ public class SJepConsole extends DJepConsole
 		println("Value:\t\t"+s);
 	}
 
+	private void explain(PNodeI pnode,int depth) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<depth;++i) print(" ");
+		if(pnode instanceof Polynomial)
+		{
+			Polynomial poly = (Polynomial) pnode;
+			println("Polynomial with "+poly.getNTerms()+" terms:");
+			for(int i=0;i<poly.getNTerms();++i)
+				explain(poly.getTerm(i),depth+1);
+		}
+		else if(pnode instanceof Monomial)
+		{
+			Monomial mon = (Monomial) pnode;
+			print("Monomial with coefficient: ");
+			print(mon.getCoeff().getValue().toString());
+			println(" and "+mon.getNVars()+" variables:");
+			for(int i=0;i<mon.getNVars();++i)
+			{
+				explain(mon.getVar(i),depth+1);
+				for(int j=0;j<depth;++j) print(" ");
+				println(" power:");
+				explain(mon.getPower(i),depth+1);
+			}
+		}
+		else if(pnode instanceof PConstant)
+		{
+			println("Constant: "+((PConstant) pnode).getValue().toString());
+		}
+		else if(pnode instanceof PVariable)
+		{
+			println("Variable: "+((PVariable) pnode).getVariable().toString());
+		}
+		else if(pnode instanceof PFunction)
+		{
+			PFunction fun = (PFunction) pnode;
+			println("Function: "+fun.getName()+" with "+fun.getNArgs()+"arguments:");
+			for(int i=0;i<fun.getNArgs();++i)
+				explain(fun.getArg(i),depth+1);
+		}
+		else if(pnode instanceof POperator)
+		{
+			POperator fun = (POperator) pnode;
+			println("Operator: "+fun.getName()+" with "+fun.getNArgs()+"arguments:");
+			for(int i=0;i<fun.getNArgs();++i)
+				explain(fun.getArg(i),depth+1);
+		}
+	}
 }
