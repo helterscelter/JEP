@@ -57,4 +57,12 @@ public class PVariable extends AbstractPNode {
 	public XVariable getVariable() {
 		return variable;
 	}
+	/**
+	 * @return Returns the name of the variable
+	 */
+	public String getName()
+	{
+		return variable.getName();
+	}
+
 }
