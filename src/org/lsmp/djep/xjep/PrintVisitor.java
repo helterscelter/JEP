@@ -414,7 +414,7 @@ public class PrintVisitor extends ErrorCatchingVisitor
 	 * In full bracket mode the brackets each element in the tree will be surrounded
 	 * by brackets to indicate the tree structure. 
 	 * In the default mode, (full bracket off) the number of brackets is
-	 * minimised so (x+y)+z will be printed as x+y+z.
+	 * minimized so (x+y)+z will be printed as x+y+z.
 	 * @param mode which flags to change, typically FULL_BRACKET
 	 * @param flag whether to switch this mode on or off
 	 */
