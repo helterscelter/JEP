@@ -16,9 +16,15 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
                 restart(stream,jep_in);
                 // Parse the expression, and return the 
                 enable_tracing();
-                Node node = Start();
-                if (node == null) throw new ParseException("No expression entered");
-                return node.jjtGetChild(0);
+                try
+                {
+                        Node node = Start();
+                        if (node == null) throw new ParseException("No expression entered");
+                        return node.jjtGetChild(0);
+                }
+                catch(TokenMgrError e) {
+                        throw new ParseException(e.getMessage());
+                }
         }
 
         /** 
@@ -35,7 +41,7 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
         }
         /**
 	 * Continue parsing without re-initilising stream.
-	 * Allows renetrancy of parser so that strings like
+	 * Allows reentrance of parser so that strings like
 	 * "x=1; y=2; z=3;" can be parsed.
 	 * When a semi colon is encountered parsing finishes leaving the rest of the string unparsed.
 	 * Parsing can be resumed from the current position by using this method.
@@ -54,9 +60,15 @@ public class Parser/*@bgen(jjtree)*/implements ParserTreeConstants, ParserConsta
 	 */
         public Node continueParse() throws ParseException
         {
-                ASTStart node = Start();
-                if (node==null) return null;
-                return node.jjtGetChild(0);
+                try
+                {
+                        Node node = Start();
+                        if (node == null) return null;
+                        return node.jjtGetChild(0);
+                }
+                catch(TokenMgrError e) {
+                        throw new ParseException(e.getMessage());
+                }
         }
 
         private void addToErrorList(String errorStr) {
@@ -1400,66 +1412,6 @@ Vector Array() :
     finally { jj_save(8, xla); }
   }
 
-  final private boolean jj_3R_26() {
-    if (jj_3R_10()) return true;
-    if (jj_scan_token(ASSIGN)) return true;
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_59() {
-    if (jj_scan_token(GE)) return true;
-    if (jj_3R_42()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_41() {
-    if (jj_3R_43()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_6() {
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_3() {
-    if (jj_3R_11()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_24() {
-    if (jj_3R_34()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_9() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_19()) {
-    jj_scanpos = xsp;
-    if (jj_3_3()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_19() {
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_58() {
-    if (jj_scan_token(LE)) return true;
-    if (jj_3R_42()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_50() {
-    if (jj_scan_token(NOT)) return true;
-    if (jj_3R_46()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_40() {
     if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
@@ -1897,6 +1849,66 @@ Vector Array() :
     return false;
   }
 
+  final private boolean jj_3R_26() {
+    if (jj_3R_10()) return true;
+    if (jj_scan_token(ASSIGN)) return true;
+    if (jj_3R_9()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_59() {
+    if (jj_scan_token(GE)) return true;
+    if (jj_3R_42()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_41() {
+    if (jj_3R_43()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_3R_17()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_3() {
+    if (jj_3R_11()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_24() {
+    if (jj_3R_34()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_9() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_19()) {
+    jj_scanpos = xsp;
+    if (jj_3_3()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_19() {
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_58() {
+    if (jj_scan_token(LE)) return true;
+    if (jj_3R_42()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_50() {
+    if (jj_scan_token(NOT)) return true;
+    if (jj_3R_46()) return true;
+    return false;
+  }
+
   public ParserTokenManager token_source;
   JavaCharStream jj_input_stream;
   public Token token, jj_nt;
@@ -1924,7 +1936,10 @@ Vector Array() :
   private int jj_gc = 0;
 
   public Parser(java.io.InputStream stream) {
-    jj_input_stream = new JavaCharStream(stream, 1, 1);
+     this(stream, null);
+  }
+  public Parser(java.io.InputStream stream, String encoding) {
+    try { jj_input_stream = new JavaCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source = new ParserTokenManager(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -1934,7 +1949,10 @@ Vector Array() :
   }
 
   public void ReInit(java.io.InputStream stream) {
-    jj_input_stream.ReInit(stream, 1, 1);
+     ReInit(stream, null);
+  }
+  public void ReInit(java.io.InputStream stream, String encoding) {
+    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
     token = new Token();
     jj_ntk = -1;
@@ -2137,6 +2155,7 @@ Vector Array() :
   final private void jj_rescan_token() {
     jj_rescan = true;
     for (int i = 0; i < 9; i++) {
+    try {
       JJCalls p = jj_2_rtns[i];
       do {
         if (p.gen > jj_gen) {
@@ -2155,6 +2174,7 @@ Vector Array() :
         }
         p = p.next;
       } while (p != null);
+      } catch(LookaheadSuccess ls) { }
     }
     jj_rescan = false;
   }
