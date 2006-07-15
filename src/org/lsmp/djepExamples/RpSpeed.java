@@ -44,6 +44,11 @@ public class RpSpeed {
 		doHorner();
 	}
 	
+	/** Run speed comparison  between jep and rpe.
+	 * 
+	 * @param eqn The equation to test
+	 * @param varNames an array of variable names which will be set to random values.
+	 */
 	public static void doAll(String eqn,String varNames[])
 	{
 		System.out.println("\nTesting speed for \""+eqn+"\"");
@@ -79,7 +84,6 @@ public class RpSpeed {
 	
 	static void doJep(String eqn2,Variable vars[],Double vals[][])
 	{
-		Random generator = new Random(seed);
 	//	System.out.println("vec init"+(t4-t3));
 		try
 		{
@@ -101,7 +105,6 @@ public class RpSpeed {
 
 	static void doRpe(String eqn2,Variable vars[],Double vals[][])
 	{
-		Random generator = new Random(seed);
 		try
 		{
 			Node node3 = j.parse(eqn2);
