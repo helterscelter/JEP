@@ -269,7 +269,7 @@ public class JepTest extends TestCase {
 		valueTest("abs(-2.5)",2.5);
 		valueTest("acos(1/sqrt(2))",Math.PI/4,0.00000001);
 		valueTest("cos(pi/3)",0.5,0.00000001);
-		
+		valueTest("atan2(3,4)",Math.atan2(3.0,4.0),0.00000001);
 	}
 	public void testComplex() throws Exception
 	{
