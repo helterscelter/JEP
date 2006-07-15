@@ -7,7 +7,7 @@ import org.lsmp.djep.groupJep.interfaces.*;
 import org.lsmp.djep.groupJep.values.*;
 import org.nfunk.jep.type.*;
 /**
- * An extended version of a Free Group, limted seport for powers and division.
+ * An extended version of a Free Group, limited support for powers and division.
  * Positive integer powers are allowed and division by constants.
  * TODO implement polynomial division and remainder (mod).
  * 
@@ -28,14 +28,14 @@ public class ExtendedFreeGroup
 	public Number pow(Number a, Number b) {
 		FreeGroupElement exp = (FreeGroupElement) b; 
 		if(!isConstantPoly(exp))
-			throw new IllegalArgumentException("Powers only supported for integer exponant. Current exponant is "+exp.toString());
+			throw new IllegalArgumentException("Powers only supported for integer exponent. Current exponent is "+exp.toString());
 
 		Complex c = exp.getComplexValue();
 		if(c.im() != 0.0)
-			throw new IllegalArgumentException("Powers only supported for integer exponant. Current exponant is "+exp.toString());
+			throw new IllegalArgumentException("Powers only supported for integer exponent. Current exponent is "+exp.toString());
 		double re = c.re();
 		if(Math.floor(re) != re)
-			throw new IllegalArgumentException("Powers only supported for integer exponant. Current exponant is "+exp.toString());
+			throw new IllegalArgumentException("Powers only supported for integer exponent. Current exponent is "+exp.toString());
 
 		return ((FreeGroupElement) a).pow((int) re);
 	}
