@@ -270,6 +270,12 @@ public class JepTest extends TestCase {
 		valueTest("acos(1/sqrt(2))",Math.PI/4,0.00000001);
 		valueTest("cos(pi/3)",0.5,0.00000001);
 		valueTest("atan2(3,4)",Math.atan2(3.0,4.0),0.00000001);
+		valueTest("2^4",16);
+		valueTest("2^10",1024);
+		valueTest("2^0.5",Math.sqrt(2),0.00000001);
+		valueTest("2^(-0.5)",1.0/Math.sqrt(2),0.00000001);
+		valueTest("2^(-4)",1.0/16,0.00000001);
+		valueTest("2^(-10)",1.0/1024,0.00000001);
 	}
 	public void testComplex() throws Exception
 	{
