@@ -146,6 +146,7 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Jul 15 06 rjm - Added methods to rpe to allow quicker setting of variables, new speed test.
 Jul 07 06 rjm - Added interegation functions to allow the sjep representation to be interegated.
 Jun 14 06 rjm - Fixed bug with multi-arg macro functions.
 Jun 14 06 rjm - Added sample application illustrating nested block control stucture.
