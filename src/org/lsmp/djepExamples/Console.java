@@ -42,6 +42,9 @@ import java.awt.event.*;
 * expressions to be evaluated. 
 * 
 * <p>
+* This class and its subclasses can also be run as a java applet 
+* which displays a textarea for interactive input.
+* <p>
 * This class has been designed to be sub classed to allow different
 * consol applications.
 * The methods
@@ -62,6 +65,25 @@ import java.awt.event.*;
 *		Console c = new DJepConsole();
 *		c.run(args);
 *	}
+*</pre>
+*<p>
+*The main input loop is approximately
+*<pre>
+* initialise();
+* printIntroText();
+* print(getPrompt());
+* String command;
+* while((command = getCommand()) != null) 
+* {
+*	if(command.equals("quit") || command.equals("exit"))
+*		break;
+*	if(!testSpecialCommands(command)) continue;
+*   try {
+*	  Node n = j.parse(command);
+*	  processEquation(n);
+*   } catch(Exception e) {}
+*	print(getPrompt());
+* }
 *</pre>
 */
 
@@ -277,7 +299,7 @@ public class Console extends Applet implements KeyListener {
 			println("\t"+ops[i].toString());
 	}
 
-	/** Prints a list of constants. */
+	/** Prints a list of variable. */
 	public void printVars() {
 		SymbolTable st = j.getSymbolTable();
 		println("Variables:");
