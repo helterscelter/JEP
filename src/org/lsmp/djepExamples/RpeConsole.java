@@ -8,7 +8,9 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 
 /** A Console application illustrating the use of the RPE evaluator.
- * 
+ * The org.lsmp.djep.rpe package is intended to speed up multiple evaluation of the same equation
+ * with different values for the variable. 
+ * As each equation is only evaluated once this will not show a speed improvement. 
  * @author Richard Morris
  */
 public class RpeConsole extends Console {
