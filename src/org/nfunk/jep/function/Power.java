@@ -13,6 +13,11 @@ import java.util.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 
+/**
+ * Computes the power of an number.
+ * Implements a fast algorithm for integer powers.
+ * @author N Funk, R Morris incorporating code by Patricia Shanahan pats@acm.org
+ */
 public class Power extends PostfixMathCommand
 {
 	public Power()
@@ -53,13 +58,25 @@ public class Power extends PostfixMathCommand
 
 	public Object power(Number d1, Number d2)
 	{
-		if (d1.doubleValue()<0 && d2.doubleValue() != d2.intValue())
+		int ival = d2.shortValue();
+		double dval = d2.doubleValue();
+		if (d1.doubleValue()<0 && dval != ival)
 		{
 			Complex c = new Complex(d1.doubleValue(), 0.0);
 			return c.power(d2.doubleValue());
 		}
 		else
+		{
+			if(dval == ival)
+			{
+				if(dval>=0)
+					return new Double(power(d1.doubleValue(),ival));
+				else
+					return new Double(1.0/power(d1.doubleValue(),-ival));
+			}
+
 			return new Double(Math.pow(d1.doubleValue(),d2.doubleValue()));
+		}
 	}
 	
 	public Object power(Complex c1, Complex c2)
@@ -93,4 +110,47 @@ public class Power extends PostfixMathCommand
 			return temp;
 	}
 	
+	/**
+	 * A fast routine for computing integer powers.
+	 * Code adapted from http://mindprod.com/jgloss/power.html
+	 * Almost identical to the method Knuth gives on page 462 of The Art of Computer Programming Volume 2 Seminumerical Algorithms.
+	 * @param x number to be taken to a power.
+	 * @param n power to take x to. 0 <= n <= Integer.MAX_VALUE
+	 * Negative numbers will be treated as unsigned positives.
+ 	 * @return x to the power n
+	 * @author Patricia Shanahan pats@acm.org
+	 */
+	public double power(double x,int n)
+	{
+		switch(n){
+		case 0: x = 1.0; break;
+		case 1: break;
+		case 2: x *= x; break;
+		case 3: x *= x*x; break;
+		case 4: x *= x*x*x; break;
+		case 5: x *= x*x*x*x; break;
+		case 6: x *= x*x*x*x*x; break;
+		case 7: x *= x*x*x*x*x*x; break;
+		case 8: x *= x*x*x*x*x*x*x; break;
+		default:
+			{
+			   int bitMask = n;
+			   double evenPower = x;
+			   double result;
+			   if ( (bitMask & 1) != 0 )
+			      result = x;
+			   else
+			      result = 1;
+			   bitMask >>>= 1;
+			   while ( bitMask != 0 ) {
+			      evenPower *= evenPower;
+			      if ( (bitMask & 1) != 0 )
+			         result *= evenPower;
+			      bitMask >>>= 1;
+			   } // end while
+			   x = result;
+			}
+		}
+		return x;
+	} 
 }
