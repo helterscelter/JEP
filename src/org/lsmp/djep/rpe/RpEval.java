@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * A fast evaluation algorithm for equations over Doubles, does not work with vectors or matricies.
  * This is based around reverse polish notation
- * and is optimised for speed at every opportunity.
+ * and is optimized for speed at every opportunity.
  * <p>
  * To use do
  * <pre>
@@ -20,6 +20,20 @@ import java.util.*;
  * System.out.println(val);
  * rpe.cleanUp();
  * </pre>
+ * <p>
+ * Variable values in the evaluator are stored in a array. The array index of a variable can be found using
+ * <pre>
+ * Varaible v = j.getVar("x");
+ * int ref = rpe.getVarRef(v);
+ * </pre>
+ * and the value of the variable set using
+ * <pre>
+ * rpe.setVarValue(ref,0.1234);
+ * </pre>
+ * Variable values can also be set using the standard <tt>Variable.setValue()</tt> or (slower) <tt>JEP.setVarVal(name,vlaue)</tt> methods.
+ * Setting the value of a jep variable will automatically update the corresponding rpe value but there will be a performance hit. 
+ * Setting the value of the rpe variable does not change the corresponding jep value.
+ * <p> 
  * The compile methods converts the expression represented by node
  * into a string of commands. For example the expression "1+2*3" will
  * be converted into the sequence of commands
@@ -42,7 +56,7 @@ import java.util.*;
  * <b>Implementation notes</b>
  * A lot of things have been done to make it as fast as possible:
  * <ul>
- * <li>Everything is final which maximises the possibility for in-lining.</li>
+ * <li>Everything is final which maximizes the possibility for in-lining.</li>
  * <li>All object creation happens during compile.</li>
  * <li>All calculations done using double values.</li>
  * <li>Each operator/function is hand coded. To extend functionality you will have to modify the source.</li>
@@ -658,11 +672,36 @@ public final class RpEval implements ParserVisitor {
 		scalerStore.cleanUp();
 	}
 	
+	/**
+	 * Gets the JEP Variable for a give reference number
+	 * @param ref reference number for the variable
+	 * @return corresponding JEP variable
+	 */
 	public Variable getVariable(int ref)
 	{
 		return scalerStore.getVariable(ref);
 	}
+	/**
+	 * Gets the reference number for a given variable
+	 * @param var JEP Variable
+	 * @return reference number for the variable
+	 * @throws ParseException
+	 */
+	public int getVarRef(Variable var) throws ParseException
+	{
+		short vRef = (short) scalerStore.addVar(var);
+		return vRef;
+	}
 	
+	/**
+	 * Sets the value of a variable
+	 * @param ref reference number for the variable
+	 * @param val the value to set the variable
+	 */
+	public void setVarValue(int ref, double val)
+	{
+		scalerStore.vars[ref]=val;
+	}
 	public String getFunction(short ref)
 	{
 			switch(ref) {
