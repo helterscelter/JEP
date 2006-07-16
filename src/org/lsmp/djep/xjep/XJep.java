@@ -46,7 +46,7 @@ public class XJep extends JEP {
 		
 		copier = new DeepCopyVisitor();
 		subv = new SubstitutionVisitor();
-		ev = new XEvaluatorVisitor();
+		ev = new XEvaluatorVisitor(this.getSymbolTable());
 		simpv = new SimplificationVisitor();
 		commandv = new CommandVisitor();
 		pv = new PrintVisitor();
@@ -90,7 +90,7 @@ public class XJep extends JEP {
 		tu = new TreeUtils();
 		copier = new DeepCopyVisitor();
 		subv = new SubstitutionVisitor();
-		ev = new XEvaluatorVisitor();
+		ev = new XEvaluatorVisitor(this.getSymbolTable());
 		simpv = new SimplificationVisitor();
 		commandv = new CommandVisitor();
 		pv = new PrintVisitor();

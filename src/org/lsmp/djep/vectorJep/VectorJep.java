@@ -21,7 +21,7 @@ public class VectorJep extends JEP {
 		super();
 		
 		opSet = new VOperatorSet();
-		this.ev = new VectorEvaluator();
+		this.ev = new VectorEvaluator(this.getSymbolTable());
 		this.parser.setInitialTokenManagerState(ParserConstants.NO_DOT_IN_IDENTIFIERS);
 	}
 

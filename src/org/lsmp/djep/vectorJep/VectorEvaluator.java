@@ -13,6 +13,10 @@ import org.lsmp.djep.vectorJep.values.*;
  */
 public class VectorEvaluator extends EvaluatorVisitor {
 
+	public VectorEvaluator(SymbolTable st) {
+		super(st);
+	}
+
 	/**
 	 * Visit a function node. The values of the child nodes
 	 * are first pushed onto the stack. Then the function class associated

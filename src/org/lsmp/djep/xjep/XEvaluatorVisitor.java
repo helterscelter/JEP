@@ -20,6 +20,10 @@ import org.nfunk.jep.*;
  */
 public class XEvaluatorVisitor extends EvaluatorVisitor {
 
+	public XEvaluatorVisitor(SymbolTable st) {
+		super(st);
+	}
+
 	/**
 	 * Visit a variable node. The value of the variable is obtained from the
 	 * symbol table (symTab) and pushed onto the stack.

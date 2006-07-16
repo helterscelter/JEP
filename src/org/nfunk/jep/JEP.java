@@ -89,7 +89,7 @@ public class JEP {
 		initSymTab();
 		initFunTab();
 		errorList = new Vector();
-		ev = new EvaluatorVisitor();
+		ev = new EvaluatorVisitor(this.getSymbolTable());
 		parser = new Parser(new StringReader(""));
 
 		//Ensure errors are reported for the initial expression
@@ -122,7 +122,7 @@ public class JEP {
 		initSymTab();
 		initFunTab();
 		errorList = new Vector();
-		ev = new EvaluatorVisitor();
+		ev = new EvaluatorVisitor(this.getSymbolTable());
 		parser = new Parser(new StringReader(""));
 
 		//Ensure errors are reported for the initial expression
@@ -674,7 +674,7 @@ public class JEP {
 	 * Returns the EvaluatorVisitor
 	 * @return the EvaluatorVisitor.
 	 */
-	public EvaluatorVisitor getEvaluatorVisitor() {
+	public EvaluatorI getEvaluatorVisitor() {
 	    return ev;
 	}
 	/**

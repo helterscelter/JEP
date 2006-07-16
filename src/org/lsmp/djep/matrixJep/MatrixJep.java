@@ -107,4 +107,10 @@ public class MatrixJep extends DJep {
 			return null;
 		}
 	}
+
+	public EvaluatorI getEvaluatorVisitor() {
+		return mev;
+	}
+	
+	
 }
