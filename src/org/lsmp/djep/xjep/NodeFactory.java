@@ -15,7 +15,7 @@ import org.nfunk.jep.function.*;
  * Created on 16-Nov-2003
  */
 public class NodeFactory {
-    private XJep xj;
+    protected XJep xj;
 	public NodeFactory(XJep xj) {this.xj=xj;}
 	private NodeFactory() {}
 	/**
@@ -53,22 +53,14 @@ public class NodeFactory {
 		return buildConstantNode(node.getValue());
 	}	
 
-
-	/** Creates a ASTConstant whose value of applying the operator to its arguments. */
-	public ASTConstant buildConstantNode(PostfixMathCommandI pfmc,Node children[]) throws IllegalArgumentException,ParseException
-	{
-/*		Stack stack = new Stack();
-		for(int i=0;i<children.length;++i)
-		{
-			if(!(children[i] instanceof ASTConstant))
-				throw new ParseException("buildConstantNode: arguments must all be constant nodes");
-			stack.push(((ASTConstant) children[i]).getValue());
-		}
-		pfmc.setCurNumberOfParameters(children.length);
-		pfmc.run(stack);
-		return buildConstantNode(stack.pop());
-*/
-	    Object val = xj.getEvaluatorVisitor().eval(pfmc,children);
+	/** Creates a constant node whose result is the given function applied to the children.
+	 * @param pfmc the function to apply
+     * @param children the arguments to the function, each argument should be a constant node.
+     * @return a new constant node
+	*/
+	public ASTConstant buildConstantNode(PostfixMathCommandI pfmc, Node[] children) throws IllegalArgumentException, ParseException {
+		Node node2 = buildFunctionNode("tmpfun",pfmc,children);
+	    Object val = xj.getEvaluatorVisitor().eval(node2);
 		return buildConstantNode(val);
 	}
 
