@@ -28,7 +28,7 @@ public class MacroFunction extends PostfixMathCommand
 {
 	private String name;
 	private Node topNode;
-	private EvaluatorVisitor ev = new EvaluatorVisitor();
+	private EvaluatorI ev;
 //	private XJep localJep;
 	private XSymbolTable mySymTab;
 	private Variable vars[];
@@ -73,6 +73,7 @@ public class MacroFunction extends PostfixMathCommand
 		}
 
 		topNode = localJep.parse(expression);
+		ev = new EvaluatorVisitor(mySymTab);
 	}
 	
 	/**
@@ -97,7 +98,7 @@ public class MacroFunction extends PostfixMathCommand
 		}
 		try
 		{
-			Object res = ev.getValue(topNode,mySymTab);
+			Object res = ev.eval(topNode);
 			stack.push(res);
 		}
 		catch(Exception e1) { throw new ParseException("MacroFunction eval: "+e1.getMessage()); }
