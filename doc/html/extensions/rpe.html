@@ -1,0 +1,273 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><!-- #BeginTemplate "/Templates/maintemplate.dwt" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- #BeginEditable "doctitle" -->
+<title>Fast evaluation of mathematical equations in Java - JEP extensions</title>
+<!-- #EndEditable --> 
+<link rel="stylesheet" type="text/css" href="../main.css" title="style1">
+</head>
+
+<body>
+
+
+
+<!-- NAVIGATION ---------------------------------------------------- -->
+<div id="navcontainer"> 
+  <ul>
+    <li><a href="../../javadoc/index.html" target="_blank">JavaDoc <img src="../img/new-window-icon.gif" width="15" height="11"></a></li>
+  </ul>
+  <h1>JEP</h1>
+  <ul>
+    <li><a href="../index.html">Basic Usage</a></li>
+    <li><a href="../variables.html">Variables</a></li>
+    <li><a href="../types.html">Data types</a></li>
+    <li><a href="../operators.html">Operators</a></li>
+    <li><a href="../functions.html">Functions</a></li>
+    <li><a href="../advanced.html">Advanced Features</a></li>
+    <li><a href="../grammar.html">Grammar</a></li>
+    <li><a href="../faq.html">FAQ</a></li>
+    <li><a href="../version.html">Version History</a></li>
+  </ul>
+  <h1>Extensions</h1>
+  <ul>
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="xjep.html">XJep</a></li>
+    <li><a href="djep.html">Differentiation</a></li>
+    <li><a href="vectorjep.html">Vectors and Matrices</a></li>
+    <li><a href="rpe.html">Fast Evaluation</a></li>
+    <li><a href="groupjep.html">Groups</a></li>
+    <li><a href="version.html">Version History</a></li>
+  </ul>
+</div>
+
+
+
+<div id="centercontent">
+<!-- CENTER CONTENT -------------------------------------------------- -->
+<!-- #BeginEditable "Text" --> 
+  <h1><a name="top"></a>Fast evaluation of mathematical equations in Java - extensions to JEP</h1>
+  <p><br>
+    The <a href="../../javadoc/org/lsmp/djep/rpe/package-summary.html">org.lsmp.djep.rpe</a> 
+    and <a href="../../javadoc/org/lsmp/djep/mrpe/package-summary.html">org.lsmp.djep.mrpe</a> 
+    packages offers fast evaluation routines for expressions involving scalars or matrices respectively. 
+    These offer a 5-10 times speed improvement over the standard JEP evaluation and approach the speed obtainable by native java code.</p>
+
+  <!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem -->
+
+  <h2>Scaler expressions</h2>
+  <p>
+  To optimise the speed of evaluation, separate packages are provided for equations involving doubles, i.e. standard single valued functions and those involving vectors and matrices. The <tt>org.lsmp.djep.rpe</tt> package provides support for non vector equations. 
+  </p>
+  <p>To use do
+  <pre>
+  JEP j = new XJep();
+  j.addStandardConstants();
+  j.addStandardFunctions();
+  j.addComplex();
+  j.setAllowUndeclared(true);
+  j.setImplicitMul(true);
+  j.setAllowAssignment(true);
+
+  RpEval rpe = new RpEval(j);
+  
+  Node node = j.parse("cos(pi/3)^2"); 
+  RpCommandList list = rpe.compile(node);
+  double val = rpe.evaluate(list);
+  System.out.println(val);
+  rpe.cleanUp();
+</pre>
+ 
+<h3>Variable</h3> 
+<p>
+Variable values in the evaluator are stored in a array. The array index of a variable can be found using
+<pre>
+  Variable v = j.getVar("x");
+  int ref = rpe.getVarRef(v);
+</pre>
+and the value of the variable set using
+<pre>
+  rpe.setVarValue(ref,0.1234);
+</pre>
+<p>
+Variable values can also be set using the standard <tt>Variable.setValue()</tt> or (slower) <tt>JEP.setVarVal(name,vlaue)</tt> methods.
+Setting the value of a jep variable will automatically update the corresponding rpe value but there will be a performance hit. 
+Setting the value of the rpe variable does not change the value of the corresponding jep value.
+</p>
+<h3>How it works</h3>
+<p>
+The compile methods converts the expression represented by node
+into a string of commands. For example the expression "4+5*6" will
+be converted into the sequence of commands
+</p>
+<pre>
+  Constant no 1 (4) (pushes constant onto stack)
+  Constant no 2 (5)
+  Constant no 3 (6)
+  Multiply scalers (multiplies last two entries on stack)
+  -  (6*5), the result (30) is pushed onto the top of the stack
+  Add scalers (adds last two entries on stack)
+  -  (30+4) the result (34) is pushed onto top of the stack
+</pre>
+<p>
+The evaluate method executes these methods sequentially
+using a stack 
+and returns the last object on the stack. 
+</p>
+<h3>Implementation notes</h3>
+<p>
+A few cautionary notes:
+Its very unlikely to be thread safe. It only works over doubles,
+expressions with complex numbers or strings will cause problems.
+It only works for expressions involving scalers.
+<p>
+A lot of things have been done to make it as fast as possible:
+</p>
+<ul>
+<li>Everything is final which maximise the possibility for in-lining.</li>
+<li>All object creation happens during compile.</li>
+<li>All calculations done using double values.</li>
+<li>Each operator/function is hand coded. To extend functionality you will have to modify the source.</li>
+</ul>
+
+<h3>Example applications</h3>
+<ul>
+<li><a href="../../javadoc/org/lsmp/djepExamples/RpSpeed.html">org.lsmp.djepExamples.RpSpeed</a> runs some speed test applications.</li>
+<li><a href="../../javadoc/org/lsmp/djepExamples/RpeConsole.html">org.lsmp.djepExamples.RpeConsole</a> an interactive console application.</li>
+</ul>
+
+<h3>Supported functions</h3>
+<p>
+Not all jep functions are supported, some are specific to Complex numbers or Strings.
+The currently supported functions are:
+<tt>sin, cos, tan, sec, cosec, cot, asin, acos, atan, sinh, cosh, tanh, asinh, acosh, atanh, 
+abs, exp, log, ln, sqrt, atan2, if</tt>.
+</p>
+<h3>Performance</h3>
+The table below indicates the evaluation speeds. Times are in milliseconds for a million evaluations.
+<table border=1 class="speedtable">
+<tr><th>Expression</th><th>Speed using JEP</th><th>Speed using rpe</th><th>Speed using Java</th></tr>
+<tr><td>5</td><td>156</td><td>47</td></tr>
+<tr><td>x</td><td>297</td><td>78</td></tr>
+<tr><td>1+x</td><td>781</td><td>94</td></tr>
+<tr><td>x^2</td><td>844</td><td>109</td></tr>
+<tr><td>x*x</td><td>781</td><td>94</td></tr>
+<tr><td>5*x</td><td>797</td><td>94</td></tr>
+<tr><td>cos(x)</td><td>656</td><td>156</td><td>79</td></tr>
+<tr><td>1+x+x^2</td><td>1828</td><td>172</td></tr>
+<tr><td>1+x+x^2+x^3</td><td>2844</td><td>281</td></tr>
+<tr><td>1+x+x^2+x^3+x^4</td><td>3891</td><td>312</td></tr>
+<tr><td>1+x+x^2+x^3+x^4+x^5</td><td>4891</td><td>375</td></tr>
+<tr><td>1+x(1+x(1+x(1+x(1+x))))</td><td>4766</td><td>391</td><td>62</td></tr>
+<tr><td>if(x>0.5,1,0)</td><td>1219</td><td>219</td></tr>
+</table>
+This indicates a speed up of between 3 and 13 times as fast.
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+<h2>Vectors and matricies</h2>
+<p>
+Equations involving vectors and matrices is handled by the org.lsmp.djep.mrpe package. 
+The operation of this package is broadly similar to the Scaler version, 
+but the code has been optimised to handle vectors and matricies upto 4 by 4 and speed improvements can be up to the order of 30 times.
+</p>
+<h3>Usage</h3>
+<p>For initisisation the JEP instance must be of type MatrixJep.</p>
+<pre>
+  MatrixJep mj = new MatrixJep();
+  mj.addStandardConstants();
+  mj.addStandardFunctions();
+  mj.addComplex();
+  mj.setAllowUndeclared(true);
+  mj.setImplicitMul(true);
+  mj.setAllowAssignment(true);
+  
+  MRpEval mrpe = new MRpEval(mj);
+</pre>
+<p>Each equation to be evaluated must be compiled.</p>
+<pre>
+  try {
+  	Node node = mj.parse("[1,2,3,4].[1,2,3,4]");
+  	Node proc = mj.preprocess(node);
+	Node simp = mj.simplify(proc);
+	
+  	MRpCommandList list = rpe.compile(simp);
+  } catch(ParseException e) {}
+</pre>
+<p>Variable values are held in an array (actually one array for each different dimension).
+The index of each variable is obtained using the <tt>getVarRef</tt> method, and the value set using
+<tt>setVarValue</tt>.</p>
+<pre>
+  xVar = (MatrixVariableI) mj.getVar("x");
+  xref = mrpe.getVarRef(xVar);
+  
+  mrpe.setVarValue(xref,0.8);
+</pre>
+<p>The evaluation is performed by the <tt>evaluate</tt> method and the result is of type <tt>MRpRes</tt>.</p>
+<pre>
+  MRpRes res = rpe.evaluate(list);
+</pre>
+<p>The Dimension of the results is obtained by using <tt>getDims()</tt> or alternatively
+<tt>MRpCommandList.getDimsOfResult()</tt> which is a little faster as the result dimension will not change between evaluation.
+The result can be converted into
+either a double (for scaler results), an array of doubles (for vectors results) or double indexed array
+of doubles (for matrix results).
+<pre>
+  Dimensions dim = list.getResultDim();
+  if(dim.is0D()) // a scaler
+   { double a = res.doubleValue(); }
+  else if(dim.is1D()) // a vector
+  { double b[] = (double[]) res.toArray(); }
+  else
+  { double c[][] = (double[][]) res.toArray(); }
+</pre>
+<p>Alternatively the result value can be copied into an existing MatrixValueI type of the correct dimension using
+<tt>copyToVecMat(MatrixValueI)</tt> or slighlty slower a new MatrixValueI type with <tt>toVecMat</tt>.
+</p>
+<pre>
+  MatrixValueI val = res.toVecMat();
+</pre>
+<p>Finally the result can be converted to a a string.</p>
+<pre>
+  System.out.println(val.toString());
+</pre>
+<h3>Perfomance</h3>
+<p>100,000 itterations, times in milliseconds.
+<table border=1 class="speedtable">
+<tr><th>Expression</th><th>Speed using VectorJep</th><th>Speed using MatrixJep</th><th>Speed using Mrpe</th><th>Speed using Java</th></tr>
+<tr><td>y*y<br/>y: 2 by 2</td><td>344</td><td>203</td><td>15</td></tr>
+<tr><td>y+y<br/>y: 2 by 2</td><td>266</td><td>141</td><td>15</td></tr>
+<tr><td>y*y<br/>y: 3 by 3</td><td>812</td><td>609</td><td>63</td><td>46 (doubles)<br/> 79 (Doubles)</td></tr>
+<tr><td>y+y<br/>y: 3 by 3</td><td>406</td><td>219</td><td>16</td><td>16 (doubles)<br/> 47 (Doubles)</td></tr>
+<tr><td>y*y<br/>y: 4 by 4</td><td>1610</td><td>1406</td><td>47</td></tr>
+<tr><td>y*y<br/>y: 5 by 5</td><td>2938</td><td>2781</td><td>312</td></tr>
+<tr><td>y*y<br/>y: 6 by 6</td><td>4937</td><td>4750</td><td>406</td></tr>
+<tr><td>y=[[1,2,3],[4,5,6],[7,8,9]]</td><td>578</td><td>188</td><td>46</td></tr>
+<tr><td>[[1,2,3],[4,5,6],[7,8,9]] * [[1,2,3],[4,5,6],[7,8,9]]</td><td>1812</td><td>860</td><td>62</td></tr>
+<tr><td>y*y+y<br/>y: 3 by 3</td><td>1219</td><td>828</td><td>32</td></tr>
+<tr><td>x*y<br/>x: 1 by 3, y: 3 by 3</td><td>234</td><td>141</td><td>15</td></tr>
+<tr><td>y^^y<br/>y: 1 by 3</td><td>157</td><td>109</td><td>31</td></tr>
+<tr><td>1*2*3+4*5*6+7*8*9</td><td>547</td><td>15</td><td>0</td></tr>
+<tr><td>x1*x2*x3+x4*x5*x6+x7*x8*x9<br/>x1, .. x9 scalers</td><td>547</td><td>282</td><td>31</td></tr>
+</table>
+ 
+<!-- #BeginLibraryItem "/Library/top bar.lbi" -->
+<div class="topbar"><a href="#top"><img src="../img/top.gif" width="38" height="15" name="top"></a></div>
+<!-- #EndLibraryItem --><!-- #EndEditable -->
+
+
+
+<!-- FOOTER ---------------------------------------------------------- -->
+<div id="footer">
+<a href="http://sourceforge.net/tracker/?func=add&group_id=24711&atid=382402">Report bugs / documentation errors</a><br/>
+<br/>
+&copy; 2006 <a href="http://www.singularsys.com" target="_blank">Singular Systems</a>
+</div>
+</div> <!-- centercontent -->
+
+</body>
+<!-- #EndTemplate --></html>

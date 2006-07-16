@@ -169,4 +169,7 @@ pre {  font-size: 10pt}
 	color: #666;
 }
 
+/*-- Speed table -------------------------------------------------*/
+
+.speedtable tr td { text-align: right; }
 
