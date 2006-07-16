@@ -26,22 +26,6 @@ public class RpExample {
 		doAll(new String[]{"x1=1","x2=2","x3=3","x4=4","x5=5","x6=6","x7=7","x8=8","x9=9",
 			"x1*x2*x3+x4*x5*x6+x7*x8*x9"});
 		doAll(new String[]{"x=0.7","cos(x)^2+sin(x)^2"});
-		// vectors and matricies can be used with assignment
-//		doStuff("x=[1,2,3]");             // Value: [1.0,2.0,3.0]
-//		doStuff("x+x");                   // Value: [2.0,4.0,6.0]
-//		doStuff("x . x");                 // Value: 14.0
-//		doStuff("x^x");                  // Value: [0.0,0.0,0.0]
-//		doStuff("y=[[1,2],[3,4]]");       // Value: [[1.0,2.0],[3.0,4.0]]
-//		doStuff("y * y");                 // Value: [[7.0,10.0],[15.0,22.0]]
-		// accessing the elements on an array or vector
-//		doStuff("ele(x,2)");              // Value: 2.0
-//		doStuff("ele(y,[1,2])");          // Value: 2.0
-		// using differentation
-//		doStuff("x=2");					  // 2.0
-//		doStuff("y=[x^3,x^2,x]");		  // [8.0,4.0,2.0]
-//		doStuff("z=diff(y,x)");			  // [12.0,4.0,1.0]
-//		doStuff("diff([x^3,x^2,x],x)");
-//		System.out.println("dim(z) "+((MatrixVariableI) j.getVar("z")).getDimensions());
 	}
 
 	public static void extendedPrint(RpCommandList list) throws ParseException
