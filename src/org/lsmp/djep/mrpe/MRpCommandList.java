@@ -3,6 +3,8 @@
  */
 package org.lsmp.djep.mrpe;
 
+import org.lsmp.djep.vectorJep.Dimensions;
+
 
 
 
@@ -64,7 +66,8 @@ public final class MRpCommandList {
 	private short commandPos;
 	/** The return type at end of evaluation */
 	private int finalType;
-	
+	/** The Dimensions of the result */
+	private Dimensions resultDim;
 	/** Package private constructor */
 	MRpCommandList() {}
 	/** Adds a command to the list */
@@ -95,7 +98,10 @@ public final class MRpCommandList {
 	public int getNumCommands() { return commandPos;}
 	/** The return type of argument. */
 	int getFinalType() {	return finalType;	}
-	void setFinalType(int i) { finalType = i;}
+	void setResultDim(Dimensions dim) { 
+		resultDim = dim;
+		finalType = MRpEval.getDimType(dim);
+	}
 	/** converts list to a string. */	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -105,4 +111,6 @@ public final class MRpCommandList {
 		}
 		return sb.toString();
 	}
+	/** The dimensions of the result */
+	public Dimensions getDimsOfResult() { return resultDim; }
 }
