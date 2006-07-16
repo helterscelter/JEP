@@ -25,10 +25,6 @@ public class RpSpeed {
 		long t2 = System.currentTimeMillis();
 		System.out.println("Jep initialise "+(t2-t1));
 
-		doAll("1*2*3+4*5*6+7*8*9",new String[]{});
-		doAll("x1*x2*x3+x4*x5*x6+x7*x8*x9",new String[]{"x1","x2","x3","x4","x5","x6","x7","x8","x9"});
-		doAll("cos(x)^2+sin(x)^2",new String[]{"x"});
-		doCos();
 		doAll("5",new String[]{});
 		doAll("x",new String[]{"x"});
 		doAll("1+x",new String[]{"x"});
@@ -36,12 +32,17 @@ public class RpSpeed {
 		doAll("x*x",new String[]{"x"});
 		doAll("5*x",new String[]{"x"});
 		doAll("cos(x)",new String[]{"x"});
+		doCos();
 		doAll("1+x+x^2",new String[]{"x"});
 		doAll("1+x+x^2+x^3",new String[]{"x"});
 		doAll("1+x+x^2+x^3+x^4",new String[]{"x"});
 		doAll("1+x+x^2+x^3+x^4+x^5",new String[]{"x"});
 		doAll("1+x(1+x(1+x(1+x(1+x))))",new String[]{"x"});
 		doHorner();
+		doAll("if(x>0.5,1,0)",new String[]{"x"});
+		doAll("1*2*3+4*5*6+7*8*9",new String[]{});
+		doAll("x1*x2*x3+x4*x5*x6+x7*x8*x9",new String[]{"x1","x2","x3","x4","x5","x6","x7","x8","x9"});
+		doAll("cos(x)^2+sin(x)^2",new String[]{"x"});
 	}
 	
 	/** Run speed comparison  between jep and rpe.
@@ -66,9 +67,10 @@ public class RpSpeed {
 				varVals[i][j] = new Double(generator.nextDouble());
 		}
 	
-		doJep(eqn,vars,varVals);
-		doRpe(eqn,vars,varVals);
-		//System.out.println();
+		long tj = doJep(eqn,vars,varVals);
+		long tr = doRpe(eqn,vars,varVals);
+		System.out.println("Speed up:\t"+(tj/tr));
+		//System.out.println("<tr><td>"+eqn+"</td><td>"+tj+"</td><td>"+tr+"</td></tr>");
 	}
 
 	static void initJep()
@@ -82,8 +84,9 @@ public class RpSpeed {
 		j.setAllowAssignment(true);
 	}
 	
-	static void doJep(String eqn2,Variable vars[],Double vals[][])
+	static long doJep(String eqn2,Variable vars[],Double vals[][])
 	{
+		long tdiff=0;
 	//	System.out.println("vec init"+(t4-t3));
 		try
 		{
@@ -98,13 +101,16 @@ public class RpSpeed {
 				j.evaluate(node);
 			}
 			long t2 = System.currentTimeMillis();
+			tdiff = t2-t1;
 			System.out.println("Using Jep:\t"+(t2-t1));
 		}
 		catch(Exception e) {System.out.println("Error"+e.getMessage());}
+		return tdiff;
 	}
 
-	static void doRpe(String eqn2,Variable vars[],Double vals[][])
+	static long doRpe(String eqn2,Variable vars[],Double vals[][])
 	{
+		long tdiff=0;
 		try
 		{
 			Node node3 = j.parse(eqn2);
@@ -122,10 +128,12 @@ public class RpSpeed {
 				rpe.evaluate(list);
 			}
 			long t2 = System.currentTimeMillis();
+			tdiff = t2-t1;
 			System.out.println("Using RpEval2:\t"+(t2-t1));
 			rpe.cleanUp();
 		}
 		catch(Exception e) {System.out.println("Error"+e.getMessage());e.printStackTrace();}
+		return tdiff;
 	}
 	
 	static void doCos()
@@ -142,8 +150,8 @@ public class RpSpeed {
 		{
 			x = varVals[i%num_vals].doubleValue();
 			double c = Math.cos(x);
-			double s = Math.sin(x);
-			y = c*c+s*s;
+			//double s = Math.sin(x);
+			//y = c*c+s*s;
 		}
 		long t2 = System.currentTimeMillis();
 		System.out.println("Using Java:\t"+(t2-t1));
@@ -167,5 +175,4 @@ public class RpSpeed {
 		long t2 = System.currentTimeMillis();
 		System.out.println("Using Java:\t"+(t2-t1));
 	}
-
 }
