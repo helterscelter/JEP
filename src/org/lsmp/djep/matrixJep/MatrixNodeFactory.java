@@ -7,6 +7,7 @@ import org.nfunk.jep.function.*;
 import org.lsmp.djep.matrixJep.nodeTypes.*;
 import org.lsmp.djep.vectorJep.*;
 import org.lsmp.djep.vectorJep.function.*;
+import org.lsmp.djep.vectorJep.values.Scaler;
 import org.lsmp.djep.xjep.*;
 
 /**
@@ -30,7 +31,10 @@ public class MatrixNodeFactory extends NodeFactory {
 	public ASTConstant buildConstantNode(Object value) throws ParseException
 	{
 		ASTMConstant node  = new ASTMConstant(ParserTreeConstants.JJTCONSTANT);
-		node.setValue(value);
+		if(value instanceof Scaler)
+			node.setValue(((Scaler)value).getEle(0));
+		else
+			node.setValue(value);
 		return node;
 	}
 
