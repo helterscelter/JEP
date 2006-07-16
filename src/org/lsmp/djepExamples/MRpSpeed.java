@@ -89,14 +89,14 @@ public class MRpSpeed {
 	
 	public static void doAll(String eqns[],String eqn2)
 	{
-		System.out.println("Testing speed for <"+eqn2+"> Where ");
+		System.out.println("\nTesting speed for <"+eqn2+"> Where ");
 		for(int i=0;i<eqns.length;++i) System.out.println("\t"+eqns[i]);
 		long v = doVec(eqns,eqn2);
 		long m = doMat(eqns,eqn2);
 		long r = doRpe(eqns,eqn2);
 		if(m!=0 && r!=0)
 			System.out.println("v/m "+v/m+" v/r "+v/r+" m/r "+m/r);
-		System.out.println();
+		//System.out.println("<tr><td>"+eqn2+"</td><td>"+v+"</td><td>"+m+"</td><td>"+r+"</td></tr>");
 	}
 
 	static void initVec()
