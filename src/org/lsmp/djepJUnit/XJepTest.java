@@ -100,9 +100,9 @@ public class XJepTest extends JepTest {
 		super.testLogical();
 		OperatorSet opSet = j.getOperatorSet();
 		if(!((XOperator) opSet.getMultiply()).isDistributiveOver(opSet.getAdd()))
-			fail("* should be distrib over +");
+			fail("* should be distributive over +");
 		if(((XOperator) opSet.getMultiply()).isDistributiveOver(opSet.getDivide()))
-			fail("* should not be distrib over /");
+			fail("* should not be distributive over /");
 		if(((XOperator) opSet.getMultiply()).getPrecedence() > ((XOperator) opSet.getAdd()).getPrecedence())
 			fail("* should have a lower precedence than +");
 
