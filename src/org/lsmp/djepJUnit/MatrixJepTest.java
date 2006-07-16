@@ -64,11 +64,6 @@ public class MatrixJepTest extends DJepTest {
 		return res;
 	}
 
-	public void valueTest(String expr,double a) throws Exception
-	{
-		valueTest(expr,new Double(a));
-	}
-
 	public void testMatrix() throws Exception
 	{
 		j.getSymbolTable().clearValues();
@@ -177,6 +172,12 @@ public class MatrixJepTest extends DJepTest {
 		valueTest("det(m)","(0.0, -4.0)");
 	}
 
+	public void testSimpIf() throws Exception {
+		MatrixJep mj = (MatrixJep) j;
+		Node n = mj.parse("if(1,2,3)");
+		Node pre = mj.preprocess(n);
+		Node simp = mj.simplify(pre);
+	}
 /* TODO GenMat Not jet implemented for MatrixJep (can it be done?)
 	public void testGenMatEle() throws Exception
 	{
