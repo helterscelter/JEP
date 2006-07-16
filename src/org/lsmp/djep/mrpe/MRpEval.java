@@ -169,7 +169,7 @@ public final class MRpEval implements ParserVisitor {
 		mnnStore.alloc();
 
 		Dimensions dims = ((MatrixNodeI) node).getDim();
-		curCommandList.setFinalType(getDimType(dims));
+		curCommandList.setResultDim(dims);
 //		returnObj = Tensor.getInstance(dims);
 //		if(dims.is2D())
 //			returnMat = (Matrix) returnObj;
@@ -359,6 +359,7 @@ public final class MRpEval implements ParserVisitor {
 		}
 		public final String toString() { return String.valueOf(a); }
 		public Object toArray() { return new double[]{a}; }
+		public final double doubleValue() { return a; }
 	}
 	private ScalerObj scalerRes = new ScalerObj(0.0);
 	
@@ -526,6 +527,11 @@ public final class MRpEval implements ParserVisitor {
 		} 
 		final void pow(){
 			double r = stack[--sp];
+			short s = (short) r;
+			if(r==s) {
+				if(r>=0) { powN(s); return; }
+				else { powN((short) -s); recroprical(); return; }
+			}
 			double l = stack[--sp];
 			stack[sp++] = Math.pow(l,r);
 		} 
@@ -2712,7 +2718,7 @@ public final class MRpEval implements ParserVisitor {
 		return null;
 	}
 	/** Gets the type of dimension **/
-	private static final short getDimType(Dimensions dims)
+	static final short getDimType(Dimensions dims)
 	{
 		if(dims.is0D())
 			return SCALER;
@@ -2992,13 +2998,7 @@ public final class MRpEval implements ParserVisitor {
 		Dimensions dims = mnode.getDim();
 		Dimensions ldims = null,rdims=null;
 
-		if(mnode.getPFMC() instanceof MatrixSpecialEvaluationI )
-		{				
-		}
-		else if(mnode.getPFMC() instanceof SpecialEvaluationI )
-		{
-		}
-		else if(node.isOperator() && node.getOperator() == opSet.getAssign()) {}
+		if(node.isOperator() && node.getOperator() == opSet.getAssign()) {}
 		else if(node.isOperator() && node.getOperator() == opSet.getPower()) {}
 		else
 			node.childrenAccept(this,null);
@@ -4828,7 +4828,7 @@ private final void mulMnnMnn(MatObj l,MatObj r){
 		double r = scalerStore.stack[--scalerStore.sp];
 		double l = scalerStore.stack[--scalerStore.sp];
 		switch(fun) {
-		case ATAN2: r = Math.atan2(r,l); break;
+		case ATAN2: r = Math.atan2(l,r); break;
 		}
 		scalerStore.stack[scalerStore.sp++] = r;
 	}

@@ -317,6 +317,11 @@ public final class RpEval implements ParserVisitor {
 		} 
 		final void pow(){
 			double r = stack[--sp];
+			short s = (short) r;
+			if(r==s) {
+				if(r>=0) { powN(s); return; }
+				else { powN((short) -s); recroprical(); return; }
+			}
 			double l = stack[--sp];
 			stack[sp++] = Math.pow(l,r);
 		} 
@@ -750,7 +755,7 @@ public final class RpEval implements ParserVisitor {
 		double r = scalerStore.stack[--scalerStore.sp];
 		double l = scalerStore.stack[--scalerStore.sp];
 		switch(fun) {
-		case ATAN2: r = Math.atan2(r,l); break;
+		case ATAN2: r = Math.atan2(l,r); break;
 		}
 		scalerStore.stack[scalerStore.sp++] = r;
 	}
