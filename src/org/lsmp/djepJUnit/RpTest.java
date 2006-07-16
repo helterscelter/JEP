@@ -4,6 +4,7 @@ import junit.framework.*;
 import org.nfunk.jep.*;
 import org.nfunk.jep.type.*;
 import org.lsmp.djep.rpe.*;
+import org.lsmp.djep.xjep.XJep;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -36,7 +37,7 @@ public class RpTest extends TestCase {
 	String vecStrs[] = new String[10];
 
 	protected void setUp() {
-		j = new JEP();
+		j = new XJep();
 		j.addStandardConstants();
 		j.addStandardFunctions();
 		j.addComplex();
@@ -230,7 +231,8 @@ public class RpTest extends TestCase {
 		rpTest2(new String[]{"x=0.5","sqrt(x)","ln(x)","log(x)","exp(x)","abs(x)"});
 
 		rpTest2(new String[]{"x=0.5","cos(x)^2+sin(x)^2"});
-//		rpTest2(new String[]{"x=0.5","sec(x)","cosec(x)","cot(x)"});
+		rpTest2(new String[]{"x=0.5","sec(x)","cosec(x)","cot(x)"});
+		rpTest2(new String[]{"x=3","y=4","atan2(y,x)","if(x>y,1,2)","if(x<y,1,2)"} );
 	}
 	
 /*	public void testSimpleSum() throws ParseException

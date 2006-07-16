@@ -21,6 +21,7 @@ import org.lsmp.djep.vectorJep.values.*;
  */
 public class MRpTest extends TestCase {
 	MatrixJep mj;
+	MRpEval mrpe;
 	public static final boolean SHOW_BAD=false;
 	
 	public MRpTest(String name) {
@@ -53,7 +54,7 @@ public class MRpTest extends TestCase {
 		mj.setAllowUndeclared(true);
 		mj.setImplicitMul(true);
 		mj.addStandardDiffRules();
-
+		mrpe = new MRpEval(mj);
 		for(int i=2;i<=9;++i)
 			for(int j=2;j<=9;++j)
 			{
@@ -101,30 +102,22 @@ public class MRpTest extends TestCase {
 		System.out.println("Success: Value of <"+msg+"> is <"+actual+">");
 	}
 
-	public void valueTest(String expr,double dub) throws ParseException
-	{
-		valueTest(expr,new Double(dub));
-	}
 	public void valueTest(String expr,Object expected) throws ParseException
 	{
-		Node node = mj.parse(expr);
-		Node matEqn = mj.preprocess(node);
-		Object res = mj.evaluate(matEqn);
+		Object res = calcValue(expr);
 		if(mj.hasError())
 			fail("Evaluation Failure: "+expr+mj.getErrorInfo());
 		assertEquals("<"+expr+">",expected,res);
-		System.out.println("Sucess value of <"+expr+"> is "+res);
+		System.out.println("Success value of <"+expr+"> is "+res);
 	}
 
 	public void valueTest(String expr,String expected) throws ParseException
 	{
-		Node node = mj.parse(expr);
-		Node matEqn = mj.preprocess(node);
-		Object res = mj.evaluate(matEqn);
+		Object res = calcValue(expr);
 		if(mj.hasError())
 			fail("Evaluation Failure: "+expr+mj.getErrorInfo());
 		assertEquals("<"+expr+">",expected,res.toString());
-		System.out.println("Sucess value of <"+expr+"> is "+res.toString());
+		System.out.println("Success value of <"+expr+"> is "+res.toString());
 	}
 
 	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
@@ -140,7 +133,8 @@ public class MRpTest extends TestCase {
 	{
 		Node node = mj.parse(expr);
 		Node matEqn = mj.preprocess(node);
-		Object res = mj.evaluate(matEqn);
+		MRpCommandList list = mrpe.compile(matEqn);
+		MRpRes res = mrpe.evaluate(list);
 		return res;
 	}
 
@@ -490,6 +484,7 @@ public class MRpTest extends TestCase {
 		rpTest2(new String[]{"x=0.5","cosh(x)","sinh(x)","tanh(x)","asinh(x)","acosh(x+1)","atanh(x)"});
 		rpTest2(new String[]{"x=0.5","sqrt(x)","ln(x)","log(x)","exp(x)","abs(x)"});
 		rpTest2(new String[]{"x=0.5","sec(x)","cosec(x)","cot(x)"});
+		rpTest2(new String[]{"x=3","y=4","atan2(y,x)","if(x>y,1,2)","if(x<y,1,2)"} );
 	}
 	
 	public void testUndecVar() throws ParseException {
