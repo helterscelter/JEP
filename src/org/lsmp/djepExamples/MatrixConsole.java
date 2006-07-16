@@ -68,11 +68,11 @@ public class MatrixConsole extends DJepConsole
 		}
 					
 		Node simp = mj.simplify(processed);
-		if(verbose) 
+		if(verbose) {
 			print("Simplified:\t"); 
-		println(mj.toString(simp));
-
-
+			println(mj.toString(simp));
+		}	
+		
 		Object val = mj.evaluate(simp);
 		String s = mj.getPrintVisitor().formatValue(val);
 		println("Value:\t\t"+s);
