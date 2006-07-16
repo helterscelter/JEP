@@ -20,7 +20,7 @@ public abstract class MRpRes {
 	/** 
 	 * Copy the value into res.
 	 * 
-	 * @param res The object values will be copied into, must be of corect type.
+	 * @param res The object values will be copied into, must be of correct type.
 	 * @throws ParseException if the res is not of the same type.
 	 */
 	public abstract void copyToVecMat(MatrixValueI res) throws ParseException;
@@ -40,4 +40,5 @@ public abstract class MRpRes {
 	 */
 	public abstract Object toArray();
 
+	public double doubleValue() {return 0.0;};
 }
