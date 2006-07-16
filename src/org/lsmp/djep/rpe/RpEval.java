@@ -113,7 +113,11 @@ public final class RpEval implements ParserVisitor {
 	public static final short MLIST = 22;
 	public static final short FUN = 23;
 	public static final short UMINUS = 24;
-	
+	public static final short FUN2 = 25;
+	public static final short FUN3 = 26;
+	public static final short FUN4 = 27;
+	public static final short POWN = 28;
+	public static final short RECIP = 29;
 	/** Standard functions **/
 	
 	private static final short SIN = 1;
@@ -140,9 +144,10 @@ public final class RpEval implements ParserVisitor {
 	private static final short COT = 20;
 	
 	// 2 argument functions
-//	private static final short ANGLE = 21;
-//	private static final short MODULUS = 22;
+	private static final short ATAN2 = 21;
 
+	// 3 argument functions
+	private static final short IF = 22;
 
 	/** Hashtable for function name lookup **/
 	
@@ -170,6 +175,9 @@ public final class RpEval implements ParserVisitor {
 		functionHash.put("sec",new Short(SEC));
 		functionHash.put("cosec",new Short(COSEC));
 		functionHash.put("cot",new Short(COT));
+		
+		functionHash.put("atan2",new Short(ATAN2));
+		functionHash.put("if",new Short(IF));
 	}
 
 	
@@ -291,6 +299,10 @@ public final class RpEval implements ParserVisitor {
 			double r = stack[--sp];
 				stack[sp++] = -r;
 		}
+		final void recroprical(){
+			double r = stack[--sp];
+				stack[sp++] = 1/r;
+		}
 		final void mulS(){
 			double r = stack[--sp];
 			stack[sp-1] *= r;
@@ -308,7 +320,14 @@ public final class RpEval implements ParserVisitor {
 			double l = stack[--sp];
 			stack[sp++] = Math.pow(l,r);
 		} 
-		final void powN(int n){
+		
+		/**
+		 * Code adapted form http://mindprod.com/jgloss/power.html
+		 * @author Patricia Shanahan pats@acm.org
+		 * almost identical to the method Knuth gives on page 462 of The Art of Computer Programming Volume 2 Seminumerical Algorithms.
+		 */
+		
+		final void powN(short n){
 			double r = stack[--sp];
 			switch(n){
 				case 0: r = 1.0; break;
@@ -317,11 +336,31 @@ public final class RpEval implements ParserVisitor {
 				case 3: r *= r*r; break;
 				case 4: r *= r*r*r; break;
 				case 5: r *= r*r*r*r; break;
+				case 6: r *= r*r*r*r*r; break;
+				case 7: r *= r*r*r*r*r*r; break;
+				case 8: r *= r*r*r*r*r*r*r; break;
 				default:
-					r = Math.pow(r,n); break;
+				   {
+					   short bitMask = n;
+					   double evenPower = r;
+					   double result;
+					   if ( (bitMask & 1) != 0 )
+					      result = r;
+					   else
+					      result = 1;
+					   bitMask >>>= 1;
+					   while ( bitMask != 0 ) {
+					      evenPower *= evenPower;
+					      if ( (bitMask & 1) != 0 )
+					         result *= evenPower;
+					      bitMask >>>= 1;
+					   } // end while
+					r = result;
+				   }
 			}
 			stack[sp++] = r;
 		} 
+		
 		final void assign(int i) {
 			vars[i] = stack[--sp]; ++sp;
 		} 
@@ -459,6 +498,8 @@ public final class RpEval implements ParserVisitor {
 		if(node.getPFMC() instanceof SpecialEvaluationI )
 		{				
 		}
+		else if(node.isOperator() && node.getOperator() == opSet.getAssign()) {}
+		else if(node.isOperator() && node.getOperator() == opSet.getPower()) {}
 		else
 			node.childrenAccept(this,null);
 
@@ -556,6 +597,27 @@ public final class RpEval implements ParserVisitor {
 			}
 			else if(op == opSet.getPower())
 			{
+				Node lhs = node.jjtGetChild(0);
+				Node rhs = node.jjtGetChild(1);
+				lhs.jjtAccept(this,null);	
+				if(rhs instanceof ASTConstant) {
+					Object val = ((ASTConstant) rhs).getValue();
+					if(val instanceof Number) {
+						double dval = ((Number) val).doubleValue();
+						short sval = ((Number) val).shortValue();
+						if(dval>= 0 && dval == sval)
+						{
+							curCommandList.addCommand(POWN,sval); 
+							return null;
+						}
+						else if(dval == sval)
+						{
+							curCommandList.addCommand(POWN,(short) (-sval));
+							curCommandList.addCommand(RECIP);
+						}
+					}
+				}
+				rhs.jjtAccept(this,null);
 				scalerStore.decStack();
 				curCommandList.addCommand(POW); return null;
 			}
@@ -566,10 +628,25 @@ public final class RpEval implements ParserVisitor {
 		Short val = (Short) functionHash.get(node.getName());
 		if(val == null)
 			throw new ParseException("RpeEval: Sorry unsupported operator/function: "+ node.getName());
-		if(node.getPFMC().getNumberOfParameters() == 1 && nChild == 1)
+		if(nChild == 1)
 		{
 			//scalerStore.decStack();
 			curCommandList.addCommand(FUN,val.shortValue()); 
+			return null;
+		}
+		else if(nChild == 2)
+		{
+			curCommandList.addCommand(FUN2,val.shortValue()); 
+			return null;
+		}
+		else if(nChild == 3)
+		{
+			curCommandList.addCommand(FUN3,val.shortValue()); 
+			return null;
+		}
+		else if(nChild == 4)
+		{
+			curCommandList.addCommand(FUN4,val.shortValue()); 
 			return null;
 		}
 
@@ -619,6 +696,11 @@ public final class RpEval implements ParserVisitor {
 			case ASSIGN: scalerStore.assign(aux1); break;
 			case FUN: unitaryFunction(aux1); break;
 			case UMINUS: scalerStore.uminus(); break;
+			case FUN2: binaryFunction(aux1); break;
+			case FUN3: trianaryFunction(aux1); break;
+			case FUN4: quarteraryFunction(aux1); break;
+			case POWN: scalerStore.powN(aux1); break;
+			case RECIP: scalerStore.recroprical(); break;
 			}
 		}
 
@@ -664,6 +746,38 @@ public final class RpEval implements ParserVisitor {
 		scalerStore.stack[scalerStore.sp++] = r;
 	}
 	
+	private final void binaryFunction(short fun){
+		double r = scalerStore.stack[--scalerStore.sp];
+		double l = scalerStore.stack[--scalerStore.sp];
+		switch(fun) {
+		case ATAN2: r = Math.atan2(r,l); break;
+		}
+		scalerStore.stack[scalerStore.sp++] = r;
+	}
+	private final void trianaryFunction(short fun)
+	{
+		double a = scalerStore.stack[--scalerStore.sp];
+		double r = scalerStore.stack[--scalerStore.sp];
+		double l = scalerStore.stack[--scalerStore.sp];
+		switch(fun) {
+		case IF: r = (l>0.0?r:a); break;
+		}
+		scalerStore.stack[scalerStore.sp++] = r;
+		
+	}
+	private final void quarteraryFunction(short fun)
+	{
+		double b = scalerStore.stack[--scalerStore.sp];
+		double a = scalerStore.stack[--scalerStore.sp];
+		double r = scalerStore.stack[--scalerStore.sp];
+		double l = scalerStore.stack[--scalerStore.sp];
+		switch(fun) {
+		case IF: r = (l>0.0?r: (l<0.0?a:b)); break;
+		}
+		scalerStore.stack[scalerStore.sp++] = r;
+		
+	}
+
 	/**
 	 * Removes observers and other cleanup needed when evaluator no longer used.
 	 */
@@ -725,6 +839,8 @@ public final class RpEval implements ParserVisitor {
 			case SEC: return "sec";
 			case COSEC: return "cosec";
 			case COT: return "cot";
+			case ATAN2: return "atan2";
+			case IF: return "if";
 			}
 			return null;
 	}
