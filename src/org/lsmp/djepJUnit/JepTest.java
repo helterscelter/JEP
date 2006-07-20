@@ -530,7 +530,7 @@ a3 = if(a1 > 0 && ApportionmentAmt < 1000,
 	        j.setVarValue("foo",new Double(5.0));
 	        fail("Should have found a null pointer exception");
 	    } catch(NullPointerException e) {
-	        System.out.println("Error caught: "+e.getClass().getName()+": "+e.getMessage());
+	        System.out.println("Expected error caught: "+e.getClass().getName()+": "+e.getMessage());
 	    }
 	}
 	
