@@ -15,8 +15,10 @@ import org.nfunk.jep.type.*;
 
 /**
  * Computes the power of an number.
- * Implements a fast algorithm for integer powers.
- * @author N Funk, R Morris incorporating code by Patricia Shanahan pats@acm.org
+ * Implements a fast algorithm for integer powers by Patricia Shanahan pats@acm.org.
+ * @author N Funk
+ * @author R Morris 
+ * @author Patricia Shanahan
  */
 public class Power extends PostfixMathCommand
 {
@@ -112,13 +114,13 @@ public class Power extends PostfixMathCommand
 	
 	/**
 	 * A fast routine for computing integer powers.
-	 * Code adapted from http://mindprod.com/jgloss/power.html
+	 * Code adapted from {@link http://mindprod.com/jgloss/power.html} by Patricia Shanahan pats@acm.org
 	 * Almost identical to the method Knuth gives on page 462 of The Art of Computer Programming Volume 2 Seminumerical Algorithms.
 	 * @param x number to be taken to a power.
 	 * @param n power to take x to. 0 <= n <= Integer.MAX_VALUE
 	 * Negative numbers will be treated as unsigned positives.
  	 * @return x to the power n
-	 * @author Patricia Shanahan pats@acm.org
+	 * 
 	 */
 	public double power(double x,int n)
 	{
