@@ -42,6 +42,7 @@ public class MRpTest extends TestCase {
 	}	
 	/** strings for each variable */
 	String matStrs[][] = new String[10][10];
+	String matStrsB[][] = new String[10][10];
 	String vecStrs[] = new String[10];
 
 	protected void setUp() {
@@ -73,6 +74,26 @@ public class MRpTest extends TestCase {
 				}
 				sb.append("]");
 				matStrs[i][j] = sb.toString();
+			}
+
+		for(int i=2;i<=9;++i)
+			for(int j=2;j<=9;++j)
+			{
+				int num=20;
+				StringBuffer sb = new StringBuffer("[");
+				for(int k=0;k<i;++k)
+				{
+						if(k>0)sb.append(",");
+						sb.append("[");
+						for(int l=0;l<j;++l)
+						{
+							if(l>0)sb.append(",");
+							sb.append(String.valueOf(num++));
+						}
+						sb.append("]");
+				}
+				sb.append("]");
+				matStrsB[i][j] = sb.toString();
 			}
 
 		for(int i=2;i<=9;++i)
@@ -343,6 +364,7 @@ public class MRpTest extends TestCase {
 		rpTest(new String[]{"x=[1,2,3,4]","y="+matStrs[4][4]},"y*x");
 
 		rpTest(new String[]{"x="+matStrs[2][2],"y="+matStrs[2][2]},"x*y");
+		rpTest(new String[]{"x="+matStrs[2][2],"y="+matStrsB[2][2]},"x*y");
 		rpTest(new String[]{"x="+matStrs[2][2],"y="+matStrs[2][3]},"x*y");
 		rpTest(new String[]{"x="+matStrs[2][2],"y="+matStrs[2][4]},"x*y");
 
@@ -360,6 +382,7 @@ public class MRpTest extends TestCase {
 
 		rpTest(new String[]{"x="+matStrs[3][3],"y="+matStrs[3][2]},"x*y");
 		rpTest(new String[]{"x="+matStrs[3][3],"y="+matStrs[3][3]},"x*y");
+		rpTest(new String[]{"x="+matStrs[3][3],"y="+matStrsB[3][3]},"x*y");
 		rpTest(new String[]{"x="+matStrs[3][3],"y="+matStrs[3][4]},"x*y");
 
 		rpTest(new String[]{"x="+matStrs[3][4],"y="+matStrs[4][2]},"x*y");
@@ -377,6 +400,21 @@ public class MRpTest extends TestCase {
 		rpTest(new String[]{"x="+matStrs[4][4],"y="+matStrs[4][2]},"x*y");
 		rpTest(new String[]{"x="+matStrs[4][4],"y="+matStrs[4][3]},"x*y");
 		rpTest(new String[]{"x="+matStrs[4][4],"y="+matStrs[4][4]},"x*y");
+		rpTest(new String[]{"x="+matStrs[4][4],"y="+matStrsB[4][4]},"x*y");
+
+		rpTest(new String[]{"x=[1,2]","y=[1,2]"},"x*y");
+		rpTest(new String[]{"x=[1,0]","y=[1,2]"},"x*y");
+		rpTest(new String[]{"x=[1,2]","y=[1,0]"},"x*y");
+		rpTest(new String[]{"x=[1,2,3]","y=[1,2,3]"},"x*y");
+		rpTest(new String[]{"x=[1,0,0]","y=[1,2,3]"},"x*y");
+		rpTest(new String[]{"x=[1,2,3]","y=[1,0,0]"},"x*y");
+		rpTest(new String[]{"x=[1,2,3,4]","y=[1,2,3,4]"},"x*y");
+		rpTest(new String[]{"x=[1,0,0,0]","y=[1,2,3,4]"},"x*y");
+		rpTest(new String[]{"x=[1,2,3,4]","y=[1,0,0,0]"},"x*y");
+		rpTest(new String[]{"x=[1,2,3,4,5]","y=[1,2,3,4,5]"},"x*y");
+		rpTest(new String[]{"x=[1,0,0,0,0]","y=[1,2,3,4,5]"},"x*y");
+		rpTest(new String[]{"x=[1,2,3,4,5]","y=[1,0,0,0,0]"},"x*y");
+
 	}
 	
 	public void testAssign() throws ParseException
@@ -459,7 +497,7 @@ public class MRpTest extends TestCase {
 				for(int k=2;k<10;++k)
 				{
 					System.out.println("\n["+i+","+j+"]*["+j+","+k+"]");
-					rpTest2(new String[]{"x="+matStrs[i][j],"y="+matStrs[j][k],"x*y"});
+					rpTest2(new String[]{"x="+matStrs[i][j],"y="+matStrsB[j][k],"x*y"});
 				}
 
 		for(int i=2;i<10;++i)

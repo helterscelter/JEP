@@ -53,11 +53,11 @@ public class MRpConsole extends MatrixConsole {
 	}
 
 	public String getPrompt() {
-		return "RPE > ";
+		return "MRpe > ";
 	}
 
 	public void printIntroText() {
-		println("RPE Console.");
+		println("MRpe Console.");
 		printStdHelp();
 	}
 

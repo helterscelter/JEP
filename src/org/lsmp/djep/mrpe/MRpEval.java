@@ -3423,7 +3423,7 @@ public final class MRpEval implements ParserVisitor {
 					switch(aux2)
 					{
 					case SCALER: v2Store.mulS(); break;
-					case V2: v2Store.mulV2(); break;
+					case V2: mulV2V2(); break;
 					case M22: mulV2M22(); break; 
 					case M23: mulV2M23(); break; 
 					case M24: mulV2M24(); break;
@@ -3437,6 +3437,7 @@ public final class MRpEval implements ParserVisitor {
 					switch(aux2)
 					{
 					case SCALER: v3Store.mulS(); break;
+					case V3: mulV3V3(); break;
 					case M32: mulV3M32(); break; 
 					case M33: mulV3M33(); break; 
 					case M34: mulV3M34(); break; 
@@ -3450,6 +3451,7 @@ public final class MRpEval implements ParserVisitor {
 					switch(aux2)
 					{
 					case SCALER: v4Store.mulS(); break;
+					case V4: mulV4V4(); break;
 					case M42: mulV4M42(); break; 
 					case M43: mulV4M43(); break; 
 					case M44: mulV4M44(); break; 
@@ -3463,9 +3465,15 @@ public final class MRpEval implements ParserVisitor {
 					switch(aux2)
 					{
 					case SCALER: mnnStore.mulS(); break;
+					case Vn: 
+						VnObj r = vnStore.stack[--vnStore.sp];
+						VnObj l = vnStore.stack[--vnStore.sp];
+						mulVnVn(l,r);
+						break;
 					case Mnn: mulVnMnn(
 						vnStore.stack[--vnStore.sp],
-						mnnStore.stack[--mnnStore.sp]); break; 
+						mnnStore.stack[--mnnStore.sp]); 
+						break; 
 					}
 					break;
 				case M22:
@@ -3908,6 +3916,17 @@ public final class MRpEval implements ParserVisitor {
 		scalerStore.stack[scalerStore.sp++]=res;
 	}
 
+	private final void mulV2V2(){
+		V2Obj r = v2Store.stack[--v2Store.sp];
+		V2Obj l = v2Store.stack[--v2Store.sp];
+		M22Obj res = m22Store.heap[m22Store.hp++];
+		res.a = l.a*r.a;
+		res.b = l.a*r.b;
+		res.c = l.b*r.a;
+		res.d = l.b*r.b;
+		m22Store.stack[m22Store.sp++]=res;	
+	}
+
 	private final void mulM22V2(){
 		V2Obj r = v2Store.stack[--v2Store.sp];
 		M22Obj l = m22Store.stack[--m22Store.sp];
@@ -3998,6 +4017,22 @@ public final class MRpEval implements ParserVisitor {
 		v3Store.stack[v3Store.sp++]=res;	
 	}
 	
+	private final void mulV3V3(){
+		V3Obj r = v3Store.stack[--v3Store.sp];
+		V3Obj l = v3Store.stack[--v3Store.sp];
+		M33Obj res = m33Store.heap[m33Store.hp++];
+		res.a = l.a*r.a;
+		res.b = l.a*r.b;
+		res.c = l.a*r.c;
+		res.d = l.b*r.a;
+		res.e = l.b*r.b;
+		res.f = l.b*r.c;
+		res.g = l.c*r.a;
+		res.h = l.c*r.b;
+		res.i = l.c*r.c;
+		m33Store.stack[m33Store.sp++]=res;	
+	}
+
 	private final void mulV3M33(){
 		M33Obj r = m33Store.stack[--m33Store.sp];
 		V3Obj l = v3Store.stack[--v3Store.sp];
@@ -4069,6 +4104,29 @@ public final class MRpEval implements ParserVisitor {
 		res.c = l.a*r.c + l.b*r.f + l.c*r.i + l.d*r.l;
 		
 		v3Store.stack[v3Store.sp++]=res;	
+	}
+
+	private final void mulV4V4(){
+		V4Obj r = v4Store.stack[--v4Store.sp];
+		V4Obj l = v4Store.stack[--v4Store.sp];
+		M44Obj res = m44Store.heap[m44Store.hp++];
+		res.a = l.a*r.a;
+		res.b = l.a*r.b;
+		res.c = l.a*r.c;
+		res.d = l.a*r.d;
+		res.e = l.b*r.a;
+		res.f = l.b*r.b;
+		res.g = l.b*r.c;
+		res.h = l.b*r.d;
+		res.i = l.c*r.a;
+		res.j = l.c*r.b;
+		res.k = l.c*r.c;
+		res.l = l.c*r.d;
+		res.m = l.d*r.a;
+		res.n = l.d*r.b;
+		res.o = l.d*r.c;
+		res.p = l.d*r.d;
+		m44Store.stack[m44Store.sp++]=res;	
 	}
 
 	private final void mulM44V4(){
@@ -4649,6 +4707,19 @@ public final class MRpEval implements ParserVisitor {
 				res[i]=ele;
 			}
 		pushVec(res);
+	}
+
+	private final void mulVnVn(VecObj l,VecObj r){
+		double[] ldata = l.toArrayVec();
+		double[] rdata = r.toArrayVec();
+		int rows = ldata.length;
+		int cols = rdata.length;
+		double res[][]=new double[rows][cols];
+		for(int i=0;i<rows;++i){
+				for(int j=0;j<cols;++j)
+					res[i][j]=ldata[i]*rdata[j];
+		}
+		pushMat(res);
 	}
 
 private final void mulMnnMnn(MatObj l,MatObj r){
