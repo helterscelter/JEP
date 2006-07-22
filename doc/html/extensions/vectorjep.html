@@ -111,8 +111,12 @@ public class VectorExample {
 		// parse and evaluate each equation in turn
 		
         doStuff("[1,2,3]");               // Value: [1.0,2.0,3.0]
-        doStuff("[1,2,3].[4,5,6]");       // Value: 32.0
-        doStuff("[1,2,3]^^[4,5,6]");      // Value: [-3.0,6.0,-3.0]
+        doStuff("[1,2,3].[4,5,6]");       // Dot product value: 32.0
+        doStuff("[1,2,3]*[4,5,6]");       // Vector by vector multiplication is
+        								  // treated as a column vector times a row vector
+        								  // Use dot product for row vec time col vec
+        								  // Value: [[4.0,5.0,6.0],[8.0,10.0,12.0],[12.0,15.0,18.0]]
+        doStuff("[1,2,3]^^[4,5,6]");      // Cross product, value: [-3.0,6.0,-3.0]
         doStuff("[1,2,3]+[4,5,6]");       // Value: [5.0,7.0,9.0]
         doStuff("[[1,2],[3,4]]");         // Value: [[1.0,2.0],[3.0,4.0]]
         doStuff("[[1,2],[3,4]]*[1,0]");   // Value: [1.0,3.0]

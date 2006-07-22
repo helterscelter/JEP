@@ -150,6 +150,7 @@ Many previous changes not included here. See the documentation for details.
 
 == org.lsmp.* =======================================================
 
+Jul 22 06 rjm - Added routines for multiplying [1,2,3]*[1,2,3] in MRpe
 Jul 16 06 rjm - Changes to reflect changes in EvaluationVisitor.
 Jul 16 06 rjm - Way NodeFactory treats building a constant node from a function with constant arguments changed.
 Jul 16 06 rjm - Above fixes bug with simplifying if(1,2,3). Unit test included.
