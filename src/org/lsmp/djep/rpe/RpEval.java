@@ -500,10 +500,7 @@ public final class RpEval implements ParserVisitor {
 	{
 		int nChild = node.jjtGetNumChildren();
 
-		if(node.getPFMC() instanceof SpecialEvaluationI )
-		{				
-		}
-		else if(node.isOperator() && node.getOperator() == opSet.getAssign()) {}
+		if(node.isOperator() && node.getOperator() == opSet.getAssign()) {}
 		else if(node.isOperator() && node.getOperator() == opSet.getPower()) {}
 		else
 			node.childrenAccept(this,null);
