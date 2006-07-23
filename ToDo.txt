@@ -1,8 +1,4 @@
-== JEP 2.4.0 ========================================================
- - Add message on SourceForge list
- - Add message to freshmeat and other sites
- - Update version number+ feature list from JARS, share*it,...
- 
+
 
 == Phone call =======================================================
   - pricing probably down to $500 for JEP license
@@ -148,8 +144,14 @@ http://www.javaworld.com/javaworld/jw-12-1996/jw-12-int.property.html
  - Upload new distribution file(s)
  - Upload license pdf
  - Upload web site
- - Add message on SourceForge list
- - Add message to freshmeat and other sites
- - Update version number+ feature list from JARS, share*it,...
  - Add CVS tag for version (e.g. v-3-0-0)
-
+ - Send notification emails
+ - Add notification messages
+   - Sourceforge
+   - Freshmeat
+   - JARS
+   - share*it,...
+   - comp.lang.java.announce
+   - Javalobby
+   - http://www.fawcette.com/javapro
+   - sites listed at http://www.javalobby.org/forums/thread.jspa?threadID=16001&tstart=0
