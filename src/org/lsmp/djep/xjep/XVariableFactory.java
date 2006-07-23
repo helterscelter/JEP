@@ -17,6 +17,9 @@ public class XVariableFactory extends VariableFactory {
 	}
 
 	public Variable createVariable(String name) {
-		return new XVariable(name);
+		if(defaultValue!=null)
+			return new XVariable(name,defaultValue);
+		else
+			return new XVariable(name);
 	}
 }

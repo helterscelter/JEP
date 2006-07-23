@@ -4,6 +4,7 @@
 package org.lsmp.djep.matrixJep;
 
 import org.lsmp.djep.djep.*;
+import org.lsmp.djep.xjep.XVariable;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.Variable;
 
@@ -22,7 +23,10 @@ public class MatrixVariableFactory extends DVariableFactory {
 
 	/** Create a variable with a given value. */
 	public Variable createVariable(String name, Object value) {
-		return new MatrixVariable(name,value);
+		if(defaultValue!=null)
+			return new MatrixVariable(name,defaultValue);
+		else
+			return new MatrixVariable(name,value);
 	}
 
 	/** Create a variable with a given value. */

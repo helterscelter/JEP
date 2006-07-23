@@ -24,7 +24,7 @@ package org.nfunk.jep;
  */
 public class VariableFactory
 {
-	Object defaultValue=null;
+	protected Object defaultValue=null;
 	/** Create a variable with a name and value */
 	public Variable createVariable(String name, Object value) {
 		Variable var = new Variable(name,value);

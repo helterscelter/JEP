@@ -23,7 +23,10 @@ public class DVariableFactory extends XVariableFactory {
 	}
 
 	public Variable createVariable(String name) {
-		return new DVariable(name);
+		if(defaultValue!=null)
+			return new DVariable(name,defaultValue);
+		else
+			return new DVariable(name);
 	}
 
 }
