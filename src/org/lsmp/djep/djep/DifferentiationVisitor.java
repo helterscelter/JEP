@@ -12,7 +12,7 @@ import java.util.Enumeration;
 import java.io.PrintStream;
 
 /**
- * A class for performing differentation of an expression.
+ * A class for performing differentiation of an expression.
  * To use do
  * <pre>
  * JEP j = ...; Node in = ...;
@@ -53,7 +53,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 
   }
       
-  /** The set of all differentation rules indexed by name of function. */ 
+  /** The set of all differentiation rules indexed by name of function. */ 
   Hashtable diffRules = new Hashtable();
   /** Adds the rules for a given function. */
   void addDiffRule(DiffRulesI rule)
@@ -68,12 +68,12 @@ public class DifferentiationVisitor extends DeepCopyVisitor
   }
   
   /**
-   * Prints all the differentation rules for all functions on System.out.
+   * Prints all the differentiation rules for all functions on System.out.
    */
   public void printDiffRules() { printDiffRules(System.out); }
   
   /**
-   * Prints all the differentation rules for all functions on specified stream.
+   * Prints all the differentiation rules for all functions on specified stream.
    */
   public void printDiffRules(PrintStream out)
   {
@@ -167,7 +167,7 @@ public class DifferentiationVisitor extends DeepCopyVisitor
 	  * Differentiates a variable. 
 	  * May want to alter behaviour when using multi equation as diff(f,x)
 	  * might not be zero.
-	  * @return 1 if the variable has the same name as data, 0 if the variable has a different name.
+	  * @return a constant node with value 1 if the variable has the same name as data, 0 if the variable has a different name.
 	  */
 	 public Object visit(ASTVarNode node, Object data) throws ParseException {
 	   String varName = (String) data;
