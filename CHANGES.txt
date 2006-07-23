@@ -1,5 +1,6 @@
 == org.nfunk.* =======================================================
 
+Jul 23 06 rjm - Added methods to VariableFactory to allow a default value to be set.
 Jul 16 06 rjm - Reworked interface to EvaluationVisitor. 
 				Jep.getEvaluationVisitor() noew returns a type of EvaluationI.
 				Constructor now requires a SymbolTable as argument.
