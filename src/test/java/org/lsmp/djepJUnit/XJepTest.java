@@ -5,6 +5,7 @@
  */
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.lsmp.djep.xjep.BaseFormat;
 import org.lsmp.djep.xjep.MacroFunction;
 import org.lsmp.djep.xjep.PrintVisitor;
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 public class XJepTest extends JepTest {
 
+	@BeforeEach
 	protected void setUp() {
 		j = new XJep();
 		j.addStandardConstants();
@@ -62,7 +64,7 @@ public class XJepTest extends JepTest {
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
-		assertEquals("<"+expr+">",expected,res);
+		assertEquals(expected,res, "<"+expr+">");
 		System.out.println("Success: Value of \""+expr+"\" is \""+res+"\"");
 	}
 

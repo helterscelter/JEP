@@ -5,6 +5,8 @@
  */
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DSymbolTable;
 import org.nfunk.jep.Node;
@@ -15,7 +17,7 @@ import org.nfunk.jep.ParseException;
  * Created on 22-Apr-2005
  */
 public class DJepTest extends XJepTest {
-
+    @BeforeEach
 	protected void setUp() {
 		j = new DJep();
 		j.addStandardConstants();
@@ -28,6 +30,7 @@ public class DJepTest extends XJepTest {
 		((DJep) j).addStandardDiffRules();
 	}
 
+	@Test
 	public void testDiff() throws ParseException
 	{
 		System.out.println("\nTesting assignment");
@@ -104,6 +107,7 @@ public class DJepTest extends XJepTest {
 //		addDiffRule(new PassThroughDiffRule(this,"\"==\"",new Comparative(5)));
 	}
 
+	@Test
 	public void testAssignDiff() throws Exception
 	{
 		System.out.println("\nTesting assignment and diff");
@@ -122,6 +126,7 @@ public class DJepTest extends XJepTest {
 
 	}
 
+	@Test
 	public void testChainedVaraibles() throws Exception
 	{
 		simplifyTestString("x=5","x=5.0");

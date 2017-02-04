@@ -1,6 +1,7 @@
 package org.lsmp.djepJUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.sjep.PNodeI;
 import org.lsmp.djep.sjep.PolynomialCreator;
@@ -118,7 +119,7 @@ public class SJepTest {
 
 		if(!res2.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+res2+"\"");
-		assertEquals("<"+expr+">",res2,res);
+		assertEquals(res2,res,"<"+expr+">");
 		System.out.println("Sucess: Value of \""+expr+"\" is \""+res+"\"");
 			
 //		System.out.print("Full Brackets:\t");
@@ -137,7 +138,7 @@ public class SJepTest {
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
-		assertEquals("<"+expr+">",expected,res);
+		assertEquals(expected,res,"<"+expr+">");
 		System.out.println("Sucess: Value of \""+expr+"\" is \""+res+"\"");
 			
 //		System.out.print("Full Brackets:\t");
@@ -157,7 +158,7 @@ public class SJepTest {
 		
 		if(!expected.equals(res))		
 			System.out.println("Error: Value of \""+expr+"\" is \""+res+"\" should be \""+expected+"\"");
-		assertEquals("<"+expr+">",expected,res);
+		assertEquals(expected,res,"<"+expr+">");
 		System.out.println("Sucess: Value of \""+expr+"\" is \""+res+"\"");
 			
 //		System.out.print("Full Brackets:\t");
@@ -182,13 +183,15 @@ public class SJepTest {
 	}
 */
 
+    @Test
 	public void testSimpleSum() throws Exception
 	{
 		valueTest("1+2",3);		
 		valueTest("2*6+3",15);		
 		valueTest("2*(6+3)",18);
 	}
-	
+
+	@Test
 	public void testOperators() throws Exception
 	{
 		OperatorSet opSet = j.getOperatorSet();
@@ -227,7 +230,8 @@ public class SJepTest {
 		valueTest("(a&&(b||c)) == ((a&&b)||(a&&c))",1);
 		valueTest("(a||(b&&c)) == ((a||b)&&(a||c))",1);
 	}
-	
+
+	@Test
 	public void testPrint() throws ParseException
 	{
 		simplifyTestString("(a+b)+c","a+b+c");
@@ -268,7 +272,8 @@ public class SJepTest {
 //		simplifyTestString("a||(b&&c)","a||b&&c");   
 //		simplifyTestString("a&&(b&&c)","a&&b&&c");
 	}
-	
+
+	@Test
 	public void testSimp() throws ParseException
 	{
 		simplifyTest("2+3","5");
@@ -408,6 +413,7 @@ public class SJepTest {
 		simplifyTest("(2*x+x)^3","27*x^3");
 	}
 
+	@Test
 	public void testPolySimp() throws ParseException,Exception
 	{
 		Node n1 = j.parse("(1.0+2.0*x+x^2.0)*(1.0+2.0*x+x^2.0)");
@@ -489,6 +495,7 @@ public class SJepTest {
 		j.println(simp);
 	}
 
+	@Test
 	public void testTotalOrder() throws ParseException,Exception
 	{
 		expandTestString("y+x","x+y");
@@ -507,7 +514,8 @@ public class SJepTest {
 		simplifyTestString("x+1/x","1/x+x");
 		simplifyTestString("1/x^2+1/x","1/x^2+1/x");
 	}
-	
+
+	@Test
 	public void testPolySimp2() throws ParseException,Exception
 	{
 		expandTestString("1+2*(1+x)","3+2*x");
@@ -515,7 +523,8 @@ public class SJepTest {
 		expandTestString("x*y+2*x","2*x+x*y");
 		expandTestString("(1+x+y)^2","1+2*x+2*x*y+x^2+2*y+y^2");
 	}
-	
+
+	@Test
 	public void testFormat() throws ParseException
 	{
 		NumberFormat format = NumberFormat.getInstance();
@@ -539,10 +548,13 @@ public class SJepTest {
 		System.out.println(c.toString(format,true));
 	}
 
+	@Test
 	public void testSimpleEquals() throws ParseException
 	{
 		assertPolynomialEquals("a+b-(c+d)","(a+b)-c-d");
 	}
+
+	@Test
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)

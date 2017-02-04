@@ -14,6 +14,7 @@ import org.nfunk.jep.type.Complex;
  * TODO don't implement number! So what if a scaler is a boolean
  */
 public class Scaler extends Number implements MatrixValueI {
+    public static final double PRECISION = 0.00000000000001;
 
 	private static final long serialVersionUID = 336717881577257953L;
 	Object value;
@@ -69,10 +70,13 @@ public class Scaler extends Number implements MatrixValueI {
 		if(!(obj instanceof Scaler)) return false;
 		Scaler s = (Scaler) obj;
 		if(!s.getDim().equals(getDim())) return false;
-		if(!value.equals(s.value)) return false;
-		return true;
+
+        double diff = Math.abs((Double)value - (Double)s.value);
+        if(diff > PRECISION) return false;
+
+        return true;
 	}
-	
+
 	/**
 	 * Always override hashCode when you override equals.
 	 * Effective Java, Joshua Bloch, Sun Press

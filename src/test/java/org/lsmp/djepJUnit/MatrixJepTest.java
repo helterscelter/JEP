@@ -6,6 +6,8 @@
 package org.lsmp.djepJUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.matrixJep.MatrixJep;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
@@ -35,6 +37,7 @@ public class MatrixJepTest extends DJepTest {
 		return res;
 	}
 
+	@Test
 	public void testMatrix() throws Exception
 	{
 		j.getSymbolTable().clearValues();
@@ -76,7 +79,8 @@ public class MatrixJepTest extends DJepTest {
 		valueTest("ele(x,[2,1])","3.0");          // Value: 2.0
 		valueTest("ele(x,[2,2])","4.0");          // Value: 2.0
 	}
-	
+
+	@Test
 	public void testLength() throws ParseException,Exception
 	{
 		valueTest("len(5)","1");
@@ -108,18 +112,22 @@ public class MatrixJepTest extends DJepTest {
 		valueTest("Map(abs(x),x,[[-2,-1],[1,2]])","[[2.0,1.0],[1.0,2.0]]");
 	}
 
+	@Test @Disabled
 	public void testDotInName() throws ParseException, Exception {
 	}
-	
+
+	@Test
 	public void testVecCmp() throws Exception {
 		valueTest("[1,2,3]==[1,2,3]",1);
 		valueTest("[1,2,3]==[1,2,4]",0);
 	}
 
+	@Test
 	public void testVectorSum() throws Exception {
 		valueTest("Sum([x,x^2],x,1,10)","[55.0,385.0]");
 	}
-	
+
+	@Test
 	public void testTgtDev() throws Exception
 	{
 		parsePreprocSimp("v=[x,x^2.0,x^3.0]");
@@ -131,6 +139,7 @@ public class MatrixJepTest extends DJepTest {
 		parsePreprocSimp("v+y*dv/length");
 	}
 
+	@Test
 	public void testComplexMatricies() throws Exception {
 		valueTest("v=[1+i,1-2i]","[(1.0, 1.0),(1.0, -2.0)]");
 		valueTest("vsum(v)","(2.0, -1.0)");
@@ -143,6 +152,7 @@ public class MatrixJepTest extends DJepTest {
 		valueTest("det(m)","(0.0, -4.0)");
 	}
 
+	@Test
 	public void testSimpIf() throws Exception {
 		MatrixJep mj = (MatrixJep) j;
 		Node n = mj.parse("if(1,2,3)");

@@ -1,6 +1,8 @@
 package org.lsmp.djepJUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.nfunk.jep.JEP;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
@@ -172,20 +174,22 @@ public class JepTest {
 
 	/////////////////// Tests ////////////////
 	
-	/** just test JUnit working OK */
+	@Test @DisplayName("just test JUnit working OK")
 	public void testGood()
 	{
 		myAssertEquals("1",new Double(1),new Double(1));
 		myAssertNaN("NaN",new Double(Double.NaN));
 	}
 
+	@Test
 	public void testSimpleSum() throws Exception
 	{
 		valueTest("1+2",3);		
 		valueTest("2*6+3",15);		
 		valueTest("2*(6+3)",18);
 	}
-	
+
+	@Test
 	public void testLogical() throws Exception
 	{
 		System.out.println("\nTesting logical operations");
@@ -246,7 +250,8 @@ public class JepTest {
 		valueTest("if((true&&true)==true,6,7)",6);
 		valueTest("if((!false)==true,6,7)",6);
 	}
-	
+
+	@Test
 	public void testFunction() throws Exception
 	{
 		System.out.println("\nTesting real functions");
@@ -262,6 +267,8 @@ public class JepTest {
 		valueTest("2^(-4)",1.0/16,0.00000001);
 		valueTest("2^(-10)",1.0/1024,0.00000001);
 	}
+
+	@Test
 	public void testComplex() throws Exception
 	{
 		System.out.println("\nTesting complex values");
@@ -285,7 +292,7 @@ public class JepTest {
 		//complexValueTest("cos(z)",new Complex(3,-2),tol);
 	}
 
-
+    @Test
 	public void testIf()  throws Exception
 	{
 		System.out.println("\nTesting if statement");
@@ -305,6 +312,7 @@ public class JepTest {
 		valueTest("if(x<3,1,-1)",-1);		
 	}
 
+	@Test
 	public void testAssign()  throws Exception
 	{
 		System.out.println("\nTesting assignment of variables");
@@ -323,6 +331,7 @@ public class JepTest {
 		// and hence the broken MMultiply was used.								
 	}
 
+	@Test
 	public void testDotInName() throws ParseException,Exception
 	{
 		System.out.println("\nTesting names with dot in them");
@@ -330,7 +339,7 @@ public class JepTest {
 		valueTest("x.x+1",4);
 	}
 
-
+    @Test
 	public void testBinom() throws ParseException,Exception
 	{
 		System.out.println("\nTesting binomial coeffs");
@@ -367,7 +376,8 @@ public class JepTest {
 		valueTestInt("binom(10,1)",10);
 		valueTestInt("binom(10,5)",252);
 	}
-	
+
+	@Test
 	public void testNaN() throws Exception
 	{
 		System.out.println("\nTesting for NaN");
@@ -397,7 +407,8 @@ public class JepTest {
 		valueTest("x == x+5",0);
 		valueTest("x == x",1);
 	}
-	
+
+	@Test
 	public void testAssign2()
 	{
 		System.out.println("\nTesting for assignment using parseExpression and getValue");
@@ -415,38 +426,39 @@ public class JepTest {
 		assertThat("<AB+2>", result, is(closeTo(5.0, 0.0001)));
 	}
 
-	 boolean isExpressionValid(String expression) 
-	 { 
-		 JEP jep = j; 
-		 try{ 
-			 Node n = jep.parse(expression); 
-			 System.out.println("expression " + expression + " \n Parsed value " + jep.hasError()); 
-			 if(jep.hasError())
-			 { 
-				 System.out.println("jep.getErrorInfo " + jep.getErrorInfo()); 
-				 return false; 
-			 } 
-			 System.out.println("jep.getSymbolTable " + jep.getSymbolTable());
-			 System.out.println("Eval: " +jep.evaluate(n).toString());
-			 return true; 
-		 }
-		 catch(Error e)
-		 { 
-			 System.out.println(e.getMessage()); 
-			 if(jep.hasError()) 
-			 System.out.println("Error is : " + jep.getErrorInfo()); 
-			 return false; 
-		 }
-		 catch(Exception e1)
-		 { 
-			 System.out.println(e1.getMessage());  
-			 if(jep.hasError()) 
-			 System.out.println("Error is : " + jep.getErrorInfo()); 
-			 return false; 
-		 } 
-	  
-	 } 
+    boolean isExpressionValid(String expression)
+    {
+        JEP jep = j;
+        try{
+            Node n = jep.parse(expression);
+            System.out.println("expression " + expression + " \n Parsed value " + jep.hasError());
+            if(jep.hasError())
+            {
+                System.out.println("jep.getErrorInfo " + jep.getErrorInfo());
+                return false;
+            }
+            System.out.println("jep.getSymbolTable " + jep.getSymbolTable());
+            System.out.println("Eval: " +jep.evaluate(n).toString());
+            return true;
+        }
+        catch(Error e)
+        {
+            System.out.println(e.getMessage());
+            if(jep.hasError())
+                System.out.println("Error is : " + jep.getErrorInfo());
+            return false;
+        }
+        catch(Exception e1)
+        {
+            System.out.println(e1.getMessage());
+            if(jep.hasError())
+                System.out.println("Error is : " + jep.getErrorInfo());
+            return false;
+        }
 
+    }
+
+    @Test
 	public void testNumParam() throws Exception
 	{
 		j.parse("if(3,1,2)");
@@ -502,6 +514,8 @@ a3 = if(a1 > 0 && ApportionmentAmt < 1000,
 	)
 */
 	}
+
+	@Test
 	public void testUndeclared() throws Exception
 	{
 	    j.setAllowUndeclared(false);
@@ -518,7 +532,8 @@ a3 = if(a1 > 0 && ApportionmentAmt < 1000,
 	        System.out.println("Expected error caught: "+e.getClass().getName()+": "+e.getMessage());
 	    }
 	}
-	
+
+	@Test
 	public void testBad() throws Exception
 	{
 		if(SHOW_BAD)

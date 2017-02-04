@@ -1,5 +1,7 @@
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.rpe.RpCommandList;
 import org.lsmp.djep.rpe.RpEval;
 import org.lsmp.djep.xjep.XJep;
@@ -8,6 +10,9 @@ import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.type.Complex;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -30,6 +35,7 @@ public class RpTest {
 	String matStrs[][] = new String[10][10];
 	String vecStrs[] = new String[10];
 
+	@BeforeEach
 	protected void setUp() {
 		j = new XJep();
 		j.addStandardConstants();
@@ -42,6 +48,7 @@ public class RpTest {
 
 	}
 
+	@Test
 	public void testGood()
 	{
 		assertEquals(1,1);
@@ -51,7 +58,7 @@ public class RpTest {
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \n<"+actual+"> should be \n<"+expected+">");
-		assertEquals("<"+msg+">",expected,actual);
+		assertEquals(expected, actual, "<"+msg+">");
 		System.out.println("Success: Value of <"+msg+"> is <"+actual+">");
 	}
 
@@ -174,13 +181,14 @@ public class RpTest {
 			System.out.println("<"+eqns[i]+"> "+rpRes[i]);
 		}
 		for(int i=0;i<eqns.length;++i)	{
-			Object matRes = j.evaluate(nodes[i]);
-			if(!matRes.equals(new Double(rpRes[i])))
-					fail("Expected <"+matRes+"> found <"+rpRes[i]+">");
+			Double matRes = (Double) j.evaluate(nodes[i]);
+			assertThat("Expected <"+matRes+"> found <"+rpRes[i]+">",
+                    matRes, is(closeTo(rpRes[i], 0.0000000000000001)));
 		}
 		rpe.cleanUp();
 	}
 
+	@Test
 	public void testRp() throws ParseException,Exception
 	{
 		rpTest(new String[0],"1*2*3+4*5*6+7*8*9");
@@ -190,13 +198,15 @@ public class RpTest {
 
 	}
 
+	@Test
 	public void testAssign() throws ParseException,Exception
 	{
 		rpTest2(new String[]{"x=5","x+x"});
 		j.setVarValue("x",new Double(6.0));
 		rpTest2(new String[]{"x+x"});
 	}
-	
+
+	@Test
 	public void testLogical() throws ParseException,Exception
 	{
 		rpTest2(new String[]{"1&&1","1&&0","0&&0","0&&1","3.14&&1"});
@@ -212,6 +222,8 @@ public class RpTest {
 
 	}
 	boolean TESTALL = false;
+
+	@Test
 	public void testFun() throws ParseException,Exception
 	{
 		rpTest2(new String[]{"x=5","y=4","x/y","x%y","x^y"});

@@ -1,5 +1,7 @@
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.rewrite.CollectPowers;
 import org.lsmp.djep.rewrite.ExpandBrackets;
@@ -20,6 +22,7 @@ public class RewriteTest extends DJepTest {
 	DJep j;
 	public static final boolean SHOW_BAD=false;
 
+	@Test
 	public void testRewrite() throws Exception
 	{
 		DJep j=new DJep();
@@ -54,6 +57,7 @@ public class RewriteTest extends DJepTest {
 		}
 	}
 
+	@Test
 	public void testTaylor() throws Exception
 	{
 		DJep taylorParser=new DJep();
@@ -89,7 +93,8 @@ public class RewriteTest extends DJepTest {
 			node3 = node5;
 		}
 	}
-	
+
+	@Test
 	public void testMemory() throws Exception
 	{
 		DJep taylorParser=new DJep();
@@ -114,6 +119,7 @@ public class RewriteTest extends DJepTest {
  		*/   
 	}
 
+	@Test @Disabled
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)

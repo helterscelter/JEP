@@ -6,6 +6,8 @@
 package org.lsmp.djepJUnit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.vectorJep.VectorJep;
 import org.nfunk.jep.ParseException;
 /**
@@ -25,6 +27,7 @@ public class VectorJepTest extends JepTest {
 		j.setImplicitMul(true);
 	}
 
+	@Test
 	public void testMatrix() throws Exception
 	{
 		System.out.println("\nTesting vector and matrix operations");
@@ -64,6 +67,7 @@ public class VectorJepTest extends JepTest {
 		valueTest("ele(x,[2,2])","4.0");          // Value: 2.0
 	}
 
+	@Test
 	public void testLength() throws ParseException,Exception
 	{
 		System.out.println("\nTesting vector and matrix functions");
@@ -97,22 +101,30 @@ public class VectorJepTest extends JepTest {
 		valueTest("Map(abs(x),x,[[-2,-1],[1,2]])","[[2.0,1.0],[1.0,2.0]]");
 	}
 
+	@Test @Disabled
 	public void testSumVector() throws Exception {
 		
 	}
+
+	@Test
 	public void testVecCmp() throws Exception {
 		valueTest("[1,2,3]==[1,2,3]",1);
 		valueTest("[1,2,3]==[1,2,4]",0);
 	}
+
+	@Test @Disabled
 	public void testDotInName() throws ParseException, Exception {
 	}
+
+	@Test
 	public void testGenMatEle() throws Exception
 	{
 	    System.out.println("The following caused a problem as ele only acepted Double arguments");
 	    valueTest("m=[1,2,3]","[1.0,2.0,3.0]");
 	    valueTest("GenMat(3,ele(m,n)*10,n)","[10.0,20.0,30.0]");
 	}
-	
+
+	@Test
 	public void testArrayAccess() throws Exception {
 	    System.out.println("\nTests array access on lhs and rhs using the a[3] notation");
 		valueTest("a=[1,2,3]","[1.0,2.0,3.0]");
@@ -124,7 +136,8 @@ public class VectorJepTest extends JepTest {
 		valueTest("c","[[1.0,5.0],[3.0,4.0]]");
 		valueTest("c[2,1]",3);
 	}
-	
+
+	@Test
 	public void testElementOperations() throws Exception {
 		((VectorJep) j).setElementMultiply(true);
 		valueTest("[1,2,3] == [2,2,2]","[0.0,1.0,0.0]");
@@ -136,7 +149,8 @@ public class VectorJepTest extends JepTest {
 		valueTest("[1,2,3] * [2,2,2]","[2.0,4.0,6.0]");
 		valueTest("[1,2,3] / [2,2,2]","[0.5,1.0,1.5]");
 	}
-	
+
+	@Test
 	public void testComplexMatricies() throws Exception {
 		valueTest("v=[1+i,1-2i]","[(1.0, 1.0),(1.0, -2.0)]");
 		valueTest("vsum(v)","(2.0, -1.0)");

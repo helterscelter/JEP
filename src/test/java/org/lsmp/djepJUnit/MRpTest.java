@@ -1,5 +1,8 @@
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.matrixJep.MatrixJep;
 import org.lsmp.djep.mrpe.MRpCommandList;
 import org.lsmp.djep.mrpe.MRpEval;
@@ -35,6 +38,7 @@ public class MRpTest {
 	String matStrsB[][] = new String[10][10];
 	String vecStrs[] = new String[10];
 
+	@BeforeEach
 	protected void setUp() {
 		mj = new MatrixJep();
 		mj.addStandardConstants();
@@ -100,6 +104,7 @@ public class MRpTest {
 			}
 	}
 
+	@Test
 	public void testGood()
 	{
 		assertEquals(1,1);
@@ -109,7 +114,7 @@ public class MRpTest {
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \n<"+actual+"> should be \n<"+expected+">");
-		assertEquals("<"+msg+">",expected,actual);
+		assertEquals(expected,actual, "<"+msg+">");
 		System.out.println("Success: Value of <"+msg+"> is <"+actual+">");
 	}
 
@@ -253,6 +258,7 @@ public class MRpTest {
 		rpe.cleanUp();
 	}
 
+	@Test
 	public void testRp() throws ParseException
 	{
 		rpTest(new String[]{"y=[[1,2,3],[4,5,6],[7,8,9]]"},"y*y");
@@ -295,6 +301,7 @@ public class MRpTest {
 
 	}
 
+	@Test
 	public void testRpAllDim() throws ParseException
 	{
 		
@@ -325,7 +332,7 @@ public class MRpTest {
 			}
 	}
 
-
+	@Test
 	public void testMul() throws ParseException
 	{
 		rpTest(new String[]{"x=[1,2]","y="+matStrs[2][2]},"x*y");
@@ -405,8 +412,9 @@ public class MRpTest {
 		rpTest(new String[]{"x=[1,2,3,4,5]","y=[1,0,0,0,0]"},"x*y");
 
 	}
-	
-	public void testAssign() throws ParseException
+
+	@Test
+	public void tesign() throws ParseException
 	{
 		rpTest2(new String[]{"x=[[5,6],[7,8]]","x+x"});
 		rpTest2(new String[]{"x=[5,6]","x+x"});
@@ -472,6 +480,7 @@ public class MRpTest {
 		rpTest2(new String[]{matStrs[2][2]+"!="+matStrs[2][2]});	
 	}
 	boolean TESTALL = false;
+	@Test
 	public void testVn() throws ParseException {
 		rpTest2(new String[]{"x=[5,6,7,8,9]","x+x","x-x","2*x","x*3","x.x"});
 		rpTest2(new String[]{"x=[[1,2,3,4,5],[5,6,7,8,9]]","x+x","x-x","2*x","x*3"});
@@ -505,6 +514,7 @@ public class MRpTest {
 	  }
 	}
 
+	@Test
 	public void testFun() throws ParseException {
 		rpTest2(new String[]{"x=5","y=4","x/y","x%y","x^y"});
 		rpTest2(new String[]{"x=0.5","cos(x)","sin(x)","tan(x)","asin(x)","acos(x)","atan(x)"});
@@ -513,7 +523,8 @@ public class MRpTest {
 		rpTest2(new String[]{"x=0.5","sec(x)","cosec(x)","cot(x)"});
 		rpTest2(new String[]{"x=3","y=4","atan2(y,x)","if(x>y,1,2)","if(x<y,1,2)"} );
 	}
-	
+
+	@Test
 	public void testUndecVar() throws ParseException {
 		mj.setAllowUndeclared(true);
 		MRpEval rpe = new MRpEval(mj);
@@ -811,6 +822,8 @@ public class MRpTest {
 		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
 	}
 	*/
+
+	@Test @Disabled
 	public void testAssignDiff() throws ParseException
 	{
 		//TODO Used to be an error but new procedure for working with derivs should add test

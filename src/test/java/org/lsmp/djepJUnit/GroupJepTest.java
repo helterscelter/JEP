@@ -1,5 +1,7 @@
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.lsmp.djep.groupJep.GroupJep;
 import org.lsmp.djep.groupJep.PolynomialVisitor;
 import org.lsmp.djep.groupJep.groups.AlgebraicExtension;
@@ -48,11 +50,11 @@ public class GroupJepTest {
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
-		assertEquals("<"+msg+">",expected,actual);
+		assertEquals(expected,actual, "<"+msg+">");
 		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\": "+ending);
 	}
 
-	/** just test JUnit working OK */
+	@Test @DisplayName("just test JUnit working OK")
 	public void testGood()
 	{
 		assertEquals(1,1);
@@ -72,14 +74,14 @@ public class GroupJepTest {
 		myAssertEquals(expr,expected,res,ending);
 	}
 
-	/** Tests very large numbers, 20! */
+	@Test @DisplayName("Tests very large numbers, 20!")
 	public void testZ() throws Exception
 	{
 		j = new GroupJep(new Integers());
 		valueToStringTest("1*2*3*4*5*6*7*8*9*10*11*12*13*14*15*16*17*18*19*20","2432902008176640000");
 	}
 
-	/** Tests rationals */
+	@Test @DisplayName("Tests rationals")
 	public void testQ() throws Exception
 	{
 		j = new GroupJep(new Rationals());
@@ -87,7 +89,7 @@ public class GroupJepTest {
 		valueToStringTest("(1/2)-(1/3)","1/6");
 	}
 	
-	/** Tests Quaternions */
+	@Test @DisplayName("Tests Quaternions")
 	public void testQuartonians() throws Exception
 	{
 		j = new GroupJep(new Quaternions());
@@ -96,7 +98,7 @@ public class GroupJepTest {
 		valueToStringTest("i*j","-k");
 	}
 
-	/** Tests integers mod 5 */
+	@Test @DisplayName("Tests integers mod 5 ")
 	public void testZn() throws Exception
 	{
 		j = new GroupJep(new Zn(BigInteger.valueOf(5)));
@@ -115,6 +117,7 @@ public class GroupJepTest {
 		valueToStringTest("4/3","3");
 	}
 
+	@Test
 	public void testZroot2() throws Exception
 	{
 		RingI ring = new Integers();
@@ -130,7 +133,8 @@ public class GroupJepTest {
 		valueToStringTest("rt2*rt2","2");
 		valueToStringTest("(rt2+1)*(rt2+1)","2 rt2+3");
 	}
-	
+
+	@Test
 	public void testZ5thRootUnity() throws Exception
 	{
 		RingI ring = new Integers();
@@ -152,6 +156,7 @@ public class GroupJepTest {
 		valueToStringTest("t*t*t*t*t","1");
 	}
 
+	@Test
 	public void testZRoot2Root5() throws Exception
 	{
 		RingI ring = new Integers();
@@ -182,6 +187,7 @@ public class GroupJepTest {
 		valueToStringTest("(t-1)*(s-1)","(t-1) s-t+1");
 	}
 
+	@Test
 	public void testZtau() throws Exception
 	{
 		RingI ring = new Integers();
@@ -209,6 +215,7 @@ public class GroupJepTest {
 		valueToStringTest("t*(1-t)","-1");
 	}
 
+	@Test
 	public void testPolynomials() throws Exception
 	{
 		RingI ring = new Reals();
@@ -255,6 +262,7 @@ public class GroupJepTest {
 		
 	}
 
+	@Test
 	public void testPolynomials2() throws Exception
 	{
 		RingI ring = new Reals();
@@ -279,6 +287,8 @@ public class GroupJepTest {
 		System.out.println(expr2 +" -> "+res2);
 
 	}
+
+	@Test
 	public void testPolynomialCreator() throws Exception
 	{
 		RingI ring = new Reals();
@@ -297,6 +307,7 @@ public class GroupJepTest {
 			System.out.println("Coeffs ["+i+"] "+coeffs[i]);
 	}
 
+	@Test
 	public void testBad() throws ParseException
 	{
 		if(SHOW_BAD)
