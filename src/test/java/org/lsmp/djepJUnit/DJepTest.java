@@ -5,10 +5,6 @@
  */
 package org.lsmp.djepJUnit;
 
-import junit.framework.Test;
-import junit.framework.TestResult;
-import junit.framework.TestSuite;
-
 import org.lsmp.djep.djep.DJep;
 import org.lsmp.djep.djep.DSymbolTable;
 import org.nfunk.jep.Node;
@@ -20,19 +16,6 @@ import org.nfunk.jep.ParseException;
  */
 public class DJepTest extends XJepTest {
 
-	public DJepTest(String name) {
-		super(name);
-	}
-
-	public static Test suite() {
-		return new TestSuite(DJepTest.class);
-	}
-
-	public static void main(String[] args) {
-		TestSuite suite= new TestSuite(DJepTest.class);
-		suite.run(new TestResult());
-	}
-	
 	protected void setUp() {
 		j = new DJep();
 		j.addStandardConstants();

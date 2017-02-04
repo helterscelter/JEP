@@ -5,46 +5,17 @@
  */
 package org.lsmp.djepJUnit;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.lsmp.djep.matrixJep.MatrixJep;
 import org.nfunk.jep.Node;
 import org.nfunk.jep.ParseException;
-
-import junit.framework.Test;
-import junit.framework.TestResult;
-import junit.framework.TestSuite;
 
 /**
  * @author Rich Morris
  * Created on 22-Apr-2005
  */
 public class MatrixJepTest extends DJepTest {
-
-	/**
-	 * @param name
-	 */
-	public MatrixJepTest(String name) {
-		super(name);
-		// TODO Auto-generated constructor stub
-	}
-	/**
-	 * Create a test suite.
-	 * @return the TestSuite
-	 */
-	public static Test suite() {
-		return new TestSuite(MatrixJepTest.class);
-	}
-
-	/**
-	 * Main entry point.
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
-
-		TestSuite suite= new TestSuite(MatrixJepTest.class);
-		suite.run(new TestResult());
-	}	
-
+	@BeforeEach
 	protected void setUp() {
 		j = new MatrixJep();
 		j.addStandardConstants();

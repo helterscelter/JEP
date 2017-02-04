@@ -1,8 +1,17 @@
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.nfunk.jep.JEP;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.type.Complex;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -12,35 +21,11 @@ import org.nfunk.jep.type.*;
  * @author Rich Morris
  * Created on 19-Nov-2003
  */
-public class JepTest extends TestCase {
+public class JepTest {
 	JEP j;
-	public static final boolean SHOW_BAD=false;
-	
-	public JepTest(String name) {
-		super(name);
-	}
+	public static final boolean SHOW_BAD = false;
 
-	/**
-	 * Create a test suite.
-	 * @return the TestSuite
-	 */
-	public static Test suite() {
-		return new TestSuite(JepTest.class);
-	}
-
-	/**
-	 * Main entry point.
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
-
-		TestSuite suite= new TestSuite(JepTest.class);
-		suite.run(new TestResult());
-	}	
-	/**
-	 * Run before each test.
-	 */
+	@BeforeEach
 	protected void setUp() {
 		j = new JEP();
 		j.addStandardConstants();
@@ -63,24 +48,24 @@ public class JepTest extends TestCase {
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error: '"+msg+"' is '"+actual+"' should be '"+expected+"'");
-		assertEquals("<"+msg+">",expected,actual);
+		assertEquals(expected,actual, "<"+msg+">");
 		System.out.println("Success: Value of \""+msg+"\" is "+actual+"");
 	}
 	
 	public void myAssertNaN(String msg,Object actual)
 	{
 		if(actual instanceof Double) {
-			if(Double.isNaN( ((Double) actual).doubleValue()) ) {
+			if(Double.isNaN((Double) actual) ) {
 				System.out.println("Success: Value of \""+msg+"\" is "+actual+"");
 			}
 			else {
 				System.out.println("Error: \""+msg+"\" is '"+actual+"' should be NaN");
-				assertTrue("<"+msg+"> is "+actual+" should be NaN",false);
+				assertTrue(false, "<"+msg+"> is "+actual+" should be NaN");
 			}
 		}
 		else {
 			System.out.println("Error: '"+msg+"' is '"+actual+"' should be 'NaN'");
-			assertTrue("<"+msg+">",false);
+			assertTrue(false, "<"+msg+">");
 		}
 	}
 
@@ -152,18 +137,18 @@ public class JepTest extends TestCase {
 	{
 		Object res = calcValue(expr);
 		if(res instanceof Double) {
-			double val = ((Double) res).doubleValue();
+			double val = (Double) res;
 			if(Math.abs(val-a)<tol) {
 				System.out.println("Success value of \""+expr+"\" is "+res);
 			}
 			else {
 				System.out.println("Error value of \""+expr+"\" is "+res+" should be "+a);
-				assertEquals(expr,a,val,tol);
+				assertThat(expr, val, is(closeTo(a, tol)));
 			}
 		}
 		else {
 			System.out.println("Error value of \""+expr+"\" is "+res+" should be "+a);
-			assertTrue("<"+expr+"> expected: <"+a+"> but was <"+res+">",false);
+			assertTrue(false, "<"+expr+"> expected: <"+a+"> but was <"+res+">");
 		}
 	}
 
@@ -181,7 +166,7 @@ public class JepTest extends TestCase {
 			System.out.println("Success value of \""+expr+"\" is "+res);
 		else {
 			System.out.println("Error value of \""+expr+"\" is "+res+" should be "+expected);
-			assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",false);
+			assertTrue(false, "<"+expr+"> expected: <"+expected+"> but was <"+res+">");
 		}
 	}
 
@@ -426,8 +411,8 @@ public class JepTest extends TestCase {
 		parser.parseExpression("AB=3"); // AB = 8
 		System.out.println("AB=3"+parser.getValue());
 		parser.parseExpression("AB+2");
-		double result= parser.getValue(); // Result = 17
-		assertEquals("<AB+2>",5.0,result,0.0);
+		double result = parser.getValue(); // Result = 17
+		assertThat("<AB+2>", result, is(closeTo(5.0, 0.0001)));
 	}
 
 	 boolean isExpressionValid(String expression) 

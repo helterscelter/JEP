@@ -1,10 +1,16 @@
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
-import org.lsmp.djep.rpe.*;
+import org.lsmp.djep.rpe.RpCommandList;
+import org.lsmp.djep.rpe.RpEval;
 import org.lsmp.djep.xjep.XJep;
+import org.nfunk.jep.JEP;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.type.Complex;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -16,22 +22,10 @@ import org.lsmp.djep.xjep.XJep;
  * @author Rich Morris
  * Created on 19-Nov-2003
  */
-public class RpTest extends TestCase {
+public class RpTest {
 	JEP j;
 	public static final boolean SHOW_BAD=false;
 	
-	public RpTest(String name) {
-		super(name);
-	}
-
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
-
-		TestSuite suite= new TestSuite(RpTest.class);
-//		DJepTest jt = new DJepTest("DJepTest");
-//		jt.setUp();
-		suite.run(new TestResult());
-	}	
 	/** strings for each variable */
 	String matStrs[][] = new String[10][10];
 	String vecStrs[] = new String[10];
@@ -46,10 +40,6 @@ public class RpTest extends TestCase {
 		j.setAllowUndeclared(true);
 		j.setImplicitMul(true);
 
-	}
-
-	public static Test suite() {
-		return new TestSuite(RpTest.class);
 	}
 
 	public void testGood()
@@ -75,7 +65,7 @@ public class RpTest extends TestCase {
 		Object res = j.evaluate(node);
 		if(j.hasError())
 			fail("Evaluation Failure: "+expr+j.getErrorInfo());
-		assertEquals("<"+expr+">",expected,res);
+		assertEquals(expected, res, "<"+expr+">");
 		System.out.println("Sucess value of <"+expr+"> is "+res);
 	}
 
@@ -93,8 +83,7 @@ public class RpTest extends TestCase {
 	{
 		Node node = j.parse(expr);
 		Object res = j.evaluate(node);
-		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
-			expected.equals((Complex) res,tol));
+		assertTrue(expected.equals((Complex) res,tol), "<"+expr+"> expected: <"+expected+"> but was <"+res+">");
 		System.out.println("Sucess value of <"+expr+"> is "+res);
 	}
 

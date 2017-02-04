@@ -1,37 +1,25 @@
 package org.nfunk.jeptesting;
 
+import org.junit.jupiter.api.Test;
 import org.nfunk.jep.ParseException;
 import org.nfunk.jep.function.Logarithm;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
+import java.util.Stack;
 
-public class LogarithmTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-	LogarithmTest(String name) {
-		super(name);
-	}
-
+public class LogarithmTest {
 	/**
 	 * Test method for 'org.nfunk.jep.function.Logarithm.run(Stack)'
 	 * Tests the return value of log(NaN). This is a test for bug #1177557
 	 */
-	public void testLogarithm() {
+	@Test
+	public void testLogarithm() throws ParseException {
 		Logarithm logFunction = new Logarithm();
-		java.util.Stack stack = new java.util.Stack();
-		stack.push(new Double(Double.NaN));
-		try {
-			logFunction.run(stack);
-		} catch (ParseException e) {
-			Assert.fail();
-		}
-		Object returnValue = stack.pop();
-
-		if (returnValue instanceof Double) {
-			Assert.assertTrue(Double.isNaN(((Double)returnValue).doubleValue()));
-		} else {
-			Assert.fail();
-		}
+		Stack<Double> stack = new Stack<>();
+		stack.push(Double.NaN);
+		logFunction.run(stack);
+		assertTrue(Double.isNaN(stack.pop()));
 	}
 
 }

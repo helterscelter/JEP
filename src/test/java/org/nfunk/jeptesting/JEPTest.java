@@ -9,13 +9,19 @@
 
 package org.nfunk.jeptesting;
 
-import java.io.*;
-
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
-import org.nfunk.jep.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.nfunk.jep.JEP;
 import org.nfunk.jep.type.Complex;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * This class is designed for testing the validity of JEP evaluations.
@@ -27,38 +33,15 @@ import org.nfunk.jep.type.Complex;
  *3.</pre>
  * The expressions '1+2' and '3' are evaluated with JEP and the results compared.
  */
-public class JEPTest extends TestCase {
+public class JEPTest {
 
 	/** The parser */
-	JEP myParser;
+	private JEP myParser;
 	
 	/** Current line position */
-	int lineCount;
+	private int lineCount;
 
-	/**
-	 * Constructor
-	 *
-	public JEPTester() {
-		// Set up the parser
-		myParser = new JEP();
-		myParser.setImplicitMul(true);
-		myParser.addStandardFunctions();
-		myParser.addStandardConstants();
-		myParser.addComplex();
-		myParser.setTraverse(false);
-		lineCount = 0;
-	}*/
-	
-	/**
-	 * Creates a new JEPTest instance
-	 */
-	public JEPTest(String name) {
-		super(name);
-	}
-	
-	/**
-	 * Sets up the parser.
-	 */
+	@BeforeEach
 	public void setUp() {
 		// Set up the parser
 		myParser = new JEP();
@@ -69,56 +52,26 @@ public class JEPTest extends TestCase {
 		myParser.setTraverse(false);
 		lineCount = 0;
 	}
-	
-	/**
-	 * Runs the test.
-	 */
-	public void runTest() {
-		String fileName = "JEPTestExpressions.txt";
-		testWithFile(fileName);
-		testGetValue();
-		testGetComplexValue();
-		testOpSetBug();
-	}
-	
-	/**
-	 * The main method checks the arguments and creates an instance
-	 * and calls it's run method.
-	 */
-	public static void main(String args[]) {
-		String fileName;
-		
-		// get filename from argument, or use default
-		if (args!=null && args.length>0) {
-			fileName = args[0];
-		} else {
-			fileName = "JEPTestExpressions.txt";
-			println("Using default input file: " + fileName);
-			println("Start with \"java org.nfunk.jepexamples."+
-			"JEPTest <filename>\" to load a different input file.");
-		}
-		
-		// Create an instance of this class and analyse the file
-		JEPTest jt = new JEPTest("JEP Test");
-		jt.setUp();
-		jt.testWithFile(fileName);
-	}
 
 	/**
 	 * Loads the file specified in fileName. Evaluates the expressions listed
 	 * in it and compares the expressions with the results.
 	 */
-	public void testWithFile(String fileName) {
+	@Test
+	public void testWithFile() {
+	    final String resource = "/JEPTestExpressions.txt";
+	    InputStream ios = JEPTest.class.getResourceAsStream(resource);
+
 		BufferedReader reader;
 		Object v1, v2;
 		boolean hasError = false;
 
 		// Load the input file
 		try {
-			reader = new BufferedReader(new FileReader(fileName));
+			reader = new BufferedReader(new InputStreamReader(ios));
 		} catch (Exception e) {
-			Assert.assertTrue(false);
-			println("File \""+fileName+"\" not found");
+			assertTrue(false);
+			println("File \""+resource+"\" not found");
 			return;
 		}
 		
@@ -230,50 +183,47 @@ public class JEPTest extends TestCase {
 //		throw new Exception("Unable to compare the values of this type");
 	}
 
-	/**
-	 * Test the getValue() method.
-	 */
+	@Test
+    @DisplayName("Test the getValue() method")
 	public void testGetValue() {
 		// Test whether a normal double value is returned correctly
 		myParser.parseExpression("2.1345");
-		Assert.assertEquals(myParser.getValue(), 2.1345, 0);
+		assertEquals(myParser.getValue(), 2.1345, 0.00001);
 		
-		// Test whether NaN is returned for Somplex numbers
+		// Test whether NaN is returned for Complex numbers
 		myParser.parseExpression("i");
-		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+		assertTrue(Double.isNaN(myParser.getValue()));
 		
 		// Test whether NaN is returned for String results
 		myParser.parseExpression("\"asdf\"");
-		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+		assertTrue(Double.isNaN(myParser.getValue()));
 	}
 	
-	/**
-	 * Test the getComplexValue() method.
-	 */
+	@Test
+    @DisplayName("Test the getComplexValue() method.")
 	public void testGetComplexValue() {
 		// Test whether a normal double value is returned as a Complex
 		myParser.parseExpression("2.1345");
-		Assert.assertTrue(new Complex(2.1345, 0).equals(
+		assertTrue(new Complex(2.1345, 0).equals(
 							myParser.getComplexValue(), 0));
 		
 		// Test whether (0, 1) is returned for i
 		myParser.parseExpression("i");
 		Complex z = myParser.getComplexValue();
-		Assert.assertTrue(z != null);
-		Assert.assertTrue(z.re() == 0);
-		Assert.assertTrue(z.im() == 1);
+		assertTrue(z != null);
+		assertTrue(z.re() == 0);
+		assertTrue(z.im() == 1);
 		
 		// Test whether NaN is returned for String results
 		myParser.parseExpression("\"asdf\"");
-		Assert.assertTrue(Double.isNaN(myParser.getValue()));
+		assertTrue(Double.isNaN(myParser.getValue()));
 	}
 	
-	/**
-	 * Tests the uninitialized OperatorSet bug 1061200
-	 */
+	@Test
+    @DisplayName("Tests the uninitialized OperatorSet bug 1061200")
 	public void testOpSetBug() {
 		JEP j = new JEP(false, true, true, null);
-		Assert.assertNotNull(j.getOperatorSet());
+		assertNotNull(j.getOperatorSet());
 	}
 
 	/**

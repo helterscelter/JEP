@@ -1,13 +1,27 @@
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
-import org.lsmp.djep.groupJep.interfaces.*;
-import org.lsmp.djep.groupJep.values.*;
-import org.lsmp.djep.groupJep.*;
-import org.lsmp.djep.groupJep.groups.*;
-import java.math.*;
+import org.lsmp.djep.groupJep.GroupJep;
+import org.lsmp.djep.groupJep.PolynomialVisitor;
+import org.lsmp.djep.groupJep.groups.AlgebraicExtension;
+import org.lsmp.djep.groupJep.groups.ExtendedFreeGroup;
+import org.lsmp.djep.groupJep.groups.FreeGroup;
+import org.lsmp.djep.groupJep.groups.Integers;
+import org.lsmp.djep.groupJep.groups.Quaternions;
+import org.lsmp.djep.groupJep.groups.Rationals;
+import org.lsmp.djep.groupJep.groups.Reals;
+import org.lsmp.djep.groupJep.groups.Zn;
+import org.lsmp.djep.groupJep.interfaces.RingI;
+import org.lsmp.djep.groupJep.values.FreeGroupElement;
+import org.lsmp.djep.groupJep.values.HasComplexValueI;
+import org.lsmp.djep.groupJep.values.Polynomial;
+import org.nfunk.jep.JEP;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.type.Complex;
+
+import java.math.BigInteger;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 /* @author rich
  * Created on 19-Nov-2003
  */
@@ -18,35 +32,15 @@ import java.math.*;
  * @author Rich Morris
  * Created on 19-Nov-2003
  */
-public class GroupJepTest extends TestCase {
+public class GroupJepTest {
 	GroupJep j;
 	public static final boolean SHOW_BAD=false;
-	
-	public GroupJepTest(String name) {
-		super(name);
-	}
-
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
-
-		TestSuite suite= new TestSuite(GroupJepTest.class);
-//		DJepTest jt = new DJepTest("DJepTest");
-//		jt.setUp();
-		suite.run(new TestResult());
-	}	
-
-	protected void setUp() {
-	}
-
-	public static Test suite() {
-		return new TestSuite(GroupJepTest.class);
-	}
 
 	public void myAssertEquals(String msg,String expected,String actual)
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
-		assertEquals("<"+msg+">",expected,actual);
+		assertEquals(expected, actual, "<"+msg+">");
 		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
 	}
 

@@ -1,10 +1,12 @@
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-
-import org.nfunk.jep.*;
-import org.lsmp.djep.djep.*;
-import org.lsmp.djep.rewrite.*;
+import org.lsmp.djep.djep.DJep;
+import org.lsmp.djep.rewrite.CollectPowers;
+import org.lsmp.djep.rewrite.ExpandBrackets;
+import org.lsmp.djep.rewrite.RewriteRuleI;
+import org.lsmp.djep.rewrite.RewriteVisitor;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 
 /* @author rich
  * Created on 19-Nov-2003
@@ -17,23 +19,6 @@ import org.lsmp.djep.rewrite.*;
 public class RewriteTest extends DJepTest {
 	DJep j;
 	public static final boolean SHOW_BAD=false;
-	
-	public RewriteTest(String name) {
-		super(name);
-	}
-
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
-
-		TestSuite suite= new TestSuite(RewriteTest.class);
-//		DJepTest jt = new DJepTest("DJepTest");
-//		jt.setUp();
-		suite.run(new TestResult());
-	}	
-
-	public static Test suite() {
-		return new TestSuite(RewriteTest.class);
-	}
 
 	public void testRewrite() throws Exception
 	{

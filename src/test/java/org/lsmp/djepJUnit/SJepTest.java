@@ -1,12 +1,21 @@
 package org.lsmp.djepJUnit;
 
-import junit.framework.*;
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.*;
-import org.lsmp.djep.xjep.*;
-import org.lsmp.djep.djep.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.lsmp.djep.djep.DJep;
+import org.lsmp.djep.sjep.PNodeI;
+import org.lsmp.djep.sjep.PolynomialCreator;
+import org.lsmp.djep.xjep.PrintVisitor;
+import org.lsmp.djep.xjep.XOperator;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.OperatorSet;
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.type.Complex;
+
 import java.text.NumberFormat;
-import org.lsmp.djep.sjep.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 /* @author rich
  * Created on 19-Nov-2003
  */
@@ -15,25 +24,13 @@ import org.lsmp.djep.sjep.*;
  * @author Rich Morris
  * Created on 19-Nov-2003
  */
-public class SJepTest extends TestCase {
+public class SJepTest {
 	DJep j;
 	PolynomialCreator pc;
 	
 	public static final boolean SHOW_BAD=false;
-	
-	public SJepTest(String name) {
-		super(name);
-	}
 
-	public static void main(String args[]) {
-		// Create an instance of this class and analyse the file
-
-		TestSuite suite= new TestSuite(SJepTest.class);
-//		DJepTest jt = new DJepTest("DJepTest");
-//		jt.setUp();
-		suite.run(new TestResult());
-	}	
-
+	@BeforeEach
 	protected void setUp() {
 		j = new DJep();
 		j.addStandardConstants();
@@ -47,15 +44,11 @@ public class SJepTest extends TestCase {
 		pc = new PolynomialCreator(j);
 	}
 
-	public static Test suite() {
-		return new TestSuite(SJepTest.class);
-	}
-
 	public void myAssertEquals(String msg,String actual,String expected)
 	{
 		if(!actual.equals(expected))
 			System.out.println("Error \""+msg+"\" is \""+actual+" should be "+expected+"\"");
-		assertEquals("<"+msg+">",expected,actual);
+		assertEquals(expected,actual, "<"+msg+">");
 		System.out.println("Success: Value of \""+msg+"\" is \""+actual+"\"");
 	}
 	
@@ -71,7 +64,7 @@ public class SJepTest extends TestCase {
 			System.out.println("Sucess: \""+s1+"\" equals \""+s2+"\"");
 		}else{
 			System.out.println("Error: \""+s1+"\" is not equal to \""+s2+"\"");
-			assertTrue("<"+s1+"> should be equal to <"+s2+"> it is not",false);
+			assertTrue(false, "<"+s1+"> should be equal to <"+s2+"> it is not");
 		}
 	}
 	/** just test JUnit working OK */
@@ -84,21 +77,22 @@ public class SJepTest extends TestCase {
 	{
 		valueTest(expr,new Double(dub));
 	}
+
 	public void valueTest(String expr,Object expected) throws Exception
 	{
 		Node node = j.parse(expr);
 		Node n2 = j.preprocess(node);
 		Object res = j.evaluate(n2);
-		assertEquals("<"+expr+">",expected,res);
+		assertEquals(expected,res, "<"+expr+">");
 		System.out.println("Success value of <"+expr+"> is "+res);
 	}
+
 	public void complexValueTest(String expr,Complex expected,double tol) throws Exception
 	{
 		Node node = j.parse(expr);
 		Node n2 = j.preprocess(node);
 		Object res = j.evaluate(n2);
-		assertTrue("<"+expr+"> expected: <"+expected+"> but was <"+res+">",
-			expected.equals((Complex) res,tol));
+		assertTrue(expected.equals((Complex) res,tol), "<"+expr+"> expected: <"+expected+"> but was <"+res+">");
 		System.out.println("Success value of <"+expr+"> is "+res);
 	}
 

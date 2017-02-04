@@ -5,16 +5,24 @@
  */
 package org.lsmp.djepJUnit;
 
+import org.lsmp.djep.xjep.BaseFormat;
+import org.lsmp.djep.xjep.MacroFunction;
+import org.lsmp.djep.xjep.PrintVisitor;
+import org.lsmp.djep.xjep.XJep;
+import org.lsmp.djep.xjep.XOperator;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.OperatorSet;
+import org.nfunk.jep.ParseException;
+import org.nfunk.jep.type.Complex;
+
 import java.text.NumberFormat;
 import java.util.Vector;
 
-import org.nfunk.jep.*;
-import org.nfunk.jep.type.Complex;
-import org.lsmp.djep.xjep.*;
-
-import junit.framework.Test;
-import junit.framework.TestResult;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * @author Rich Morris
@@ -22,19 +30,6 @@ import junit.framework.TestSuite;
  */
 public class XJepTest extends JepTest {
 
-	public XJepTest(String name) {
-		super(name);
-	}
-
-	public static Test suite() {
-		return new TestSuite(XJepTest.class);
-	}
-
-	public static void main(String[] args) {
-		TestSuite suite= new TestSuite(XJepTest.class);
-		suite.run(new TestResult());
-	}
-	
 	protected void setUp() {
 		j = new XJep();
 		j.addStandardConstants();
@@ -324,7 +319,7 @@ public class XJepTest extends JepTest {
 		node = xj.continueParsing();
 		myAssertEquals("..., z=x+y;","3.0",calcValue(node).toString());
 		node = xj.continueParsing();
-		assertNull("empty string ",node);
+		assertNull(node, "empty string ");
 	}
 	
 	
@@ -359,10 +354,10 @@ public class XJepTest extends JepTest {
 
 		Node n1 = j.parse("a+b+c+d");
 		Vector v = xj.getVarsInEquation(n1,new Vector());
-		assertTrue("Does not contain a",v.contains(j.getSymbolTable().getVar("a")));
-		assertTrue("Does not contain b",v.contains(j.getSymbolTable().getVar("b")));
-		assertTrue("Does not contain c",v.contains(j.getSymbolTable().getVar("c")));
-		assertTrue("Does not contain d",v.contains(j.getSymbolTable().getVar("d")));
+		assertTrue(v.contains(j.getSymbolTable().getVar("a")), "Does not contain a");
+		assertTrue(v.contains(j.getSymbolTable().getVar("b")), "Does not contain b");
+		assertTrue(v.contains(j.getSymbolTable().getVar("c")), "Does not contain c");
+		assertTrue(v.contains(j.getSymbolTable().getVar("d")), "Does not contain d");
 
 		xj.preprocess(j.parse("x=a+b t"));
 		xj.preprocess(j.parse("y=c+d t"));
@@ -383,7 +378,7 @@ public class XJepTest extends JepTest {
 		v3.add(j.getVar("g"));
 
 		System.out.println(v2.toString());
-		assertEquals("Bad element seq",v3,v2);
+		assertArrayEquals(v3.toArray(), v2.toArray(), "Bad element seq");
 	}
 
 	public void testUndecVar() throws ParseException {
